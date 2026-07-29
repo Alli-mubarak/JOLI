@@ -1,7 +1,6 @@
 import mysql from 'mysql2';
 import express from 'express';
-import db from './config/db.js'; 
-//import User from './model/User.js'; //  Import User Model
+import db from '../config/db.js'; 
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 import geoip from "geoip-lite";
@@ -13,7 +12,7 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-//import { sendCustomEmail } from './Utils/mailer.js';
+//import { sendCustomEmail } from '../Utils/mailer.js';
 
 dotenv.config();
 const app = express();
