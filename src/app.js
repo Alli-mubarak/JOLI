@@ -1,7 +1,7 @@
 import mysql from 'mysql2';
 import express from 'express';
 import {Router} from 'express;
-import db from './config/db.js'; 
+//import db from './config/db.js'; 
 import User from './model/User.js'; //  Import User Model
 import bcrypt from 'bcrypt';
 import cors from 'cors';
