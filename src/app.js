@@ -1,11 +1,9 @@
-import mongoose from 'mongoose';
+import mysql from 'mysql2';
 import express from 'express';
 import {Router} from 'express'
-import connectDB from './config/db.js';
+//import connectDB from './config/db.js';
 import User from './model/User.js'; //  Import User Model
-import {createEntry, getEntries, getAnEntry, updateEntry, deleteEntry} from './config/routes/entries.js';
 import bcrypt from 'bcrypt';
-import {encrypt, decrypt} from './Utils/Crypt.js'; // encrypter and decrypter function import
 import cors from 'cors';
 import geoip from "geoip-lite";
 import dotenv from 'dotenv';
@@ -16,7 +14,6 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import MongoStore from 'connect-mongo'; // used insted of express session to save session in db
 import { sendCustomEmail } from './Utils/mailer.js';
 
 const app = express();
@@ -62,19 +59,14 @@ app.use(cors({
 }));
 
 // Connect to the database
-connectDB();
+//connectDB();
 
-// ... (after mongoose is connected)
+// ... (after mysql is connected)
 
 app.use(session({
     secret: process.env.SESSION_SECRET, 
     resave: false,                            // Prevents resaving unchanged sessions
     saveUninitialized: false,                 // Prevents storing empty sessions
-    store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
-        ttl: 7 * 24 * 60 * 60,                // Time to live in MongoDB: 7 days (in seconds)
-        autoRemove: 'native'                  // Let MongoDB handle expired session cleanup
-    }),
     cookie: {
         maxAge: 30 * 24 * 60 * 60 * 1000,      // Cookie expiration: 7 days (in milliseconds)
         httpOnly: true,                       // Protects against XSS attacks
@@ -128,14 +120,14 @@ passport.use(new GoogleStrategy({
 
     try {
       // Check if user already exists in our database
-      let user = await User.findOne({ googleId: profile.id });
+    //*  let user = await 
 
       if (user) {
         // User exists, pass the user object to the next step
         return done(null, user);
       } else {
         // User does not exist, create and save them to MongoDB
-        user = await User.create(newUser);
+       //* user = await User.create(newUser);
         return done(null, user);
       }
     } catch (err) {
@@ -154,7 +146,7 @@ passport.use(new LocalStrategy(
     async (email, password, done) => {
         try {
             // 1. Find the user by email
-            const user = await User.findOne({ email: email });
+         //*   const user = 
             if (!user) {
                 return done(null, false, { message: 'User not found!.' });
             }
@@ -183,7 +175,7 @@ passport.serializeUser((user, done) => {
 // Deserialize user by fetching them from MongoDB using their ID
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+//*    const user = await User.findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);
@@ -213,8 +205,8 @@ app.post('/api/sign-up', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({ displayName: username, email,country: countryName, password: hashedPassword, profilePic: "/user.png"});
-    await newUser.save();
+  //*  const newUser = new User({ displayName: username, email,country: countryName, password: hashedPassword, profilePic: "/user.png"});
+   //* await newUser.save();
     // Log the user in automatically
     // Convert the Mongoose document to a plain JavaScript object
    const userObj = newUser.toObject();
@@ -408,20 +400,6 @@ app.get('/logout', (req, res) => {
     });
   });
 });
-
-
-
-//add entry route
-app.post('/add', createEntry);
-
-//get all entries route
-app.get('/getEntries', getEntries);
-
-//edit an entry
-app.post('/editEntry/:id', updateEntry);
-
-//delete an entry
-app.delete('/deleteEntry/:id', deleteEntry);
 
 //user details download route
 //app.get('/user/:id/download-txt', async (req, res) => {
