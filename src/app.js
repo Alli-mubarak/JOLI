@@ -57,7 +57,7 @@ function getCountryNameFromReq(req) {
 //app.use(cors());
 
 app.use(cors({
-  origin: 'https://diary-app-omega-lime.vercel.app/', 
+  origin: 'https://joli-indol.vercel.app/', 
   credentials: true // Crucial: Allows the browser to send cookies back and forth
 }));
 
@@ -76,7 +76,7 @@ app.use(session({
         autoRemove: 'native'                  // Let MongoDB handle expired session cleanup
     }),
     cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000,      // Cookie expiration: 7 days (in milliseconds)
+        maxAge: 30 * 24 * 60 * 60 * 1000,      // Cookie expiration: 7 days (in milliseconds)
         httpOnly: true,                       // Protects against XSS attacks
         secure: false                      // Set to true if using HTTPS in production
     }
@@ -102,10 +102,6 @@ console.log(req.method, req.path, req.ip, countryName, currentTime,);
 //  console.log('Session Data in memory:', req.session);
 //  console.log('Is Authenticated?:', req.isAuthenticated ? req.isAuthenticated() : 'No passport');
 //  console.log('User object:', req.user);
-  
-  let enc = encrypt('We are running fine. Welcome to Diary app by Mubarak Alli', 5);
-  console.log(enc);
-  console.log(decrypt(enc, 5));
 next();
 });
 
@@ -300,7 +296,7 @@ app.get('/auth/google/callback',
 app.get('/',(req, res)=>{
 console.log(req.query)
 console.log('default path requested! \n');
-    res.sendFile(__dirname + '/public/pages/index.html');
+    res.sendFile(__dirname + '/views/index.html');
 
 });
 
@@ -311,7 +307,7 @@ console.log('sign up page  requested! \n');
   if (req.isAuthenticated()){
    return  res.redirect('/');
   }
-    res.sendFile(__dirname + '/public/pages/signup.html');
+    res.sendFile(__dirname + '/views/signup.html');
 
 });
 
@@ -322,7 +318,7 @@ console.log('sign in page  requested! \n');
   if (req.isAuthenticated()){
    return  res.redirect('/');
   }
-    res.sendFile(__dirname + '/public/pages/signin.html');
+    res.sendFile(__dirname + '/views/signin.html');
 
 });
 
@@ -566,7 +562,7 @@ app.get('/api/users/summary-optimized', async (req, res) => {
 //response to all wrong paths
 app.use((req, res)=>{
 console.log('wrong path invoked \n');
-  res.sendFile(__dirname + '/public/pages/error.html');
+  res.sendFile(__dirname + '/views/error.html');
 });
 
 const listener = app.listen(process.env.PORT,()=>{
