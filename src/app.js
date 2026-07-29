@@ -1,6 +1,5 @@
 import express from 'express';
-import db from '../config/db.js'; 
-import { Kafka } from 'kafkajs';
+import {producer, consumer} from '../config/db.js'; 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -533,18 +532,27 @@ console.log('wrong path invoked \n');
 //start server
 async function startServer() {
   try {
-    // Test the database connection pool
-    await db.query('SELECT 1');
-    console.log('✅ Successfully connected to the MySQL database.');
+    console.log('Connecting Kafka components...');
+    await producer.connect();
+    await consumer.connect();
+    console.log('Successfully connected to Aiven Kafka.');
 
+    // Subscribe to a test topic to listen for incoming messages
+    await consumer.subscribe({ topic: 'Setup', fromBeginning: false });
+    await consumer.run({
+      eachMessage: async ({ topic, partition, message }) => {
+        console.log(`[Consumer] Message Received on ${topic}:`, message.value.toString());
+      },
+    });
+
+    
     const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
   } catch (error) {
-    console.error('❌ Failed to connect to the database:', error.message);
+    console.error('Failed to initialize Kafka or server:', error);
     process.exit(1);
   }
 }
-
 startServer();
 
