@@ -1,6 +1,9 @@
-import mysql from 'mysql2';
 import express from 'express';
 import db from '../config/db.js'; 
+import { Kafka } from 'kafkajs';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
 import geoip from "geoip-lite";
@@ -12,7 +15,6 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import MySQLStoreFactory from 'express-mysql-session';
 //import { sendCustomEmail } from '../Utils/mailer.js';
 
 dotenv.config();
@@ -25,6 +27,8 @@ app.use(express.json());
 
 app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
+const __filename = fileURLToPath(import.meta.url);
+
 
 // Initialize the built-in JavaScript internationalization display names utility
 const countryNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });
@@ -54,15 +58,12 @@ app.use(cors({
   credentials: true // Crucial: Allows the browser to send cookies back and forth
 }));
 
-const MySQLStore = MySQLStoreFactory(session);
-const sessionStore = new MySQLStore({}, db); 
-// Note: It automatically creates a table named 'sessions' in your database if it doesn't exist.
 
 // 2. Configure and use the session middleware
 app.use(session({
   key: 'session_cookie_name',          // Name of the cookie stored on the client
   secret: process.env.SESSION_SECRET,
-  store: sessionStore,                 // Tell express-session to save sessions to MySQL
+ // store: sessionStore,                 // Tell express-session to save sessions to MySQL
   resave: false,                       // Don't resave session if unmodified
   saveUninitialized: false,            // Don't create session until something is stored
   cookie: {
