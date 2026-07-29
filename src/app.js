@@ -295,8 +295,7 @@ console.log('sign up page  requested! \n');
   if (req.isAuthenticated()){
    return  res.redirect('/');
   }
-    res.sendFile(__dirname + '/views/signup.html');
-
+  res.sendFile(path.join(__dirname, "../", "/views/signup.html"));
 });
 
 //sign in route
@@ -306,8 +305,7 @@ console.log('sign in page  requested! \n');
   if (req.isAuthenticated()){
    return  res.redirect('/');
   }
-    res.sendFile(__dirname + '/views/signin.html');
-
+  res.sendFile(path.join(__dirname, "../", "/views/login.html"));
 });
 
 
@@ -524,7 +522,7 @@ app.get('/api/users/summary-optimized', async (req, res) => {
 //response to all wrong paths
 app.use((req, res)=>{
 console.log('wrong path invoked \n');
-  res.sendFile(__dirname + '/views/error.html');
+  res.sendFile(path.join(__dirname, "../", "/views/error.html"));
 });
 
 //start server
