@@ -61,7 +61,7 @@ const sessionStore = new MySQLStore({}, db);
 // 2. Configure and use the session middleware
 app.use(session({
   key: 'session_cookie_name',          // Name of the cookie stored on the client
-  secret: process.env.SESSION_SECRET
+  secret: process.env.SESSION_SECRET,
   store: sessionStore,                 // Tell express-session to save sessions to MySQL
   resave: false,                       // Don't resave session if unmodified
   saveUninitialized: false,            // Don't create session until something is stored
