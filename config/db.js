@@ -16,4 +16,4 @@ const pool = mysql.createPool({
 });
 
 // Export the promise-based pool
-module.exports = pool.promise();
+export default pool.promise();
