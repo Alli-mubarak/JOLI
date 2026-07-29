@@ -285,8 +285,7 @@ app.get('/auth/google/callback',
 app.get('/',(req, res)=>{
 console.log(req.query)
 console.log('default path requested! \n');
-    res.sendFile(__dirname + '..'+'/views/index.html');
-
+  res.sendFile(path.join(__dirname, "../", "/views/index.html"));
 });
 
 //sign up route
