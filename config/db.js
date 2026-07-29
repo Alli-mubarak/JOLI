@@ -14,9 +14,9 @@ const kafka = new Kafka({
   brokers: [process.env.KAFKA_BROKER],
   ssl: {
     rejectUnauthorized: true,
-    ca: [fs.readFileSync(path.join(__dirname, 'ca.pem'))],
-    key: fs.readFileSync(path.join(__dirname, 'service.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'service.cert')),
+    ca: [fs.readFileSync(path.join(__dirname, '..', 'ca.pem'))],
+    key: fs.readFileSync(path.join(__dirname, '..', 'service.key')),
+    cert: fs.readFileSync(path.join(__dirname, '..', 'service.cert')),
   },
 });
 
