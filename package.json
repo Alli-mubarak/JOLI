@@ -1,1 +1,35 @@
-
+{
+  "name": "JOLI",
+  "version": "1.0.0",
+  "description": "A social media application",
+  "keywords": [
+    "social",
+    "server",
+    "database"
+  ],
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.0.0",
+    "express": "^5.2.1",
+    "mongodb": "^6.0.0",
+    "mongoose": "^8.0.0",
+    "bcrypt": "^5.1.1",
+    "google-auth-library": "^10.5.0",
+    "express-session": "^1.18.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0",
+    "connect-mongo": "^5.1.0",
+    "geoip-lite": "^1.4.10",
+    "nodemailer": "^6.9.0"
+  },
+  "license": "ISC",
+  "author": "Mubarak Alli",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js"
+  }
+}
