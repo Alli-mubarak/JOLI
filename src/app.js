@@ -16,12 +16,9 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { sendCustomEmail } from './Utils/mailer.js';
 
-const app = express();
-
 dotenv.config();
-
+const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json())
 
 // Middleware (e.g., JSON parsing)
@@ -57,11 +54,6 @@ app.use(cors({
   origin: 'https://joli-indol.vercel.app/', 
   credentials: true // Crucial: Allows the browser to send cookies back and forth
 }));
-
-// Connect to the database
-//connectDB();
-
-// ... (after mysql is connected)
 
 app.use(session({
     secret: process.env.SESSION_SECRET, 
@@ -463,18 +455,6 @@ app.get('/user/download-txt', async (req, res) => {
     }
   }
 });
-                                        
-  
-
-
-
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  await mongoose.connection.close();
-  console.log('MongoDB connection closed due to app termination');
-  process.exit(0);
-});
-
 
 //google login
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -543,6 +523,21 @@ console.log('wrong path invoked \n');
   res.sendFile(__dirname + '/views/error.html');
 });
 
-const listener = app.listen(process.env.PORT,()=>{
-console.log("app is listening on port ", listener.address().port,'\n');
+//start server
+async function startServer() {
+  try {
+    // Test the database connection pool
+    await db.query('SELECT 1');
+    console.log('✅ Successfully connected to the MySQL database.');
+
+    const listener = app.listen(process.env.PORT,()=>{
+  console.log("app is listening on port ", listener.address().port,'\n');
 });
+  } catch (error) {
+    console.error('❌ Failed to connect to the database:', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();
+
