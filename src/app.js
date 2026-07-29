@@ -12,6 +12,7 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import MySQLStoreFactory from 'express-mysql-session';
 //import { sendCustomEmail } from '../Utils/mailer.js';
 
 dotenv.config();
@@ -53,15 +54,22 @@ app.use(cors({
   credentials: true // Crucial: Allows the browser to send cookies back and forth
 }));
 
+const MySQLStore = MySQLStoreFactory(session);
+const sessionStore = new MySQLStore({}, db); 
+// Note: It automatically creates a table named 'sessions' in your database if it doesn't exist.
+
+// 2. Configure and use the session middleware
 app.use(session({
-    secret: process.env.SESSION_SECRET, 
-    resave: false,                            // Prevents resaving unchanged sessions
-    saveUninitialized: false,                 // Prevents storing empty sessions
-    cookie: {
-        maxAge: 30 * 24 * 60 * 60 * 1000,      // Cookie expiration: 7 days (in milliseconds)
-        httpOnly: true,                       // Protects against XSS attacks
-        secure: false                      // Set to true if using HTTPS in production
-    }
+  key: 'session_cookie_name',          // Name of the cookie stored on the client
+  secret: process.env.SESSION_SECRET
+  store: sessionStore,                 // Tell express-session to save sessions to MySQL
+  resave: false,                       // Don't resave session if unmodified
+  saveUninitialized: false,            // Don't create session until something is stored
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,       // Cookie expiration: 1 day (in milliseconds)
+    httpOnly: true,                    // Prevents client-side scripts from reading the cookie (XSS protection)
+    secure: false                      // Set to true if using HTTPS/SSL in production
+  }
 }));
 
 
