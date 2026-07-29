@@ -19,6 +19,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "geoip-lite": "^1.4.10",
+    "express-mysql-session": "^3.0.3",
     "nodemailer": "^6.9.0"
   },
   "license": "ISC",
