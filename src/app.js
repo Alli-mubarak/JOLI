@@ -1,1 +1,574 @@
-import 
+import mongoose from 'mongoose';
+import express from 'express';
+import {Router} from 'express'
+import connectDB from './config/db.js';
+import User from './model/User.js'; //  Import User Model
+import {createEntry, getEntries, getAnEntry, updateEntry, deleteEntry} from './config/routes/entries.js';
+import bcrypt from 'bcrypt';
+import {encrypt, decrypt} from './Utils/Crypt.js'; // encrypter and decrypter function import
+import cors from 'cors';
+import geoip from "geoip-lite";
+import dotenv from 'dotenv';
+import path from 'node:path';
+import bodyParser from 'body-parser';
+import { OAuth2Client } from 'google-auth-library';
+import session from 'express-session';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import MongoStore from 'connect-mongo'; // used insted of express session to save session in db
+import { sendCustomEmail } from './Utils/mailer.js';
+
+const app = express();
+
+dotenv.config();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json())
+
+// Middleware (e.g., JSON parsing)
+app.use(express.json());
+
+app.use(express.static('icon'));
+const __dirname = import.meta.dirname;
+
+// Initialize the built-in JavaScript internationalization display names utility
+const countryNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });
+//function for getting country from ip
+function getCountryNameFromReq(req) {
+  // Extract client IP address from request header
+  const clientIp = req.headers['x-forwarded-for']
+  // Lookup geolocation data using geoip-lite
+  const geo = geoip.lookup(clientIp);
+  let countryName = 'Unknown';
+  if (geo && geo.country) {
+    try {
+      // Convert the 2-letter code (e.g., 'US') to full name (e.g., 'United States')
+      countryName = countryNamesInEnglish.of(geo.country);
+    } catch (error) {
+      // Fallback to the country code if the lookup fails for any reason
+      countryName = geo.country;
+    }
+    return countryName;
+  }
+}
+
+//app.use(cors());
+
+app.use(cors({
+  origin: 'https://diary-app-omega-lime.vercel.app/', 
+  credentials: true // Crucial: Allows the browser to send cookies back and forth
+}));
+
+// Connect to the database
+connectDB();
+
+// ... (after mongoose is connected)
+
+app.use(session({
+    secret: process.env.SESSION_SECRET, 
+    resave: false,                            // Prevents resaving unchanged sessions
+    saveUninitialized: false,                 // Prevents storing empty sessions
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+        ttl: 7 * 24 * 60 * 60,                // Time to live in MongoDB: 7 days (in seconds)
+        autoRemove: 'native'                  // Let MongoDB handle expired session cleanup
+    }),
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000,      // Cookie expiration: 7 days (in milliseconds)
+        httpOnly: true,                       // Protects against XSS attacks
+        secure: false                      // Set to true if using HTTPS in production
+    }
+}));
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//middleware - logs the method, path, ip address and time to the console
+app.use(function middleware(req,res,next){
+let d = new Date();
+const countryName = getCountryNameFromReq(req);
+let currentTime = d.toLocaleString();
+console.log(req.method, req.path, req.ip, countryName, currentTime,);
+  
+// console.log('--- Session Debug ---');
+//  console.log('Incoming Cookie:', req.headers.cookie);
+//   console.log('Session ID:', req.sessionID);
+//  console.log('Session Data in memory:', req.session);
+//  console.log('Is Authenticated?:', req.isAuthenticated ? req.isAuthenticated() : 'No passport');
+//  console.log('User object:', req.user);
+  
+  let enc = encrypt('We are running fine. Welcome to Diary app by Mubarak Alli', 5);
+  console.log(enc);
+  console.log(decrypt(enc, 5));
+next();
+});
+
+// Configure Passport Google Strategy
+// updated Passport Google Strategy with Async/Await Database Logic
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL,
+    passReqToCallback: true  // this will make the req object available for access
+  },
+  async (req, accessToken, refreshToken, profile, done) => {
+    const countryName = getCountryNameFromReq(req);
+    // Structure the data coming from Google profile payload
+    const newUser = {
+     googleId: profile.id,
+      displayName: profile.displayName,
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      email: profile.emails[0].value,
+      profilePic: profile.photos[0].value,
+      country: countryName
+    };
+
+    try {
+      // Check if user already exists in our database
+      let user = await User.findOne({ googleId: profile.id });
+
+      if (user) {
+        // User exists, pass the user object to the next step
+        return done(null, user);
+      } else {
+        // User does not exist, create and save them to MongoDB
+        user = await User.create(newUser);
+        return done(null, user);
+      }
+    } catch (err) {
+      console.error(err);
+      return done(err, null);
+    }
+  }
+));
+
+// Add the Local Strategy for Email/Password
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'email',    // Define 'email' as the username field
+        passwordField: 'password'
+    },
+    async (email, password, done) => {
+        try {
+            // 1. Find the user by email
+            const user = await User.findOne({ email: email });
+            if (!user) {
+                return done(null, false, { message: 'User not found!.' });
+            }
+
+            // 2. Validate password (assuming you hash passwords on signup)
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return done(null, false, { message: 'Incorrect credentials.' });
+            }
+
+            // 3. Success
+            return done(null, user);
+        } catch (err) {
+            return done(err);
+        }
+    }
+));
+
+// Serialize and Deserialize User Session Data
+//  Serialize user using the MongoDB object ID (_id) instead of the whole object
+passport.serializeUser((user, done) => {
+  const id = user.id || user._id; 
+  done(null, id);
+});
+
+// Deserialize user by fetching them from MongoDB using their ID
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
+
+// --- Auth Routes ---
+
+//sign up API
+app.post('/api/sign-up', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Validate inputs
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Check if email is taken
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+    const countryName = getCountryNameFromReq(req);
+  
+// Hash password and save user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new User({ displayName: username, email,country: countryName, password: hashedPassword, profilePic: "/user.png"});
+    await newUser.save();
+    // Log the user in automatically
+    // Convert the Mongoose document to a plain JavaScript object
+   const userObj = newUser.toObject();
+        req.login(userObj, (err) => {
+            if (err) {
+                return next(err); // Handles passport login errors
+            }
+            // Success! The session is created!
+            res.status(201).json({ message: 'Registration successful!' });
+        });
+   
+  } catch (err) {
+    console.log(err+ ', ' + err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//  Email Login
+app.post('/auth/login', (req, res, next) => {
+  // 1. Extract values to validate that the frontend sent the required data
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  // Invoke Passport's Local Strategy
+  // "info" contains the custom error messages we wrote inside the strategy
+  passport.authenticate('local', (err, user, info) => {
+    
+    //  A critical server or database error occurred
+    if (err) {
+      console.error('Passport Auth Error:', err);
+      return next(err); 
+    }
+
+    //  Authentication failed (wrong password, account doesn't exist, etc.)
+    if (!user) {
+      return res.status(401).json({ message: info?.message || 'Invalid email or password.' });
+    }
+
+    //  Credentials are correct! Establish the user session
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        console.error('Session creation failed:', loginErr);
+        return next(loginErr);
+      }
+
+      // Convert Mongoose document to a plain object to clean it up safely
+      const cleanUser = user.toObject();
+      delete cleanUser.password; // Never send the hashed password back to the frontend
+
+      
+      return res.status(200).json({
+        message: 'Logged in successfully.',
+        user: cleanUser
+      });
+    });
+
+  })(req, res, next); // Necessary to pass the request and response objects to Passport
+});
+
+// Trigger Google Sign-Up / Login Flow
+app.get('/auth/google', 
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+//  Google OAuth Callback Route
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login-failed' }),
+  (req, res) => {
+    // Successful authentication, redirect to user dashboard or home.
+    res.redirect('/dashboard');
+  }
+);
+
+
+//default route
+app.get('/',(req, res)=>{
+console.log(req.query)
+console.log('default path requested! \n');
+    res.sendFile(__dirname + '/public/pages/index.html');
+
+});
+
+//sign up route
+app.get('/sign-up',(req, res)=>{
+console.log(req.query)
+console.log('sign up page  requested! \n');
+  if (req.isAuthenticated()){
+   return  res.redirect('/');
+  }
+    res.sendFile(__dirname + '/public/pages/signup.html');
+
+});
+
+//sign in route
+app.get('/sign-in',(req, res)=>{
+console.log(req.query)
+console.log('sign in page  requested! \n');
+  if (req.isAuthenticated()){
+   return  res.redirect('/');
+  }
+    res.sendFile(__dirname + '/public/pages/signin.html');
+
+});
+
+
+//user check route
+app.get('/api/auth/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ loggedIn: true, user: req.user });
+  } else {
+    res.json({ loggedIn: false, user: null });
+  }
+});
+
+// POST Route for logging in
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/sign-in',
+    failureFlash: false 
+}));
+
+
+// API for changing users role
+
+  
+// --- Application Routes ---
+
+app.get('/dashboard', async(req, res) => {
+   if(!req.isAuthenticated()) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+  // res.send(`<h1>Welcome ${req.user.firstName}</h1><p>Email: ${req.user.email}</p><a href="/logout">Logout</a>`);
+ // const taifrgetUser = req.user.email;
+//const emailSubject = 'Welcome to Our Website!';
+//const emailBody = `
+//  <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee;">
+  //  <h2 style="color: #333;">Thank you for joining us!</h2>
+//    <p>Your account is now active under our custom URL setup.</p>
+  //  <a href="https://yourwebsiteurl.com" style="background: blue; color: white; padding: 10px; text-decoration: none;">Visit Dashboard</a>
+//  </div>
+//`;
+  
+  //build the email notification content - build later 
+  const email = req.user.email;
+  console.log(email)
+    const emailSubject = 'Security Alert: New Login Detected';
+    const currentTime = new Date().toLocaleString();
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 20px; border-radius: 8px;">
+        <h2 style="color: #d9534f;">New Login Notification</h2>
+        <p>Hello,</p>
+        <p>We detected a new login to your account at <strong>${currentTime}</strong>.</p>
+        <p>If this was you, you can safely ignore this email. If this wasn't you, please change your password immediately.</p>
+        <br>
+        <p style="font-size: 12px; color: #777;">This is an automated security alert from your website application.</p>
+      </div>
+    `;
+
+    //. Trigger the email function (Fire-and-forget or awaited)
+    // Will work on the mailing system later
+  
+//  try {
+ //     await sendCustomEmail(email, emailSubject, emailHtml);
+//    console.log('email sent!');
+//   } catch (emailError) {
+//    console.error('⚠️ User logged in, but security email failed to send:', emailError.message);
+//           }
+  
+  res.redirect('/');
+});
+
+app.get('/login-failed', (req, res) => {
+  res.send('Authentication failed. Please try again.');
+});
+
+// Logout Route
+app.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    
+    // Destroy the session in MongoDB
+    req.session.destroy((err) => {
+      if (err) return res.send('Error logging out');
+      
+      // Clear the cookie on the client side
+      res.clearCookie('connect.sid');
+      res.redirect('/');
+    });
+  });
+});
+
+
+
+//add entry route
+app.post('/add', createEntry);
+
+//get all entries route
+app.get('/getEntries', getEntries);
+
+//edit an entry
+app.post('/editEntry/:id', updateEntry);
+
+//delete an entry
+app.delete('/deleteEntry/:id', deleteEntry);
+
+//user details download route
+//app.get('/user/:id/download-txt', async (req, res) => {
+app.get('/user/download-txt', async (req, res) => {
+  if(!req.isAuthenticated()) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+  if(!req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+  
+  const userId = req.user.id
+  try {
+    // Fetch user data from MongoDB
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    //Format the user information nicely for the .txt file
+    const userEntries = user.entries.map(e => ({entryId:  e._id, content:  e.description, created:  e.createdAt.toLocaleString(), lastUpdated:  e.updatedAt.toLocaleString()}))
+    const formattedEntries = user.entries && user.entries.length > 0
+      ? userEntries.map((item, index) => {
+          return `  ${index + 1}. [
+         entryId : ${item.entryId},
+         content: ${item.content},
+         created : ${item.created},
+         last updated: ${item.lastUpdated}
+        ]`;
+        }).join('\n')
+      : '  No entries found.';
+    const country = user.country || 'unknown';
+    const fileContent = [
+      `User Profile Report`,
+      `===================`,
+      `ID:         ${user._id}`,
+      `Name:       ${user.displayName}`,
+      `Email:      ${user.email}`,
+      `Country:    ${country}`,
+      `Entries:    ${user.entries.length} entries`,
+       `${formattedEntries}`,
+      `Role:       ${user.role}`,
+      `Joined On:  ${new Date(user.createdAt).toLocaleString()}`,
+      `===================`,
+      `Generated on: ${new Date().toLocaleString()}`
+    ].join('\n'); // Separates lines correctly for text files
+
+    //Set headers to force download and define the file extension
+    res.attachment(`${user.displayName.replace(/\s+/g, '_')}_profile.txt`);
+    res.type('text/plain');
+
+    // Send the text content out directly
+    return res.send(fileContent);
+
+  } catch (error) {
+    console.error('Error exporting user data:', error);
+    
+    // Pro Tip: Make sure headers weren't already sent before replying with an error
+    if (!res.headersSent) {
+      return res.status(500).json({ error: 'Failed to generate user file.' });
+    }
+  }
+});
+                                        
+  
+
+
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  await mongoose.connection.close();
+  console.log('MongoDB connection closed due to app termination');
+  process.exit(0);
+});
+
+
+//google login
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// Endpoint where frontend sends the Google ID Token
+app.post('/api/auth/google', async (req, res) => {
+    const { token } = req.body;
+
+    if (!token) {
+        return res.status(400).json({ message: 'Token is required' });
+    }
+
+    try {
+        // Verify the token integrity with Google
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID, 
+        });
+
+        // Extract the user profile data
+        const payload = ticket.getPayload();
+        const { sub, email, name, picture } = payload;
+
+        // DATABASE LOGIC GOES HERE:
+        // 1. Check if user with 'sub' (Google ID) or 'email' exists in database.
+        // 2. If not, create a new user record.
+        // 3. Generate your own session token (like a JWT) for your app.
+
+        res.status(200).json({
+            message: 'Authentication successful',
+            user: { id: sub, email, name, picture }
+        });
+
+    } catch (error) {
+        res.status(401).json({ message: 'Invalid Google token', error: error.message });
+    }
+});
+
+
+//fetch all users at once
+app.get('/api/users/summary-optimized', async (req, res) => {
+  if(!req.isAuthenticated()) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+  try {
+    // Runs both database actions at the exact same time
+    const [totalCount, usersList] = await Promise.all([
+      User.countDocuments({}), // Fast internal database counter
+      User.find({}).select('email entries -_id country') // Fetches emails
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      totalUsers: totalCount,
+      users: usersList.map(u => ({id:u._id, createdAt:u.createdAt, email: u.email, country: u.country || 'unknown', entries: u.entries.length}))
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
+    
+
+//response to all wrong paths
+app.use((req, res)=>{
+console.log('wrong path invoked \n');
+  res.sendFile(__dirname + '/public/pages/error.html');
+});
+
+const listener = app.listen(process.env.PORT,()=>{
+console.log("app is listening on port ", listener.address().port,'\n');
+});
