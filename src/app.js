@@ -524,10 +524,28 @@ console.log('wrong path invoked \n');
 });
 
 //start server
-//async function startServer() {
+async function startServer() {
+  try {
+    console.log('Testing connection to Aiven PostgreSQL...');
+    
+    // Run a quick, cheap query to verify the SSL handshake and credentials
+    const result = await pool.query('SELECT NOW() as current_time;');
+    
+    console.log(`✅ Database connection successful! Server time: ${result.rows[0].current_time}`);
+
+    // Start Express ONLY if the database connection succeeds
     const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
-//}
-//startServer();
+
+  } catch (error) {
+    console.error('❌ Database connection failed at startup!');
+    console.error('Error Details:', error.message);
+    
+    // Exit the process with a failure code so your app doesn't run broken
+    process.exit(1); 
+  }
+}
+    
+startServer();
 
