@@ -31,11 +31,15 @@ const __filename = fileURLToPath(import.meta.url);
 
 const DATABASE = new pg.Client(pool);
 DATABASE.connect(function (err) {
+  console.log("connecting to DB...1");
   if (err) throw err;
+  console.log("connecting to DB...2");
   client.query("SELECT VERSION()", [], function (err, result) {
+    console.log("connecting to DB...3");
     if (err) throw err;
-
+    console.log("connecting to DB...4");
     console.log(result.rows[0]);
+    console.log("connected successfully to Avien Database");
     DATABASE.end(function (err) {
       if (err) throw err;
     });
