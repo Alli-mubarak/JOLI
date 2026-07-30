@@ -1,5 +1,6 @@
 import express from 'express';
-import {producer, consumer} from '../config/db.js'; 
+import {pool} from '../config/db.js'; 
+import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
@@ -57,21 +58,18 @@ app.use(cors({
 }));
 
 
-// 2. Configure and use the session middleware
+// Configure and use the session middleware
+const PostgresStore = connectPgSimple(session);
+
+// session middleware (Saves sessions directly to Aiven Postgres)
 app.use(session({
-  key: 'session_cookie_name',          // Name of the cookie stored on the client
-  secret: process.env.SESSION_SECRET,
- // store: sessionStore,                 // Tell express-session to save sessions to MySQL
-  resave: false,                       // Don't resave session if unmodified
-  saveUninitialized: false,            // Don't create session until something is stored
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24,       // Cookie expiration: 1 day (in milliseconds)
-    httpOnly: true,                    // Prevents client-side scripts from reading the cookie (XSS protection)
-    secure: false                      // Set to true if using HTTPS/SSL in production
-  }
+  store: new PostgresStore({ pool: pool, tableName: 'session' }),
+  secret: process.env.SESSION_SECRET || 'super-secure-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false }
 }));
-
-
+  
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Initialize Passport
