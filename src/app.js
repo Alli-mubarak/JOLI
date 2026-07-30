@@ -29,14 +29,14 @@ app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
 const __filename = fileURLToPath(import.meta.url);
 
-const client = new pg.Client(pool);
-client.connect(function (err) {
+const DATABASE = new pg.Client(pool);
+DATABASE.connect(function (err) {
   if (err) throw err;
   client.query("SELECT VERSION()", [], function (err, result) {
     if (err) throw err;
 
     console.log(result.rows[0]);
-    client.end(function (err) {
+    DATABASE.end(function (err) {
       if (err) throw err;
     });
   });
