@@ -526,7 +526,8 @@ console.log('wrong path invoked \n');
 //start server
 async function startServer() {
   try {
-    console.log('Testing connection to Aiven PostgreSQL...');
+    console.log('Testing connection to Aiven PostgreSQL...', process.env.DB_HOST);
+    
     
     // Run a quick, cheap query to verify the SSL handshake and credentials
     const result = await pool.query('SELECT NOW() as current_time;');
