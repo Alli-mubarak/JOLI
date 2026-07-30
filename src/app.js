@@ -524,29 +524,10 @@ console.log('wrong path invoked \n');
 });
 
 //start server
-async function startServer() {
-  try {
-    console.log('Connecting Kafka components...');
-    await producer.connect();
-    await consumer.connect();
-    console.log('Successfully connected to Aiven Kafka.');
-
-    // Subscribe to a test topic to listen for incoming messages
-    await consumer.subscribe({ topic: 'Setup', fromBeginning: false });
-    await consumer.run({
-      eachMessage: async ({ topic, partition, message }) => {
-        console.log(`[Consumer] Message Received on ${topic}:`, message.value.toString());
-      },
-    });
-
-    
+//async function startServer() {
     const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
-  } catch (error) {
-    console.error('Failed to initialize Kafka or server:', error);
-    process.exit(1);
-  }
-}
-startServer();
+//}
+//startServer();
 
