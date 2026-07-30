@@ -1,4 +1,5 @@
 import express from 'express';
+import pg from 'pg';
 import {pool} from '../config/db.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
