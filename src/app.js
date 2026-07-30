@@ -541,6 +541,7 @@ async function startServer() {
 
   } catch (error) {
     console.error('❌ Database connection failed at startup!');
+    console.error('Error Details:', error);
     console.error('Error Details:', error.message);
     
     // Exit the process with a failure code so your app doesn't run broken
