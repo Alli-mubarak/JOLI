@@ -1,5 +1,4 @@
 import express from 'express';
-import pg from 'pg';
 import {pool} from '../config/db.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
@@ -28,8 +27,6 @@ app.use(express.json());
 app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
 const __filename = fileURLToPath(import.meta.url);
-
-const DATABASE = new pg.Client(pool);
 
 // Initialize the built-in JavaScript internationalization display names utility
 const countryNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });
@@ -528,21 +525,13 @@ console.log('wrong path invoked \n');
 //start server
 async function startServer(){
   try{
-  DATABASE.connect(function (err) {
-  console.log("connecting to DB...1");
-  if (err) throw err;
-  console.log("connecting to DB...2");
-  DATABASE.query("SELECT VERSION()", [], function (err, result) {
-    console.log("connecting to DB...3");
-    if (err) throw err;
-    console.log("connecting to DB...4");
-    console.log(result.rows[0]);
-    console.log("connected successfully to Avien Database");
-    DATABASE.end(function (err) {
-      if (err) throw err;
-    });
-  });
-});
+  console.log('🔄 Connecting to Aiven PostgreSQL...');
+    const result = await pool.query('SELECT NOW()');
+    
+    console.log('✅ Database connected successfully!');
+    console.log(`🕒 Aiven Server Time: ${result.rows[0].now}`);
+
+    // 2. Start the server
                  
  const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
