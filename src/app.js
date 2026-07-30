@@ -527,12 +527,25 @@ console.log('wrong path invoked \n');
 async function startServer() {
   try {
     console.log('Testing connection to Aiven PostgreSQL...');
-    
+
+    const client = new pg.Client(pool);
+client.connect(function (err) {
+  if (err) throw err;
+  client.query("SELECT VERSION()", [], function (err, result) {
+    if (err) throw err;
+
+    console.log(result.rows[0]);
+    client.end(function (err) {
+      if (err) throw err;
+    });
+  });
+});
+
     
     // Run a quick, cheap query to verify the SSL handshake and credentials
-    const result = await pool.query('SELECT NOW() as current_time;');
+ //   const result = await pool.query('SELECT NOW() as current_time;');
     
-    console.log(`✅ Database connection successful! Server time: ${result.rows[0].current_time}`);
+//    console.log(`✅ Database connection successful! Server time: ${result.rows[0].current_time}`);
 
     // Start Express ONLY if the database connection succeeds
     const listener = app.listen(process.env.PORT,()=>{
