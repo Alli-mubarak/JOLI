@@ -1,28 +1,24 @@
-import { Kafka } from 'kafkajs';
+import pg from 'pg';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
 
-dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialize Kafka client with Aiven SSL configurations
-const kafka = new Kafka({
-  clientId: process.env.KAFKA_CLIENT_ID,
-  brokers: [process.env.KAFKA_BROKER],
+// Step up one level to reach the root directory where pg-ca.pem is located
+const pgCaPath = path.join(__dirname, '..', 'pg-ca.pem');
+
+const { Pool } = pg;
+
+export const pool = new Pool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   ssl: {
     rejectUnauthorized: true,
-    ca: [fs.readFileSync(path.join(__dirname, '..', 'ca.pem'))],
-    key: fs.readFileSync(path.join(__dirname, '..', 'service.key')),
-    cert: fs.readFileSync(path.join(__dirname, '..', 'service.cert')),
+    ca: fs.readFileSync(pgCaPath).toString(),
   },
 });
-
-const producer = kafka.producer();
-const consumer = kafka.consumer({ groupId: process.env.KAFKA_GROUP_ID });
-
-
-// Export the kafka producer and consumer 
-export {producer, consumer}
