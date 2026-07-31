@@ -522,6 +522,19 @@ console.log('wrong path invoked \n');
   res.sendFile(path.join(__dirname, "../", "/views/error.html"));
 });
 
+// database pinger to prevent powering off
+async function pingAivenDatabase() {
+  try {
+    // Reuses an idle connection from existing pool
+    await pool.query('SELECT 1;');
+    console.log(`[${new Date().toISOString()}] Aiven DB pool keep-alive successful.`);
+  } catch (error) {
+    console.error(`[${new Date().toISOString()}] Aiven DB pool keep-alive failed:`, error.message);
+  }
+}
+// ½ hour in milliseconds (30 mins * 60 secs * 1000 ms)
+const HALF_HOUR = 30 * 60 * 1000;
+
 //start server
 async function startServer(){
   try{
@@ -536,28 +549,15 @@ async function startServer(){
  const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
+    pingAivenDatabase();
+    setInterval(pingAivenDatabase, HALF_HOUR);
   }catch (err){
     console.error('❌ Database connection failed! Server shutting down...');
     console.error(err.message);
     process.exit(1); 
   }
 }
-startServer();
+startServer(); 
 
-async function pingAivenDatabase() {
-  try {
-    // Reuses an idle connection from existing pool
-    await pool.query('SELECT 1;');
-    console.log(`[${new Date().toISOString()}] Aiven DB pool keep-alive successful.`);
-  } catch (error) {
-    console.error(`[${new Date().toISOString()}] Aiven DB pool keep-alive failed:`, error.message);
-  }
-}
-  
-// ½ hour in milliseconds (30 mins * 60 secs * 1000 ms)
-const HALF_HOUR = 30 * 60 * 1000;
 
-// Start the recurring interval timer
-setInterval(pingAivenDatabase, HALF_HOUR);
 
-pingAivenDatabase();
