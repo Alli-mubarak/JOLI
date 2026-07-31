@@ -1,6 +1,7 @@
 import express from 'express';
 import {pool} from '../config/db.js'; 
 import connectPgSimple from 'connect-pg-simple';
+import {pingAivenDatabase} from '../Utils/db-pinger.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
@@ -544,4 +545,11 @@ async function startServer(){
 }
 startServer();
   
+// ½ hour in milliseconds (30 mins * 60 secs * 1000 ms)
+const HALF_HOUR = 30 * 60 * 1000;
 
+// Start the recurring interval timer
+setInterval(pingAivenDatabase, HALF_HOUR);
+
+// Optional: Run once immediately when the server starts up
+pingAivenDatabase();
