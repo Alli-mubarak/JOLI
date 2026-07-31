@@ -2,7 +2,7 @@ import { Client } from 'pg';
 
 const connectionString = process.env.DB_URI;
 
-async function pingDatabase() {
+export async function pingDatabase() {
   if (!connectionString) {
     console.warn("Aiven keep-alive skipped: No connection string found.");
     return;
