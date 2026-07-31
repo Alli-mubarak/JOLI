@@ -1,4 +1,7 @@
 import { Client } from 'pg';
+const fs = require('fs');
+const path = require('path');
+
 
 const connectionString = process.env.DB_URI;
 
@@ -9,7 +12,13 @@ export async function pingAivenDatabase() {
   }
 
   // Create a temporary client just for the ping to avoid cluttering the main pool
-  const pingClient = new Client({ connectionString });
+  const pingClient = new Client({ 
+  connectionString,
+  ssl: {
+    rejectUnauthorized: true,
+    ca: fs.readFileSync(path.join(__dirname, 'ca.pem')).toString() // Tells Node to trust Aiven
+  }
+});
 
   try {
     await pingClient.connect();
