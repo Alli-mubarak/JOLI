@@ -1,7 +1,12 @@
 import { Client } from 'pg';
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
+dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const connectionString = process.env.DB_URI;
 
@@ -16,7 +21,7 @@ export async function pingAivenDatabase() {
   connectionString,
   ssl: {
     rejectUnauthorized: true,
-    ca: fs.readFileSync(path.join(__dirname, 'ca.pem')).toString() // Tells Node to trust Aiven
+    ca: fs.readFileSync(path.join(__dirname, '..', 'ca.pem')).toString() // Tells Node to trust Aiven
   }
 });
 
