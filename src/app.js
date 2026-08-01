@@ -239,7 +239,7 @@ RETURNING *;
     preferences,
     country
 ]);
-    return done(null,newUser);
+    return done(null, newUser.rows[0]);
     
     } catch (err) {
       console.error(err);
