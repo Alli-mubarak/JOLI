@@ -390,7 +390,7 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login-failed' }),
   (req, res) => {
     // Successful authentication, redirect to user dashboard or home.
-    res.redirect('/dashboard');
+    res.redirect('/');
   }
 );
 
@@ -438,56 +438,6 @@ app.post('/login', passport.authenticate('local', {
     failureRedirect: '/sign-in',
     failureFlash: false 
 }));
-
-
-// API for changing users role
-
-  
-// --- Application Routes ---
-
-app.get('/dashboard', async(req, res) => {
-   if(!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorized. Please log in.');
-  }
-  // res.send(`<h1>Welcome ${req.user.firstName}</h1><p>Email: ${req.user.email}</p><a href="/logout">Logout</a>`);
- // const taifrgetUser = req.user.email;
-//const emailSubject = 'Welcome to Our Website!';
-//const emailBody = `
-//  <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee;">
-  //  <h2 style="color: #333;">Thank you for joining us!</h2>
-//    <p>Your account is now active under our custom URL setup.</p>
-  //  <a href="https://yourwebsiteurl.com" style="background: blue; color: white; padding: 10px; text-decoration: none;">Visit Dashboard</a>
-//  </div>
-//`;
-  
-  //build the email notification content - build later 
-  const email = req.user.email;
-  console.log(email)
-    const emailSubject = 'Security Alert: New Login Detected';
-    const currentTime = new Date().toLocaleString();
-    const emailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 20px; border-radius: 8px;">
-        <h2 style="color: #d9534f;">New Login Notification</h2>
-        <p>Hello,</p>
-        <p>We detected a new login to your account at <strong>${currentTime}</strong>.</p>
-        <p>If this was you, you can safely ignore this email. If this wasn't you, please change your password immediately.</p>
-        <br>
-        <p style="font-size: 12px; color: #777;">This is an automated security alert from your website application.</p>
-      </div>
-    `;
-
-    //. Trigger the email function (Fire-and-forget or awaited)
-    // Will work on the mailing system later
-  
-//  try {
- //     await sendCustomEmail(email, emailSubject, emailHtml);
-//    console.log('email sent!');
-//   } catch (emailError) {
-//    console.error('⚠️ User logged in, but security email failed to send:', emailError.message);
-//           }
-  
-  res.redirect('/');
-});
 
 app.get('/login-failed', (req, res) => {
   res.send('Authentication failed. Please try again.');
