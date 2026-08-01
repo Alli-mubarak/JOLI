@@ -17,12 +17,8 @@ const BACKEND_URL = "";
          <img src="${data.user.profilePic}" width="55" height="55" style="border-radius:50%">
          </div>
          <div class="other-info">
-           <h2>${data.user.displayName}</h2>
+           <h2>${data.user.username}</h2>
            <p id="user-email">${data.user.email}</p>
-           <div class="amount-download">
-           <p id="entries-amount">${data.user.entries.length} Entries</p>
-           <a href="/user/download-txt">Download my data </a>
-           </div>
            </div>
            </div>
            
