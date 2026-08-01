@@ -17,7 +17,8 @@ body{
   width : 100%;
   top:0;
   left:0;
-  background: rgba(0,0,0,0.05);
+  height:fit-content;
+  background: rgba(0,0,0,0.04);
 }
 main{
             display:flex;
@@ -25,10 +26,6 @@ main{
             justify-content:center;
             height:100dvh;
         }
-#auth-section{
-  height: 30px;
-  background: #ccc;
-}
         .container{
             padding:20px;
             background: transparent;
@@ -114,14 +111,21 @@ main{
           }
 
 footer {
-  height:60px;
-  padding: 20px;
+  height:70px;
+  padding: 10px;
   position: absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction: column;
   bottom:0;
   left:0;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.03);
   width:100%;
   text-align:center
+}
+footer p{
+  font-size: 0.8rem;
 }
 footer a{
   text-decoration: none;
