@@ -58,7 +58,7 @@ const initDb = async () => {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         username CITEXT UNIQUE NOT NULL,
         email CITEXT UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
+        password VARCHAR(255),
         is_active BOOLEAN NOT NULL DEFAULT TRUE,
         is_private BOOLEAN NOT NULL DEFAULT FALSE,
         is_verified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -205,7 +205,7 @@ INSERT INTO users
 (
     username,
     email,
-    password_hash,
+    password,
     google_id,
     google_full_name,
     profile_picture,
@@ -277,10 +277,8 @@ passport.use(new LocalStrategy(
 ));
 
 // Serialize and Deserialize User Session Data
-//  Serialize user using the MongoDB object ID (_id) instead of the whole object
 passport.serializeUser((user, done) => {
-  const id = user.id || user._id; 
-  done(null, id);
+  done(null,user.id);
 });
 
 // Deserialize user by fetching them from PostgreSQL using their ID
