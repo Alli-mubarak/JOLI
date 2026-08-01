@@ -1,6 +1,6 @@
 const authSection = document.getElementById("auth-section");
-//const emailInput = document.getElementById("email-input");
-//const emailBtn = document.getElementById("email-btn");
+const emailInput = document.getElementById("email-input");
+const emailBtn = document.getElementById("email-btn");
 const BACKEND_URL = "";
 
     async function checkAuthStatus() {
