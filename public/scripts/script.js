@@ -75,7 +75,7 @@ function confirmEmail(){
 }
 function closeAuth(){}
 emailInput.oninput = () => {
-   alert('hey');
+   confirmEmail();
 };
 
 checkAuthStatus();
