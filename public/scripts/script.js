@@ -47,6 +47,14 @@ const BACKEND_URL = "";
       }
               }
 
+    // Handle logging out
+    function logoutUser() {
+        if (data.loggedIn) {
+      // Redirect browser directly to backend logout route to clear cookie and destroy session 
+      window.location.href = `${BACKEND_URL}/logout`;
+        }
+        return 
+    }
 function closeAuth(){}
 checkAuthStatus();
-alert('hello world!');
+
