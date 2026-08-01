@@ -119,6 +119,7 @@ footer {
   justify-content:center;
   flex-direction: column;
   bottom:0;
+  gap:5px;
   left:0;
   background: rgba(0,0,0,0.03);
   width:100%;
