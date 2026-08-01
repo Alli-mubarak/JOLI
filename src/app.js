@@ -149,29 +149,98 @@ passport.use(new GoogleStrategy({
   },
   async (req, accessToken, refreshToken, profile, done) => {
     const countryName = getCountryNameFromReq(req);
+  try {
     // Structure the data coming from Google profile payload
-    const newUser = {
-     googleId: profile.id,
-      displayName: profile.displayName,
-      firstName: profile.name.givenName,
-      lastName: profile.name.familyName,
-      email: profile.emails[0].value,
-      profilePic: profile.photos[0].value,
-      country: countryName
-    };
+    const google_id = profile.id;
+    const result = await pool.query(
+    "SELECT * FROM users WHERE google_id = $1",
+    [google_id]
+  );
 
-    try {
-      // Check if user already exists in our database
-    //*  let user = await 
+   let user = result.rows[0];
+    if (user) {
+    return done(null, user);
+    }
+    const email = profile.emails[0].value;
 
-      if (user) {
-        // User exists, pass the user object to the next step
-        return done(null, user);
-      } else {
-        // User does not exist, create and save them to MongoDB
-       //* user = await User.create(newUser);
-        return done(null, user);
-      }
+   const existing = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email]
+   );
+    if (existing.rows.length > 0) {
+
+    user = existing.rows[0];
+
+    await pool.query(
+        `
+        UPDATE users
+        SET
+            google_id = $1,
+            google_full_name = $2,
+            profile_picture = $3,
+            last_login_at = CURRENT_TIMESTAMP
+        WHERE id = $4
+        `,
+        [
+            profile.id,
+            profile.displayName,
+            profile.photos?.[0]?.value || null,
+            user.id
+        ]
+    );
+
+    return done(null, user);
+    }
+    const username =
+    profile.displayName
+        .toLowerCase()
+        .replace(/\s+/g, "") +
+    Math.floor(Math.random() * 10000);
+    const preferences = { theme: 'light', notifications: true, language: 'en-US' };
+    const country = countryName;
+
+const newUser = await pool.query(
+`
+INSERT INTO users
+(
+    username,
+    email,
+    password_hash,
+    google_id,
+    google_full_name,
+    profile_picture,
+    preferences,
+    country,
+    last_login_at
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    CURRENT_TIMESTAMP
+)
+
+RETURNING *;
+`,
+[
+    username,
+    profile.emails[0].value,
+    null,
+    profile.id,
+    profile.displayName,
+    profile.photos?.[0]?.value || null,
+    preferences,
+    country
+]);
+    return done(null,newUser);
+    
     } catch (err) {
       console.error(err);
       return done(err, null);
@@ -312,7 +381,7 @@ app.post('/auth/login', (req, res, next) => {
 });
 
 // Trigger Google Sign-Up / Login Flow
-app.get('/auth/google', 
+app.get('/api/auth/google', 
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
@@ -562,6 +631,33 @@ app.get('/api/users/summary-optimized', async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 });
+    //temporary api
+    app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
+      try{
+        await pool.query(`
+            ALTER TABLE users
+            ALTER COLUMN password_hash DROP NOT NULL;
+        `);
+
+        await pool.query(`
+            ALTER TABLE users
+            ALTER COLUMN password_hash TYPE TEXT;
+        `);
+        res.json({
+            success: true,
+            message: "Users table updated successfully."
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+          
     
 
 //response to all wrong paths
