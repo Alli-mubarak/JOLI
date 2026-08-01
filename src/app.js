@@ -49,7 +49,56 @@ function getCountryNameFromReq(req) {
   }
 }
 
-//app.use(cors());
+//database table setup
+const initDb = async () => {
+  const setupScript = `
+    CREATE EXTENSION IF NOT EXISTS "citext";
+
+    CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        username CITEXT UNIQUE NOT NULL,
+        email CITEXT UNIQUE NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+        is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+        google_id VARCHAR(255) UNIQUE,
+        google_full_name VARCHAR(255), 
+        phone_number VARCHAR(255),
+        country VARCHAR(50) NOT NULL,
+        bio TEXT,
+    profile_picture TEXT,
+    cover_photo TEXT,
+    website VARCHAR(255),
+    location VARCHAR(100),
+    date_of_birth DATE,
+    gender VARCHAR(20),
+    role VARCHAR(20) NOT NULL DEFAULT 'user'
+        CHECK (role IN (
+            'user',
+            'moderator',
+            'admin'
+        )),
+   is_private BOOLEAN NOT NULL DEFAULT FALSE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    followers_count INTEGER NOT NULL DEFAULT 0,
+    following_count INTEGER NOT NULL DEFAULT 0,
+    posts_count INTEGER NOT NULL DEFAULT 0,
+        preferences JSONB NOT NULL DEFAULT '{}'::jsonb,
+        posts JSONB NOT NULL DEFAULT '{}'::jsonb,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        last_login_at TIMESTAMP WITH TIME ZONE,
+        CONSTRAINT username_length_check CHECK (char_length(username) >= 3),
+        CONSTRAINT email_format_check CHECK (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')
+    );
+  `;
+  try {
+    await pool.query(setupScript);
+    console.log('✅ PostgreSQL Users table is ready.');
+  } catch (err) {
+    console.error('❌ Database initialization failed:', err.message);
+  }
+};
 
 app.use(cors({
   origin: 'https://joli-indol.vercel.app/', 
@@ -80,7 +129,7 @@ app.use(function middleware(req,res,next){
 let d = new Date();
 const countryName = getCountryNameFromReq(req);
 let currentTime = d.toLocaleString();
-console.log(req.method, req.path, req.ip, countryName, currentTime,);
+console.log(req.method, req.path, req.hostname, req.ip, countryName, currentTime,);
   
 // console.log('--- Session Debug ---');
 //  console.log('Incoming Cookie:', req.headers.cookie);
@@ -549,6 +598,7 @@ async function startServer(){
  const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
+    await initDb();
     pingAivenDatabase();
     setInterval(pingAivenDatabase, HALF_HOUR);
   }catch (err){
@@ -558,6 +608,3 @@ async function startServer(){
   }
 }
 startServer(); 
-
-
-
