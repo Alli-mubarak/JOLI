@@ -57,9 +57,7 @@ const BACKEND_URL = "";
         }
         return 
     }
-function closeAuth(){}
-emailInput.oninput = () = {
-
+function confirmEmail(){
     const emailValue = emailInput.value.trim();
     
     // Strict Regex to enforce standard email format
@@ -75,5 +73,10 @@ emailInput.oninput = () = {
         emailBtn.style.color = "#ccc";
     }
 }
+function closeAuth(){}
+emailInput.oninput = () = {
+    alert('hey');
+}
+
 checkAuthStatus();
 
