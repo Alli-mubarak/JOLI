@@ -14,7 +14,7 @@ const BACKEND_URL = "";
          <div id="closer"  ><i class="fa-solid fa-xmark" onclick="closeAuth()"></i></div>
          <div class="user-details">
          <div class="user-dp">
-         <img src="${data.user.profilePic}" width="55" height="55" style="border-radius:50%">
+         <img src="${data.user.profile_picture}" width="55" height="55" style="border-radius:50%">
          </div>
          <div class="other-info">
            <h2>${data.user.username}</h2>
