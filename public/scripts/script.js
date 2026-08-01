@@ -1,4 +1,6 @@
 const authSection = document.getElementById("auth-section");
+const emailInput = document.getElementById("email-input");
+const emailBtn = document.getElementById("email-btn");
 const BACKEND_URL = "";
 
     async function checkAuthStatus() {
@@ -56,5 +58,22 @@ const BACKEND_URL = "";
         return 
     }
 function closeAuth(){}
+emailInput.oninput = () = {
+
+    const emailValue = emailInput.value.trim();
+    
+    // Strict Regex to enforce standard email format
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (emailRegex.test(emailValue)) {
+        emailBtn.disabled = false;
+        emailBtn.style.background = "#111";
+        emailBtn.style.color = "#eee";
+    }else{
+        emailBtn.disabled = true;
+        emailBtn.style.background = "#777";
+        emailBtn.style.color = "#ccc";
+    }
+}
 checkAuthStatus();
 
