@@ -4,11 +4,11 @@
   padding:0;
   margin:0;
   box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 body{
   position:relative;
-
+  
 }
 #auth-section{
   position: absolute;
@@ -34,17 +34,17 @@ main{
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap:12px;
+            gap:20px;
             text-align:center;
             
         }
         .logo{
-            width:150px;
-            height:150px;
-            margin-bottom: 12px;
+            width:200px;
+            height:200px;
+            margin-bottom: 20px;
         }
         .container h1{
-            font-size:2rem;
+            font-size:2.2rem;
             margin-bottom: 2rem;
         }
         .container div{
@@ -52,7 +52,7 @@ main{
         }
         .sign-in-container{
             display: grid;
-            gap: 12px;
+            gap: 20px;
             width:100%;
         }
         
@@ -63,6 +63,7 @@ main{
             width:100%;
             padding:10px;
             text-decoration:none;
+          font-size: 1.1rem;
             border-radius: 30px;
         }
          a.google img{
@@ -96,10 +97,10 @@ main{
         .email input{
             width:100%;
             font-size:1.1rem;
-            padding: 12px 5px;
+            padding: 15px 5px;
             border : 2px solid rgba(0,0,0,0.08);
-            border-radius: 10px;
-            margin-bottom: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
             outline: none;
         }
         .email input:focus{
