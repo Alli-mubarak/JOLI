@@ -57,7 +57,22 @@ const BACKEND_URL = "";
         }
         return 
     }
+function confirmEmail(){
+    const emailValue = emailInput.value.trim();
+    
+    // Strict Regex to enforce standard email format
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (emailRegex.test(emailValue)) {
+        emailBtn.disabled = false;
+        emailBtn.style.background = "#111";
+        emailBtn.style.color = "#eee";
+    }else{
+        emailBtn.disabled = true;
+        emailBtn.style.background = "#777";
+        emailBtn.style.color = "#ccc";
+    }
+}
 function closeAuth(){}
 emailInput.oninput = () = {
     alert('hey');
