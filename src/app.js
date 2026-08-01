@@ -110,8 +110,8 @@ const PostgresStore = connectPgSimple(session);
 
 // session middleware (Saves sessions directly to Aiven Postgres)
 app.use(session({
-  store: new PostgresStore({ pool: pool, tableName: 'session' }),
-  secret: process.env.SESSION_SECRET || 'super-secure-secret',
+  store: new PostgresStore({ pool: pool, tableName: 'session',createTableIfMissing: true }),
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false }
