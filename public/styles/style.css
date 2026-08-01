@@ -6,6 +6,17 @@
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
 }
+body{
+  position:relative;
+
+}
+#auth-section{
+  position: absolute;
+  width : 100dvh;
+  top:0;
+  left:0;
+  background: rgba(0,0,0,0.05);
+}
 main{
             display:flex;
             align-items:center;
