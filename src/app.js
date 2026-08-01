@@ -60,6 +60,7 @@ const initDb = async () => {
         email CITEXT UNIQUE NOT NULL,
         password_hash VARCHAR(255) NOT NULL,
         is_active BOOLEAN NOT NULL DEFAULT TRUE,
+        is_private BOOLEAN NOT NULL DEFAULT FALSE,
         is_verified BOOLEAN NOT NULL DEFAULT FALSE,
         google_id VARCHAR(255) UNIQUE,
         google_full_name VARCHAR(255), 
@@ -78,8 +79,6 @@ const initDb = async () => {
             'moderator',
             'admin'
         )),
-   is_private BOOLEAN NOT NULL DEFAULT FALSE,
-    is_active BOOLEAN NOT NULL DEFAULT TRUE,
     followers_count INTEGER NOT NULL DEFAULT 0,
     following_count INTEGER NOT NULL DEFAULT 0,
     posts_count INTEGER NOT NULL DEFAULT 0,
