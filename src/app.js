@@ -278,24 +278,19 @@ passport.use(new LocalStrategy(
 
 // Serialize and Deserialize User Session Data
 passport.serializeUser((user, done) => {
-  done(null,user.id);
+  done(null, user.id);
 });
 
-// Deserialize user by fetching them from PostgreSQL using their ID
-passport.deserializeUser(async(id,done)=>{
-
-    const db = require("../config/db");
-
-    const result = await db.query(
-
-        "SELECT * FROM users WHERE id=$1",
-
-        [id]
-
-    );
-
-    done(null,result.rows[0]);
-
+// 2. Take the ID from the session and look up the full user object
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    const user = result.rows[0];
+    
+    done(null, user); // This attaches the user object to req.user
+  } catch (err) {
+    done(err, null);
+  }
 });
 
 // --- Auth Routes ---
