@@ -70,7 +70,7 @@ main{
             width:20px;
             border-radius: 50%;
         }
-        a.google{
+        a.google, a.phone{
             display:flex;
             align-items: center;
             justify-content: center;
@@ -81,6 +81,10 @@ main{
             background: #000;
             color: #fff;
         }
+     a.phone i{
+       font-size: 0.8rem;
+       color: #fff;
+     }
         .divider{
             display:flex;
             align-items: center;
