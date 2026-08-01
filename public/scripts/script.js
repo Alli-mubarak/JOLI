@@ -52,3 +52,5 @@ const BACKEND_URL = "";
               }
 
 function closeAuth(){}
+checkAuthStatus();
+alert('hello world!');
