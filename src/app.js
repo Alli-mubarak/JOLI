@@ -283,14 +283,21 @@ passport.serializeUser((user, done) => {
   done(null, id);
 });
 
-// Deserialize user by fetching them from MongoDB using their ID
-passport.deserializeUser(async (id, done) => {
-  try {
-//*    const user = await User.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err, null);
-  }
+// Deserialize user by fetching them from PostgreSQL using their ID
+passport.deserializeUser(async(id,done)=>{
+
+    const db = require("../config/db");
+
+    const result = await db.query(
+
+        "SELECT * FROM users WHERE id=$1",
+
+        [id]
+
+    );
+
+    done(null,result.rows[0]);
+
 });
 
 // --- Auth Routes ---
@@ -336,7 +343,7 @@ app.post('/api/sign-up', async (req, res) => {
 });
 
 //  Email Login
-app.post('/auth/login', (req, res, next) => {
+app.post('/api/auth/login', (req, res, next) => {
   // 1. Extract values to validate that the frontend sent the required data
   const { email, password } = req.body;
 
