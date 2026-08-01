@@ -59,9 +59,9 @@ const BACKEND_URL = "";
     }
 
 function closeAuth(){}
-//emailInput.oninput = () = {
- //   alert('hey');
-//}
+emailInput.oninput = () = {
+   alert('hey');
+};
 
 checkAuthStatus();
 
