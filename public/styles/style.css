@@ -55,7 +55,7 @@ main{
             width:100%;
         }
         
-        .container a{
+        .container a, #email-btn{
             display:block;
             border: 2px solid rgba(0,0,0,0.08);
             color: #444;
@@ -109,7 +109,7 @@ main{
         .email input:focus{
             border-color: #444;
         }
-        .email a{
+        #email-btn{
             background: rgba(0,0,0,0.25);
             color: #555;
           }
