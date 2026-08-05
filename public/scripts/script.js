@@ -2,6 +2,7 @@ const authSection = document.getElementById("auth-section");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
 const signInContainer = document.querySelector(".sign-in-container");
+const caption = document.querySelector(".caption");
 const signUpForm = document.getElementById("email-signup");
 const signInForm = document.getElementById("email-signin");
 const BACKEND_URL = "";
@@ -80,6 +81,7 @@ emailInput.oninput = () => {
    confirmEmail();
 };
 function proceedWithEmail(){
+    caption.classList.add("hidden");
     signInContainer.classList.add("hidden");
     signUpForm.classList.remove("hidden");
     signUpForm.email.value = emailInput.value.trim();
