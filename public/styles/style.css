@@ -113,6 +113,7 @@ main{
         #email-btn{
             background: #777;
             color: #ccc;
+            cursor: pointer;
           }
 form{
             display: flex;
@@ -150,6 +151,7 @@ form{
             border-radius: 30px;
             background: #777;
             font-size: 1rem;
+            cursor: pointer;
         }
         form small{
             color: red;
@@ -161,7 +163,7 @@ form{
     font-weight:600;
     font-size: 1rem;
     margin-left: 10px;
-    
+    cursor: pointer;
   }
         .invisible{
             opacity:0;
