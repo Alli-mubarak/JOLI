@@ -106,7 +106,18 @@ signUpForm.onsubmit = (e) =>{
         emailError.innerHTML = "incorrect email, enter correct email!";
         setTimeout(()=>{
             emailError.innerHTML = "";
-        },500)
+        },500);
+        return
+    }
+    const usernameValue = signUpForm.username.value;
+    const usernameError = signUpForm.querySelector("#username-error");
+    const usernameRegex = /^[a-z0-9_]+$/
+    if (usernameValue.length < 5){
+        usernameError.innerHTML = "username cannot be less than 5 characters";
+        setTimeout(()=>{
+            usernameError.innerHTML = "";
+        },500);
+        return
     }
 }
 signInForm.onsubmit = (e) =>{
