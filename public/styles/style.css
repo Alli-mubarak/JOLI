@@ -24,7 +24,7 @@ main{
             display:flex;
             align-items:center;
             justify-content:center;
-            height: 100dvh;
+            min-height: 100dvh;
         }
         .container, .other-login{
             padding:20px;
