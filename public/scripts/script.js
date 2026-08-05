@@ -155,6 +155,16 @@ signUpForm.onsubmit = (e) =>{
 }
 signInForm.onsubmit = (e) =>{
     e.preventDefault();
+    const emailValue = signInForm.email.value;
+    const emailError = signInForm.querySelector("#email-error");
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(emailValue)) {
+        emailError.innerHTML = "incorrect email format";
+        setTimeout(()=>{
+            emailError.innerHTML = "";
+        },1200);
+        return
+    }
 }
 checkAuthStatus();
 
