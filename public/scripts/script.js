@@ -94,6 +94,7 @@ function checkUsername(){
 }
 emailInput.oninput = () => {
    confirmEmail();
+    checkUsername();
 };
 function proceedWithEmail(){
     caption.classList.add("hidden");
