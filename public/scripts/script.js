@@ -104,6 +104,9 @@ signUpForm.onsubmit = (e) =>{
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(emailValue)) {
         emailError.innerHTML = "incorrect email, enter correct email!";
+        setTimeout(()=>{
+            emailError.innerHTML = "";
+        },500)
     }
 }
 signInForm.onsubmit = (e) =>{
