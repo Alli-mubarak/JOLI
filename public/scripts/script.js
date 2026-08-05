@@ -100,6 +100,7 @@ function showSignInForm(){
 signUpForm.onsubmit = (e) =>{
     e.preventDefault();
     const emailValue = signUpForm.email.value;
+    const emailError = signUpForm.querySelector("#email-error");
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(emailValue)) {
         emailError.innerHTML = "incorrect email, enter correct email!";
