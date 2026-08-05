@@ -143,6 +143,15 @@ signUpForm.onsubmit = (e) =>{
         },1200);
         return
     }
+    const pwdCfm = signUpForm.passwordConfirm.value;
+    const pwdCfmError = signUpForm.querySelector("#pwd-cfm-error");
+    if(pwdCfm !== pwdValue){
+        pwdCfmError.innerHTML = "passwords do not match!";
+        setTimeout(()=>{
+            pwdCfmError.innerHTML = "";
+        },1200);
+        return
+    }
 }
 signInForm.onsubmit = (e) =>{
     e.preventDefault();
