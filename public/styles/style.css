@@ -169,6 +169,12 @@ form a.phone{
    color: #444;
   background: transparent;
 }
+form a.phone i{
+  color: #444;
+}
+form a:hover{
+  color: #000;
+}
         .invisible{
             opacity:0;
         }
