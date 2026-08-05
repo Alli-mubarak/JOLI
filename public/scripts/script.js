@@ -94,5 +94,11 @@ function showSignInForm(){
     signUpForm.classList.add("hidden");
     signInForm.classList.remove("hidden");
 }
+signUpForm.onsubmit = (e) =>{
+    e.preventDefault();
+}
+signInForm.onsubmit = (e) =>{
+    e.preventDefault();
+}
 checkAuthStatus();
 
