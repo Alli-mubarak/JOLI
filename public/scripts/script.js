@@ -83,6 +83,7 @@ function proceedWithEmail(){
     signInContainer.classList.add("hidden");
     signUpForm.classList.remove("hidden");
     signUpForm.email.value = emailInput.value.trim();
+    signInForm.email.value = emailInput.value.trim();
 }
 function showSignUpForm(){
     signInContainer.classList.add("hidden");
