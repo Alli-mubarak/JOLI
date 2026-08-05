@@ -84,6 +84,15 @@ function proceedWithEmail(){
     signUpForm.classList.remove("hidden");
     signUpForm.email.value = emailInput.value.trim();
 }
-
+function showSignUpForm(){
+    signInContainer.classList.add("hidden");
+    signInForm.classList.add("hidden");
+    signUpForm.classList.remove("hidden");
+}
+function showSignInForm(){
+    signInContainer.classList.add("hidden");
+    signUpForm.classList.add("hidden");
+    signInForm.classList.remove("hidden");
+}
 checkAuthStatus();
 
