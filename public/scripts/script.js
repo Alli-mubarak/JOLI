@@ -82,6 +82,7 @@ emailInput.oninput = () => {
 function proceedWithEmail(){
     signInContainer.classList.add("hidden");
     signUpForm.classList.remove("hidden");
+    signUpForm.email.value = emailInput.value.trim();
 }
 
 checkAuthStatus();
