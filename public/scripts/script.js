@@ -1,6 +1,9 @@
 const authSection = document.getElementById("auth-section");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
+const signInContainer = document.querySelector("sign-in-container");
+const signUpForm = document.getElementById("email-signup");
+const signInForm = document.getElementById("email-signin");
 const BACKEND_URL = "";
 
     async function checkAuthStatus() {
@@ -38,7 +41,7 @@ const BACKEND_URL = "";
          //   userDP.classList.add('hidden');
          //   signInBtn.classList.remove('hidden');
           authSection.innerHTML = `
-          <div id="closer"><i class="fa-solid fa-xmark" onclick="closeAuth()"></i></div>
+          <div id="closer"><i class="fa-solid fa-xmark" ></i></div>
             <h2>Please sign up or log in</h2>
             <a href="${BACKEND_URL}/auth/google"><button>Sign In with Google</button></a>
           `;
@@ -73,10 +76,13 @@ function confirmEmail(){
         emailBtn.style.color = "#ccc";
     }
 }
-function closeAuth(){}
 emailInput.oninput = () => {
    confirmEmail();
 };
+function proceedWithEmail(){
+    signInContainer.classList.add("hidden");
+    signUpForm.classList.remove("hidden");
+}
 
 checkAuthStatus();
 
