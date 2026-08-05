@@ -25,7 +25,7 @@
                 </a>
                 <a href="/api/auth/login" class="phone">
                   <i class="fa-solid fa-phone"></i> 
-                  <span>Continue with Phone Number</span>
+                  <span>Continue with Phone</span>
                 </a>
                 <div class="divider">
                     <div></div>
@@ -38,6 +38,7 @@
                 </div>
             </div>
            <form id="email-signup" class="hidden">
+             <h2>Sign Up with Email</h2>
              <div class="input-box">
                <label>Email</label>
                <input name="email" type="email" placeholder="abc@mail.com">
@@ -62,6 +63,7 @@
            </form>
            
            <form id="email-signin" class="hidden">
+             <h2>Sign In with Email</h2>
              <div class="input-box">
                <label>Email</label>
                <input name="email" type="email" placeholder="abc@mail.com">
@@ -72,6 +74,17 @@
              </div>
               <small></small>
              <button type="submit" >Sign In</button>
+             <p>Already have an account?, <button>Sign In</button></p>
+             <div class="other-login">
+             <a href="/api/auth/google" class="google">
+                    <img src="images/google-icon.png" alt="google-logo" />
+                    <span>Continue with Google </span>
+                </a>
+                <a href="/api/auth/login" class="phone">
+                  <i class="fa-solid fa-phone"></i> 
+                  <span>Continue with Phone</span>
+                </a>
+             </div>
            </form>
         </div>
       </main>
