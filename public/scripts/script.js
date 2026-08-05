@@ -69,6 +69,21 @@ function confirmEmail(){
 
     if (emailRegex.test(emailValue)) {
         emailBtn.disabled = false;
+        emailBtn.setAttribute("onclick", "proceedWithEmail()");
+        emailBtn.style.background = "#111";
+        emailBtn.style.color = "#eee";
+    }else{
+        emailBtn.disabled = true;
+        emailBtn.style.background = "#777";
+        emailBtn.style.color = "#ccc";
+    }
+}
+function checkUsername(){
+    const username = emailInput.value.trim();
+    const usernameRegex = /^[a-z0-9_]+$/
+    if(usernameRegex.test(username)){
+        emailBtn.disabled = false;
+        emailBtn.setAttribute("onclick", "proceedWithUsername()");
         emailBtn.style.background = "#111";
         emailBtn.style.color = "#eee";
     }else{
@@ -85,6 +100,13 @@ function proceedWithEmail(){
     signInContainer.classList.add("hidden");
     signUpForm.classList.remove("hidden");
     signUpForm.email.value = emailInput.value.trim();
+    signInForm.email.value = emailInput.value.trim();
+}
+function proceedWithUsername(){
+    caption.classList.add("hidden");
+    signUpContainer.classList.add("hidden");
+    signUpForm.classList.add("hidden");
+    signInForm.classList.remove("hidden");
     signInForm.email.value = emailInput.value.trim();
 }
 function showSignUpForm(){
