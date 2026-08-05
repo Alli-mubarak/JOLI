@@ -152,16 +152,18 @@ signUpForm.onsubmit = (e) =>{
         },1200);
         return
     }
+    const formMessage = signUpForm.querySelector("#form-message");
+    formMessage.innerHTML = "NO ISSUES";
 }
 signInForm.onsubmit = (e) =>{
     e.preventDefault();
     const emailValue = signInForm.email.value;
-    const emailError = signInForm.querySelector("#email-error");
+    const formMessage = signInForm.querySelector("#form-message");
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(emailValue)) {
-        emailError.innerHTML = "incorrect email format";
+        formMessage.innerHTML = "incorrect email format";
         setTimeout(()=>{
-            emailError.innerHTML = "";
+            formMessage.innerHTML = "";
         },1200);
         return
     }
