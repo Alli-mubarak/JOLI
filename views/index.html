@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>JOLI - Home</title>
-    <link rel="stylesheet" href="styles/style.css" />
+ <link rel="stylesheet" href="styles/style.css" />
   <link rel="manifest" href="/manifest.json">
   <link rel="shortcut icon" href="images/joli3.png" type="image/x-icon">
   <link rel="apple-touch-icon" href="images/joli3.png">
@@ -60,15 +60,15 @@
                 <small></small>
              </div>
              <button type="submit" >Create My Account</button>
-             <p>Already have an account?, <button>Sign In</button></p>
+             <p>Already have an account?, <button onclick="showSignInForm()">Sign In</button></p>
              <div class="other-login">
              <a href="/api/auth/google" class="google">
                     <img src="images/google-icon.png" alt="google-logo" />
-                    <span>Continue with Google </span>
+                    <span>Sign Up with Google </span>
                 </a>
                 <a href="/api/auth/login" class="phone">
                   <i class="fa-solid fa-phone"></i> 
-                  <span>Continue with Phone</span>
+                  <span>Sign Up with Phone</span>
                 </a>
              </div>
            </form>
@@ -85,15 +85,15 @@
              </div>
               <small></small>
              <button type="submit" >Sign In</button>
-             <p>Are you new here?, <button>Sign Up</button></p>
+             <p>Are you new here?, <button onclick="showSignUpForm()">Sign Up</button></p>
              <div class="other-login">
              <a href="/api/auth/google" class="google">
                     <img src="images/google-icon.png" alt="google-logo" />
-                    <span>Continue with Google </span>
+                    <span>Sign In with Google </span>
                 </a>
                 <a href="/api/auth/login" class="phone">
                   <i class="fa-solid fa-phone"></i> 
-                  <span>Continue with Phone</span>
+                  <span>Sign In with Phone</span>
                 </a>
              </div>
            </form>
