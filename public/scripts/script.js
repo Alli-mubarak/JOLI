@@ -103,10 +103,10 @@ signUpForm.onsubmit = (e) =>{
     const emailError = signUpForm.querySelector("#email-error");
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(emailValue)) {
-        emailError.innerHTML = "incorrect email, enter correct email!";
+        emailError.innerHTML = "incorrect email format";
         setTimeout(()=>{
             emailError.innerHTML = "";
-        },500);
+        },1200);
         return
     }
     const usernameValue = signUpForm.username.value;
@@ -116,7 +116,14 @@ signUpForm.onsubmit = (e) =>{
         usernameError.innerHTML = "username cannot be less than 5 characters";
         setTimeout(()=>{
             usernameError.innerHTML = "";
-        },500);
+        },1200);
+        return
+    }
+    if (usernameValue.length >= 5 && !usernameRegex.test(usernameValue)){
+        usernameError.innerHTML = "username can only contain lowercase, numbers and underscore";
+        setTimeout(()=>{
+            usernameError.innerHTML = "";
+        },1200);
         return
     }
 }
