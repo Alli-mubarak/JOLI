@@ -139,7 +139,7 @@ form{
             border-radius: 5px;
             outline: none;
         }
-        form button{
+        form button:[type="submit"]{
             display:block;
             border: 2px solid rgba(0,0,0,0.08);
             color: #ccc;
