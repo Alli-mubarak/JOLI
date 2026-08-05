@@ -42,23 +42,24 @@
              <div class="input-box">
                <label>Email</label>
                <input name="email" type="email" placeholder="abc@mail.com">
-                <small></small>
+                <small id="email-error"></small>
              </div>
              <div class="input-box">
                <label>Username</label>
                <input name="username" type="text" placeholder="Create username">
-               <small></small>
+               <small id="username-error"></small>
              </div>
              <div class="input-box">
                <label>Password</label>
                <input name="password" type="password">
-                <small></small>
+                <small id="pwd-error"></small>
              </div>
              <div class="input-box">
                <label>Confirm Password</label>
                <input type="password">
-                <small></small>
+                <small id="pwd-cfm-error"></small>
              </div>
+             <small id="form-message"></small>
              <button type="submit" >Create My Account</button>
              <p>Already have an account?, <span onclick="showSignInForm()">Sign In</span></p>
              <div class="other-login">
@@ -83,7 +84,7 @@
                <label>Password</label>
                <input name="password" type="password">
              </div>
-              <small></small>
+              <small id="form-message"></small>
              <button type="submit" >Sign In</button>
              <p>Are you new here?, <span onclick="showSignUpForm()">Sign Up</span></p>
              <div class="other-login">
