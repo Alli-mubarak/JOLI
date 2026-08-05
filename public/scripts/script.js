@@ -81,7 +81,7 @@ function confirmEmail(){
 function checkUsername(){
     const username = emailInput.value.trim();
     const usernameRegex = /^[a-z0-9_]+$/
-    if(usernameRegex.test(username)){
+    if(usernameRegex.test(username) && username.length >= 5){
         emailBtn.disabled = false;
         emailBtn.setAttribute("onclick", "proceedWithUsername()");
         emailBtn.style.background = "#111";
@@ -105,7 +105,7 @@ function proceedWithEmail(){
 }
 function proceedWithUsername(){
     caption.classList.add("hidden");
-    signUpContainer.classList.add("hidden");
+    signInContainer.classList.add("hidden");
     signUpForm.classList.add("hidden");
     signInForm.classList.remove("hidden");
     signInForm.email.value = emailInput.value.trim();
