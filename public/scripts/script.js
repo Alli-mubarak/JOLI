@@ -130,7 +130,7 @@ signUpForm.onsubmit = (e) =>{
     const pwdError = signUpForm.querySelector("#pwd-error");
     const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if(pwdValue.length < 8){
-        pwdError.innerHTML = "password cannot be less than 5 characters";
+        pwdError.innerHTML = "password cannot be less than 8 characters";
         setTimeout(()=>{
             pwdError.innerHTML = "";
         },1200);
@@ -139,7 +139,7 @@ signUpForm.onsubmit = (e) =>{
     if(!pwdRegex.test(pwdValue)){
         pwdError.innerHTML = "use a strong password!";
         setTimeout(()=>{
-            usernameError.innerHTML = "";
+            pwdError.innerHTML = "";
         },1200);
         return
     }
