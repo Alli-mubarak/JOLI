@@ -37,11 +37,41 @@
                     <button id="email-btn" disabled>Continue</button>
                 </div>
             </div>
-           <form>
+           <form id="email-signup">
+             <div class="input-box">
+               <label>Email</label>
+               <input name="email" type="email" placeholder="abc@mail.com">
+                <small></small>
+             </div>
+             <div class="input-box">
+               <label>Username</label>
+               <input name="username" type="text" placeholder="Create username">
+               <small></small>
+             </div>
+             <div class="input-box">
+               <label>Password</label>
+               <input name="password" type="password">
+                <small></small>
+             </div>
+             <div class="input-box">
+               <label>Confirm Password</label>
+               <input type="password">
+                <small></small>
+             </div>
+             <button type="submit" >Create My Account</button>
+           </form>
+           
+           <form id="email-signin" class="hidden">
              <div class="input-box">
                <label>Email</label>
                <input name="email" type="email" placeholder="abc@mail.com">
              </div>
+             <div class="input-box">
+               <label>Password</label>
+               <input name="password" type="password">
+             </div>
+              <small></small>
+             <button type="submit" >Sign In</button>
            </form>
         </div>
       </main>
