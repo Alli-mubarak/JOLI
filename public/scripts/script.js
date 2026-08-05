@@ -119,8 +119,25 @@ signUpForm.onsubmit = (e) =>{
         },1200);
         return
     }
-    if (usernameValue.length >= 5 && !usernameRegex.test(usernameValue)){
+    if (!usernameRegex.test(usernameValue)){
         usernameError.innerHTML = "username can only contain lowercase, numbers and underscore";
+        setTimeout(()=>{
+            usernameError.innerHTML = "";
+        },1200);
+        return
+    }
+    const pwdValue = signUpForm.password.value;
+    const pwdError = signUpForm.querySelector("#pwd-error");
+    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if(pwdValue.length < 8){
+        pwdError.innerHTML = "password cannot be less than 5 characters";
+        setTimeout(()=>{
+            pwdError.innerHTML = "";
+        },1200);
+        return
+    }
+    if(!pwdRegex.test(pwdValue)){
+        pwdError.innerHTML = "use a strong password!";
         setTimeout(()=>{
             usernameError.innerHTML = "";
         },1200);
