@@ -216,4 +216,6 @@ footer a{
   .container{
     flex-direction: row-reverse;
     gap:30px;
+  }
 }
+  
