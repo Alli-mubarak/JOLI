@@ -187,7 +187,15 @@ signInForm.onsubmit = (e) =>{
 }
 function toggleReveal(el){
     const passwordInput = el.previousSibling;
-    alert(passwordInput);
+    if(passwordInput.type === "password"){
+    passwordInput.type = "text";
+    el.classList.remove('fa-eye')
+    el.classList.add('fa-eye-slash');
+    }else{
+    passwordInput.type = "password";
+    el.classList.remove('fa-eye-slash')
+    el.classList.add('fa-eye');
+    }
 }
 checkAuthStatus();
 
