@@ -177,7 +177,7 @@ signUpForm.onsubmit = async(e) =>{
   const payload = Object.fromEntries(formData.entries());
  try {
     // Send a POST request to the server API
-    const response = await fetch("/auth/sign-up", {
+    const response = await fetch("/api/auth/sign-up", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // Inform server we are sending JSON data
