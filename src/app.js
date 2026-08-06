@@ -304,9 +304,10 @@ app.post('/api/auth/sign-up', async (req, res) => {
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    if (username.length < 5) {
-      return res.status(400).json({ message: 'Username is too short!' });
-    }
+    console.log(username)
+  //  if (username.length < 5) {
+   //   return res.status(400).json({ message: 'Username is too short!' });
+  //  }
     
 
     // Check if email is taken
