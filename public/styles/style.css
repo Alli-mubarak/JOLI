@@ -233,6 +233,9 @@ footer a{
     align-items: center;
     justify-content:center;
   }
+  .sign-in-container{
+    min-height: 95dvh;
+  }
   .logo{
     width:300px;
     height: 300px;
