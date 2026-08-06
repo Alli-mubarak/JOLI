@@ -139,6 +139,7 @@ form{
            top: 40px;
            right:10px;
            font-size: 1.4rem;
+           cursor:pointer;
            color: #333;
          }
         form label{
