@@ -304,19 +304,19 @@ app.post('/api/auth/sign-up', async (req, res) => {
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    console.log(username)
-  //  if (username.length < 5) {
-   //   return res.status(400).json({ message: 'Username is too short!' });
-  //  }
+    
+   if (username.length < 5) {
+      return res.status(400).json({ message: 'Username is too short!' });
+    }
     
 
     // Check if email is taken
     const emails = await pool.query(
-    "SELECT * FROM users WHERE email= $1",
+    "SELECT * FROM users WHERE email = $1",
     [email]
   );
     let existingEmail;
-    if (emails.row.length > 0){
+    if (emails){
    existingEmail = emails.rows[0];
     }
     
@@ -326,11 +326,11 @@ app.post('/api/auth/sign-up', async (req, res) => {
 
     // Check if username is taken
     const usernames = await pool.query(
-    "SELECT * FROM users WHERE username= $1",
+    "SELECT * FROM users WHERE username = $1",
     [username]
   );
     let existingUsername;
-    if (usernames.row.length > 0){
+    if (usernames){
    existingUsername = usernames.rows[0];
     }
     
