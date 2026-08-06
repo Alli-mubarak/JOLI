@@ -382,8 +382,8 @@ RETURNING *;
     
     // Log the user in automatically
     // Convert the new user document to a plain JavaScript object
-   const userObj = newUser.toObject();
-        req.login(userObj, (err) => {
+  // const userObj = newUser.toObject();
+        req.login(newUser, (err) => {
             if (err) {
                 return next(err); // Handles passport login errors
             }
