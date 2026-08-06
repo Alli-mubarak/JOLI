@@ -187,6 +187,7 @@ signInForm.onsubmit = (e) =>{
 }
 function toggleReveal(el){
     const passwordInput = el.previousSibling;
+    console.log(passwordInput);
     if(passwordInput.type === "password"){
     passwordInput.type = "text";
     el.classList.remove('fa-eye')
