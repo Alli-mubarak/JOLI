@@ -222,10 +222,12 @@ footer a{
 @media screen and (min-width:762px){
   .container{
     flex-direction: row-reverse;
+    align-items: start;
     gap:30px;
   }
   .logo-caption{
     display: flex;
+    flex-direction:column;
     height:100dvh;
     align-items: center;
     justify-content:center;
