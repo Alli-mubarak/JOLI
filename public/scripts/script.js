@@ -185,5 +185,9 @@ signInForm.onsubmit = (e) =>{
         return
     }
 }
+function toggleReveal(el){
+    const passwordInput = el.previousSibling;
+    alert(passwordInput);
+}
 checkAuthStatus();
 
