@@ -10,7 +10,7 @@
 body{
   position:relative;
   width: 100%;
-  
+  background: #fff;
 }
 #auth-section{
   position: absolute;
