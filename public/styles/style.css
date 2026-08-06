@@ -54,7 +54,7 @@ main{
             display: flex;
            flex-direction:column;
            align-items: center;
-           justify-content center;
+           justify-content: center;
             gap: 20px;
             width:100%;
         }
@@ -238,7 +238,6 @@ footer a{
   }
   .sign-in-container{
     min-height: 95dvh;
-    background:tan;
   }
   .logo{
     width:300px;
