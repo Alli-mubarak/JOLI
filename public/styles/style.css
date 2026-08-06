@@ -136,9 +136,9 @@ form{
          }
          .input-box i{
            position: absolute;
-           bottom: 15px;
-           left:5px;
-           font-size: 0.9rem;
+           top: 35px;
+           right:10px;
+           font-size: 1.2rem;
            color: #333;
          }
         form label{
