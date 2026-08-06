@@ -131,6 +131,16 @@ form{
             align-items: start;
             gap:3px;
         }
+         .input-box{
+           position: relative;
+         }
+         .input-box i{
+           position: absolute;
+           bottom: 15px;
+           left:5px;
+           font-size: 0.9rem;
+           color: #333;
+         }
         form label{
             font-size: 1.1rem;
             font-weight: 600;
