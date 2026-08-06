@@ -176,40 +176,7 @@ signUpForm.onsubmit = (e) =>{
   const formData = new FormData(signUpForm);
   const payload = Object.fromEntries(formData.entries());
  
-  try {
-    // Send a POST request to the server API
-    const response = await fetch("/auth/sign-up", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Inform server we are sending JSON data
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
-    });
- 
-    // 6. Parse the server JSON response
-    const data = await response.json();
- 
-    // 7. Handle success vs server-side validation/errors
-    if (response.ok) {
-      formMessage.textContent = 'Registration successful! Redirecting...';
-      formMessage.style.color = 'green';
-      signUpForm.reset(); // Clear form fields
-        setTimeout(()=>{
-            formMessage.textContent = '';
-        },1600);
-      
-       window.location.href = '/dashboard';
-    }
-  }
-    catch(e){
-     formMessage.textContent = 'An error occurred!, Try again later';
-      formMessage.style.color = 'tan';
-      signUpForm.reset(); // Clear form fields
-        setTimeout(()=>{
-            formMessage.textContent = '';
-        },1600);
-    }
+  
     
 }
 signInForm.onsubmit = (e) =>{
