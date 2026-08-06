@@ -212,3 +212,8 @@ footer p{
 footer a{
   text-decoration: none;
 }
+@media screen and (max-width:900px){
+  .container{
+    flex-direction: row-reverse;
+    gap:30px;
+}
