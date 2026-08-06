@@ -296,7 +296,7 @@ passport.deserializeUser(async (id, done) => {
 // --- Auth Routes ---
 
 //sign up API
-app.post('/api/sign-up', async (req, res) => {
+app.post('/api/auth/sign-up', async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -304,22 +304,83 @@ app.post('/api/sign-up', async (req, res) => {
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
+    if (username.length < 5) {
+      return res.status(400).json({ message: 'Username is too short!' });
+    }
+    
 
     // Check if email is taken
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const emails = await pool.query(
+    "SELECT * FROM users WHERE email= $1",
+    [email]
+  );
+    let existingEmail;
+    if (emails.row.length > 0){
+   existingEmail = emails.rows[0];
+    }
+    
+    if (existingEmail) {
       return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    // Check if username is taken
+    const usernames = await pool.query(
+    "SELECT * FROM users WHERE username= $1",
+    [username]
+  );
+    let existingUsername;
+    if (usernames.row.length > 0){
+   existingUsername = usernames.rows[0];
+    }
+    
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username is taken, choose another one!' });
     }
     const countryName = getCountryNameFromReq(req);
   
 // Hash password and save user
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+    const country = countryName;
+    const preferences = { theme: 'light', notifications: true, language: 'en-US' };
 
-  //*  const newUser = new User({ displayName: username, email,country: countryName, password: hashedPassword, profilePic: "/user.png"});
-   //* await newUser.save();
+    const newUser = await pool.query(
+`
+INSERT INTO users
+(
+    username,
+    email,
+    password,
+    profile_picture,
+    preferences,
+    country,
+    last_login_at
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    CURRENT_TIMESTAMP
+)
+
+RETURNING *;
+`,
+[
+    username,
+    email,
+    hashedPassword,
+    null,
+    preferences,
+    country
+]);
+    
     // Log the user in automatically
-    // Convert the Mongoose document to a plain JavaScript object
+    // Convert the new user document to a plain JavaScript object
    const userObj = newUser.toObject();
         req.login(userObj, (err) => {
             if (err) {
