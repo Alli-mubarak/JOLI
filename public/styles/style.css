@@ -238,6 +238,7 @@ footer a{
   }
   .sign-in-container{
     min-height: 95dvh;
+    min-width: 350px;
   }
   .logo{
     width:300px;
