@@ -130,7 +130,7 @@ main{
             align-items: center;
         }
          form:hover{
-           box-shadow: 2px 3px 0 rgba(0,0,0,0.2);
+           transform: scale(1.1);
          }
         form > div{
             display: flex;
@@ -152,6 +152,7 @@ main{
         form label{
             font-size: 1.1rem;
             font-weight: 600;
+          cursor: pointer;
         }
         form input{
             width:100%;
