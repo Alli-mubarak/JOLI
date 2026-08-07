@@ -45,6 +45,7 @@ header{
 header #logo{
   text-decoration: none ;
   height: 100%;
+  display: block;
 }
 header #logo img{
   height:100%;
