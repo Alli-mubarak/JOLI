@@ -219,7 +219,7 @@ signUpForm.onsubmit = async(e) =>{
  }
 }
 
-signInForm.onsubmit = (e) =>{
+signInForm.onsubmit = async(e) =>{
     e.preventDefault();
 const identifier = signInForm.identifier.value;
 const password = signInForm.password.value;
