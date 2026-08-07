@@ -83,8 +83,7 @@ background:#000;
   border-radius: 50%;
 }
 main{
-    padding:20px;
-    background: #ccc;
+    padding:20px 0;
     width:100%;
 }
   main h2{
@@ -98,6 +97,7 @@ main{
   justify-content:center;
   width:100%;
   position: relative;
+  background: #ccc;
 }
 .post{
   background: #eee;
@@ -107,19 +107,20 @@ main{
   align-items: center;
   justify-content:center;
   width: 100%;
-  min-height: 50px;
+  min-height: 80px;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
 }
   .post:before{
     position: absolute;
     content: '';
     width: 30px;
     height: 100%;
-    background: linear-gradient(#eee, rgba(0,0,0,0.02), #fff);
-    left: -35px;
+    background: linear-gradient(to right, #eee, rgba(0,0,0,0.07), #eee);
+    left: -155px;
     transition: all 0.4s ease;
-    animation: load linear infinite 0.4s;
+    animation: load linear infinite 2s;
   }
   @keyframes load{
     to{
