@@ -31,7 +31,8 @@ body{
             font-weight: 500;
         }
 notifier i{
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  cursor:pointer;
 }
 #auth-section{
   position: absolute;
@@ -140,6 +141,7 @@ main{
             background: #777;
             color: #ccc;
             cursor: pointer;
+          transition: all ease 0.3s;
           }
      form{
             display: flex;
@@ -194,10 +196,14 @@ main{
             padding:10px;
             text-decoration:none;
             border-radius: 30px;
-            background: #111;
+            background: #444;
             font-size: 1rem;
             cursor: pointer;
+          transition: all ease 0.3s;
         }
+         form button[type="submit"]:hover{
+           background: #000;
+         }
         form small{
             color: red;
             width:100%;
@@ -223,7 +229,11 @@ main{
     font-size: 1rem;
     margin-left: 10px;
     cursor: pointer;
+    transition: all ease 0.3s;
   }
+p span:hover{
+ transform: scale(1.03);
+}
 form a.phone{
    color: #444;
   background: transparent;
