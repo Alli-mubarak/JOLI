@@ -191,7 +191,7 @@ signUpForm.onsubmit = async(e) =>{
  
     // 7. Handle success vs server-side validation/errors
     if (response.ok) {
-      formMessage.textContent = 'Registration successful! Redirecting...';
+      formMessage.textContent = 'Login successful! Redirecting...';
       formMessage.style.color = 'green';
       signUpForm.reset(); // Clear form fields
         setTimeout(()=>{
@@ -201,7 +201,7 @@ signUpForm.onsubmit = async(e) =>{
        window.location.href = '/home';
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
-      formMessage.textContent = data.message || 'Signup failed. Please try again.';
+      formMessage.textContent = data.message || 'Login failed. Please try again.';
       formMessage.style.color = 'red';
         setTimeout(()=>{
             formMessage.textContent = '';
