@@ -33,15 +33,23 @@ notifier i{
   font-size: 0.9rem;
   cursor:pointer;
 }
-#auth-section{
-  position: absolute;
-  width : 100%;
-  top:0;
-  left:0;
-  height:fit-content;
-  background: rgba(0,0,0,0.04);
+header{
+  width:100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
 }
-
+header #logo{
+  height:100%;
+  width: auto;
+}
+header .sidebar{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+}
 
 footer {
   height:70px;
