@@ -1,2 +1,30 @@
-const message = "Hello World!";
- console.log(message);
+const userPic = document.getElementById("user-pic");
+async function checkAuthStatus() {
+      try {
+        // 'credentials: include' forces the browser to send the session cookie
+        const response = await fetch(`${BACKEND_URL}/api/auth/user`, { credentials: 'include' });
+        data = await response.json();
+ 
+        
+        if (data.loggedIn) {
+         userPic.src = data.user.profile_picture;
+          
+        } else {
+          
+          console.log("unauthenticated");
+        }
+      } catch (err) {
+        console.error("Error verifying authentication status:", err);
+      }
+      }
+
+    // Handle logging out
+    function logoutUser() {
+        if (data.loggedIn) {
+      // Redirect browser directly to backend logout route to clear cookie and destroy session 
+      window.location.href = `${BACKEND_URL}/logout`;
+        }
+        return 
+    }
+
+checkAuthStatus();
