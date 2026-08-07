@@ -2,7 +2,7 @@ const userPic = document.getElementById("user-pic");
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
-        const response = await fetch(`${BACKEND_URL}/api/auth/user`, { credentials: 'include' });
+        const response = await fetch("/api/auth/user", { credentials: 'include' });
         data = await response.json();
  
         
