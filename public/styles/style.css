@@ -226,7 +226,7 @@ main{
         }
   p span{
     color: transparent;
-    background: linear-gradient(100deg, blue 20%, #111 50%, pink 80%);
+    background: linear-gradient(100deg, blue 20%, green 50%, red 80%);
     background-clip: text;
     font-weight:600;
     font-size: 1rem;
