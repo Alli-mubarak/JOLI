@@ -82,6 +82,51 @@ background:#000;
   border : 2px solid #555;
   border-radius: 50%;
 }
+main{
+    padding:20px;
+    background: #ccc;
+    width:100%;
+}
+  main h2{
+    text-align:center;
+  }
+.posts{
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  position: relative;
+}
+.post{
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  align-items: center;
+  justify-content:center;
+  width: 100%;
+  min-height: 50px;
+  position: relative;
+  overflow: hidden;
+}
+  .post:before{
+    position: absolute;
+    content: '';
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(#eee, rgba(0,0,0,0.02), #fff);
+    left: -35px;
+    transition: all 0.4s ease;
+    animation: load linear infinite 0.4s;
+  }
+  @keyframes load{
+    to{
+      left: 110%;
+    }
+  }
+  
 footer {
   height:70px;
   padding: 10px;
