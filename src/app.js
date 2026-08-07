@@ -250,26 +250,38 @@ RETURNING *;
 
 // Add the Local Strategy for Email/Password
 passport.use(new LocalStrategy(
-    {
-        usernameField: 'email',    // Define 'email' as the username field
-        passwordField: 'password'
-    },
-    async (email, password, done) => {
-        try {
-            // 1. Find the user by email
-         //*   const user = 
-            if (!user) {
-                return done(null, false, { message: 'User not found!.' });
-            }
+  {
+       usernameField: 'identifier', 
+      passwordField: 'password'
+            },
+            async (identifier, password, done) => {
+                try {
+                    // Search PostgreSQL for a matching email OR username
+                    const result = await pool.query(
+                        'SELECT * FROM users WHERE email = $1 OR username = $1',
+                        [identifier.trim()]
+                    );
 
-            // 2. Validate password (assuming you hash passwords on signup)
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return done(null, false, { message: 'Incorrect credentials.' });
-            }
+                    if (result.rows.length === 0) {
+                        return done(null, false, { message: 'Invalid credentials.' });
+                    }
 
-            // 3. Success
-            return done(null, user);
+                    const user = result.rows[0];
+
+                    // Check if they only signed up via Google and don't have a password
+                    if (!user.password) {
+                        return done(null, false, { message: 'Please sign in using Google.' });
+                    }
+
+                    // Compare hashes
+                    const isMatch = await bcrypt.compare(password, user.password);
+                    if (!isMatch) {
+                        return done(null, false, { message: 'Invalid credentials.' });
+                    }
+
+                    // Success! Pass the user object to Passport
+                    return done(null, user);
+
         } catch (err) {
             return done(err);
         }
@@ -372,8 +384,8 @@ VALUES
 RETURNING *;
 `,
 [
-    username,
-    email,
+    username.toLowerCase(),
+    email.toLowerCase(),
     hashedPassword,
     null,
     preferences,
@@ -382,8 +394,8 @@ RETURNING *;
     
     // Log the user in automatically
     // Convert the new user document to a plain JavaScript object
-  // const userObj = newUser.toObject();
-        req.login(newUser, (err) => {
+  const userObj = newUser.rows[0];
+        req.login(userObj, (err) => {
             if (err) {
                 return next(err); // Handles passport login errors
             }
@@ -397,13 +409,13 @@ RETURNING *;
   }
 });
 
-//  Email Login
+//  Email or Username Login
 app.post('/api/auth/login', (req, res, next) => {
   // 1. Extract values to validate that the frontend sent the required data
-  const { email, password } = req.body;
+  const { identifier, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required.' });
+  if (!identifier || !password) {
+    return res.status(400).json({ message: 'Email/Username and password are required.' });
   }
 
   // Invoke Passport's Local Strategy
@@ -418,7 +430,7 @@ app.post('/api/auth/login', (req, res, next) => {
 
     //  Authentication failed (wrong password, account doesn't exist, etc.)
     if (!user) {
-      return res.status(401).json({ message: info?.message || 'Invalid email or password.' });
+      return res.status(401).json({ message: info?.message || 'Invalid credentials!.' });
     }
 
     //  Credentials are correct! Establish the user session
@@ -428,17 +440,11 @@ app.post('/api/auth/login', (req, res, next) => {
         return next(loginErr);
       }
 
-      // Convert Mongoose document to a plain object to clean it up safely
-      const cleanUser = user.toObject();
-      delete cleanUser.password; // Never send the hashed password back to the frontend
-
-      
       return res.status(200).json({
         message: 'Logged in successfully.',
-        user: cleanUser
-      });
+       user: { id: user.id, username: user.username, email: user.email }
     });
-
+    });
   })(req, res, next); // Necessary to pass the request and response objects to Passport
 });
 
