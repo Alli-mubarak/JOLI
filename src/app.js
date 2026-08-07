@@ -488,8 +488,62 @@ app.get('/auth/google/callback',
   }
 );
 
+app.post('/api/create-post', async (req, res) => {
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: 'You need to log in first!'});
+  }
+  const { content, media_urls, post_type, parent_id, root_id } = req.body;
+  const user_id = req.user.id;
 
-//default route
+  // 1. Validation: Post must have text or media
+  if (!user_id) {
+    return res.status(400).json({ error: 'user_id is required' });
+  }
+  if (!content && (!media_urls || media_urls.length === 0)) {
+    return res.status(400).json({ error: 'Post must contain text content or media' });
+  }
+
+  try {
+    // 2. Safely insert post using parameterized queries ($1, $2, etc.)
+    const queryText = `
+      INSERT INTO posts (user_id, content, media_urls, post_type, parent_id, root_id)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
+    `;
+
+    // Convert media_urls array to a valid JSON string for our JSONB column
+    const mediaJson = media_urls ? JSON.stringify(media_urls) : '[]';
+
+    const values = [
+      user_id,
+      content || null,
+      mediaJson,
+      post_type || 'original',
+      parent_id || null,
+      root_id || null
+    ];
+
+    const result = await pool.query(queryText, values);
+
+    // 3. Optional step: If it's a reply, increment parent's reply counter
+    if (post_type === 'reply' && parent_id) {
+      await pool.query(
+        'UPDATE posts SET reply_count = reply_count + 1 WHERE id = $1',
+        [parent_id]
+      );
+    }
+
+    // 4. Return the newly created post
+    return res.status(201).json(result.rows[0]);
+
+  } catch (error) {
+    console.error('Error creating post:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+//default page  route
 app.get('/',(req, res)=>{
 console.log(req.query)
 console.log('default path requested! \n');
