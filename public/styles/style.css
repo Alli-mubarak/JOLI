@@ -12,6 +12,27 @@ body{
   width: 100%;
   background: #fff;
 }
+.notifier{
+            position: absolute;
+            width:100dvw;
+            height:40px;
+            display:flex; 
+            padding: 10px;
+            align-items:center;
+            justify-content: center;
+            gap:30px;
+            background: tan;
+            top:-40px;
+            left:0;
+            transition: all ease 0.3s;
+        }
+        .notifier p{
+            font-size: 19px;
+            font-weight: 500;
+        }
+notifier i{
+  font-size: 0.8rem;
+}
 #auth-section{
   position: absolute;
   width : 100%;
