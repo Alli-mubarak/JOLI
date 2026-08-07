@@ -1,3 +1,4 @@
+const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
 async function checkAuthStatus() {
       try {
@@ -7,10 +8,13 @@ async function checkAuthStatus() {
  
         
         if (data.loggedIn) {
+        signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture;
+        userPic.classList.remove("hidden");
           
         } else {
-          
+          signInLink.classList.remove("hidden");
+          userPic.classList.add("hidden");
           console.log("unauthenticated");
         }
       } catch (err) {
