@@ -9,7 +9,7 @@ async function checkAuthStatus() {
         
         if (data.loggedIn) {
         signInLink.classList.add("hidden");
-         userPic.src = data.user.profile_picture || "images/joli-dark.png";
+         userPic.src = data.user.profile_picture || "images/default-user.png";
         userPic.classList.remove("hidden");
           
         } else {
