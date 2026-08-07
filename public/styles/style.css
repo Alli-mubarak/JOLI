@@ -196,7 +196,7 @@ main{
             padding:10px;
             text-decoration:none;
             border-radius: 30px;
-            background: #444;
+            background: #333;
             font-size: 1rem;
             cursor: pointer;
           transition: all ease 0.3s;
@@ -224,16 +224,15 @@ main{
             }
         }
   p span{
-    color: #111;
+    color: transparent;
+    background-clip: text;
+    background: linear-gradient(100deg, blue 20%, #111 50%, #114d5c 80%);
     font-weight:600;
     font-size: 1rem;
     margin-left: 10px;
     cursor: pointer;
     transition: all ease 0.3s;
   }
-p span:hover{
- transform: scale(1.03);
-}
 form a.phone{
    color: #444;
   background: transparent;
