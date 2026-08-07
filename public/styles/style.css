@@ -104,6 +104,7 @@ main{
         }
        a.google:hover{
          color : #000;
+         border-color: #222;
        }
         a.phone{
             background: #000;
@@ -243,6 +244,7 @@ form a.phone i{
 }
 form a:hover{
   color: #000;
+  border-color:#222;
 }
         .invisible{
             opacity:0;
