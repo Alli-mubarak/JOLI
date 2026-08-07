@@ -259,7 +259,7 @@ passport.use(new LocalStrategy(
                     // Search PostgreSQL for a matching email OR username
                     const result = await pool.query(
                         'SELECT * FROM users WHERE email = $1 OR username = $1',
-                        [identifier.trim()]
+                        [identifier.toLowerCase().trim()]
                     );
 
                     if (result.rows.length === 0) {
