@@ -724,10 +724,10 @@ app.get('/api/users/summary-optimized', async (req, res) => {
   }
 });
     //temporary api
-    app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
+app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
       try{
         await pool.query(`
-            TRUNCATE TABLE session
+            TRUNCATE TABLE users
         `);
 
         res.json({
