@@ -179,6 +179,7 @@ main{
             font-size: 1.1rem;
             font-weight: 600;
           cursor: pointer;
+          color:#333;
         }
         form input{
             width:100%;
@@ -196,7 +197,7 @@ main{
             padding:10px;
             text-decoration:none;
             border-radius: 30px;
-            background: #333;
+            background: #222;
             font-size: 1rem;
             cursor: pointer;
           transition: all ease 0.3s;
