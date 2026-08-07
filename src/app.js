@@ -501,23 +501,16 @@ app.get('/api/auth/user', (req, res) => {
   }
 });
 
-// POST Route for logging in
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/sign-in',
-    failureFlash: false 
-}));
-
 app.get('/login-failed', (req, res) => {
   res.send('Authentication failed. Please try again.');
 });
 
 // Logout Route
-app.get('/logout', (req, res) => {
+app.get('/api/auth/logout', (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
     
-    // Destroy the session in MongoDB
+    // Destroy the session in Database 
     req.session.destroy((err) => {
       if (err) return res.send('Error logging out');
       
