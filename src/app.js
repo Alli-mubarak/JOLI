@@ -49,10 +49,11 @@ function getCountryNameFromReq(req) {
   }
 }
 
-//database table setup
+//database tables setup
 const initDb = async () => {
   const setupScript = `
     CREATE EXTENSION IF NOT EXISTS "citext";
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
     CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -90,6 +91,31 @@ const initDb = async () => {
         CONSTRAINT username_length_check CHECK (char_length(username) >= 3),
         CONSTRAINT email_format_check CHECK (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')
     );
+
+    CREATE TABLE IF NOT exists posts (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL, -- Assumes your users table also uses UUID
+    content TEXT,
+    media_urls JSONB DEFAULT '[]'::jsonb,
+    post_type VARCHAR(20) DEFAULT 'original' NOT NULL,
+    parent_id UUID,
+    root_id UUID,
+    like_count INTEGER DEFAULT 0 NOT NULL,
+    repost_count INTEGER DEFAULT 0 NOT NULL,
+    reply_count INTEGER DEFAULT 0 NOT NULL,
+    view_count BIGINT DEFAULT 0 NOT NULL,
+    is_pinned BOOLEAN DEFAULT false NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
+
+    -- Constraints
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_parent FOREIGN KEY (parent_id) REFERENCES posts(id) ON DELETE SET NULL,
+    CONSTRAINT fk_root FOREIGN KEY (root_id) REFERENCES posts(id) ON DELETE SET NULL,
+    CONSTRAINT check_counts_positive CHECK (
+        like_count >= 0 AND repost_count >= 0 AND reply_count >= 0 AND view_count >= 0
+    )
+);
   `;
   try {
     await pool.query(setupScript);
