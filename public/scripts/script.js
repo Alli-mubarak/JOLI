@@ -6,7 +6,33 @@ const caption = document.querySelector(".caption");
 const signUpForm = document.getElementById("email-signup");
 const signInForm = document.getElementById("email-signin");
 const BACKEND_URL = "";
+const notifier = document.querySelector(".notifier");
+let closeNotifierID;
 
+
+function notify(msg){
+          if(notifier.innerHTML === ""){
+            const message = document.createElement('p');
+            const closer = document.createElement('i');
+            message.textContent = msg;
+            closer.classList.add("fa-solid");
+            closer.classList.add("fa-xmark");
+            closer.setAttribute("onclick", "closeNotifier()");
+            notifier.appendChild(message );
+            notifier.appendChild(closer);
+            notifier.style.top = "0";
+            closeNotifierID =setTimeout(()=>{
+                notifier.style.top="-40px";
+                notifier.innerHTML = "";
+            }, 2000)
+        }
+            
+ }
+     function closeNotifier(){
+           clearTimeout(closeNotifierID);
+            notifier.style.top="-40px";
+             notifier.innerHTML = "";
+    }
     async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
