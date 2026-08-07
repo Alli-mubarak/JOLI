@@ -97,17 +97,17 @@ main{
   justify-content:center;
   width:100%;
   position: relative;
-  background: #ccc;
+  background: #eee;
 }
 .post{
-  background: #eee;
+  background: #fff;
   display: flex;
   flex-direction: column;
   gap:10px;
   align-items: center;
   justify-content:center;
   width: 100%;
-  min-height: 80px;
+  min-height: 120px;
   position: relative;
   overflow: hidden;
   border-radius: 10px;
@@ -115,9 +115,9 @@ main{
   .post:before{
     position: absolute;
     content: '';
-    width: 30px;
+    width: 150px;
     height: 100%;
-    background: linear-gradient(to right, #eee, rgba(0,0,0,0.07), #eee);
+    background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
     left: -155px;
     transition: all 0.4s ease;
     animation: load linear infinite 2s;
@@ -127,7 +127,9 @@ main{
       left: 110%;
     }
   }
-  
+  .hidden{
+    display: none;
+  }
 footer {
   height:70px;
   padding: 10px;
