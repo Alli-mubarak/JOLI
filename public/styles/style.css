@@ -182,6 +182,20 @@ main{
             width:100%;
             text-align:left;
         }
+         .form-loader{
+            width:20px !important;
+            height:20px !important;
+            border: 4px solid #888;
+            border-right-color: #333;
+            border-radius:50%;
+            background: transparent;
+            animation: roll linear infinite 2s;
+        }
+        @keyframes roll{
+            to{
+                transform:rotate(360deg);
+            }
+        }
   p span{
     color: #111;
     font-weight:600;
