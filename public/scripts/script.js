@@ -170,7 +170,9 @@ signUpForm.onsubmit = async(e) =>{
         return
     }
     const formMessage = signUpForm.querySelector("#form-message");
-  //  formMessage.innerHTML = "NO ISSUES";
+    const formLoader = document.createElement("div");
+    formLoader.classList.add("form-loader");
+    formMessage.appendChild(formLoader);
      
   // Automatically extract data from the input fields
   const formData = new FormData(signUpForm);
@@ -191,6 +193,7 @@ signUpForm.onsubmit = async(e) =>{
  
     // 7. Handle success vs server-side validation/errors
     if (response.ok) {
+     formMessage.innerHTML = "";
       formMessage.textContent = 'Account created successfully!, Redirecting...';
       formMessage.style.color = 'green';
       signUpForm.reset(); // Clear form fields
@@ -201,6 +204,7 @@ signUpForm.onsubmit = async(e) =>{
        window.location.href = '/home';
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
+        formMessage.innerHTML = "";
       formMessage.textContent = data.message || 'Account creation failed. Please try again.';
       formMessage.style.color = 'red';
         setTimeout(()=>{
@@ -210,6 +214,7 @@ signUpForm.onsubmit = async(e) =>{
  
   } catch (error) {
     // Network errors (e.g., server is offline or internet disconnected)
+     formMessage.innerHTML = "";
     console.error('Network Error:', error);
     formMessage.textContent = 'Network error. Cannot reach the server.';
     formMessage.style.color = 'red';
@@ -240,6 +245,9 @@ if(identifier.length < 5 && password.length < 8){
         },1600);
     return 
 }
+    const formLoader = document.createElement("div");
+    formLoader.classList.add("form-loader");
+    formMessage.appendChild(formLoader);
 
   // Automatically extract data from the input fields
   const formData = new FormData(signInForm);
@@ -260,6 +268,7 @@ if(identifier.length < 5 && password.length < 8){
  
     // 7. Handle success vs server-side validation/errors
     if (response.ok) {
+        formMessage.innerHTML = "";
       formMessage.textContent = 'Successfully Logged In!,  Redirecting...';
       formMessage.style.color = 'green';
       signUpForm.reset(); // Clear form fields
@@ -270,6 +279,7 @@ if(identifier.length < 5 && password.length < 8){
        window.location.href = '/home';
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
+     formMessage.innerHTML = "";
       formMessage.textContent = data.message || 'Login failed. Please try again.';
       formMessage.style.color = 'red';
         setTimeout(()=>{
@@ -280,6 +290,7 @@ if(identifier.length < 5 && password.length < 8){
   } catch (error) {
     // Network errors (e.g., server is offline or internet disconnected)
     console.error('Network Error:', error);
+     formMessage.innerHTML = "";
     formMessage.textContent = 'Network error. Cannot reach the server.';
     formMessage.style.color = 'red';
       setTimeout(()=>{
