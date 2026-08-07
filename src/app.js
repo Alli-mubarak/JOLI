@@ -467,17 +467,18 @@ app.get('/auth/google/callback',
 app.get('/',(req, res)=>{
 console.log(req.query)
 console.log('default path requested! \n');
+  if (req.isAuthenticated() && req.user){
+   return  res.redirect('/home');
+  }
   res.sendFile(path.join(__dirname, "../", "/views/index.html"));
 });
 
 //sign up route
-app.get('/sign-up',(req, res)=>{
+app.get('/home',(req, res)=>{
 console.log(req.query)
-console.log('sign up page  requested! \n');
-  if (req.isAuthenticated()){
-   return  res.redirect('/');
-  }
-  res.sendFile(path.join(__dirname, "../", "/views/signup.html"));
+console.log('home page  requested! \n');
+  
+  res.sendFile(path.join(__dirname, "../", "/views/feeds.html"));
 });
 
 //sign in route
