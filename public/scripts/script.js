@@ -221,16 +221,71 @@ signUpForm.onsubmit = async(e) =>{
 
 signInForm.onsubmit = (e) =>{
     e.preventDefault();
-    const emailValue = signInForm.email.value;
-    const formMessage = signInForm.querySelector("#form-message");
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(emailValue)) {
-        formMessage.innerHTML = "incorrect email format";
+const identifier = signInForm.identifier.value;
+const password = signInForm.password.value;
+const formMessage = signInForm.querySelector("#form-message");
+if(!identifier && !password){
+    formMessage.textContent = 'Enter credentials';
+    formMessage.style.color = 'red';
+      setTimeout(()=>{
+            formMessage.textContent = '';
+        },1600);
+    return 
+}
+if(identifier.length < 5 && password.length < 8){
+    formMessage.textContent = 'Enter correct credentials';
+    formMessage.style.color = 'red';
+      setTimeout(()=>{
+            formMessage.textContent = '';
+        },1600);
+    return 
+}
+
+  // Automatically extract data from the input fields
+  const formData = new FormData(signUpForm);
+  const payload = Object.fromEntries(formData.entries());
+ try {
+    // Send a POST request to the server API
+    const response = await fetch("/api/auth/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Inform server we are sending JSON data
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
+    });
+ 
+    // 6. Parse the server JSON response
+    const data = await response.json();
+ 
+    // 7. Handle success vs server-side validation/errors
+    if (response.ok) {
+      formMessage.textContent = 'Registration successful! Redirecting...';
+      formMessage.style.color = 'green';
+      signUpForm.reset(); // Clear form fields
         setTimeout(()=>{
-            formMessage.innerHTML = "";
-        },1200);
-        return
+            formMessage.textContent = '';
+        },1600);
+      
+       window.location.href = '/home';
+    } else {
+      // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
+      formMessage.textContent = data.message || 'Signup failed. Please try again.';
+      formMessage.style.color = 'red';
+        setTimeout(()=>{
+            formMessage.textContent = '';
+        },1600);
     }
+ 
+  } catch (error) {
+    // Network errors (e.g., server is offline or internet disconnected)
+    console.error('Network Error:', error);
+    formMessage.textContent = 'Network error. Cannot reach the server.';
+    formMessage.style.color = 'red';
+      setTimeout(()=>{
+            formMessage.textContent = '';
+        },1600)
+ }
 }
 function toggleReveal(el){
     const passwordInput = el.previousElementSibling;
