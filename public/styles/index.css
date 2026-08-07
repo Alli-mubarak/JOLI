@@ -79,8 +79,8 @@ header .side-bar{
 background:#000;
 }
 .side-bar img{
-  height: 45px;
-  width: 45px;
+  height: 35px;
+  width: 35px;
   border : 2px solid #555;
   border-radius: 50%;
 }
