@@ -191,7 +191,7 @@ signUpForm.onsubmit = async(e) =>{
  
     // 7. Handle success vs server-side validation/errors
     if (response.ok) {
-      formMessage.textContent = 'Login successful! Redirecting...';
+      formMessage.textContent = 'Account created successfully!, Redirecting...';
       formMessage.style.color = 'green';
       signUpForm.reset(); // Clear form fields
         setTimeout(()=>{
@@ -201,7 +201,7 @@ signUpForm.onsubmit = async(e) =>{
        window.location.href = '/home';
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
-      formMessage.textContent = data.message || 'Login failed. Please try again.';
+      formMessage.textContent = data.message || 'Account creation failed. Please try again.';
       formMessage.style.color = 'red';
         setTimeout(()=>{
             formMessage.textContent = '';
@@ -242,7 +242,7 @@ if(identifier.length < 5 && password.length < 8){
 }
 
   // Automatically extract data from the input fields
-  const formData = new FormData(signUpForm);
+  const formData = new FormData(signInForm);
   const payload = Object.fromEntries(formData.entries());
  try {
     // Send a POST request to the server API
@@ -260,7 +260,7 @@ if(identifier.length < 5 && password.length < 8){
  
     // 7. Handle success vs server-side validation/errors
     if (response.ok) {
-      formMessage.textContent = 'Registration successful! Redirecting...';
+      formMessage.textContent = 'Successfully Logged In!,  Redirecting...';
       formMessage.style.color = 'green';
       signUpForm.reset(); // Clear form fields
         setTimeout(()=>{
@@ -270,7 +270,7 @@ if(identifier.length < 5 && password.length < 8){
        window.location.href = '/home';
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
-      formMessage.textContent = data.message || 'Signup failed. Please try again.';
+      formMessage.textContent = data.message || 'Login failed. Please try again.';
       formMessage.style.color = 'red';
         setTimeout(()=>{
             formMessage.textContent = '';
