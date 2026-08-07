@@ -102,7 +102,7 @@ main{
             justify-content: center;
             gap: 10px;
         }
-       a.google:hover{
+       a.google:hover, a.home-link:hover{
          color : #000;
          border-color: #222;
        }
