@@ -727,14 +727,9 @@ app.get('/api/users/summary-optimized', async (req, res) => {
     app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
       try{
         await pool.query(`
-            ALTER TABLE users
-            ALTER COLUMN password_hash DROP NOT NULL;
+            TRUNCATE TABLE session
         `);
 
-        await pool.query(`
-            ALTER TABLE users
-            ALTER COLUMN password_hash TYPE TEXT;
-        `);
         res.json({
             success: true,
             message: "Users table updated successfully."
