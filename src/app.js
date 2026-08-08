@@ -175,7 +175,9 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL,
+    state: false,
     passReqToCallback: true  // this will make the req object available for access
+  
   },
   async (req, accessToken, refreshToken, profile, done) => {
     const countryName = getCountryNameFromReq(req);
