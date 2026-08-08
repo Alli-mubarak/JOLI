@@ -188,7 +188,7 @@ passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: process.env.CALLBACK_URL,
-    state: false,
+    state: true,
     passReqToCallback: true  // this will make the req object available for access
   
   },
@@ -788,13 +788,13 @@ app.get('/api/users/summary-optimized', async (req, res) => {
     //temporary api
 app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
       try{
-        await pool.query(`
-            TRUNCATE TABLE session
-        `);
+      //  await pool.query(`
+        //    TRUNCATE TABLE session
+      //  `);
 
         res.json({
             success: true,
-            message: "Users table updated successfully."
+            message: "Updated successfully."
         });
 
     } catch (err) {
