@@ -140,7 +140,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: false }
+  cookie: { 
+    sameSite: 'lax',
+    maxAge: 30 * 24 * 60 * 60 * 1000, 
+    secure: true;
+  }
 }));
   
 app.use(express.static(path.join(__dirname, 'public')));
@@ -751,7 +755,7 @@ app.get('/api/users/summary-optimized', async (req, res) => {
 app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
       try{
         await pool.query(`
-            TRUNCATE TABLE users
+            TRUNCATE TABLE session
         `);
 
         res.json({
