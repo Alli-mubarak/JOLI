@@ -23,6 +23,7 @@ app.use(bodyParser.json())
 
 // Middleware (e.g., JSON parsing)
 app.use(express.json());
+app.set('trust proxy', 1); // Triggers Express to trust the HTTPS headers from your host
 
 app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
@@ -143,7 +144,7 @@ app.use(session({
   cookie: { 
     sameSite: 'lax',
     maxAge: 30 * 24 * 60 * 60 * 1000, 
-    secure: false
+    secure: true
   }
 }));
   
