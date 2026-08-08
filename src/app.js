@@ -487,28 +487,31 @@ app.get('/api/auth/google',
 );
 
 //  Google OAuth Callback Route
+
 app.get('/auth/google/callback', (req, res, next) => {
   passport.authenticate('google', (err, user, info) => {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/'); }
+    // Catch the TokenError / Bad Request gracefully
+    if (err) {
+      if (err.name === 'TokenError') {
+        console.log('Caught PWA Double-Exchange TokenError. Redirecting to app check.');
+        // If the cookie was already written successfully on the first trigger, 
+        // redirecting them straight to the dashboard will show them logged in.
+        return res.redirect('/');
+      }
+      return next(err);
+    }
     
-    req.logIn(user, (err) => {
-      if (err) { return next(err); }
-      
-      // Forces Express to finish writing the cookie data right now
-      req.session.save((err) => {
-        if (err) { return next(err); }
-        
-        // Safe JavaScript redirect wrapper
-        return res.send(`
-          <script>
-            window.location.replace('/home');
-          </script>
-        `);
-      });
+    if (!user) {
+      return res.redirect('/');
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) return next(loginErr);
+      return res.redirect('/home');
     });
   })(req, res, next);
 });
+
 
 
 app.post('/api/create-post', async (req, res) => {
