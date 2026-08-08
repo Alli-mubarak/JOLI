@@ -553,24 +553,48 @@ console.log('default path requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/index.html"));
 });
 
-//sign up route
+//homepage route
 app.get('/home',(req, res)=>{
-console.log(req.query)
 console.log('home page  requested! \n');
   
   res.sendFile(path.join(__dirname, "../", "/views/feeds.html"));
 });
 
-//sign in route
-app.get('/sign-in',(req, res)=>{
-console.log(req.query)
-console.log('sign in page  requested! \n');
-  if (req.isAuthenticated()){
-   return  res.redirect('/');
-  }
-  res.sendFile(path.join(__dirname, "../", "/views/login.html"));
+//followers page route
+app.get('/followers',(req, res)=>{
+console.log('followers page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/friends.html"));
 });
 
+//Add post page route
+app.get('/create-post',(req, res)=>{
+console.log('add post page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/addpost.html"));
+});
+
+//messages page route
+app.get('/messages',(req, res)=>{
+console.log('messages page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/messages.html"));
+});
+
+//search page route
+app.get('/search',(req, res)=>{
+console.log('add post page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/search.html"));
+});
 
 //user check route
 app.get('/api/auth/user', (req, res) => {
