@@ -144,6 +144,7 @@ main{
             background: #fff;
             border-top: 2px solid #ddd;
         }
+  
         .tabs > div{
             overflow: hidden;
             display: flex;
@@ -152,6 +153,10 @@ main{
             border-radius:10px;
             cursor:pointer;
         }
+     .tabs > div a{
+       text-decoration:none;
+       display: block;
+     }
         .tabs > div:hover{
           border: 2px solid #eee;
         }
