@@ -4,7 +4,7 @@
   "short_name": "JOLI",
   "description": "An amazing social media web app that functions exactly like a native Android application.",
   "start_url": "/",
-  "display": "standalone",
+  "display": "minimal-ui",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "orientation": "portrait",
