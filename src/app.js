@@ -14,6 +14,7 @@ import session from 'express-session';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import rateLimit  from 'express-rate-limit';
 //import { sendCustomEmail } from '../Utils/mailer.js';
 
 dotenv.config();
@@ -131,6 +132,17 @@ app.use(cors({
   credentials: true // Crucial: Allows the browser to send cookies back and forth
 }));
 
+//configure rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: 'Too many requests from this IP, please try again later.'
+});
+
+// Apply to all requests
+app.use(limiter);
 
 // Configure and use the session middleware
 const PostgresStore = connectPgSimple(session);
