@@ -803,11 +803,11 @@ app.get('/api/change-role/user/:id/:newRole', async(req,res) => {
     });
    }
    const initiatorRole = req.user.role
-   if(initiatorRole !== roles[2]){
-    return res.json({
-     error: 'You are not authorised to do this!'
-   });
-  }
+//   if(initiatorRole !== roles[2]){
+ //   return res.json({
+ //    error: 'You are not authorised to do this!'
+//   });
+//  }
    
        await pool.query(
         `
