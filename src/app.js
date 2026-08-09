@@ -784,7 +784,7 @@ app.get('/api/change-role/user/:role', async(req,res) => {
      initiatiorRole: req.user.role || null
     });
   }
-   if(!newRole in roles){
+   if(!roles.includes(newRole)){
     return res.json({
       error: 'role does not exist!',
       initiatiorRole: req.user.role || null
