@@ -141,8 +141,8 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 
-// Apply to all requests
-app.use(limiter);
+// apply limiter to routes starting with /api/auth/
+//app.use('/api/auth/', limiter);
 
 // Configure and use the session middleware
 const PostgresStore = connectPgSimple(session);
@@ -353,7 +353,7 @@ passport.deserializeUser(async (id, done) => {
 // --- Auth Routes ---
 
 //sign up API
-app.post('/api/auth/sign-up', async (req, res) => {
+app.post('/api/auth/sign-up', limiter, async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -455,7 +455,7 @@ RETURNING *;
 });
 
 //  Email or Username Login
-app.post('/api/auth/login', (req, res, next) => {
+app.post('/api/auth/login', limiter, (req, res, next) => {
   // 1. Extract values to validate that the frontend sent the required data
   const { identifier, password } = req.body;
 
@@ -494,13 +494,12 @@ app.post('/api/auth/login', (req, res, next) => {
 });
 
 // Trigger Google Sign-Up / Login Flow
-app.get('/api/auth/google', 
+app.get('/api/auth/google', limiter,
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 //  Google OAuth Callback Route
-
-app.get('/auth/google/callback', (req, res, next) => {
+app.get('/auth/google/callback', limiter, (req, res, next) => {
   passport.authenticate('google', (err, user, info) => {
     // Catch the TokenError / Bad Request gracefully
     if (err) {
@@ -635,7 +634,7 @@ console.log('add post page  requested! \n');
 });
 
 //user check route
-app.get('/api/auth/user', (req, res) => {
+app.get('/api/auth/user',  (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ loggedIn: true, user: req.user });
   } else {
@@ -648,7 +647,7 @@ app.get('/login-failed', (req, res) => {
 });
 
 // Logout Route
-app.get('/api/auth/logout', (req, res) => {
+app.get('/api/auth/logout', limiter, (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
     
@@ -725,44 +724,6 @@ app.get('/user/download-txt', async (req, res) => {
     }
   }
 });
-
-//google login
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-// Endpoint where frontend sends the Google ID Token
-app.post('/api/auth/google', async (req, res) => {
-    const { token } = req.body;
-
-    if (!token) {
-        return res.status(400).json({ message: 'Token is required' });
-    }
-
-    try {
-        // Verify the token integrity with Google
-        const ticket = await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID, 
-        });
-
-        // Extract the user profile data
-        const payload = ticket.getPayload();
-        const { sub, email, name, picture } = payload;
-
-        // DATABASE LOGIC GOES HERE:
-        // 1. Check if user with 'sub' (Google ID) or 'email' exists in database.
-        // 2. If not, create a new user record.
-        // 3. Generate your own session token (like a JWT) for your app.
-
-        res.status(200).json({
-            message: 'Authentication successful',
-            user: { id: sub, email, name, picture }
-        });
-
-    } catch (error) {
-        res.status(401).json({ message: 'Invalid Google token', error: error.message });
-    }
-});
-
 
 //fetch all users at once
 app.get('/api/users/summary-optimized', async (req, res) => {
