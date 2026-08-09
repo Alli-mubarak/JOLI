@@ -767,7 +767,21 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
         });
     }
 });
-          
+
+app.get('/api/change-role/user/:role', async(req,res) => {
+  try{
+    res.json({
+      message: req.query,
+      userId : req.user.id
+    })
+  }
+  catch(error){
+    res.json({
+      error: error,
+      errorMessage: error.message
+    })
+  }
+})
     
 
 //response to all wrong paths
