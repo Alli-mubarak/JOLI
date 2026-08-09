@@ -633,6 +633,18 @@ console.log('add post page  requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/search.html"));
 });
 
+//admin page route
+app.get('/admin/dashboard',(req, res)=>{
+console.log('admin page  requested! \n');
+  if (!req.user){
+  return  res.redirect('/');
+ }
+  if(req.user.role !== 'admin'){
+    return res.redirect('/home');
+  }
+  res.sendFile(path.join(__dirname, "../", "/views/admin.html"));
+});
+
 //user check route
 app.get('/api/auth/user',  (req, res) => {
   if (req.isAuthenticated()) {
