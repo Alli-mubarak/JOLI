@@ -780,20 +780,17 @@ app.get('/api/change-role/user/:role', async(req,res) => {
   const roles = ["user","moderator","admin"];
   if(!user){
    return res.status(400).json({
-      error: 'user not found!',
-     initiatiorRole: req.user.role || null
+      error: 'user not found!'
     });
   }
    if(!roles.includes(newRole)){
     return res.json({
-      error: 'role does not exist!',
-      initiatiorRole: req.user.role || null
+      error: 'role does not exist!'
     });
    }
    if(user.role === newRole){
     return res.json({
-      error: 'user already has the role!',
-      initiatiorRole: req.user.role || null
+      error: 'user already has the role!'
     });
    }
    if(!req.user){
@@ -801,12 +798,27 @@ app.get('/api/change-role/user/:role', async(req,res) => {
       error: 'You need to log in first!'
     });
    }
-    const updatedUser = await pool.query(
-      `UPDATE users SET role = ${newRole} WHERE id = ${id} RETURNING *`
+   const initiatorRole = req.user.role
+   if(initiatorRole !== roles[2]){
+     return res.json({
+      error: 'You are not authorised to do this!'
+    });
+   }
+   
+       await pool.query(
+        `
+        UPDATE users
+        SET role = $1
+         WHERE id = $2
+        `,
+        [
+            newRole,
+            id
+        ]
     );
    res.json({
      message: `user role changed to ${newRole}`,
-     user: updatedUser
+     user: user
    })
   }
   catch(error){
