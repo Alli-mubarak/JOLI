@@ -769,11 +769,45 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
 });
 
 app.get('/api/change-role/user/:role', async(req,res) => {
-  try{
-    res.json({
-      message: req.params,
-      userId : req.user.id
-    })
+  const newRole = req.params.role
+  const id = req.user.id
+ try{
+   const getUser = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
+   const user = getUser.rows[0];
+  const roles = ["user","moderator","admin"];
+  if(!user){
+   return res.status(400).json({
+      error: 'user not found!',
+     initiatiorRole: req.user.role || null
+    });
+  }
+   if(!newRole in roles){
+    return res.json({
+      error: 'role does not exist!',
+      initiatiorRole: req.user.role || null
+    });
+   }
+   if(user.role === newRole){
+    return res.json({
+      error: 'user already has the role!',
+      initiatiorRole: req.user.role || null
+    });
+   }
+   if(!req.user){
+    return res.json({
+      error: 'You need to log in first!'
+    });
+   }
+    const updatedUser = await pool.query(
+      `UPDATE users SET role = ${newRole} WHERE id = ${id} RETURNING *`
+    );
+   res.json({
+     message: `user role changed to ${newRole}`,
+     user: updatedUser
+   })
   }
   catch(error){
     res.json({
