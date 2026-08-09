@@ -24,5 +24,5 @@ export const pool = new Pool({
     rejectUnauthorized: true,
     ca: fs.readFileSync(pgCaPath).toString(),
   },
-  connectionTimeoutMillis: 10000, // Fail quickly (10s) instead of hanging indefinitely
+  connectionTimeoutMillis: 20000, // Fail quickly (20s) instead of hanging indefinitely
 });
