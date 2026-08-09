@@ -771,7 +771,7 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
 app.get('/api/change-role/user/:role', async(req,res) => {
   try{
     res.json({
-      message: req.query,
+      message: req.params,
       userId : req.user.id
     })
   }
