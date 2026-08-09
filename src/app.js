@@ -768,8 +768,9 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
     }
 });
 
-app.get('/api/change-role/user/:id/:newRole', async(req,res) => {
-  const {newRole, id} = req.params
+// user role change api
+app.get('/api/change-role/user/:id/:newRole', limiter, async(req,res) => {
+  const {newRole, id} = req.params;
  try{
    if(!newRole && !id){
    return res.json({
@@ -803,11 +804,11 @@ app.get('/api/change-role/user/:id/:newRole', async(req,res) => {
     });
    }
    const initiatorRole = req.user.role
-//   if(initiatorRole !== roles[2]){
- //   return res.json({
- //    error: 'You are not authorised to do this!'
-//   });
-//  }
+   if(initiatorRole !== roles[2]){
+    return res.json({
+     error: 'You are not authorised to do this!'
+    });
+  }
    
        await pool.query(
         `
