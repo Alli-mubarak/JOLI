@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JOLI - Home</title>
+  <title>JOLI - Create post</title>
  <link rel="stylesheet" href="styles/create.post.css" />
   <link rel="manifest" href="/manifest.json">
   <link rel="shortcut icon" href="images/joli3.png" type="image/x-icon">
@@ -21,6 +21,8 @@
   </div>
   </header>
   <main>    
+    <input type="file" id="image-input" accept="image/*">
+     
   <h2>Create post</h2>
     <section class="posts">
       <div class="post"></div>
@@ -59,5 +61,13 @@
           </div>
   <section class="notifier"></section>
   <script src="scripts/index.js"></script>
+  <script>
+         const imgInput = document.getElementById('image-input');
+         imgInput.onchange = (e) =>{
+         const image = e.target.files[0];
+         if(!image) return 
+         console.log(image)
+         }
+  </script>
 </body>
 </html>
