@@ -780,6 +780,32 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
     }
 });
 
+//fetch all users
+app.get('/api/get-all-users', limiter, async(req, res) => {
+  try{
+    if(!req.user || req.user.role === "admin"){
+      return res.json({
+        error: "You are not authorised to do this"
+    })
+    }
+   const users = await pool.query(
+        "SELECT * FROM users"
+   );
+      res.json({
+      totalUsers : users.length,
+      users: users 
+      });
+  }
+    
+  catch(e){
+    res.json({
+      error: e,
+      errorMessage: e.message
+    })
+  }
+
+});
+
 // user role change api
 app.get('/api/change-role/user/:id/:newRole', limiter, async(req,res) => {
   const {newRole, id} = req.params;
