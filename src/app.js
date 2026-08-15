@@ -783,7 +783,8 @@ app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
 //fetch all users
 app.get('/api/get-all-users', limiter, async(req, res) => {
   try{
-    if(!req.user || req.user.role === "admin"){
+ //   if(!req.user || req.user.role === "admin"){
+    if(!req.user){
       return res.json({
         error: "You are not authorised to do this"
     })
