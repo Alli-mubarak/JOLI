@@ -615,6 +615,15 @@ console.log('add post page  requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/addpost.html"));
 });
 
+//cropper test page
+app.get('/test-cropper',(req, res)=>{
+console.log('image cropper page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/cropper.html"));
+});
+
 //messages page route
 app.get('/messages',(req, res)=>{
 console.log('messages page  requested! \n');
