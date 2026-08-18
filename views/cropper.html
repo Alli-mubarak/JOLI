@@ -265,8 +265,22 @@
                 diff2 = (h - h2) / 2;
                 positionReader.textContent = w - w2
 
-                srcImage.style.left = (srcImage.offsetLeft + diff) + "px";
-               srcImage.style.top = (srcImage.offsetTop + diff2) + "px";
+                let scaleLeft = srcImage.offsetLeft + diff;
+               let scaleTop = srcImage.offsetTop + diff2;
+
+        if(scaleLeft > margin) scaleLeft = margin
+            if(scaleTop > margin) scaleTop = margin
+
+            
+            let scaleRight = container.clientWidth - srcImage.clientWidth - margin;
+            if(scaleLeft < scaleRight)scaleLeft = scaleRight
+
+             let scaleBottom = container.clientHeight - srcImage.clientHeight - margin;
+            if(scaleTop < scaleBottom)scaleTop = scaleBottom
+            
+            
+             srcImage.style.left = scaleLeft + "px";
+            srcImage.style.top = scaleTop + "px";
             }
         }
         cropBtn.onclick = () => {
