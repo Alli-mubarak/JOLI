@@ -51,7 +51,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: url(/images/clipper.png);
+            background-image: url(images/clipper.png);
             background-size: 100% 100%;
             top: 0; left:0;
             cursor: move;
@@ -108,11 +108,14 @@
     <script>
         const imageInput = document.getElementById("image-input");
         const srcImage = document.getElementById("src-image");
+        const positionReader = document.getElementById("reader");
         const container = document.getElementById("editing-container");
         const cropBox = document.getElementById("crop-box");
         const range = document.getElementById("range");
         const cropBtn = document.getElementById("crop-btn");
-        const overlayContainer = document.querySelector("#result-box")
+        const overlayContainer = document.querySelector("#result-box");
+        
+        
 
         let initMouseX = 0;
         let initMouseY = 0;
@@ -140,7 +143,7 @@
             range.classList.remove("hidden");
             cropBtn.classList.remove("hidden");
         }
-        const positionReader = document.getElementById("reader");
+        
         positionReader.textContent = container.offsetLeft
 
         function checkImageDownload(){
@@ -217,6 +220,7 @@
                   srcImage.style.width = container.clientWidth + "px";
                   let centerCalc = `${((srcImage.clientHeight - container.clientHeight) / 2) * -1}px`   
                 srcImage.style.top = centerCalc
+                
              }else{
                  srcImage.style.height = container.clientHeight - (margin * 2) + "px";
                   srcImage.style.width = container.clientWidth - (margin * 2) + "px";
@@ -282,7 +286,71 @@
              srcImage.style.left = scaleLeft + "px";
             srcImage.style.top = scaleTop + "px";
             }
-        }
+       }
+       
+       //***********
+       //variables for mobile
+        let isDragging = false;
+       let initialLeft = srcImage.offsetLeft;
+  let initialTop = srcImage.offsetTop;
+let startX, startY, newX, newY;
+//****
+
+   container.addEventListener('touchstart', (e) => {
+  isDragging = true;
+  // Use the first touch point
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  initialTop = srcImage.offsetTop;
+  initialLeft = srcImage.offsetLeft;
+
+  
+  // Prevent mobile screen from scrolling while dragging the box
+  e.preventDefault();
+}, { passive: false });
+
+       // Handle touch movement
+document.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  
+  const dx = e.touches[0].clientX - startX;
+  const dy = e.touches[0].clientY - startY;
+  
+  // Calculate new positions
+    let newLeft = initialLeft + dx;
+   let newTop = initialTop + dy;
+  
+  if(newLeft > margin) newLeft = margin
+   if(newTop > margin) newTop = margin
+
+            
+   let newRight = container.clientWidth - srcImage.clientWidth - margin;
+    if(newLeft < newRight)newLeft = newRight
+
+   let newBottom = container.clientHeight - srcImage.clientHeight - margin;
+    if(newTop < newBottom)newTop = newBottom
+            positionReader.textContent = initialTop+ ":" + e.touches[0].clientY
+            
+  
+  // Set style
+  srcImage.style.left = `${newLeft}px`;
+  srcImage.style.top = `${newTop}px`;
+  
+    newX = srcImage.offsetLeft
+    newY = srcImage.offsetTop
+    
+  e.preventDefault();
+}, { passive: false });
+
+// Handle touch release
+document.addEventListener('touchend', (e) => {
+  if(isDragging){
+ initialTop = newY
+ initialLeft = newX
+ }
+ isDragging = false;
+});
+     //*******
         cropBtn.onclick = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
@@ -331,4 +399,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
