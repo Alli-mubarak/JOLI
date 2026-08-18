@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image cropper</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html{
+            z-index: 100;
+        }
+        body{
+            position: relative;
+        }
+        input{
+            text-align: center;
+            display: block;
+            margin: 20px auto;
+            cursor: pointer;
+        }
+        canvas{
+            width: 400px;
+            display: block;
+            margin:10px auto 0;
+            
+        }
+        #editing-container{
+            height: 350px;
+            /* border:2px dotted olive; */
+            width: 350px;
+            overflow: hidden;
+            position: absolute;
+            top: 80px;
+            left: calc(50% - 175px);
+        }
+        #src-image{
+            min-width: 100%;
+            position: absolute;
+            left:0;
+            user-select: none;
+            -khtml-user-select:none;
+            -o-user-select:none;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+        }
+        #crop-box{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url(clipper.png);
+            background-size: 100% 100%;
+            top: 0; left:0;
+            cursor: move;
+        }
+        #range{
+            width: 350px;
+            margin: 420px auto 0;
+            display: block;
+        }
+        .overlayContainer{
+            width: 90dvw;
+            height: 90dvh;
+            background: rgba(0,0,0,0.9);
+            position: absolute;
+            top: 0;
+            left: 5dvw;
+            z-index: 20;
+            padding: 30px;
+            overflow: hidden;
+        }
+        
+        .hidden{
+            display: none !important;
+            
+        }
+        #close-btn, button{
+            font-size: 1.3rem;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-left: auto;
+            display: block;
+        }
+        #crop-btn{
+            margin:30px auto 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="reader" class="hidden"></div>
+    <input type="file" name="" id="image-input" accept="image/*">
+    
+    <div id="editing-container" class="hidden">
+        <img src="#" alt="" id="src-image">
+        <div id="crop-box"></div>
+    </div>
+    <div class="overlayContainer hidden">
+        <button id="close-btn">close</button>
+        <div id="result-box"></div>
+    </div>
+<input type="range" title="slide to resize" class="hidden" value="10" id="range" min="10" max="40" >
+<button id="crop-btn" class="hidden">Crop Image</button>
+    <script>
+        const imageInput = document.getElementById("image-input");
+        const srcImage = document.getElementById("src-image");
+        const container = document.getElementById("editing-container");
+        const cropBox = document.getElementById("crop-box");
+        const range = document.getElementById("range");
+        const cropBtn = document.getElementById("crop-btn");
+        const overlayContainer = document.querySelector("#result-box")
+
+        let initMouseX = 0;
+        let initMouseY = 0;
+        let initImageX = 0;
+        let initImageY = 0;
+        let imageRatio = 1;
+        let mouseMove = false;
+        let mouseDown = false;
+        let imageHeight, imageWidth;
+        const margin = 30;
+
+        imageInput.onchange = (e) => {
+            const imageChosen = e.target.files[0];
+            // console.log(imageChosen.type)
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                srcImage.src = e.target.result;
+                srcImage.style.top = margin + "px";
+                srcImage.style.left = margin + "px";
+                checkImageDownload()
+                range.value = 10;
+            }
+            reader.readAsDataURL(imageChosen)
+            container.classList.remove("hidden");
+            range.classList.remove("hidden");
+            cropBtn.classList.remove("hidden");
+        }
+        const positionReader = document.getElementById("reader");
+        positionReader.textContent = container.offsetLeft
+
+        function checkImageDownload(){
+            if(srcImage.complete){
+                resetImage();
+                
+         imageWidth = srcImage.clientWidth;
+        imageHeight = srcImage.clientHeight;
+        
+                
+            }else{
+                srcImage.onload = () => {
+                    resetImage()
+                    
+        imageWidth = srcImage.clientWidth;
+        imageHeight = srcImage.clientHeight;
+        // container.classList.remove("hidden");
+                }
+            }
+        }
+        window.onmousemove = (e) =>{
+            if(mouseMove && mouseDown){
+
+            let scaleLeft = e.clientX - initMouseX;
+            let scaleTop = e.clientY - initMouseY;
+
+            scaleLeft = initImageX + scaleLeft ;
+            scaleTop = initImageY+ scaleTop ;
+            positionReader.textContent = initImageX
+
+            if(scaleLeft > margin) scaleLeft = margin
+            if(scaleTop > margin) scaleTop = margin
+
+            
+            let scaleRight = container.clientWidth - srcImage.clientWidth - margin;
+            if(scaleLeft < scaleRight)scaleLeft = scaleRight
+
+             let scaleBottom = container.clientHeight - srcImage.clientHeight - margin;
+            if(scaleTop < scaleBottom)scaleTop = scaleBottom
+            positionReader.textContent = scaleRight
+            
+             srcImage.style.left = scaleLeft + "px";
+            srcImage.style.top = scaleTop + "px";
+            }
+
+        }
+        container.onmouseenter = (e) => {
+            mouseMoveOn(e)
+        }
+        container.onmouseleave = (e) => {
+            mouseMoveOff(e)
+        }
+        container.onmousedown = (e) => {
+            mouseDownOn(e)
+        }
+        container.onmouseup = (e) => {
+            mouseDownOff(e)
+        }
+        window.onmouseup = (e) => {
+            mouseDownOff(e)
+        }
+        function resetImage(){
+            if(srcImage.naturalWidth > srcImage.naturalHeight){
+                imageRatio = srcImage.naturalWidth / srcImage.naturalHeight
+                srcImage.style.height = container.clientHeight - (margin * 2) + "px";
+                srcImage.style.width = (container.clientWidth - (margin * 2)) * imageRatio + "px";
+                let centerCalc = `${((srcImage.clientWidth - container.clientWidth) / 2) * -1}px`   
+                srcImage.style.left = centerCalc
+                
+            }
+             if(srcImage.naturalHeight > srcImage.naturalWidth){
+                 imageRatio = srcImage.naturalHeight / srcImage.naturalWidth;
+                 srcImage.style.height = container.clientHeight * imageRatio + "px";
+                  srcImage.style.width = container.clientWidth + "px";
+                  let centerCalc = `${((srcImage.clientHeight - container.clientHeight) / 2) * -1}px`   
+                srcImage.style.top = centerCalc
+             }
+        }
+        function mouseMoveOn(e){
+            mouseMove = true;
+        }
+        
+        function mouseMoveOff(e){
+            mouseMove = false;
+        }
+        function mouseDownOn(e){
+            mouseDown = true;
+            initMouseX = e.clientX;
+            initMouseY = e.clientY;
+
+            initImageX = srcImage.offsetLeft  ;
+            initImageY = srcImage.offsetTop ;
+
+            // positionReader.textContent = initMouseX
+        }
+        function mouseDownOff(){
+            mouseDown = false;
+             initImageX = srcImage.offsetLeft  ;
+            initImageY = srcImage.offsetTop ;
+
+        }
+
+        range.oninput =(e) =>{
+            resizeImage(e)
+        } 
+        
+        function resizeImage(e){
+            let w = srcImage.clientWidth;
+            let h = srcImage.clientHeight;
+            
+            srcImage.style.width = ((range.value / 10) * imageWidth) + "px";
+            srcImage.style.height = ((range.value / 10) * imageHeight) + "px";
+
+            let w2 = srcImage.clientWidth;
+            let h2 = srcImage.clientHeight;
+
+            if((w - w2 !== 0) || (h - h2 !== 0)){
+                diff =(w - w2) / 2;
+                diff2 = (h - h2) / 2;
+                positionReader.textContent = w - w2
+
+                srcImage.style.left = (srcImage.offsetLeft + diff) + "px";
+               srcImage.style.top = (srcImage.offsetTop + diff2) + "px";
+            }
+        }
+        cropBtn.onclick = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const square = cropBox.getBoundingClientRect();
+            const imgSquare = srcImage.getBoundingClientRect();
+
+            const cropX = square.left - imgSquare.left + margin;
+            const cropY = square.top - imgSquare.top + margin;
+            const cropWidth = square.width - (margin * 2) ;
+            const cropHeight = square.height - (margin * 2) ;
+
+            const scaleX = srcImage.naturalWidth / imgSquare.width;
+            const scaleY = srcImage.naturalHeight / imgSquare.height;
+
+            canvas.width = cropWidth * scaleX;
+            canvas.height = cropHeight * scaleY;
+
+            
+            overlayContainer.append(canvas)
+            overlayContainer.parentElement.classList.remove("hidden")
+            ctx.drawImage(
+                srcImage, cropX * scaleX, cropY * scaleY, cropWidth * scaleX, cropHeight * scaleY, 
+                0, 0, canvas.width, canvas.height
+            );
+        
+// convert to blob and save in your database
+        // canvas.toBlob((blob) => {
+        //     const formData = new FormData();
+        //     formData.append("croppedImage", blob, "photo,png");
+        //     fetch("/upload", 
+        //         {
+        //             method : "POST",
+        //             body: formData
+        //         }
+        //     )
+        //     .then(res => res.json())
+        //     .then(data => console.log("picture uploaded!", data))
+        //     .catch(e =>{
+        //         console.error(e)
+        //     });
+        // },"image/png");
+        }
+        document.getElementById("close-btn").onclick = (e) => {
+            e.target.parentElement.classList.add("hidden")
+            overlayContainer.innerHTML = ""
+        }
+    </script>
+</body>
+</html>
