@@ -211,12 +211,15 @@
                 srcImage.style.left = centerCalc
                 
             }
-             if(srcImage.naturalHeight > srcImage.naturalWidth){
+             else if(srcImage.naturalHeight > srcImage.naturalWidth){
                  imageRatio = srcImage.naturalHeight / srcImage.naturalWidth;
                  srcImage.style.height = container.clientHeight * imageRatio + "px";
                   srcImage.style.width = container.clientWidth + "px";
                   let centerCalc = `${((srcImage.clientHeight - container.clientHeight) / 2) * -1}px`   
                 srcImage.style.top = centerCalc
+             }else{
+                 srcImage.style.height = container.clientHeight - (margin * 2) + "px";
+                  srcImage.style.width = container.clientWidth - (margin * 2) + "px";
              }
         }
         function mouseMoveOn(e){
