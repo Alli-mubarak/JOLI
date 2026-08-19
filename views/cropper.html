@@ -399,8 +399,8 @@ const uploadCroppedImage = async () => {
 
     const data = await response.json();
 
-    if (data.success) {
-      console.log('Image successfully hosted on Cloudinary:', data.imageUrl);
+    if (data.status === "successful") {
+      console.log('Image successfully hosted on Cloudinary:', data);
       alert('image uploaded successfully!');
     } else {
       console.error('Server error:', data.error);
