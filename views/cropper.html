@@ -401,15 +401,16 @@ const uploadCroppedImage = async () => {
 
     if (data.success) {
       console.log('Image successfully hosted on Cloudinary:', data.imageUrl);
-      alert('Post uploaded successfully!');
+      alert('image uploaded successfully!');
     } else {
       console.error('Server error:', data.error);
     }
   } catch (error) {
     console.error('Network error during upload:', error);
-      alert('error occurred');
+      alert('error occurred, image upload failed!');
   }
 }; 
+            uploadCroppedImage();
         }
         document.getElementById("close-btn").onclick = (e) => {
             e.target.parentElement.classList.add("hidden")
