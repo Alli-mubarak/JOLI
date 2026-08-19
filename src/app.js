@@ -831,25 +831,37 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
   }
   
   try{
-    const {picture} = req.body
-      
+    const { imageStr } = req.body;
 
-    
-    // Upload an image
-     const uploadResult = await cloudinary.uploader
-       .upload(
-           'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', {
-               public_id: 'shoes',
-           }
-       )
-       .catch((error) => {
+    if (!imageStr) {
+      return res.status(400).json({ error: 'No image data provided.' });
+    }
+
+    // Send the base64 string directly to Cloudinary
+    const cloudinaryResponse = await cloudinary.uploader.upload(imageStr, {
+      folder: 'users_profile_pictures',
+    })
+    .catch((error) => {
            console.log(error);
        });
     
-    console.log(uploadResult);
+
+    return res.status(201).json({
+      success: true,
+      imageUrl: cloudinaryResponse.secure_url,
+      publicId: cloudinaryResponse.public_id
+    });
+
+  
+  
+
+  console.log(cloudinaryResponse);
+
+
+    
     
     // Optimize delivery by resizing and applying auto-format and auto-quality
-    const optimizeUrl = cloudinary.url('shoes', {
+    const optimizeUrl = cloudinary.url('users_profile_pictures', {
         fetch_format: 'auto',
         quality: 'auto'
     });
@@ -857,7 +869,7 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     console.log(optimizeUrl);
     
     // Transform the image: auto-crop to square aspect_ratio
-    const autoCropUrl = cloudinary.url('shoes', {
+    const autoCropUrl = cloudinary.url('users_profile_pictures', {
         crop: 'auto',
         gravity: 'auto',
         width: 500,
@@ -866,12 +878,10 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     
     console.log(autoCropUrl);    
 
-  }
-  catch(error){
-    console.error(error)
-   res.json({
-     error: error
-   })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Upload failed' });
+  
   }
 });
 
