@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
 
 // Middleware (e.g., JSON parsing)
-app.use(express.json());
+app.use(express.json({ limit: '10mb' })),
 app.set('trust proxy', 1); // Triggers Express to trust the HTTPS headers from your host
 
 app.use(express.static('icon'));
