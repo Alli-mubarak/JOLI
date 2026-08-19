@@ -832,6 +832,7 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
   
   try{
     const { imageStr } = req.body;
+    const id = req.user.id
 
     if (!imageStr) {
       return res.status(400).json({ error: 'No image data provided.' });
@@ -856,14 +857,33 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     });
     
  
-    
-    console.log(optimizedImageUrl);    
-    
+    const getUser = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
+    const user = getUser.rows[0];
+    if(!user){
+   return res.status(400).json({
+      error: 'user not found!'
+    });
+    }
 
+    await pool.query(
+        `
+        UPDATE users
+        SET profile_picture = $1
+         WHERE id = $2
+        `,
+        [
+            optimizedImageUrl,
+            id
+        ]
+    );
+    console.log( `${user.username} successfully changed their profile picture `);
     res.status(201).json({
-      success: true,
-      imageUrl: cloudinaryResponse.secure_url,
-      publicId: cloudinaryResponse.public_id
+      message : `${req.user.username} changed their profile picture `,
+      status: 'successful',
+      newImageUrl : optimizedImageUrl
     });
 
   } catch (error) {
