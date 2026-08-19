@@ -377,21 +377,21 @@ document.addEventListener('touchend', (e) => {
             );
         
 // convert to blob and save in your database
-        // canvas.toBlob((blob) => {
-        //     const formData = new FormData();
-        //     formData.append("croppedImage", blob, "photo,png");
-        //     fetch("/upload", 
-        //         {
-        //             method : "POST",
-        //             body: formData
-        //         }
-        //     )
-        //     .then(res => res.json())
-        //     .then(data => console.log("picture uploaded!", data))
-        //     .catch(e =>{
-        //         console.error(e)
-        //     });
-        // },"image/png");
+        canvas.toBlob((blob) => {
+           const formData = new FormData();
+           formData.append("picture", blob, "dp.png");
+            fetch("/upload/profile-picture", 
+               {
+                    method : "POST",
+                    body: formData
+                }
+            )
+            .then(res => res.json())
+             .then(data => console.log("picture uploaded!", data))
+            .catch(e =>{
+                console.error(e)
+           });
+         },"image/png");
         }
         document.getElementById("close-btn").onclick = (e) => {
             e.target.parentElement.classList.add("hidden")
