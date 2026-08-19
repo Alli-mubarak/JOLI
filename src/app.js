@@ -845,8 +845,7 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     .catch((error) => {
            console.log(error);
        });
-
-    console.log(cloudinaryResponse);
+    
     const optimizedImageUrl = cloudinary.url(cloudinaryResponse.public_id, {
       // --- PASTE YOUR CLOUDINARY OPTIMIZATION CODES HERE ---
       fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
