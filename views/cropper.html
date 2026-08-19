@@ -381,8 +381,7 @@ document.addEventListener('touchend', (e) => {
     
 
 //  Convert canvas to a Base64 string (JPEG format compresses it for faster transit)
-// The second argument (0.85) sets the image quality from 0.0 to 1.0
-const croppedImageBase64 = canvas.toDataURL('image/jpeg', 0.85);
+const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
 
 // Send the string to your backend API via a standard POST request
 const uploadCroppedImage = async () => {
