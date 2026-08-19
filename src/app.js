@@ -846,24 +846,18 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
        });
 
     console.log(cloudinaryResponse);
+    const optimizedImageUrl = cloudinary.url(cloudinaryResponse.public_id, {
+      // --- PASTE YOUR CLOUDINARY OPTIMIZATION CODES HERE ---
+      fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
+      quality: 'auto',            // q_auto: Compresses file size without losing visual quality
+      width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
+      crop: 'limit',              // was massive, saving your free tier bandwidth
+      secure: true
+    });
+    
  
-    // Optimize delivery by resizing and applying auto-format and auto-quality
-    const optimizeUrl = cloudinary.url('users_profile_pictures', {
-        fetch_format: 'auto',
-        quality: 'auto'
-    });
     
-    console.log(optimizeUrl);
-    
-    // Transform the image: auto-crop to square aspect_ratio
-    const autoCropUrl = cloudinary.url('users_profile_pictures', {
-        crop: 'auto',
-        gravity: 'auto',
-        width: 500,
-        height: 500,
-    });
-    
-    console.log(autoCropUrl);    
+    console.log(optimizedImageUrl);    
     
 
     res.status(201).json({
