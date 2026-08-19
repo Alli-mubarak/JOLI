@@ -377,21 +377,39 @@ document.addEventListener('touchend', (e) => {
             );
         
 // convert to blob and save in your database
-        canvas.toBlob((blob) => {
-           const formData = new FormData();
-           formData.append("picture", blob, "dp.png");
-            fetch("/upload/profile-picture", 
-               {
-                    method : "POST",
-                    body: formData
-                }
-            )
-            .then(res => res.json())
-             .then(data => console.log("picture uploaded!", data))
-            .catch(e =>{
-                console.error(e)
-           });
-         },"image/png");
+
+    
+
+//  Convert canvas to a Base64 string (JPEG format compresses it for faster transit)
+// The second argument (0.85) sets the image quality from 0.0 to 1.0
+const croppedImageBase64 = canvas.toDataURL('image/jpeg', 0.85);
+
+// Send the string to your backend API via a standard POST request
+const uploadCroppedImage = async () => {
+  try {
+    const response = await fetch('/upload/profile-picture', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        imageStr: croppedImageBase64 // Send the raw base64 string directly
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      console.log('Image successfully hosted on Cloudinary:', data.imageUrl);
+      alert('Post uploaded successfully!');
+    } else {
+      console.error('Server error:', data.error);
+    }
+  } catch (error) {
+    console.error('Network error during upload:', error);
+      alert('error occurred');
+  }
+}; 
         }
         document.getElementById("close-btn").onclick = (e) => {
             e.target.parentElement.classList.add("hidden")
