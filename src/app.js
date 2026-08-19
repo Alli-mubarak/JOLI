@@ -844,22 +844,9 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     .catch((error) => {
            console.log(error);
        });
-    
 
-    return res.status(201).json({
-      success: true,
-      imageUrl: cloudinaryResponse.secure_url,
-      publicId: cloudinaryResponse.public_id
-    });
-
-  
-  
-
-  console.log(cloudinaryResponse);
-
-
-    
-    
+    console.log(cloudinaryResponse);
+ 
     // Optimize delivery by resizing and applying auto-format and auto-quality
     const optimizeUrl = cloudinary.url('users_profile_pictures', {
         fetch_format: 'auto',
@@ -877,6 +864,13 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
     });
     
     console.log(autoCropUrl);    
+    
+
+    res.status(201).json({
+      success: true,
+      imageUrl: cloudinaryResponse.secure_url,
+      publicId: cloudinaryResponse.public_id
+    });
 
   } catch (error) {
     console.error(error);
