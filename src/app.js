@@ -21,8 +21,8 @@ import { v2 as cloudinary } from 'cloudinary';
 
 dotenv.config();
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.json({limit: '10mb'}))
 
 // Middleware (e.g., JSON parsing)
 app.use(express.json({ limit: '10mb' })),
