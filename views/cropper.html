@@ -288,7 +288,7 @@
             }
        }
        
-       //***********
+       //*********** touch functionality start
        //variables for mobile
         let isDragging = false;
        let initialLeft = srcImage.offsetLeft;
@@ -350,7 +350,8 @@ document.addEventListener('touchend', (e) => {
  }
  isDragging = false;
 });
-     //*******
+     //******* touch functionality end
+        
         cropBtn.onclick = () => {
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
@@ -375,8 +376,6 @@ document.addEventListener('touchend', (e) => {
                 srcImage, cropX * scaleX, cropY * scaleY, cropWidth * scaleX, cropHeight * scaleY, 
                 0, 0, canvas.width, canvas.height
             );
-        
-// convert to blob and save in your database
 
     
 
@@ -384,6 +383,7 @@ document.addEventListener('touchend', (e) => {
 const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
 
 // Send the string to your backend API via a standard POST request
+
 const uploadCroppedImage = async () => {
   try {
     const response = await fetch('/upload/profile-picture', {
@@ -411,6 +411,7 @@ const uploadCroppedImage = async () => {
 }; 
             uploadCroppedImage();
         }
+
         document.getElementById("close-btn").onclick = (e) => {
             e.target.parentElement.classList.add("hidden")
             overlayContainer.innerHTML = ""
