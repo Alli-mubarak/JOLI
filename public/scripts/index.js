@@ -36,7 +36,7 @@ mediaInput.onchange = (e) =>{
  const selectedFiles = Array.from(e.target.files);
  if (selectedFiles.length === 0) return; 
  selectedFiles.forEach(file =>{
-       console.log(file.type + ", " +(file.size /1024) + "kb");
+       console.log(file.type + ", " +Math.ceil(file.size /1024) + "kb");
      //  if(file.type.includes("video")){
     //         console.log("You cannot post videos yet!");
     //   }else{
