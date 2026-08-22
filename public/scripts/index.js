@@ -30,5 +30,10 @@ async function checkAuthStatus() {
         }
         return 
     }
-
+//post adder
+const mediaInput = document.getElementById('media-upload');
+mediaInput.onchange = (e) =>{
+ const selectedFiles = e.target.files;
+ alert(typeof(selectedFiles));
+}
 checkAuthStatus();
