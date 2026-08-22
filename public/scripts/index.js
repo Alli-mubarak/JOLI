@@ -33,7 +33,10 @@ async function checkAuthStatus() {
 //post adder
 const mediaInput = document.getElementById('media-upload');
 mediaInput.onchange = (e) =>{
- const selectedFiles = e.target.files;
- console.log(selectedFiles);
+ const selectedFiles = Array.from(e.target.files);
+ selectedFiles.forEach(file =>{
+       console.log(file);
+ })
+ 
 }
 checkAuthStatus();
