@@ -1,5 +1,11 @@
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
+  const mediaFileDisplayer = document.getElementById('media-files-displayer');
+    const input = document.getElementById('content');
+    const postBtn = document.getElementById('post-btn');
+    const mediaInput = document.getElementById('media-upload');
+   const mediaCover = document.getElementById('cover');
+   const mediaAdder = document.getElementById('add-media');
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
@@ -31,7 +37,23 @@ async function checkAuthStatus() {
         return 
     }
 //post adder
-const mediaInput = document.getElementById('media-upload');
+input.oninput = () => {
+  
+      if (input.value.length > 0){
+          postBtn.disabled = false;
+          postBtn.style.background = "#2bff43";
+          mediaCover.classList.add('hidden');
+          mediaAdder.style.background = "#2bff43";
+          mediaAdder.style.color = "#222";
+          
+      }else{
+          postBtn.disabled = true;
+          postBtn.style.background = "#c5ff95";
+          mediaCover.classList.remove('hidden');
+          mediaAdder.style.background = "#c5ff95";
+          mediaAdder.style.color = "#bbb";
+      }
+}
 mediaInput.onchange = (e) =>{
  const selectedFiles = Array.from(e.target.files);
  if (selectedFiles.length === 0) return; 
