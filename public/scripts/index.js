@@ -1,6 +1,9 @@
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
   const mediaFileDisplayer = document.getElementById('media-files-displayer');
+const postCloser = document.getElementById('p-closer');
+const pUserPic= document.getElementById('p-user-pic');
+const pUsername = document.getElementById('p-username');
     const input = document.getElementById('content');
     const postBtn = document.getElementById('post-btn');
     const mediaInput = document.getElementById('media-upload');
@@ -16,6 +19,8 @@ async function checkAuthStatus() {
         if (data.loggedIn) {
         signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture || "images/default-user.png";
+          pUserPic.src = data.user.profile_picture || "images/default-user.png";
+          pUsername.textContent = data.user.username
         userPic.classList.remove("hidden");
           
         } else {
@@ -37,6 +42,9 @@ async function checkAuthStatus() {
         return 
     }
 //post adder
+postCloser.onclick = (e) => {
+  e.target.parentElement.classList.add("hidden");
+}
 input.oninput = () => {
   
       if (input.value.length > 0){
