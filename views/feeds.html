@@ -30,10 +30,41 @@
       <div class="post"></div>
     </section>
     <article>
-      <input type="file" accept="image/*,video/*" id="media-upload" multiple/>
       
     </article>
     </main>
+   <div id="create-post-container" class="hiddent">
+        <div class="header">
+            <div class="closer">
+            <i id="post-container-closer">X</i>
+            </div>
+            <h2>Create Post</h2>
+            <button disabled id="post-btn">Post</button>
+        </div>
+        <div class="user-details">
+            <img src="user.png" alt="user picture" />
+            <p id="username">User</p>
+        </div>
+        <div id="media-files-displayer"></div>
+        <form>
+            <textarea id="content" name="content"  placeholder="What's on your mind?"></textarea>
+           
+            <div id="add-media-files">
+                
+                
+                <input  type="file" accept="image/*,video/*" id="media-upload" />
+            </div>
+        </form>
+           <div id="media-adder">
+               <div id="cover"></div>
+            <label  id="add-media">
+            <i>Add media files</i>
+            </label>
+            </div>
+            
+        
+    </div>
+    
   <div class="tabs">
         <div dataset="home" class="active" title="home">
            <a href="/">
