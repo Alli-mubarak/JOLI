@@ -1,6 +1,6 @@
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
-  const mediaFileDisplayer = document.getElementById('media-files-displayer');
+  const mediaFilesDisplayer = document.getElementById('media-files-displayer');
 const postCloser = document.getElementById('p-closer');
 const pUserPic= document.getElementById('p-user-picture');
 const pUsername = document.getElementById('p-username');
@@ -43,7 +43,7 @@ async function checkAuthStatus() {
     }
 //post adder
 postCloser.onclick = (e) => {
-  e.target.parentElement.classList.add("hidden");
+  e.target.parentElement.parentElement.classList.add("hidden");
 }
 input.oninput = () => {
   
@@ -73,7 +73,7 @@ mediaInput.onchange = (e) =>{
     //        
      //  }
        const fileURL = URL.createObjectURL(file); [1]
-            const previewContainer = document.createElement("div");
+            
             // Create a generic wrapper div for styling individual item cards
             const previewCard = document.createElement('div');
             previewCard.style.width = '150px';
@@ -102,8 +102,8 @@ mediaInput.onchange = (e) =>{
             }
 
             // 4. Inject the individual preview card into the container grid
-            previewContainer.appendChild(previewCard);
-           document.body.appendChild(previewContainer);
+            mediaFilesDisplayer.appendChild(previewCard);
+           
  })
 
       e.target.value = '';
