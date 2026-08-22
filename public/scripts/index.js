@@ -37,7 +37,7 @@ mediaInput.onchange = (e) =>{
  if (selectedFiles.length === 0) return; 
  selectedFiles.forEach(file =>{
        console.log(file.type + ", " +(file.size /1024) + "kb");
-       if("video" in file.type){
+       if(file.type.includes("video")){
              console.log("this is a video");
        }else{
              console.log("this is an image");
