@@ -1,6 +1,7 @@
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
   const mediaFilesDisplayer = document.getElementById('media-files-displayer');
+const postContainer = document.getElementById('create-post-container');
 const postCloser = document.getElementById('p-closer');
 const pUserPic= document.getElementById('p-user-picture');
 const pUsername = document.getElementById('p-username');
@@ -42,8 +43,8 @@ async function checkAuthStatus() {
         return 
     }
 //post adder
-postCloser.onclick = (e) => {
-  e.target.parentElement.parentElement.classList.add("hidden");
+postCloser.onclick = () => {
+  postContainer.classList.add("hidden");
 }
 input.oninput = () => {
   
