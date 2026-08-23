@@ -204,6 +204,7 @@ main{
             height: 100px;
             display: inline-block;
           border: 1px solid #ccc;
+          border-radius:8px;
           margin:0 5px;
         }
       
