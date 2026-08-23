@@ -142,6 +142,7 @@ function compressImage(file, quality) {
               canvasViewer.classList.add("fa-solid");
               canvasViewer.classList.add("fa-expand");
               canvasDeleter.appendChild(cancelMark);
+              canvasDeleter.onclick = () => {removeMedia(e)};
               canvasController.appendChild(canvasDeleter);
               canvasController.appendChild(canvasViewer);
               canvasController.classList.add("canvas-controller");
@@ -156,4 +157,8 @@ function compressImage(file, quality) {
 
         reader.onerror = (err) => console.error(err);
             }
+function removeMedia(e){
+  const card = e.target.parentElement.parentElement;
+  mediaFilesDisplayer.removeChild(card);
+}
 checkAuthStatus();
