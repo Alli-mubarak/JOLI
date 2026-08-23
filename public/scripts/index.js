@@ -107,7 +107,6 @@ mediaInput.onchange = (e) =>{
  })
 
       e.target.value = '';
-   console.log(selectedPictures);
  
 }
 function compressImage(file, quality) {
@@ -169,6 +168,7 @@ function compressImage(file, quality) {
                 cropped: false
               }
               selectedPictures.push(imageData);
+              console.log(selectedPictures);
  
             };
 
