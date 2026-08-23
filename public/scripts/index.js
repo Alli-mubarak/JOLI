@@ -51,6 +51,11 @@ postCloser.onclick = () => {
   postContainer.classList.add("hidden");
   mediaFilesDisplayer.innerHTML = "";
   input.value = "";
+  postBtn.disabled = true;
+  postBtn.style.background = "#c5ff95";
+  mediaCover.classList.remove('hidden');
+  mediaAdder.style.background = "#c5ff95";
+  mediaAdder.style.color = "#bbb";
 }
 input.oninput = () => {
   
