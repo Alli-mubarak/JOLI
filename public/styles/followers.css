@@ -232,16 +232,19 @@ main{
       align-items :center ;
       justify-content:center;
       margin-left:auto;
-      background:#ccc;
+      background:#ddd;
       border-radius:50%;
     }
   .canvas-controller i:nth-child(2){
-    margin:  auto;
+    margin: 5px  auto;
     width: 60%;
     height: 60%;
-    display:block;
     font-size: 3rem;
     cursor: pointer;
+    display: flex;
+      align-items :center ;
+      justify-content:center;
+    background:#ddd;
   }
         form{
             width: 100%;
