@@ -319,6 +319,14 @@ main{
     padding: 10px 20px;
     border-radius: 10px;
   }
+  #image-box{
+    width: 350px;
+    margin: auto;
+  }
+  #image-box image{
+    width:350px;
+    height: auto;
+  }
 .tabs{
             display: flex;
             align-items :center;
