@@ -15,6 +15,7 @@ const imageCropper = document.getElementById("image-cropper");
 const cropSaver = document.getElementById("crop-saver");
 
 const selectedPictures = [];
+let n = 0;
 
 async function checkAuthStatus() {
       try {
@@ -87,6 +88,7 @@ mediaInput.onchange = (e) =>{
    if (file.type.startsWith('image/')) {
      try {
         // Compress the image with 70% quality
+       n++
         compressImage(file, 0.7); 
         console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
@@ -155,11 +157,13 @@ function compressImage(file, quality) {
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
+              canvasContainer.id = `p${n};
               mediaFilesDisplayer.appendChild(canvasContainer);
 
               const imageData = {
                 image : img,
                 canvas: canvas,
+                id: `p${n}`,
                 x: 0,
                 y:0,
                 cropped: false
@@ -173,15 +177,22 @@ function compressImage(file, quality) {
 
         reader.onerror = (err) => console.error(err);
             }
+            
 function removeMedia(e){
   const card = e.target.parentElement.parentElement.parentElement;
-  mediaFilesDisplayer.removeChild(card);
+  const index = selectedPictures.findIndex( image => image.id === card.id);
+if (index !== -1) {
+  selectedPictures.splice(index, 1);
 }
+mediaFilesDisplayer.removeChild(card);
+}
+
 function cropImage(e){
   const card = e.target.parentElement.parentElement.parentElement;
  // alert(card)
   imageCropper.classList.remove("hidden");
 }
+
 cropSaver.onclick = (e) => {
   imageCropper.classList.add("hidden");
 }
