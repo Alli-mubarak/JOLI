@@ -142,7 +142,7 @@ function compressImage(file, quality) {
               canvasViewer.classList.add("fa-solid");
               canvasViewer.classList.add("fa-expand");
               canvasDeleter.appendChild(cancelMark);
-              canvasDeleter.onclick = () => {removeMedia(e)};
+              canvasDeleter.onclick = (e) => {removeMedia(e)};
               canvasController.appendChild(canvasDeleter);
               canvasController.appendChild(canvasViewer);
               canvasController.classList.add("canvas-controller");
