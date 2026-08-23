@@ -157,7 +157,7 @@ function compressImage(file, quality) {
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
-              canvasContainer.id = `p${n};
+              canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
 
               const imageData = {
