@@ -141,6 +141,7 @@ main{
             padding: 20px;
             width:100%;
             height: 100%;
+            min-height: 100vh;
             position: absolute;
             top: 0; left:0;
             background: #fff;
@@ -204,6 +205,7 @@ main{
             height: 100px;
             display: inline-block;
          position: relative;
+         margin:0 5px;
          
        }
         #media-files-displayer canvas{
@@ -211,13 +213,14 @@ main{
             height: 100px;
           border: 1px solid #ccc;
           border-radius:8px;
-          margin:0 5px;
+          
         }
       .canvas-controller{
         position: absolute;
         width: 100%;
         height:100%;
         background: tan;
+        top:0; left:0;
       }
         form{
             width: 100%;
