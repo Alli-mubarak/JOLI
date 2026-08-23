@@ -195,7 +195,6 @@ main{
             font-weight: 600;
         }
         #media-files-displayer{
-            height: 150px;
             width:100%;
             overflow-x: auto;
             white-space: nowrap; 
@@ -204,6 +203,7 @@ main{
             width: 150px;
             height: 150px;
             display: inline-block;
+          margin:0 5px;
         }
       
         form{
