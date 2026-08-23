@@ -228,9 +228,10 @@ main{
       font-size: 0.9rem;
       width:20px; height: 20px;
       cursor: pointer;
-      display: block;
-      text-align:center;
-      margin-right:auto;
+      display: flex;
+      align-items :center ;
+      justify-content:center;
+      margin-left:auto;
       background:#ccc;
       border-radius:50%;
     }
