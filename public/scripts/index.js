@@ -139,8 +139,8 @@ function compressImage(file, quality) {
               
               cancelMark.classList.add("fa-solid");
               cancelMark.classList.add("fa-xmark");
-              canvasViewer.classList.add("fa-regular");
-              canvasViewer.classList.add("fa-square");
+              canvasViewer.classList.add("fa-solid");
+              canvasViewer.classList.add("fa-expand");
               canvasDeleter.appendChild(cancelMark);
               canvasController.appendChild(canvasDeleter);
               canvasController.appendChild(canvasViewer);
