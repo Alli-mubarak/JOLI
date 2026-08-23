@@ -299,6 +299,26 @@ main{
             width: 1px;
             height: 1px;
   }
+  #image-cropper{
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.9);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 30px;
+            overflow: hidden;
+     }
+  #crop-saver{
+    font-size:1rem;
+    display: block;
+    margin-left: auto;
+    border: none;
+    background: #ddd;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
 .tabs{
             display: flex;
             align-items :center;
