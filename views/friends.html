@@ -31,6 +31,40 @@
     </section>
     <article></article>
     </main>
+<div id="create-post-container" class="hidden">
+        <div class="header">
+            <div class="closer" id="p-closer">
+            <i id="post-container-closer" class="fa-solid fa-xmark"></i>
+            </div>
+            <h2>Create Post</h2>
+            <button disabled id="post-btn">Post</button>
+        </div>
+        <div class="user-details">
+            <img src="/images/default-user.png" alt="user picture" id="p-user-picture" />
+            <p id="p-username">User</p>
+        </div>
+     <div id="media-adder">
+               <div id="cover"></div>
+            <label  id="add-media" for="media-upload">
+            <i class="fa-regular fa-images"></i>
+            </label>
+     </div>
+        <form>
+          
+        <div id="media-files-displayer"></div>
+            <textarea id="content" name="content" autofocus  placeholder="What's on your mind?"></textarea>
+           
+            <div id="add-media-files">
+                
+                
+                <input  type="file" accept="image/*" id="media-upload" multiple />
+            </div>
+        </form>
+           
+            
+        
+</div>
+  
   <div class="tabs">
         <div dataset="home" class="active" title="home">
            <a href="/">
