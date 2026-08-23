@@ -77,8 +77,8 @@ mediaInput.onchange = (e) =>{
             
             // Create a generic wrapper div for styling individual item cards
             const previewCard = document.createElement('div');
-            previewCard.style.width = '150px';
-            previewCard.style.height = '150px';
+            previewCard.style.width = '100px';
+            previewCard.style.height = '100px';
             previewCard.style.overflow = 'hidden';
             previewCard.style.border = '1px solid #ccc';
             previewCard.style.borderRadius = '8px';
