@@ -72,46 +72,15 @@ mediaInput.onchange = (e) =>{
  if (selectedFiles.length === 0) return; 
  selectedFiles.forEach(file =>{
        console.log(file.type + ", " +Math.ceil(file.size /1024) + "kb");
-     //  if(file.type.includes("video")){
-    //         console.log("You cannot post videos yet!");
-    //   }else{
-    //        
-     //  }
-       const fileURL = URL.createObjectURL(file); [1]
-            
-            // Create a generic wrapper div for styling individual item cards
-            const previewCard = document.createElement('canvas');
-             const ctx = previewCard.getContext('2d');
-   
-           // previewCard.style.width = '100px';
-           // previewCard.style.height = '100px';
-          //  previewCard.style.overflow = 'hidden';
-            previewCard.style.border = '1px solid #ccc';
-            previewCard.style.borderRadius = '8px';
-
-            // Check file type and build the correct HTML element
-            if (file.type.startsWith('image/')) {
-                const img = document.createElement('img');
-                img.src = fileURL;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-               // previewCard.appendChild(img);
-              const MAX_WIDTH = 1200;
-                let width = img.width;
-                let height = img.height;
-
-                if (width > MAX_WIDTH) {
-                    height *= MAX_WIDTH / width;
-                    width = MAX_WIDTH;
-                }
-
-                previewCard.width = width;
-                previewCard.height = height;
-
-                // Draw image onto the canvas
-                ctx.drawImage(img, 0, 0, width, height);
-
+   if (file.type.startsWith('image/')) {
+     try {
+        // Compress the image with 70% quality
+        compressImage(file, 0.7); 
+        console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
+    //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
+    } catch (error) {
+        console.error('Compression failed:', error);
+     }
             } else if (file.type.startsWith('video/')) {
                 const video = document.createElement('video');
                 video.src = fileURL;
@@ -130,4 +99,41 @@ mediaInput.onchange = (e) =>{
       e.target.value = '';
  
 }
+function compressImage(file, quality) {
+    
+        const reader = new FileReader();
+        reader.readAsDataURL(file); // 1. Read file as a Data URL
+
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result; // 2. Load into image element
+
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                // Optional: Maintain aspect ratio or apply a max width/height
+                const MAX_WIDTH = 1200;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+
+                // 3. Draw image onto the canvas
+                ctx.drawImage(img, 0, 0, width, height);
+              mediaFilesDisplayer.appendChild(canvas);
+ 
+            };
+
+            img.onerror = (err) => reject(err);
+        };
+
+        reader.onerror = (err) => reject(err);
+            }
 checkAuthStatus();
