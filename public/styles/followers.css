@@ -320,12 +320,16 @@ main{
     border-radius: 10px;
   }
   #image-box{
-    width: 80vh;
-    margin:15px  auto 0;
+    width: 80vw;
+    background: pink;
+    position: absolute;
+    top: 100px;
+    left: 10vw;
   }
   #image-box img{
     width:100%;
     height: auto;
+    
   }
 .tabs{
             display: flex;
