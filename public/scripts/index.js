@@ -195,7 +195,7 @@ function cropImage(e){
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
   imageInfo = selectedPictures[index];
-  cropBox.appendChild(imageInfo.canvas);
+  cropBox.appendChild(imageInfo.image);
   console.log(imageInfo);
 }
   imageCropper.classList.remove("hidden");
