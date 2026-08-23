@@ -49,6 +49,7 @@ postAdder.onclick = () => {
 }
 postCloser.onclick = () => {
   postContainer.classList.add("hidden");
+  mediaFilesDisplayer.innerHTML = "";
 }
 input.oninput = () => {
   
