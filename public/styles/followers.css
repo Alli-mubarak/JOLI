@@ -316,6 +316,8 @@ main{
     margin-left: auto;
     border: none;
     background: #ddd;
+    padding: 10px 20px;
+    border-radius: 10px;
   }
 .tabs{
             display: flex;
