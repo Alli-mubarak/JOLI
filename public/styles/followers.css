@@ -321,10 +321,10 @@ main{
   }
   #image-box{
     width: 80vh;
-    margin: auto;
+    margin:15px  auto 0;
   }
   #image-box img{
-    width:100%
+    width:100%;
     height: auto;
   }
 .tabs{
