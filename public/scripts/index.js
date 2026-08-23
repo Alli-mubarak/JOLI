@@ -13,6 +13,7 @@ const pUsername = document.getElementById('p-username');
    const mediaAdder = document.getElementById('add-media');
 const imageCropper = document.getElementById("image-cropper");
 const cropSaver = document.getElementById("crop-saver");
+const cropBox = document.getElementById("image-box");
 
 const selectedPictures = [];
 let n = 0;
@@ -189,12 +190,19 @@ mediaFilesDisplayer.removeChild(card);
 }
 
 function cropImage(e){
+  let imageInfo;
   const card = e.target.parentElement.parentElement.parentElement;
- // alert(card)
+  
+  const index = selectedPictures.findIndex( image => image.id === card.id);
+if (index !== -1) {
+  imageInfo = selectedPictures[index];
+  cropBox.appendChild(imageInfo.canvas);
+}
   imageCropper.classList.remove("hidden");
 }
 
 cropSaver.onclick = (e) => {
   imageCropper.classList.add("hidden");
+  cropBox.innerHTML = "";
 }
 checkAuthStatus();
