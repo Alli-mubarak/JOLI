@@ -131,7 +131,23 @@ function compressImage(file, quality) {
 
                 // 3. Draw image onto the canvas
                 ctx.drawImage(img, 0, 0, width, height);
-              mediaFilesDisplayer.appendChild(canvas);
+              const canvasContainer = document.createElement("div");
+              const canvasController = document.createElement("div");
+              const canvasDeleter = document.createElement("div");
+              const cancelMark = document.createElement("i");
+              const canvasViewer = document.createElement("i");
+              
+              cancelMark.classList.add("fa-solid");
+              cancelMark.classList.add("fa-xmark");
+              canvasViewer.classList.add("fa-solid");
+              canvasViewer.classList.add("fa-square");
+              canvasDeleter.appendChild(cancelMark);
+              canvasController.appendChild(canvasDeleter);
+              canvasController.appendChild(canvasViewer);
+              canvasController.classList.add("canvas-controller");
+              canvasContainer.appendChild(canvas);
+              canvasContainer.appendChild(canvasController);
+              mediaFilesDisplayer.appendChild(canvasContainer);
  
             };
 
