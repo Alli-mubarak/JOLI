@@ -11,6 +11,7 @@ const pUsername = document.getElementById('p-username');
     const mediaInput = document.getElementById('media-upload');
    const mediaCover = document.getElementById('cover');
    const mediaAdder = document.getElementById('add-media');
+const imageCropper = document.getElementById("image-cropper");
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
@@ -141,6 +142,7 @@ function compressImage(file, quality) {
               cancelMark.classList.add("fa-xmark");
               canvasViewer.classList.add("fa-solid");
               canvasViewer.classList.add("fa-expand");
+              canvasViewer.onclick = (e) => {cropImage(e)};
               canvasDeleter.appendChild(cancelMark);
               canvasDeleter.onclick = (e) => {removeMedia(e)};
               canvasController.appendChild(canvasDeleter);
@@ -160,5 +162,13 @@ function compressImage(file, quality) {
 function removeMedia(e){
   const card = e.target.parentElement.parentElement.parentElement;
   mediaFilesDisplayer.removeChild(card);
+}
+function cropImage(e){
+  const card = e.target.parentElement.parentElement.parentElement;
+  alert(card)
+  imageCropper.classlist.remove("hidden");
+}
+cropSaver.onclick = (e) => {
+  imageCropper.classlist.add("hidden");
 }
 checkAuthStatus();
