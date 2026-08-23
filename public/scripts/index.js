@@ -64,6 +64,7 @@ postCloser.onclick = () => {
   mediaAdder.style.background = "#c5ff95";
   mediaAdder.style.color = "#bbb";
 }
+input.value = "";
 input.oninput = () => {
   
       if (input.value.length > 0){
@@ -85,12 +86,12 @@ mediaInput.onchange = (e) =>{
  const selectedFiles = Array.from(e.target.files);
  if (selectedFiles.length === 0) return; 
  selectedFiles.forEach(file =>{
-       console.log(file.type + ", " +Math.ceil(file.size /1024) + "kb");
+      // console.log(file.type + ", " +Math.ceil(file.size /1024) + "kb");
    if (file.type.startsWith('image/')) {
      try {
         // Compress the image with 70% quality
         compressImage(file, 0.7); 
-        console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
+       // console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
     } catch (error) {
         console.error('Compression failed:', error);
@@ -169,8 +170,6 @@ function compressImage(file, quality) {
                 cropped: false
               }
               selectedPictures.push(imageData);
-              console.log(selectedPictures);
- 
             };
 
             img.onerror = (err) => console.error(err);
@@ -191,12 +190,13 @@ mediaFilesDisplayer.removeChild(card);
 
 function cropImage(e){
   let imageInfo;
-  const card = e.target.parentElement.parentElement.parentElement;
+  const card = e.target.parentElement.parentElement;
   
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
   imageInfo = selectedPictures[index];
   cropBox.appendChild(imageInfo.canvas);
+  console.log(imageInfo);
 }
   imageCropper.classList.remove("hidden");
 }
