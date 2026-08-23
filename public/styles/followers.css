@@ -226,13 +226,16 @@ main{
       }
     .canvas-controller i:nth-child(1){
       font-size: 0.9rem;
-      width:30px; height: 30px;
+      width:20px; height: 20px;
       cursor: pointer;
       display: block;
-      margin-right:0;
+      text-align:center;
+      margin-right:auto;
+      background:#ccc;
+      border-radius:50%;
     }
   .canvas-controller i:nth-child(2){
-    margin: 8px  auto;
+    margin:  auto;
     width: 60%;
     height: 60%;
     display:block;
