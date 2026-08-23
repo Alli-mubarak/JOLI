@@ -225,15 +225,18 @@ main{
         top:0; left:0;
       }
     .canvas-controller i:nth-child(1){
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       width:30px; height: 30px;
       cursor: pointer;
+      display: block;
       margin-right:0;
     }
   .canvas-controller i:nth-child(2){
     margin: 8px  auto;
     width: 60%;
     height: 60%;
+    display:block;
+    font-size: 3rem;
     cursor: pointer;
   }
         form{
