@@ -13,6 +13,9 @@ const pUsername = document.getElementById('p-username');
    const mediaAdder = document.getElementById('add-media');
 const imageCropper = document.getElementById("image-cropper");
 const cropSaver = document.getElementById("crop-saver");
+
+const selectedPictures = [];
+
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
@@ -103,6 +106,7 @@ mediaInput.onchange = (e) =>{
  })
 
       e.target.value = '';
+   console.log(selectedPictures);
  
 }
 function compressImage(file, quality) {
@@ -118,7 +122,7 @@ function compressImage(file, quality) {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
-                // Optional: Maintain aspect ratio or apply a max width/height
+                // Maintain aspect ratio or apply a max width/height
                 const MAX_WIDTH = 1200;
                 let width = img.width;
                 let height = img.height;
@@ -131,7 +135,7 @@ function compressImage(file, quality) {
                 canvas.width = width;
                 canvas.height = height;
 
-                // 3. Draw image onto the canvas
+              
                 ctx.drawImage(img, 0, 0, width, height);
               const canvasContainer = document.createElement("div");
               const canvasController = document.createElement("div");
@@ -152,6 +156,15 @@ function compressImage(file, quality) {
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
               mediaFilesDisplayer.appendChild(canvasContainer);
+
+              const imageData = {
+                image : img,
+                canvas: canvas,
+                x: 0,
+                y:0,
+                cropped: false
+              }
+              selectedPictures.push(imageData);
  
             };
 
