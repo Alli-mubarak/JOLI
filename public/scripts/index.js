@@ -88,7 +88,6 @@ mediaInput.onchange = (e) =>{
    if (file.type.startsWith('image/')) {
      try {
         // Compress the image with 70% quality
-       n++
         compressImage(file, 0.7); 
         console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
@@ -157,6 +156,7 @@ function compressImage(file, quality) {
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
+              n++;
               canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
 
