@@ -185,6 +185,7 @@ if (index !== -1) {
   selectedPictures.splice(index, 1);
 }
 mediaFilesDisplayer.removeChild(card);
+  console.log(selectedPictures);
 }
 
 function cropImage(e){
