@@ -80,10 +80,12 @@ mediaInput.onchange = (e) =>{
        const fileURL = URL.createObjectURL(file); [1]
             
             // Create a generic wrapper div for styling individual item cards
-            const previewCard = document.createElement('div');
-            previewCard.style.width = '100px';
-            previewCard.style.height = '100px';
-            previewCard.style.overflow = 'hidden';
+            const previewCard = document.createElement('canvas');
+             const ctx = previewCard.getContext('2d');
+   
+           // previewCard.style.width = '100px';
+           // previewCard.style.height = '100px';
+          //  previewCard.style.overflow = 'hidden';
             previewCard.style.border = '1px solid #ccc';
             previewCard.style.borderRadius = '8px';
 
@@ -94,7 +96,21 @@ mediaInput.onchange = (e) =>{
                 img.style.width = '100%';
                 img.style.height = '100%';
                 img.style.objectFit = 'cover';
-                previewCard.appendChild(img);
+               // previewCard.appendChild(img);
+              const MAX_WIDTH = 1200;
+                let width = img.width;
+                let height = img.height;
+
+                if (width > MAX_WIDTH) {
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                }
+
+                previewCard.width = width;
+                previewCard.height = height;
+
+                // Draw image onto the canvas
+                ctx.drawImage(img, 0, 0, width, height);
 
             } else if (file.type.startsWith('video/')) {
                 const video = document.createElement('video');
