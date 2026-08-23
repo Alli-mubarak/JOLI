@@ -218,8 +218,10 @@ main{
   #media-adder{
             font-size: 0.9rem;
             width: 100%;
+           height: fit-content;
             display: flex;
             align-items: center;
+            position: relative;
             justify-content: end;
             padding: 5px;
             }
