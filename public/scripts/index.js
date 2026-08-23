@@ -12,6 +12,7 @@ const pUsername = document.getElementById('p-username');
    const mediaCover = document.getElementById('cover');
    const mediaAdder = document.getElementById('add-media');
 const imageCropper = document.getElementById("image-cropper");
+const cropSaver = document.getElementById("crop-saver");
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
