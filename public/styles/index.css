@@ -199,10 +199,11 @@ main{
             overflow-x: auto;
             white-space: nowrap; 
         }
-        #media-files-displayer > div{
-            width: 150px;
-            height: 150px;
+        #media-files-displayer > canvas{
+            width: 100px;
+            height: 100px;
             display: inline-block;
+          border: 1px solid #ccc;
           margin:0 5px;
         }
       
