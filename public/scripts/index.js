@@ -151,9 +151,9 @@ function compressImage(file, quality) {
  
             };
 
-            img.onerror = (err) => reject(err);
+            img.onerror = (err) => console.error(err);
         };
 
-        reader.onerror = (err) => reject(err);
+        reader.onerror = (err) => console.error(err);
             }
 checkAuthStatus();
