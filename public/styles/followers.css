@@ -320,11 +320,11 @@ main{
     border-radius: 10px;
   }
   #image-box{
-    width: 350px;
+    width: 400px;
     margin: auto;
   }
-  #image-box image{
-    width:350px;
+  #image-box img{
+    width:400px;
     height: auto;
   }
 .tabs{
