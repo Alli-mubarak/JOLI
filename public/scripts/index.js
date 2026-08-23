@@ -158,7 +158,7 @@ function compressImage(file, quality) {
         reader.onerror = (err) => console.error(err);
             }
 function removeMedia(e){
-  const card = e.target.parentElement.parentElement;
+  const card = e.target.parentElement.parentElement.parentElement;
   mediaFilesDisplayer.removeChild(card);
 }
 checkAuthStatus();
