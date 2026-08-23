@@ -83,7 +83,7 @@ mediaInput.onchange = (e) =>{
             previewCard.style.border = '1px solid #ccc';
             previewCard.style.borderRadius = '8px';
 
-            // 3. Check file type and build the correct HTML element
+            // Check file type and build the correct HTML element
             if (file.type.startsWith('image/')) {
                 const img = document.createElement('img');
                 img.src = fileURL;
@@ -102,7 +102,7 @@ mediaInput.onchange = (e) =>{
                 previewCard.appendChild(video);
             }
 
-            // 4. Inject the individual preview card into the container grid
+            //  Inject the individual preview card into the media files displayer
             mediaFilesDisplayer.appendChild(previewCard);
            
  })
