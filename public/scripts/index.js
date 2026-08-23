@@ -167,9 +167,9 @@ function removeMedia(e){
 function cropImage(e){
   const card = e.target.parentElement.parentElement.parentElement;
   alert(card)
-  imageCropper.classlist.remove("hidden");
+  imageCropper.classList.remove("hidden");
 }
 cropSaver.onclick = (e) => {
-  imageCropper.classlist.add("hidden");
+  imageCropper.classList.add("hidden");
 }
 checkAuthStatus();
