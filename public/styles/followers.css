@@ -299,6 +299,17 @@ main{
             width: 1px;
             height: 1px;
   }
+     .overlayContainer{
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.9);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            padding: 30px;
+            overflow: hidden;
+     }
 .tabs{
             display: flex;
             align-items :center;
