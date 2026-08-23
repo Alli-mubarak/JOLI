@@ -91,9 +91,6 @@ mediaInput.onchange = (e) =>{
                 previewCard.appendChild(video);
             }
 
-            //  Inject the individual preview card into the media files displayer
-            mediaFilesDisplayer.appendChild(previewCard);
-           
  })
 
       e.target.value = '';
