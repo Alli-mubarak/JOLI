@@ -195,15 +195,16 @@ main{
             font-weight: 600;
         }
         #media-files-displayer{
-            height:150px; width:100%;
-            background:pink;
-          display: flex;
-          overflow: hidden;
+            height: 150px;
+            width:100%;
+            overflow-x: auto;
+            white-space: nowrap; 
         }
-      #media-files-displayer > div{
-        display: inline-block;
-        margin-right: 10px;
-      }
+        #media-files-displayer > div{
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+        }
       
         form{
             width: 100%;
