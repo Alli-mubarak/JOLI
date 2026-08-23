@@ -295,6 +295,9 @@ main{
             background:#777;
             position:relative;
         }
+      .add-post:hover{
+        background: #111;
+      }
         .add-post div{
             position: absolute;
             width:4px;
