@@ -265,6 +265,12 @@ const cropHolder = document.getElementById("crop-holder");
         imageInCropper.style.height = imageHeight + "px";
         initialWidth = imageWidth;
         initialHeight = imageHeight;
+
+         //reset cropper
+         crop.style.width = imageWidth + "px";
+         crop.style.height = imageHeight + "px";
+         crop.style.top = 0;
+         crop.style.left = 0;
        }catch(e){
          console.error(e);
        }
@@ -274,7 +280,6 @@ const cropHolder = document.getElementById("crop-holder");
 
    crop.addEventListener('touchstart', (e) => {
   isResizing = true;
-  alert(image)
   // Use the first touch point
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
