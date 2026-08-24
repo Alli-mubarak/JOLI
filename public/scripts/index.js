@@ -140,12 +140,11 @@ mediaInput.onchange = (e) =>{
         reader.readAsDataURL(file); // 1. Read file as a Data URL
 
         reader.onload = (event) => {
-            n++;
+            
             const img = new Image();
-            img.id = `p${n}`;
            img.src = event.target.result; // 2. Load into image element
 
-         //  img.onload = () => {
+           img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
@@ -184,7 +183,9 @@ mediaInput.onchange = (e) =>{
               canvasContainer.appendChild(canvasController);
               canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
-              
+             
+              n++;
+             img.id = `p${n}`;
               const imageData = {
                 image : img,
                 canvas: canvas,
@@ -196,10 +197,10 @@ mediaInput.onchange = (e) =>{
                 cropped: false
               }
               selectedPictures.push(imageData);
-           // };
+            };
           
 
-         //   img.onerror = (err) => console.error(err);
+           img.onerror = (err) => console.error(err);
         };
 
         reader.onerror = (err) => console.error(err);
