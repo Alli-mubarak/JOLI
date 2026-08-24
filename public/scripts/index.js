@@ -109,6 +109,7 @@ mediaInput.onchange = (e) =>{
    if (file.type.startsWith('image/')) {
      try {
         // Compress the image with 70% quality
+       n++;
         compressImage(file, 0.7); 
        // console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
@@ -128,6 +129,7 @@ mediaInput.onchange = (e) =>{
  })
 
       e.target.value = '';
+    console.log(selectedPictures);
   }catch(e){
     console.error(e)
   }
@@ -138,7 +140,7 @@ function compressImage(file, quality) {
         reader.readAsDataURL(file); // 1. Read file as a Data URL
 
         reader.onload = (event) => {
-            n++;
+            
             const img = new Image();
             img.id = `p${n}`;
             img.src = event.target.result; // 2. Load into image element
