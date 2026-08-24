@@ -349,26 +349,8 @@ cropHolder.addEventListener('touchmove', (e) => {
        isDragging = false;
        
    }
-  const saveBtn = document.getElementById("save-crop")
-    saveBtn.onclick = () => {
-    const canvas = document.createElement("canvas")
-    canvas.height = initialHeight;
-    canvas.width = initialWidth
-    const ctx = canvas.getContext('2d');
-    const rect = crop.getBoundingClientRect();
-    const imgRect = image.getBoundingClientRect();
-    const scaleX = image.naturalWidth / imgRect.width;
-     const scaleY = image.naturalHeight / imgRect.height;
-    const cropX = initialLeft * scaleX;
-     const cropY = initialTop * scaleY;
-      const cropWidth = rect.width * scaleX;
-       const cropHeight = rect.height * scaleY;
-       console.log(scaleX)
-    ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
-    result.appendChild(canvas)
-        cropBox.removeChild(image);
-        cropper.classList.add("hidden")
-          }
+  
+    
 
 function cropImage(e){
   let imageInfo;
@@ -404,8 +386,23 @@ if (index !== -1) {
 }
 
 cropSaver.onclick = (e) => {
+  const canvas = document.createElement("canvas")
+    canvas.height = initialHeight;
+    canvas.width = initialWidth
+    const ctx = canvas.getContext('2d');
+    const rect = crop.getBoundingClientRect();
+    const imgRect = image.getBoundingClientRect();
+    const scaleX = image.naturalWidth / imgRect.width;
+     const scaleY = image.naturalHeight / imgRect.height;
+    const cropX = initialLeft * scaleX;
+     const cropY = initialTop * scaleY;
+      const cropWidth = rect.width * scaleX;
+       const cropHeight = rect.height * scaleY;
+       console.log(scaleX)
+    ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
   imageCropper.classList.add("hidden");
   cropBox.innerHTML = "";
- console.log(imageInCropperId);
+ const croppedImageContainer = cropBox.querySelector(`#${imageInCropperId`);
+ alert(croppedImageContainer);
 }
 checkAuthStatus();
