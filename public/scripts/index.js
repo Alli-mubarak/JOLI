@@ -263,7 +263,6 @@ const cropHolder = document.getElementById("crop-holder");
         cropBox.style.width = imageWidth + "px";
       
         imageInCropper.style.height = imageHeight + "px";
-        cropper.classList.remove("hidden");
         initialWidth = imageWidth;
         initialHeight = imageHeight;
        }catch(e){
