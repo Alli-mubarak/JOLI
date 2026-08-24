@@ -17,6 +17,7 @@ const cropBox = document.getElementById("image-box");
 
 const selectedPictures = [];
 let n = 0;
+let imageInCropperId;
 
 async function checkAuthStatus() {
       try {
@@ -214,6 +215,7 @@ if (index !== -1) {
           `;
   cropBox.appendChild(imageInfo.image);
   console.log(imageInfo);
+  imageInCropperId = imageInfo.id;
 }
   imageCropper.classList.remove("hidden");
 }
@@ -221,7 +223,6 @@ if (index !== -1) {
 cropSaver.onclick = (e) => {
   imageCropper.classList.add("hidden");
   cropBox.innerHTML = "";
- const imageInCropper = cropBox.children[1].id
-  console.log(imageInCropper);
+ console.log(imageInCropperId);
 }
 checkAuthStatus();
