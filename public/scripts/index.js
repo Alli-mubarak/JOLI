@@ -190,6 +190,186 @@ mediaFilesDisplayer.removeChild(card);
   console.log(selectedPictures);
 }
 
+const crop = document.getElementById("crop");
+const cropHolder = document.getElementById("crop-holder");
+    
+    let image, w, h,  imageWidth, imageHeight
+    //variables for mobile
+        let isDragging = false;
+        let isResizing = false;
+       
+       let startX, startY, newX, newY, initialHeight, dragX, dragY, initialWidth, initialTop, initialLeft;
+       let minSize = 150;
+       let cropWidth, cropHeight;
+     
+    
+    
+    
+    function checkImageDownload(){
+       if(image.complete){    
+        imageWidth = cropBox.clientWidth;
+        imageHeight = cropBox.clientHeight;
+        resetImage();    
+        }else{
+           image.onload = () => {                    
+        imageWidth = cropBox.clientWidth;
+        imageHeight = cropBox.clientHeight;
+        resetImage();
+            }
+          }
+        }
+        
+      function resetImage(){
+       
+        h = image.naturalHeight;
+        w = image.naturalWidth;
+        const r = h/w;
+        const pw = window.innerWidth
+       const imageInCropper =document.getElementById("crop-image")
+       
+        imageWidth = (pw * 0.8) ;
+        imageHeight = ((pw * 0.8)* r ) ;
+        cropBox.style.width = imageWidth + "px";
+      
+        imageInCropper.style.height = imageHeight + "px";
+        cropper.classList.remove("hidden");
+        initialWidth = imageWidth;
+        initialHeight = imageHeight;
+       
+        
+    }
+//****
+
+   crop.addEventListener('touchstart', (e) => {
+  isResizing = true;
+  
+  // Use the first touch point
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  
+ 
+  
+  // Prevent mobile screen from scrolling while dragging the box
+  e.preventDefault();
+}, { passive: false });
+
+   // Handle touch movement
+   
+   // resizing functionality 
+crop.addEventListener('touchmove', (e) => {
+  if (!isResizing) return;
+  
+  const dx = e.touches[0].clientX - startX;
+  const dy = e.touches[0].clientY - startY;
+  
+  // Calculate new size
+    newWidth = initialWidth + dx;
+    newHeight = initialHeight + dy;
+    
+  // restrict crop         
+  if(newWidth < minSize) newWidth = minSize;
+  if(newHeight < minSize) newHeight = minSize;
+  
+  let remW = imageWidth - crop.offsetLeft ;
+  if(newWidth > remW) newWidth = remW;
+  
+  let remH = imageHeight - crop.offsetTop
+  if(newHeight > remH) newHeight = remH;
+  
+  
+  // Set style
+  crop.style.width = newWidth + "px";
+  crop.style.height = newHeight + "px";
+  
+  e.preventDefault();
+}, { passive: false });
+
+ crop.addEventListener('touchend', (e) => {
+  if(isResizing){
+ initialHeight = newHeight
+ initialWidth = newWidth
+ }
+ isResizing = false;
+ 
+});
+
+//Dragging functionality 
+   initialTop = crop.offsetTop;
+    initialLeft = crop.offsetLeft;
+cropHolder.addEventListener('touchstart', (e) => {
+  
+  isResizing = false;
+  isDragging = true;
+    dragX = e.touches[0].clientX;
+    dragY = e.touches[0].clientY;
+  //  initialTop = crop.offsetTop;
+   // initialLeft = crop.offsetLeft;
+ 
+  // Prevent mobile screen from scrolling while dragging the box
+  e.preventDefault();
+}, { passive: false });
+
+cropHolder.addEventListener('touchmove', (e) => {
+  
+  isResizing = false;
+  if(!isDragging) return;
+  
+    const ox = e.touches[0].clientX - dragX;
+    const oy = e.touches[0].clientY - dragY;
+ 
+ // Calculate new positions
+    newX= initialLeft + ox;
+    newY= initialTop + oy;
+  
+  //restrict drag
+    if(newX < 0) newX = 0
+    if(newY < 0) newY = 0
+    
+    let newA = imageWidth - initialWidth 
+    if(newX > newA) newX = newA
+    
+    let newB = imageHeight - initialHeight
+    if(newY > newB) newY = newB
+   
+   
+    //set style
+    crop.style.left = newX + "px";
+    crop.style.top = newY + "px";
+    
+  // Prevent mobile screen from scrolling while dragging the box
+  e.preventDefault();
+}, { passive: false });
+
+   cropHolder.ontouchend = () =>{
+       isResizing = false;
+       if(isDragging){
+        initialLeft = newX;
+        initialTop = newY;
+       }
+       isDragging = false;
+       
+   }
+  const saveBtn = document.getElementById("save-crop")
+    saveBtn.onclick = () => {
+    const canvas = document.createElement("canvas")
+    canvas.height = initialHeight;
+    canvas.width = initialWidth
+    const ctx = canvas.getContext('2d');
+    const rect = crop.getBoundingClientRect();
+    const imgRect = image.getBoundingClientRect();
+    const scaleX = image.naturalWidth / imgRect.width;
+     const scaleY = image.naturalHeight / imgRect.height;
+    const cropX = initialLeft * scaleX;
+     const cropY = initialTop * scaleY;
+      const cropWidth = rect.width * scaleX;
+       const cropHeight = rect.height * scaleY;
+       console.log(scaleX)
+    ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
+    result.appendChild(canvas)
+        cropBox.removeChild(image);
+        cropper.classList.add("hidden")
+          }
+
 function cropImage(e){
   let imageInfo;
   const card = e.target.parentElement.parentElement;
@@ -214,6 +394,9 @@ if (index !== -1) {
           </div>
           `;
   cropBox.appendChild(imageInfo.image);
+  image = imageInfo.image
+   checkImageDownload()
+       
   console.log(imageInfo);
   imageInCropperId = imageInfo.id;
 }
