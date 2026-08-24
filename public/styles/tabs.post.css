@@ -189,6 +189,7 @@ form textarea{
             margin:10px auto 0;
             position: relative;
             overflow: hidden;
+            max-width: 80%;
         }
         #image-box img{
             width:100%; 
