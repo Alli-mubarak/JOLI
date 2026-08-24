@@ -250,7 +250,7 @@ const cropHolder = document.getElementById("crop-holder");
         w = image.naturalWidth;
         const r = h/w;
         const pw = window.innerWidth
-       const imageInCropper =document.getElementById("crop-image")
+       const imageInCropper =document.querySelector(".image-to-crop")
        
         imageWidth = (pw * 0.8) ;
         imageHeight = ((pw * 0.8)* r ) ;
@@ -385,13 +385,16 @@ function cropImage(e){
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
   imageInfo = selectedPictures[index];
-  
-  cropBox.appendChild(imageInfo.image);
-  image = imageInfo.image
+
+  const imageToCrop = imageInfo.image
+  imageTocrop.classList.add("image-to-crop");
+  cropBox.appendChild(imageToCrop);
+  image = imageInfo.image;
+  imageInCropperId = imageInfo.id;
    checkImageDownload(image)
        
   console.log(imageInfo);
-  imageInCropperId = imageInfo.id;
+  
 }
   imageCropper.classList.remove("hidden");
 }
