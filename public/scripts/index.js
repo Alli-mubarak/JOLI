@@ -205,7 +205,7 @@ const cropHolder = document.getElementById("crop-holder");
     
     
     
-    function checkImageDownload(){
+    function checkImageDownload(image){
        if(image.complete){    
         imageWidth = cropBox.clientWidth;
         imageHeight = cropBox.clientHeight;
@@ -388,7 +388,7 @@ if (index !== -1) {
 cropSaver.onclick = (e) => {
   const canvas = document.createElement("canvas")
     canvas.height = initialHeight;
-    canvas.width = initialWidth
+    canvas.width = initialWidth;
     const ctx = canvas.getContext('2d');
     const rect = crop.getBoundingClientRect();
     const imgRect = image.getBoundingClientRect();
@@ -402,7 +402,7 @@ cropSaver.onclick = (e) => {
     ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
   imageCropper.classList.add("hidden");
   cropBox.innerHTML = "";
- const croppedImageContainer = cropBox.querySelector(`#${imageInCropperId`);
+ const croppedImageContainer = cropBox.querySelector(`#${imageInCropperId}`);
  alert(croppedImageContainer);
 }
 checkAuthStatus();
