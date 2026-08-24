@@ -189,6 +189,8 @@ function compressImage(file, quality) {
                 id: `p${n}`,
                 x: 0,
                 y:0,
+                w: null,
+                h: null,
                 cropped: false
               }
               selectedPictures.push(imageData);
@@ -427,7 +429,7 @@ cropSaver.onclick = (e) => {
      const cropY = initialTop * scaleY;
       const cropWidth = rect.width * scaleX;
        const cropHeight = rect.height * scaleY;
-       console.log(scaleX)
+      
     ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
   imageCropper.classList.add("hidden");
   cropBox.removeChild(imageInfo.image);
@@ -435,7 +437,16 @@ cropSaver.onclick = (e) => {
 const existingCanvas = croppedImageContainer.querySelector("canvas");
 croppedImageContainer.removeChild(existingCanvas);
 croppedImageContainer.appendChild(canvas);
- alert(croppedImageContainer);
+ const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
+if (index !== -1) {
+selectedPictures[index].x = initialLeft;
+selectedPictures[index].y = initialTop;
+selectedPictures[index].cropped = true;
+selectedPictures[index].w = initialWidth;
+selectedPictures[index].h = initialHeight;
+}
+console.log(selectedPictures);
+console.log(selectedPictures[index]);
   }catch(e){
     console.error(e)
   }
