@@ -109,7 +109,7 @@ mediaInput.onchange = (e) =>{
    if (file.type.startsWith('image/')) {
      try {
         // Compress the image with 70% quality
-       n++;
+       
         compressImage(file, 0.7); 
        // console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
@@ -142,8 +142,8 @@ function compressImage(file, quality) {
         reader.onload = (event) => {
             
             const img = new Image();
-            img.id = `p${n}`;
-            img.src = event.target.result; // 2. Load into image element
+           // img.id = `p${n}`;
+           // img.src = event.target.result; // 2. Load into image element
 
             img.onload = () => {
                 const canvas = document.createElement('canvas');
@@ -185,6 +185,10 @@ function compressImage(file, quality) {
               canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
 
+              n++;
+            img.id = `p${n}`;
+            img.src = event.target.result; // 2. Load into image element
+              
               const imageData = {
                 image : img,
                 canvas: canvas,
@@ -197,6 +201,7 @@ function compressImage(file, quality) {
               }
               selectedPictures.push(imageData);
             };
+          
 
             img.onerror = (err) => console.error(err);
         };
