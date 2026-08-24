@@ -221,5 +221,7 @@ if (index !== -1) {
 cropSaver.onclick = (e) => {
   imageCropper.classList.add("hidden");
   cropBox.innerHTML = "";
+ const imageInCropper = cropBox.children[1].id
+  console.log(imageInCropper);
 }
 checkAuthStatus();
