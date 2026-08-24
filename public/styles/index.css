@@ -346,7 +346,12 @@ main{
        flex-direction:column;
        align-items:center;
        justify-content: center;
+       color : #555;
+       font-weight:500;
      }
+       .active span{
+         color: #111;
+       }
         .tabs > div:hover{
           border: 2px solid #eee;
         }
@@ -364,6 +369,13 @@ main{
   .add-post:hover{
         background: #111;
   }
+       .add-post span{
+         position: absolute;
+         bottom:0;
+       }
+       .add-post:hover span{
+         color:#111;
+       }
         .add-post div{
             position: absolute;
             width:4px;
