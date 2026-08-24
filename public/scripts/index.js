@@ -269,7 +269,7 @@ const cropHolder = document.getElementById("crop-holder");
 
    crop.addEventListener('touchstart', (e) => {
   isResizing = true;
-  
+  alert(image)
   // Use the first touch point
   startX = e.touches[0].clientX;
   startY = e.touches[0].clientY;
@@ -413,7 +413,7 @@ cropSaver.onclick = (e) => {
     ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
   imageCropper.classList.add("hidden");
   cropBox.removeChild(imageInfo.image);
- const croppedImageContainer = cropBox.querySelector(`#${imageInCropperId}`);
+ const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
  alert(croppedImageContainer);
 }
 checkAuthStatus();
