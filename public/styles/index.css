@@ -372,7 +372,7 @@ main{
   }
        .add-post span{
          position: absolute;
-         bottom:0;
+         bottom:-10px;
        }
        .add-post:hover span{
          color:#111;
