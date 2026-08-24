@@ -394,7 +394,7 @@ if (index !== -1) {
   imageInfo = selectedPictures[index];
 
   const imageToCrop = imageInfo.image
-  imageTocrop.classList.add("image-to-crop");
+  imageToCrop.classList.add("image-to-crop");
   cropBox.appendChild(imageToCrop);
   image = imageInfo.image;
   imageInCropperId = imageInfo.id;
