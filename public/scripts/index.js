@@ -15,6 +15,23 @@ const imageCropper = document.getElementById("image-cropper");
 const cropSaver = document.getElementById("crop-saver");
 const cropBox = document.getElementById("image-box");
 
+cropBox.innerHTML = `
+   <div id="crop">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div id="crop-holder">
+                  <div class="holder"></div>
+                  <div class="holder"></div>
+              </div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+          </div>
+          `;
+
 const selectedPictures = [];
 let n = 0;
 let imageInCropperId;
@@ -181,6 +198,7 @@ function compressImage(file, quality) {
             }
             
 function removeMedia(e){
+  try{
   const card = e.target.parentElement.parentElement.parentElement;
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
@@ -188,6 +206,9 @@ if (index !== -1) {
 }
 mediaFilesDisplayer.removeChild(card);
   console.log(selectedPictures);
+  }catch(e){
+    console.log(e)
+  }
 }
 
 const crop = document.getElementById("crop");
@@ -206,6 +227,7 @@ const cropHolder = document.getElementById("crop-holder");
     
     
     function checkImageDownload(image){
+      try{
        if(image.complete){    
         imageWidth = cropBox.clientWidth;
         imageHeight = cropBox.clientHeight;
@@ -217,10 +239,13 @@ const cropHolder = document.getElementById("crop-holder");
         resetImage();
             }
           }
+        }catch(e){
+        console.log(e);
         }
+    }
         
       function resetImage(){
-       
+       try{
         h = image.naturalHeight;
         w = image.naturalWidth;
         const r = h/w;
@@ -235,7 +260,9 @@ const cropHolder = document.getElementById("crop-holder");
         cropper.classList.remove("hidden");
         initialWidth = imageWidth;
         initialHeight = imageHeight;
-       
+       }catch(e){
+         console.log(e);
+       }
         
     }
 //****
@@ -377,7 +404,7 @@ if (index !== -1) {
           `;
   cropBox.appendChild(imageInfo.image);
   image = imageInfo.image
-   checkImageDownload()
+   checkImageDownload(image)
        
   console.log(imageInfo);
   imageInCropperId = imageInfo.id;
