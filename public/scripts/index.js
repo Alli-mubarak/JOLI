@@ -134,18 +134,18 @@ mediaInput.onchange = (e) =>{
     console.error(e)
   }
 }
-async function compressImage(file, quality) {
+ function compressImage(file, quality) {
     try{
         const reader = new FileReader();
         reader.readAsDataURL(file); // 1. Read file as a Data URL
 
         reader.onload = (event) => {
-            await n++;
+            n++;
             const img = new Image();
             img.id = `p${n}`;
            img.src = event.target.result; // 2. Load into image element
 
-            img.onload = () => {
+         //  img.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
@@ -196,10 +196,10 @@ async function compressImage(file, quality) {
                 cropped: false
               }
               selectedPictures.push(imageData);
-            };
+           // };
           
 
-            img.onerror = (err) => console.error(err);
+         //   img.onerror = (err) => console.error(err);
         };
 
         reader.onerror = (err) => console.error(err);
