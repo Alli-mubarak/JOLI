@@ -195,6 +195,22 @@ function cropImage(e){
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
   imageInfo = selectedPictures[index];
+  cropBox.innerHTML = `
+   <div id="crop">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div id="crop-holder">
+                  <div class="holder"></div>
+                  <div class="holder"></div>
+              </div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+          </div>
+          `;
   cropBox.appendChild(imageInfo.image);
   console.log(imageInfo);
 }
