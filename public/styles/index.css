@@ -347,7 +347,7 @@ main{
        align-items:center;
        justify-content: center;
        color : #777;
-       font-weight:600;
+       font-weight:500;
        font-size: 0.9rem;
      }
        .active span{
@@ -372,7 +372,7 @@ main{
   }
        .add-post span{
          position: absolute;
-         top:calc(100% + 5px);
+         top:calc(100% + 2px);
          color : #777;
        font-weight:600;
        font-size: 0.9rem;
