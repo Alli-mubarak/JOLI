@@ -35,6 +35,7 @@
      }
        .active span{
          color: #111;
+        font-weight:700;
        }
         .tabs > div:hover{
           border: 2px solid #eee;
@@ -57,11 +58,12 @@
          position: absolute;
          top:calc(100% + 2px);
          color : #777;
-       font-weight:700;
+       font-weight:500;
        font-size: 0.9rem;
        }
        .add-post:hover span{
          color:#111;
+       font-weight:700;
        }
         .add-post div{
             position: absolute;
