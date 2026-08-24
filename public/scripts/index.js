@@ -273,6 +273,14 @@ const cropHolder = document.getElementById("crop-holder");
          crop.style.height = imageHeight + "px";
          crop.style.top = 0;
          crop.style.left = 0;
+
+         if(imageInfo.cropped){
+          crop.style.width = imageInfo.w + "px";
+         crop.style.height = imageInfo.h + "px";
+         crop.style.top = imageInfo.y + "px";
+         crop.style.left = imageInfo.x + "px";
+           
+         }
        }catch(e){
          console.error(e);
        }
