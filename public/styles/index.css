@@ -321,7 +321,7 @@ main{
   }
 .tabs{
             display: flex;
-            align-items :center;
+            align-items :start;
             justify-content:space-between;
             padding: 15px 5px;
            width: 100%;
@@ -372,7 +372,7 @@ main{
   }
        .add-post span{
          position: absolute;
-         bottom:-10px;
+         top:calc(100% + 5px);
          color : #777;
        font-weight:600;
        font-size: 0.9rem;
