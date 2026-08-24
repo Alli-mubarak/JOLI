@@ -183,7 +183,7 @@ form textarea{
     font-size:1rem;
     display: block;
     position: absolute;
-    top: 10px; right:10px;
+    top: 10px; right:20px;
     cursor: pointer;
     border: none;
     background: #ddd;
@@ -193,6 +193,7 @@ form textarea{
   #image-box{
     width: 90%;
     background: pink;
+    height: fit-content;
   }
   #image-box img{
     width:100%;
