@@ -117,7 +117,9 @@ function compressImage(file, quality) {
         reader.readAsDataURL(file); // 1. Read file as a Data URL
 
         reader.onload = (event) => {
+            n++;
             const img = new Image();
+            img.id = `p${n}`;
             img.src = event.target.result; // 2. Load into image element
 
             img.onload = () => {
@@ -157,7 +159,6 @@ function compressImage(file, quality) {
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
-              n++;
               canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
 
