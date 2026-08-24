@@ -346,7 +346,7 @@ main{
        flex-direction:column;
        align-items:center;
        justify-content: center;
-       color : #ccc;
+       color : #777;
        font-weight:600;
        font-size: 0.9rem;
      }
@@ -362,8 +362,8 @@ main{
             
         }
         .add-post{
-            width:70px;
-            height:50px;
+            width:50px;
+            height:35px;
             background:#777;
             position:relative;
         }
@@ -373,6 +373,9 @@ main{
        .add-post span{
          position: absolute;
          bottom:-10px;
+         color : #777;
+       font-weight:600;
+       font-size: 0.9rem;
        }
        .add-post:hover span{
          color:#111;
