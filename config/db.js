@@ -24,5 +24,7 @@ export const pool = new Pool({
     rejectUnauthorized: true,
     ca: fs.readFileSync(pgCaPath).toString(),
   },
+  max: 3,                 // Tight limit for free tier
+  idleTimeoutMillis: 5000,
   connectionTimeoutMillis: 20000, // Fail quickly (20s) instead of hanging indefinitely
 });
