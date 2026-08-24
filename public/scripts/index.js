@@ -432,6 +432,9 @@ cropSaver.onclick = (e) => {
   imageCropper.classList.add("hidden");
   cropBox.removeChild(imageInfo.image);
  const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
+const existingCanvas = croppedImageContainer.querySelector("canvas");
+croppedImageContainer.removeChild(existingCanvas);
+croppedImageContainer.appendChild(canvas);
  alert(croppedImageContainer);
   }catch(e){
     console.error(e)
