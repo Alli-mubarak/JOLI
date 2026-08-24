@@ -378,30 +378,14 @@ cropHolder.addEventListener('touchmove', (e) => {
    }
   
     
-
+let imageInfo;
 function cropImage(e){
-  let imageInfo;
   const card = e.target.parentElement.parentElement;
   
   const index = selectedPictures.findIndex( image => image.id === card.id);
 if (index !== -1) {
   imageInfo = selectedPictures[index];
-  cropBox.innerHTML = `
-   <div id="crop">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div id="crop-holder">
-                  <div class="holder"></div>
-                  <div class="holder"></div>
-              </div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-          </div>
-          `;
+  
   cropBox.appendChild(imageInfo.image);
   image = imageInfo.image
    checkImageDownload(image)
@@ -428,7 +412,7 @@ cropSaver.onclick = (e) => {
        console.log(scaleX)
     ctx.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
   imageCropper.classList.add("hidden");
-  cropBox.innerHTML = "";
+  cropBox.removeChild(imageInfo.image);
  const croppedImageContainer = cropBox.querySelector(`#${imageInCropperId}`);
  alert(croppedImageContainer);
 }
