@@ -101,6 +101,7 @@ input.oninput = () => {
       }
 }
 mediaInput.onchange = (e) =>{
+  try{
  const selectedFiles = Array.from(e.target.files);
  if (selectedFiles.length === 0) return; 
  selectedFiles.forEach(file =>{
@@ -127,10 +128,12 @@ mediaInput.onchange = (e) =>{
  })
 
       e.target.value = '';
- 
+  }catch(e){
+    console.error(e)
+  }
 }
 function compressImage(file, quality) {
-    
+    try{
         const reader = new FileReader();
         reader.readAsDataURL(file); // 1. Read file as a Data URL
 
@@ -195,6 +198,9 @@ function compressImage(file, quality) {
         };
 
         reader.onerror = (err) => console.error(err);
+    }catch(e){
+      console.error(e)
+    }
             }
             
 function removeMedia(e){
@@ -207,7 +213,7 @@ if (index !== -1) {
 mediaFilesDisplayer.removeChild(card);
   console.log(selectedPictures);
   }catch(e){
-    console.log(e)
+    console.error(e)
   }
 }
 
@@ -240,7 +246,7 @@ const cropHolder = document.getElementById("crop-holder");
             }
           }
         }catch(e){
-        console.log(e);
+        console.error(e);
         }
     }
         
@@ -261,7 +267,7 @@ const cropHolder = document.getElementById("crop-holder");
         initialWidth = imageWidth;
         initialHeight = imageHeight;
        }catch(e){
-         console.log(e);
+         console.error(e);
        }
         
     }
@@ -380,6 +386,7 @@ cropHolder.addEventListener('touchmove', (e) => {
     
 let imageInfo;
 function cropImage(e){
+  try{
   const card = e.target.parentElement.parentElement;
   
   const index = selectedPictures.findIndex( image => image.id === card.id);
@@ -397,9 +404,13 @@ if (index !== -1) {
   
 }
   imageCropper.classList.remove("hidden");
+  }catch(e){
+    console.error(e)
+  }
 }
 
 cropSaver.onclick = (e) => {
+  try{
   const canvas = document.createElement("canvas")
     canvas.height = initialHeight;
     canvas.width = initialWidth;
@@ -418,5 +429,8 @@ cropSaver.onclick = (e) => {
   cropBox.removeChild(imageInfo.image);
  const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
  alert(croppedImageContainer);
+  }catch(e){
+    console.error(e)
+  }
 }
 checkAuthStatus();
