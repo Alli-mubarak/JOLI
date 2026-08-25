@@ -34,6 +34,7 @@ cropBox.innerHTML = `
 
 const selectedPictures = [];
 let imageInCropperId;
+let n = 0;
 
 async function checkAuthStatus() {
       try {
@@ -178,15 +179,16 @@ mediaInput.onchange = (e) =>{
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
-              canvasContainer.id = `p${index}`;
+             n++;
+              canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
              
               
-             img.id = `p${index}`;
+             img.id = `p${n}`;
               const imageData = {
                 image : img,
                 canvas: canvas,
-                id: `p${index}`,
+                id: `p${n}`,
                 x: 0,
                 y:0,
                 w: null,
