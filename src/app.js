@@ -570,7 +570,7 @@ app.post('/api/create-post', async (req, res) => {
     });
     
  const uploadResults = await Promise.all(uploadPromises);
-    console.log(uploadedResults);
+    console.log(uploadResults);
     const urls = uploadResults.map(result => {
      return  cloudinary.url(result.public_id, {
       fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
