@@ -468,6 +468,7 @@ imageInfo = "";
     console.error(e)
   }
 }
+
 function convertCanvas(canvas){
   return canvas.toDataURL('image/jpeg', 0.7);
 }
@@ -480,7 +481,7 @@ postBtn.onclick = () =>{
   imagesSize += compressedImage.length;
   });
   console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
-  alert("posting, please wait);
+  alert("posting, please wait");
   }catch(e){
     console.error(e)
   }
