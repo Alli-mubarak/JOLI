@@ -480,12 +480,53 @@ function convertCanvas(canvas){
 postBtn.onclick = () =>{
   try{
   let imagesSize = 0;
+  const compressedImagesArray = [];
   selectedPictures.forEach((file) => {
    const compressedImage = convertCanvas(file.canvas);
+    compressedImagesArray.push(compressedImage);
   imagesSize += compressedImage.length;
   });
-  console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
+//  console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
+  const imagesSizeInMb = (imagesSize / 1024 / 1024).toFixed(2);
   alert("posting, please wait");
+  console.log(imagesSizeInMb + "MB");
+    if(input.value.length < 1) return;
+  if(imagesSizeInMb > 10){
+  alert("images are too much or too large, crop them and retry or use different images");
+    return;
+  }
+
+const textData = {
+  content: input.value
+};
+
+const formData = new FormData();
+formData.append('content', textData.content);
+
+compressedImagesArray.forEach((blob, index) => {
+  // Key name 'images[]' lets backend frameworks easily parse this as an array
+  // We append a custom file name 'image_0.jpg', 'image_1.jpg' etc., if it is a raw Blob
+  formData.append('images[]', blob, `image_${index}.jpg`);
+});
+    
+try {
+  const response = await fetch('/api/upload-post', {
+    method: 'POST',
+    body: formData 
+  });
+
+  if (response.ok) {
+    const result = await response.json();
+    console.log('Upload successful:', result);
+    alert(result);
+  } else {
+    console.error('Server error status:', response.status);
+  }
+} catch (error) {
+  console.error('Network dispatch failure:', error);
+}
+    
+    
   }catch(e){
     console.error(e)
   }
