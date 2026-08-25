@@ -431,6 +431,15 @@ cropSaver.onclick = (e) => {
   try{
     console.log(crop.clientWidth, crop.clientHeight, crop.offsetLeft, crop.offsetTop);
     console.log(initialHeight, initialWidth, initialLeft, initialTop);
+
+const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
+if (index !== -1) {
+if(!selectedPictures[index].cropped) selectedPictures[index].cropped = true;
+selectedPictures[index].x = crop.offsetLeft;
+selectedPictures[index].y = crop.offsetTop;
+selectedPictures[index].w = crop.clientWidth;
+selectedPictures[index].h = crop.clientHeight;
+}
   const canvas = document.createElement("canvas")
     canvas.height = initialHeight;
     canvas.width = initialWidth;
@@ -450,14 +459,7 @@ cropSaver.onclick = (e) => {
  const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
 const existingCanvas = croppedImageContainer.querySelector("canvas");
 existingCanvas.replaceWith(canvas);
-const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
-if (index !== -1) {
-if(!selectedPictures[index].cropped) selectedPictures[index].cropped = true;
-selectedPictures[index].x = crop.offsetLeft;
-selectedPictures[index].y = crop.offsetTop;
-selectedPictures[index].w = crop.clientWidth;
-selectedPictures[index].h = crop.clientHeight;
-}
+
 console.log(selectedPictures[index]);
 imageInfo = "";
   }catch(e){
