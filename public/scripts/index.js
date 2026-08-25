@@ -489,7 +489,7 @@ postBtn.onclick = async() =>{
   });
   console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
  const imagesSizeInMb = (imagesSize / 1024 / 1024).toFixed(2);
-  alert("posting, please wait");
+  
   console.log(imagesSizeInMb + "MB");
     if(input.value.length < 1) return;
   if(imagesSizeInMb > 10){
@@ -514,13 +514,25 @@ try {
 
   if (response.ok) {
     const result = await response.json();
+    
+    alert("post successfully created!");
+    input.value = "";
+    mediaFilesDisplayer.innerHTML = "";
+    postBtn.disabled = true;
+    postBtn.style.background = "#c5ff95";
+    mediaCover.classList.remove('hidden');
+    mediaAdder.style.background = "#c5ff95";
+     mediaAdder.style.color = "#bbb";
     console.log('Upload successful:', result);
-    alert(result);
+    
+    
   } else {
     console.error('Server error status:', response.status);
+    alert("An error occurred, please try again later!");
   }
 } catch (error) {
   console.error('Network dispatch failure:', error);
+  alert("A server error occurred, please try again later!");
 }
     
     
