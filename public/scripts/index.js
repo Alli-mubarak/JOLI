@@ -499,7 +499,8 @@ postBtn.onclick = async() =>{
 console.log(compressedImagesArray);
 const payload = {
   content: input.value,
-  images: compressedImagesArray 
+  images: compressedImagesArray,
+  postType: 'public'
 };
     
 try {
