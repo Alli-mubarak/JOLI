@@ -272,18 +272,18 @@ const cropHolder = document.getElementById("crop-holder");
         initialHeight = imageHeight;
 
          //reset cropper
-         crop.style.top = 0;
-         crop.style.left = 0;
-         crop.style.width = imageWidth + "px";
-         crop.style.height = imageHeight + "px";
-         
          if(imageInfo.cropped){
-           crop.style.top = imageInfo.y + "px";
-         crop.style.left = imageInfo.x + "px";
-          crop.style.width = imageInfo.w + "px";
-         crop.style.height = imageInfo.h + "px";
-         
+           initialWidth = imageInfo.w;
+           initialHeight = imageInfo.h;
+           initialTop = imageInfo.y;
+           initialLeft = imageInfo.x;
          }
+         crop.style.top = initialTop + "px";
+         crop.style.left = initialLeft + "px";
+          crop.style.width = initialWidth + "px";
+         crop.style.height = initialHeight + "px";
+         
+         
          
        }catch(e){
          console.error(e);
