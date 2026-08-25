@@ -488,7 +488,7 @@ postBtn.onclick = async() =>{
   imagesSize += compressedImage.length;
   });
   console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
-  const imagesSizeInMb = ((imagesSize / 1024 )/ 1024)).toFixed(2);
+//  const imagesSizeInMb = ((imagesSize / 1024 )/ 1024)).toFixed(2);
   alert("posting, please wait");
   console.log(imagesSizeInMb + "MB");
     if(input.value.length < 1) return;
