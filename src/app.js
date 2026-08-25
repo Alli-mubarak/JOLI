@@ -533,45 +533,60 @@ app.get('/auth/google/callback', limiter, (req, res, next) => {
 });
 
 
-
+// post creation api
 app.post('/api/create-post', async (req, res) => {
   if (!req.isAuthenticated() && !req.user){
    return  res.status(400).json({error: 'You need to log in first!'});
   }
-  const { content, media_urls, post_type, parent_id, root_id } = req.body;
-  const user_id = req.user.id;
+  
+  const userId = req.user.id;
 
-  // 1. Validation: Post must have text or media
-  if (!user_id) {
-    return res.status(400).json({ error: 'user_id is required' });
+  if (!userId) {
+    return res.status(400).json({ error: 'user id is required' });
   }
-  if (!content && (!media_urls || media_urls.length === 0)) {
-    return res.status(400).json({ error: 'Post must contain text content or media' });
+  const { content, images } = req.body;
+  if (!content) {
+    return res.status(400).json({ error: 'Post must contain text content ' });
   }
-
-  try {
-    // 2. Safely insert post using parameterized queries ($1, $2, etc.)
-    const queryText = `
-      INSERT INTO posts (user_id, content, media_urls, post_type, parent_id, root_id)
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *;
-    `;
-
-    // Convert media_urls array to a valid JSON string for our JSONB column
-    const mediaJson = media_urls ? JSON.stringify(media_urls) : '[]';
-
-    const values = [
-      user_id,
-      content || null,
-      mediaJson,
-      post_type || 'original',
-      parent_id || null,
-      root_id || null
-    ];
+  try{
+  let mediaURLs;
+  if(images){
+    
+  const uploadPromises = images.map((base64String) => {
+      return cloudinary.uploader.upload(base64String, {
+        folder: `postPictures/${userId}`,
+        resource_type: 'image' // Cloudinary auto-detects the jpeg metadata inside the string
+      });
+    });
+    
+ const uploadResults = await Promise.all(uploadPromises);
+    
+    const urls = uploadResults.map(result => {
+      cloudinary.url(result.public_id, {
+      fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
+      quality: 'auto',            // q_auto: Compresses file size without losing visual quality
+      width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
+      crop: 'limit',              // was massive, saving your free tier bandwidth
+      secure: true
+    });
+    
+    });
+    await Promise.all(urls);
+    mediaURLs =  JSON.stringify(urls)
+  }else{
+    mediaURLs =  [];
+  }
+    
+const queryText = `
+  INSERT INTO posts (user_id, content, media_urls)
+  VALUES ($1, $2, $3)
+  RETURNING *;
+`;
+    const values = [userId, content, mediaURLs];
+    
 
     const result = await pool.query(queryText, values);
 
-    // 3. Optional step: If it's a reply, increment parent's reply counter
     if (post_type === 'reply' && parent_id) {
       await pool.query(
         'UPDATE posts SET reply_count = reply_count + 1 WHERE id = $1',
