@@ -33,7 +33,6 @@ cropBox.innerHTML = `
           `;
 
 const selectedPictures = [];
-let n = 0;
 let imageInCropperId;
 
 async function checkAuthStatus() {
@@ -104,13 +103,11 @@ mediaInput.onchange = (e) =>{
   try{
  const selectedFiles = Array.from(e.target.files);
  if (selectedFiles.length === 0) return; 
- selectedFiles.forEach(file =>{
+ selectedFiles.forEach((file, index) =>{
       // console.log(file.type + ", " +Math.ceil(file.size /1024) + "kb");
    if (file.type.startsWith('image/')) {
      try {
-        // Compress the image with 70% quality
-       
-        compressImage(file, 0.7); 
+        processImage(file, index); 
        // console.log(`Original size: ${(file.size / 1024).toFixed(2)} KB`);
     //    console.log(`Compressed size: ${(compressedBlob.size / 1024).toFixed(2)} KB`);
     } catch (error) {
@@ -134,7 +131,7 @@ mediaInput.onchange = (e) =>{
     console.error(e)
   }
 }
- function compressImage(file, quality) {
+ function processImage(file, index) {
     try{
         const reader = new FileReader();
         reader.readAsDataURL(file); // 1. Read file as a Data URL
@@ -184,12 +181,12 @@ mediaInput.onchange = (e) =>{
               canvasContainer.id = `p${n}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
              
-              n++;
-             img.id = `p${n}`;
+              
+             img.id = `p${index}`;
               const imageData = {
                 image : img,
                 canvas: canvas,
-                id: `p${n}`,
+                id: `p${index}`,
                 x: 0,
                 y:0,
                 w: null,
