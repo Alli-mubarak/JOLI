@@ -503,7 +503,7 @@ const payload = {
 };
     
 try {
-  const response = await fetch('/api/upload-post', {
+  const response = await fetch('/api/create-post', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
