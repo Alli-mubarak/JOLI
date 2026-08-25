@@ -429,6 +429,8 @@ if (index !== -1) {
 
 cropSaver.onclick = (e) => {
   try{
+    console.log(crop.clientWidth, crop.clientHeight, crop.offsetLeft, crop.offsetTop);
+    console.log(initialHeight, initialWidth, initialLeft, initialTop);
   const canvas = document.createElement("canvas")
     canvas.height = initialHeight;
     canvas.width = initialWidth;
