@@ -178,7 +178,7 @@ mediaInput.onchange = (e) =>{
               canvasController.classList.add("canvas-controller");
               canvasContainer.appendChild(canvas);
               canvasContainer.appendChild(canvasController);
-              canvasContainer.id = `p${n}`;
+              canvasContainer.id = `p${index}`;
               mediaFilesDisplayer.appendChild(canvasContainer);
              
               
