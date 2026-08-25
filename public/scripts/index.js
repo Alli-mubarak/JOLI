@@ -474,11 +474,16 @@ function convertCanvas(canvas){
 
 let imagesSize = 0;
 postBtn.onclick = () =>{
+  try{
   selectedPictures.forEach((file) => {
    const compressedImage = convertCanvas(file.canvas);
   imagesSize += compressedImage.length;
   });
   console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
   alert("posting, please wait);
+  }catch(e){
+    console.error(e)
+  }
 }
+
 checkAuthStatus();
