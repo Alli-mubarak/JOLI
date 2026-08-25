@@ -17,6 +17,7 @@ const cropBox = document.getElementById("image-box");
 
 cropBox.innerHTML = `
    <div id="crop">
+          
               <div></div>
               <div></div>
               <div></div>
@@ -260,7 +261,7 @@ const cropHolder = document.getElementById("crop-holder");
         w = image.naturalWidth;
         const r = h/w;
         const pw = window.innerWidth
-       const imageInCropper =document.querySelector(".image-to-crop")
+       const imageInCropper = document.querySelector(".image-to-crop")
        
         imageWidth = (pw * 0.8) ;
         imageHeight = ((pw * 0.8)* r ) ;
@@ -271,17 +272,19 @@ const cropHolder = document.getElementById("crop-holder");
         initialHeight = imageHeight;
 
          //reset cropper
-         if(imageInfo.cropped){
-          crop.style.width = imageInfo.w + "px";
-         crop.style.height = imageInfo.h + "px";
-         crop.style.top = imageInfo.y + "px";
-         crop.style.left = imageInfo.x + "px";
-         }else{
          crop.style.top = 0;
          crop.style.left = 0;
          crop.style.width = imageWidth + "px";
          crop.style.height = imageHeight + "px";
+         
+         if(imageInfo.cropped){
+           crop.style.top = imageInfo.y + "px";
+         crop.style.left = imageInfo.x + "px";
+          crop.style.width = imageInfo.w + "px";
+         crop.style.height = imageInfo.h + "px";
+         
          }
+         
        }catch(e){
          console.error(e);
        }
