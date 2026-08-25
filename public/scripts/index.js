@@ -451,10 +451,10 @@ existingCanvas.replaceWith(canvas);
 const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
 if (index !== -1) {
 if(!selectedPictures[index].cropped) selectedPictures[index].cropped = true;
-selectedPictures[index].x = initialLeft;
-selectedPictures[index].y = initialTop;
-selectedPictures[index].w = initialWidth;
-selectedPictures[index].h = initialHeight;
+selectedPictures[index].x = crop.offsetLeft;
+selectedPictures[index].y = crop.offsetTop;
+selectedPictures[index].w = crop.clientWidth;
+selectedPictures[index].h = crop.clientHeight;
 }
 console.log(selectedPictures[index]);
 imageInfo = "";
