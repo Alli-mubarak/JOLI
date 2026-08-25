@@ -461,6 +461,9 @@ selectedPictures[index].h = initialHeight;
  const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
 const existingCanvas = croppedImageContainer.querySelector("canvas");
 existingCanvas.replaceWith(canvas);
+if (index !== -1) {
+  selectedPictures[index].canvas = canvas;
+}
 
 console.log(selectedPictures[index]);
 imageInfo = "";
@@ -473,9 +476,10 @@ function convertCanvas(canvas){
   return canvas.toDataURL('image/jpeg', 0.7);
 }
 
-let imagesSize = 0;
+
 postBtn.onclick = () =>{
   try{
+  let imagesSize = 0;
   selectedPictures.forEach((file) => {
    const compressedImage = convertCanvas(file.canvas);
   imagesSize += compressedImage.length;
