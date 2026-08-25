@@ -431,16 +431,16 @@ if (index !== -1) {
 
 cropSaver.onclick = (e) => {
   try{
-    console.log(crop.clientWidth, crop.clientHeight, crop.offsetLeft, crop.offsetTop);
-    console.log(initialHeight, initialWidth, initialLeft, initialTop);
+ //   console.log(crop.clientWidth, crop.clientHeight, crop.offsetLeft, crop.offsetTop);
+ //   console.log(initialHeight, initialWidth, initialLeft, initialTop);
 
 const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
 if (index !== -1) {
 if(!selectedPictures[index].cropped) selectedPictures[index].cropped = true;
-selectedPictures[index].x = crop.offsetLeft;
-selectedPictures[index].y = crop.offsetTop;
-selectedPictures[index].w = crop.clientWidth;
-selectedPictures[index].h = crop.clientHeight;
+selectedPictures[index].x = initialLeft;
+selectedPictures[index].y = initialTop;
+selectedPictures[index].w = initialWidth;
+selectedPictures[index].h = initialHeight;
 }
   const canvas = document.createElement("canvas")
     canvas.height = initialHeight;
