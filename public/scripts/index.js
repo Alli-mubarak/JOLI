@@ -477,7 +477,7 @@ function convertCanvas(canvas){
 }
 
 
-postBtn.onclick = () =>{
+postBtn.onclick = async() =>{
   try{
   let imagesSize = 0;
   const compressedImagesArray = [];
