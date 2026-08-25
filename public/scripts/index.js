@@ -270,6 +270,8 @@ const cropHolder = document.getElementById("crop-holder");
         imageInCropper.style.height = imageHeight + "px";
         initialWidth = imageWidth;
         initialHeight = imageHeight;
+         initialLeft = 0;
+         initialTop = 0;
 
          //reset cropper
          if(imageInfo.cropped){
