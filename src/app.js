@@ -570,9 +570,9 @@ app.post('/api/create-post', async (req, res) => {
     });
     
  const uploadResults = await Promise.all(uploadPromises);
-    
+    console.log(uploadedResults);
     const urls = uploadResults.map(result => {
-      cloudinary.url(result.public_id, {
+     return  cloudinary.url(result.public_id, {
       fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
       quality: 'auto',            // q_auto: Compresses file size without losing visual quality
       width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
@@ -581,8 +581,9 @@ app.post('/api/create-post', async (req, res) => {
     });
     
     });
-    await Promise.all(urls);
-    mediaURLs =  JSON.stringify(urls)
+    const optimizedUrls = await Promise.all(urls);
+    console.log(optimizedUrls);
+    mediaURLs =  JSON.stringify(optimizedUrls);
   }else{
     mediaURLs =  [];
   }
@@ -603,9 +604,10 @@ const queryText = `
         [parent_id]
       );
     }
-
-    // 4. Return the newly created post
-    return res.status(201).json(result.rows[0]);
+    const newPost = result.rows[0];
+    console.log('Post successfully created!');
+    console.log(newPost);
+    return res.status(201).json(newPost);
 
   } catch (error) {
     console.error('Error creating post:', error);
