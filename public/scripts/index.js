@@ -445,9 +445,8 @@ cropSaver.onclick = (e) => {
   cropBox.removeChild(imageInfo.image);
  const croppedImageContainer = mediaFilesDisplayer.querySelector(`#${imageInCropperId}`);
 const existingCanvas = croppedImageContainer.querySelector("canvas");
-croppedImageContainer.removeChild(existingCanvas);
-croppedImageContainer.appendChild(canvas);
- const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
+existingCanvas.replaceWith(canvas);
+const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
 if (index !== -1) {
 selectedPictures[index].x = initialLeft;
 selectedPictures[index].y = initialTop;
