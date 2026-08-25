@@ -544,15 +544,25 @@ app.post('/api/create-post', async (req, res) => {
   if (!userId) {
     return res.status(400).json({ error: 'user id is required' });
   }
-  const { content, images } = req.body;
+  const { content, images, postType } = req.body;
   if (!content) {
     return res.status(400).json({ error: 'Post must contain text content ' });
   }
   try{
   let mediaURLs;
   if(images){
+    let imagesSize = 0;
     
+  images.forEach(file =>{
+    imagesSize += file.length
+  });
+  const imagesSizeInMb = (imagesSize / 1024 / 1024).toFixed(2);
+    
+  if(imagesSizeInMb > 10){
+  return res.status(400).json({error: "images are too much or too large, crop them and retry or use different images"});
+  }
   const uploadPromises = images.map((base64String) => {
+    
       return cloudinary.uploader.upload(base64String, {
         folder: `postPictures/${userId}`,
         resource_type: 'image' // Cloudinary auto-detects the jpeg metadata inside the string
@@ -578,16 +588,16 @@ app.post('/api/create-post', async (req, res) => {
   }
     
 const queryText = `
-  INSERT INTO posts (user_id, content, media_urls)
-  VALUES ($1, $2, $3)
+  INSERT INTO posts (user_id, content, media_urls, post_type)
+  VALUES ($1, $2, $3, $4)
   RETURNING *;
 `;
-    const values = [userId, content, mediaURLs];
+    const values = [userId, content, mediaURLs, postType];
     
 
     const result = await pool.query(queryText, values);
 
-    if (post_type === 'reply' && parent_id) {
+    if (postType === 'reply' && parent_id) {
       await pool.query(
         'UPDATE posts SET reply_count = reply_count + 1 WHERE id = $1',
         [parent_id]
