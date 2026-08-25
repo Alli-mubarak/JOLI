@@ -481,6 +481,7 @@ postBtn.onclick = async() =>{
   try{
   let imagesSize = 0;
   const compressedImagesArray = [];
+    
   selectedPictures.forEach((file) => {
    const compressedImage = convertCanvas(file.canvas);
     compressedImagesArray.push(compressedImage);
@@ -504,6 +505,9 @@ const payload = {
 try {
   const response = await fetch('/api/upload-post', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(payload)
   });
 
