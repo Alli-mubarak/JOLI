@@ -2,7 +2,8 @@
         --crop-color: #ddd;
         }
         body{
-            position: relative;
+         position: relative;
+        height: 100vh;
         }
 #notifier{
             position: absolute;
@@ -17,7 +18,7 @@
             align-items:center;
             justify-content: center;
             gap:10px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 400;
         }
         #n-link{
