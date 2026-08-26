@@ -4,6 +4,35 @@
         body{
             position: relative;
         }
+#notifier{
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            width: fit-content;
+            transform: translateX(-50%);
+            border-radius: 20px;
+            background:#eee;
+            padding: 8px 15px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            gap:10px;
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        #n-link{
+            font-weight:600;
+        }
+        #n-closer{
+            padding: 5px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.05);
+            width:20px; height:20px;
+            display: flex;
+            align-items :center ;
+            justify-content: center;
+            border-radius: 50%;
+        }
 #create-post-container{
             display:flex;
             flex-direction: column;
@@ -27,7 +56,7 @@
             justify-content:space-between;
         }
         .header .closer{
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             cursor: pointer;
             width: 35px;
             height: 35px;
