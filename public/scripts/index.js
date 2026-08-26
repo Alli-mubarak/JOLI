@@ -19,6 +19,7 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
+let canPost = false;
 let closeNID;
         
 nCloser.onclick = () =>{
@@ -73,6 +74,7 @@ async function checkAuthStatus() {
  
         
         if (data.loggedIn) {
+          canPost = true
         signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture || "images/default-user.png";
           pUserPic.src = data.user.profile_picture || "images/default-user.png";
@@ -80,6 +82,7 @@ async function checkAuthStatus() {
         userPic.classList.remove("hidden");
           
         } else {
+          canPost = false;
           signInLink.classList.remove("hidden");
           userPic.classList.add("hidden");
           console.log("unauthenticated");
@@ -99,7 +102,10 @@ async function checkAuthStatus() {
     }
 //post adder
 postAdder.onclick = () => {
+  if(canPost){
   postContainer.classList.remove("hidden");
+  }
+  return
 }
 postCloser.onclick = () => {
   postContainer.classList.add("hidden");
@@ -506,6 +512,7 @@ function convertCanvas(canvas){
 
 
 postBtn.onclick = async() =>{
+  if(!canPost) return;
   try{
   let imagesSize = 0;
   const compressedImagesArray = [];
