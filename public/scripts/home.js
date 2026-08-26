@@ -1,7 +1,8 @@
 const postsContainer = document.getElementById("posts");
-postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
+
 
 async function fetchPosts() {
+      postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
       try {
         
         const response = await fetch("/api/getPosts" );
@@ -14,4 +15,7 @@ async function fetchPosts() {
       }
 }
 
+setTimeout(() =>{
 fetchPosts()
+},6000);
+
