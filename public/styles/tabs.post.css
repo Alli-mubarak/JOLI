@@ -321,7 +321,7 @@ form textarea{
       display: flex;
       align-items :start;
       justify-content:space-between;
-       padding: 15px 5px;
+       padding: 10px 15px;
        width: 100%;
        position: fixed;
          z-index: 90;
@@ -362,10 +362,11 @@ form textarea{
             
         }
         .add-post{
-            width:50px;
-            height:35px;
-            background:#777;
-            position:relative;
+        width:50px;
+        height:35px;
+        background:#777;
+        position:relative;
+        margin-top: 10px;
         }
   .add-post:hover{
         background: #111;
