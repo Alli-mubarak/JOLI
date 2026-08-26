@@ -83,14 +83,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 10px;
         width: fit-content;
         overflow: hidden;
         }
       .header button #p-loader{
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
         background: transparent;
-        border: 1px solid #c5ff95;
+        border: 3px solid #222;
+       border-radius: 50%;
         border-bottom-color: transparent;
       }
 .roll{
