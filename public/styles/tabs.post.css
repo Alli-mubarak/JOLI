@@ -7,7 +7,7 @@
         }
 #notifier{
             position: absolute;
-            bottom: 100px;
+            bottom: 220px;
             left: 50%;
             width: fit-content;
             transform: translateX(-50%);
