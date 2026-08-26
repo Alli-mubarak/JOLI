@@ -6,14 +6,41 @@ const postContainer = document.getElementById('create-post-container');
 const postCloser = document.getElementById('p-closer');
 const pUserPic= document.getElementById('p-user-picture');
 const pUsername = document.getElementById('p-username');
-    const input = document.getElementById('content');
-    const postBtn = document.getElementById('post-btn');
-    const mediaInput = document.getElementById('media-upload');
-   const mediaCover = document.getElementById('cover');
-   const mediaAdder = document.getElementById('add-media');
+const input = document.getElementById('content');
+const postBtn = document.getElementById('post-btn');
+const mediaInput = document.getElementById('media-upload');
+const mediaCover = document.getElementById('cover');
+const mediaAdder = document.getElementById('add-media');
 const imageCropper = document.getElementById("image-cropper");
 const cropSaver = document.getElementById("crop-saver");
 const cropBox = document.getElementById("image-box");
+const notifier = document.getElementById("notifier");
+const nMessage = document.getElementById("n-message");
+const nLink = document.getElementById("n-link");
+const nCloser = document.getElementById("n-closer");
+let closeNID;
+        
+nCloser.onclick = () =>{
+    notifier.classList.add("hidden");
+    clearTimeout(closeNID);
+ }
+function notify(msg,mType = "success",linkText = null, link = null){
+    nMessage.textContent = msg;
+    if(mType === "danger"){
+        nMessage.style.color = 'red';
+    }else{
+      nMessage.style.color = '#111';
+     }
+            
+    nLink.textContent = linkText;
+     nLink.href = link;
+    
+    notifier.classList.remove("hidden");
+            
+    closeNID = setTimeout(()=>{
+     notifier.classList.add("hidden");
+    },4000)
+}
 
 cropBox.innerHTML = `
    <div id="crop">
@@ -515,7 +542,8 @@ try {
   if (response.ok) {
     const result = await response.json();
     
-    alert("post successfully created!");
+    const msg = "post created!";
+    notify(msg, "success","view post", "#");
     input.value = "";
     mediaFilesDisplayer.innerHTML = "";
     postBtn.disabled = true;
@@ -528,11 +556,14 @@ try {
     
   } else {
     console.error('Server error status:', response.status);
-    alert("An error occurred, please try again later!");
+    
+    const msg = "error occurred, please try again!";
+    notify(msg, "error");
   }
 } catch (error) {
   console.error('Network dispatch failure:', error);
-  alert("A server error occurred, please try again later!");
+  const msg = "server error occurred, please try again!";
+  notify(msg, "error");
 }
     
     
