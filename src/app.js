@@ -616,10 +616,21 @@ const queryText = `
   }
 });
 
+//api for fetching posts
+app.get('/api/getPosts',(req, res)=>{
+console.log('all posts fetched \n');
+try{
+const posts = await pool.query('SELECT * FROM posts');
+
+res.status(200).json({posts: posts.rows});
+}catch(e){
+  console.error('Error fetching posts:', error);
+  res.status(500).json({error: 'Internal Server Error'});
+}
+});
 
 //default page  route
 app.get('/',(req, res)=>{
-console.log(req.query)
 console.log('default path requested! \n');
   if (req.isAuthenticated() && req.user){
    return  res.redirect('/home');
