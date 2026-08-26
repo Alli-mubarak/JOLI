@@ -620,9 +620,9 @@ const queryText = `
 app.get('/api/getPosts',(req, res)=>{
 console.log('all posts fetched \n');
 try{
-const posts = await pool.query('SELECT * FROM posts');
+const result = await pool.query('SELECT * FROM posts');
 
-res.status(200).json({posts: posts.rows});
+res.status(200).json({posts: result.rows});
 }catch(e){
   console.error('Error fetching posts:', e);
   res.status(500).json({error: 'Internal Server Error'});
