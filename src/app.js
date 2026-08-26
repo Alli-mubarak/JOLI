@@ -624,7 +624,7 @@ const posts = await pool.query('SELECT * FROM posts');
 
 res.status(200).json({posts: posts.rows});
 }catch(e){
-  console.error('Error fetching posts:', error);
+  console.error('Error fetching posts:', e);
   res.status(500).json({error: 'Internal Server Error'});
 }
 });
