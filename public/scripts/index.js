@@ -541,7 +541,7 @@ try {
 
   if (response.ok) {
     const result = await response.json();
-    
+    postContainer.classList.add("hidden");
     const msg = "post created!";
     notify(msg, "success","view post", "#");
     input.value = "";
@@ -556,12 +556,27 @@ try {
     
   } else {
     console.error('Server error status:', response.status);
-    
+    postContainer.classList.add("hidden");
+  mediaFilesDisplayer.innerHTML = "";
+  input.value = "";
+  postBtn.disabled = true;
+  postBtn.style.background = "#c5ff95";
+  mediaCover.classList.remove('hidden');
+  mediaAdder.style.background = "#c5ff95";
+  mediaAdder.style.color = "#bbb";
     const msg = "error occurred, please try again!";
     notify(msg, "error");
   }
 } catch (error) {
   console.error('Network dispatch failure:', error);
+  postContainer.classList.add("hidden");
+  mediaFilesDisplayer.innerHTML = "";
+  input.value = "";
+  postBtn.disabled = true;
+  postBtn.style.background = "#c5ff95";
+  mediaCover.classList.remove('hidden');
+  mediaAdder.style.background = "#c5ff95";
+  mediaAdder.style.color = "#bbb";
   const msg = "server error occurred, please try again!";
   notify(msg, "error");
 }
