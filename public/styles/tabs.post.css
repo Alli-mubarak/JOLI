@@ -79,7 +79,33 @@
             border-radius: 15px;
             font-weight: 500;
             cursor:pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        overflow: hidden;
         }
+      .header button #p-loader{
+        width: 30px;
+        height: 30px;
+        background: transparent;
+        border: 1px solid #c5ff95;
+        border-bottom-color: transparent;
+      }
+.roll{
+        transition: all ease 0.3s;
+        animation: roll linear infinite 2s;
+        
+}
+ @keyframes roll{
+         from{
+        transform: rotate(0deg);
+         }
+         to{
+          transform: rotate(360deg)
+         }
+ }
         .user-details{
             display: flex;
             align-items: center;
