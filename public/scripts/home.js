@@ -6,13 +6,22 @@ async function fetchPosts() {
       try {
         
         const response = await fetch("/api/getPosts" );
-        posts = await response.json();
+        const data = await response.json();
  
-        console.log(typeof(posts));
-        console.log(posts);
+        const posts = data.posts
+       posts.forEach((post) => {
+             displayPost(post)
+       })
       } catch (err) {
         console.error("Error fetching posts:", err);
       }
+}
+function displayPost(post){
+const postCard = document.createElement("div");
+postCard.textContent = post.content; 
+
+document.body.appendChild(postCard);
+
 }
 
 setTimeout(() =>{
