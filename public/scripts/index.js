@@ -4,6 +4,7 @@ const postAdder = document.querySelector(".add-post");
   const mediaFilesDisplayer = document.getElementById('media-files-displayer');
 const postContainer = document.getElementById('create-post-container');
 const postCloser = document.getElementById('p-closer');
+const postLoader = document.getElementById('p-loader');
 const pUserPic= document.getElementById('p-user-picture');
 const pUsername = document.getElementById('p-username');
 const input = document.getElementById('content');
@@ -529,7 +530,15 @@ const payload = {
   images: compressedImagesArray,
   postType: 'public'
 };
-    
+
+  
+  postBtn.disabled = true;
+  postBtn.style.background = "#c5ff95";
+  postLoader.classList.remove("hidden");
+  postLoader.classList.add("roll");
+  mediaCover.classList.remove('hidden');
+  mediaAdder.style.background = "#c5ff95";
+  mediaAdder.style.color = "#bbb";
 try {
   const response = await fetch('/api/create-post', {
     method: 'POST',
@@ -542,41 +551,32 @@ try {
   if (response.ok) {
     const result = await response.json();
     postContainer.classList.add("hidden");
+    postLoader.classList.remove("roll");
+   postLoader.classList.add("hidden");
+    mediaFilesDisplayer.innerHTML = "";
+    input.value = "";
     const msg = "post created!";
     notify(msg, "success","view post", "#");
-    input.value = "";
-    mediaFilesDisplayer.innerHTML = "";
-    postBtn.disabled = true;
-    postBtn.style.background = "#c5ff95";
-    mediaCover.classList.remove('hidden');
-    mediaAdder.style.background = "#c5ff95";
-     mediaAdder.style.color = "#bbb";
-    console.log('Upload successful:', result);
     
+    console.log('Upload successful:', result);
     
   } else {
     console.error('Server error status:', response.status);
     postContainer.classList.add("hidden");
-  mediaFilesDisplayer.innerHTML = "";
-  input.value = "";
-  postBtn.disabled = true;
-  postBtn.style.background = "#c5ff95";
-  mediaCover.classList.remove('hidden');
-  mediaAdder.style.background = "#c5ff95";
-  mediaAdder.style.color = "#bbb";
+    postLoader.classList.remove("roll");
+   postLoader.classList.add("hidden");
+    mediaFilesDisplayer.innerHTML = "";
+    input.value = "";
     const msg = "error occurred, please try again!";
     notify(msg, "error");
   }
 } catch (error) {
   console.error('Network dispatch failure:', error);
   postContainer.classList.add("hidden");
+  postLoader.classList.remove("roll");
+   postLoader.classList.add("hidden");
   mediaFilesDisplayer.innerHTML = "";
   input.value = "";
-  postBtn.disabled = true;
-  postBtn.style.background = "#c5ff95";
-  mediaCover.classList.remove('hidden');
-  mediaAdder.style.background = "#c5ff95";
-  mediaAdder.style.color = "#bbb";
   const msg = "server error occurred, please try again!";
   notify(msg, "error");
 }
