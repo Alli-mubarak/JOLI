@@ -8,9 +8,8 @@
 #notifier{
             position: absolute;
             bottom: 220px;
-            left: 50%;
+            left: 100px;
             width: fit-content;
-            transform: translateX(-50%);
             border-radius: 20px;
             background:#eee;
             padding: 8px 15px;
@@ -18,8 +17,8 @@
             align-items:center;
             justify-content: center;
             gap:10px;
-            font-size: 0.85rem;
-            font-weight: 400;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
         #n-link{
             font-weight:600;
