@@ -617,7 +617,7 @@ const queryText = `
 });
 
 //api for fetching posts
-app.get('/api/getPosts',(req, res)=>{
+app.get('/api/getPosts',async(req, res)=>{
 console.log('all posts fetched \n');
 try{
 const result = await pool.query('SELECT * FROM posts');
