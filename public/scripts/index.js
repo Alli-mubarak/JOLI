@@ -540,7 +540,7 @@ const payload = {
   mediaAdder.style.background = "#c5ff95";
   mediaAdder.style.color = "#bbb";
 try {
-  const response = await fetch('/api/create-posts', {
+  const response = await fetch('/api/create-post', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
