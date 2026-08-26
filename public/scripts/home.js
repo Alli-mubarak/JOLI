@@ -8,7 +8,7 @@ async function fetchPosts() {
         const response = await fetch("/api/getPosts" );
         posts = await response.json();
  
-        
+        console.log(typeof(posts));
         console.log(posts);
       } catch (err) {
         console.error("Error fetching posts:", err);
