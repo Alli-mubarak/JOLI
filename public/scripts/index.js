@@ -27,7 +27,7 @@ nCloser.onclick = () =>{
  }
 function notify(msg,mType = "success",linkText = null, link = null){
     nMessage.textContent = msg;
-    if(mType === "danger"){
+    if(mType === "error"){
         nMessage.style.color = 'red';
     }else{
       nMessage.style.color = '#111';
