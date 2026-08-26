@@ -1,2 +1,2 @@
 const postsContainer = document.getElementById("posts");
-postContainer.innerHTML = `<pre>Fetching posts....</pre>`;
+postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
