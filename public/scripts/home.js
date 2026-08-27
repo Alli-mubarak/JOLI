@@ -24,7 +24,7 @@ async function fetchPosts() {
 
 async function displayPost(post){
 try{
- const postImages = post.media_url
+ const postImages = post.media_urls
 let imgs = "";
  if(postImages.length > 0){
 imgs = await sortImages(postImages);
