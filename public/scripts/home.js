@@ -10,6 +10,7 @@ async function fetchPosts() {
  
         const posts = data.posts
        posts.forEach((post) => {
+             postsContainer.innerHTML = '';
              displayPost(post)
        })
       } catch (err) {
