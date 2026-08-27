@@ -5,8 +5,8 @@ body{
 position: relative;
   }
 #notifier{
-            position: absolute;
-            bottom: 220px;
+            position: fixed;
+            top: 70vh;
             left: 100px;
             width: fit-content;
             border-radius: 20px;
