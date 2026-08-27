@@ -2,7 +2,6 @@ const postsContainer = document.getElementById("posts");
 
 
 async function fetchPosts() {
-      postsContainer.innerHTML = `<p style="text-align:center; padding: 10px;">Fetching posts....</>`;
       try {
         
         const response = await fetch("/api/getPosts" );
@@ -12,7 +11,6 @@ async function fetchPosts() {
       postsContainer.innerHTML = '';
             
       for (let i=posts.length-1; i >=0; i--){
-            console.log(posts[i]);
              await displayPost(posts[i]);
             
             // setTimeout(()=>{loadDefaultImage()},2000);
@@ -124,7 +122,7 @@ function sortImages(images){
 return result;
 }
 
-setTimeout(() =>{
+//setTimeout(() =>{
 fetchPosts()
-},4000);
+//},4000);
 
