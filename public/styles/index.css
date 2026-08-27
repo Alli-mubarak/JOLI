@@ -104,8 +104,8 @@ main{
     height: 100%;
     background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
     left: -155px;
-    transition: all 0.4s ease;
-    animation: load linear infinite 2s;
+    transition: all 0.3s ease;
+    animation: load linear infinite 1.8s;
   }
         .postCard{
             background:#fff;
@@ -203,10 +203,10 @@ main{
         }
         .post-content{
            width:100%;
-            font-size: 0.95rem;
+            font-size: 1rem;
             padding: 10px 0;
           font-weight:500;
-            
+          line-height: 25px;
         }
         .post-images{
             width: 100%;
