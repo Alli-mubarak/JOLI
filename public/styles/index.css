@@ -88,6 +88,24 @@ background:#000;
 main{
     width:100%;
 }
+.p-loader{
+  background: #fff;
+  width: 100%;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+  .p-loader:before{
+    position: absolute;
+    content: '';
+    width: 150px;
+    height: 100%;
+    background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
+    left: -155px;
+    transition: all 0.4s ease;
+    animation: load linear infinite 2s;
+  }
         .postCard{
             background:#fff;
             display: flex; 
