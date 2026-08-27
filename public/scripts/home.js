@@ -14,7 +14,7 @@ async function fetchPosts() {
       for (let i=posts.length-1; i >=0; i--){
              await displayPost(posts[i]);
             // setTimeout(()=>{loadDefaultImage()},2000);
-       })
+       }
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
