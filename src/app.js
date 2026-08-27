@@ -162,8 +162,8 @@ app.use(session({
   }
 }));
 
+app.set('views', path.join(process.cwd(), 'dviews'))
 app.set('view engine', 'ejs');
-app.set('views', '../dviews');
   
 app.use(express.static(path.join(__dirname, 'public')));
 
