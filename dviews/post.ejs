@@ -11,7 +11,40 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    
+  <% 
+function getPostTime(postTime){
+const targetDate = new Date(postTime);
+const currentDate = new Date();
+
+const msDifference = currentDate - targetDate;
+const sDifference = msDifference / 1000;
+const mDifference = msDifference / (1000 * 60);
+const hDifference = msDifference / (1000 * 60 * 60);
+const dDifference = msDifference / (1000 * 60 * 60 * 24);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
+
+if(mtDifference > 1){
+return `${Math.floor(mtDifference)}M`; 
+}else if (dDifference > 1){
+return `${Math.floor(dDifference)}d`;
+}else if (hDifference > 1){
+return `${Math.floor(hDifference)}h`;
+}else if (mDifference > 1){
+return `${Math.floor(mDifference)}m`;
+}else {
+return `${Math.floor(sDifference)}s`;
+}
+
+}
+
+function sortImages(images){
+      let result = "";
+      images.forEach(imgLink=>{
+             result += `<img src=${imgLink} loading="lazy" alt="post image"/>`
+       });
+return result;
+}
+%>
 <div class="postCard">
         <div class="post-header" dataset="/post/<%= post.user_id%>">
             <div class="author-details">
@@ -24,7 +57,7 @@
                           <a href="/user/<%= post.user_id %>" class="author-link">
                               <p class="author-username"><%= post.author_username || null %></p>
                           </a>
-                          <small><%= post.created_at %> </small>
+                          <small><%= getPostTime(post.created_at) %> </small>
                      </div>
             </div> 
             <div class="post-menu">
