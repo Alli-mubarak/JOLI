@@ -183,8 +183,9 @@ main{
         }
         .post-content{
            width:100%;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             padding: 10px 0;
+          font-weight:500;
             
         }
         .post-images{
