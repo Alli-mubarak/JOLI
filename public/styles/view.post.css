@@ -146,10 +146,10 @@ header button:hover {
         }
         .post-content{
            width:100%;
-            font-size: 0.95rem;
+            font-size: 1rem;
             padding: 10px 0;
           font-weight:500;
-            
+          line-height: 25px;
         }
         .post-images{
             width: 100%;
@@ -178,13 +178,13 @@ header button:hover {
             align-items: center;
             justify-content: space-between;
         }
-        .interactions> div{
+        .interactions > div{
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
           padding: 10px 15px;
-          border: 1px solid #eee;
+          border: 2px solid #eee;
           border-radius: 10px;
         }
         .interactions > div button{
