@@ -23,14 +23,14 @@ const postCard = `
             <div class="author-details">
                 <div class="author-image">
                      <a href="#" id="author-image">
-                         <img src="${post.author_profile_pic || null}" loading="lazy" id="author-pic" alt="author profile picture" />
+                         <img src="${post.author_profile_pic || '/images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
                           <a href="#" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
-                          <small>${post.createdAt}</small>
+                          <small>${post.created_at}</small>
                      </div>
             </div> 
             <div class="post-menu">
