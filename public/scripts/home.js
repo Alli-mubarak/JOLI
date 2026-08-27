@@ -20,7 +20,8 @@ async function fetchPosts() {
         console.error("Error fetching posts:", err);
       }
 }
-function async displayPost(post){
+
+async function displayPost(post){
 try{
  const postImages = post.images
 let imgs = "";
