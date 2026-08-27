@@ -79,7 +79,7 @@ return result;
             <p class="post-content"><%= post.content %></p>
             <div class="post-images">
                 <% if (post.media_urls.length > 0) { %>
-        sortImages(post.media_urls);
+        <%= sortImages(post.media_urls) %>
     <% } %>
             </div>
         </div>
