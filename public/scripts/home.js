@@ -25,14 +25,14 @@ const postCard = `
             <div class="author-details">
                 <div class="author-image">
                      <a href="#" id="author-image">
-                         <img src="${post.author_profile_pic || 'images/lll.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
+                         <img src="${post.author_profile_pic || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
                           <a href="#" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
-                          <small>${post.created_at}</small>
+                          <small>${getHours(post.created_at)}h</small>
                      </div>
             </div> 
             <div class="post-menu">
@@ -74,6 +74,18 @@ console.log(post);
 
       
 postsContainer.innerHTML += postCard;
+
+}
+
+function getHours(postTime){
+const targetDate = new Date(postTime);
+const currentDate = new Date();
+
+const msDifference = currentDate - targetDate;
+
+const hourDifference = msDifference / (1000 * 60 * 60);
+
+return Math.floor(hourDifference); 
 
 }
 
