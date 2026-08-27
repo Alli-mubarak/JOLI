@@ -636,6 +636,7 @@ res.status(200).json({posts: result.rows});
 app.get('/post/:id', async (req, res) => {
     const postId = req.params.id;
     const postData = await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
+   postData.title = "A recent post";
     
     // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
     res.render('post', { post: postData }); 
