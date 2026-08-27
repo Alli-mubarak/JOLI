@@ -6,7 +6,7 @@ position: relative;
   }
 #notifier{
             position: fixed;
-            bottom:180px;
+            bottom:110px;
             left: 100px;
             width: fit-content;
             border-radius: 20px;
