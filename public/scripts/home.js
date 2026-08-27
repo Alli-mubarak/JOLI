@@ -9,8 +9,9 @@ async function fetchPosts() {
         const data = await response.json();
  
         const posts = data.posts
+      postsContainer.innerHTML = '';
        posts.forEach((post) => {
-             postsContainer.innerHTML = '';
+             
              displayPost(post)
        })
       } catch (err) {
