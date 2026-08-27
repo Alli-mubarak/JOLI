@@ -594,4 +594,7 @@ try {
   }
 }
 
-checkAuthStatus();
+setTimeout(()=>{
+  checkAuthStatus();
+},5000);
+
