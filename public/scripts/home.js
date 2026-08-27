@@ -83,7 +83,7 @@ const currentDate = new Date();
 
 const msDifference = currentDate - targetDate;
 const sDifference = msDifference / 1000;
-const mDifference = msDifference / (1000/60);
+const mDifference = msDifference / (1000 * 60);
 const hDifference = msDifference / (1000 * 60 * 60);
 const dDifference = msDifference / (1000 * 60 * 60 * 24);
 const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
