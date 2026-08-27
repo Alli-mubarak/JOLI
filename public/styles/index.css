@@ -10,9 +10,7 @@ body{
   position:relative;
   width: 100%;
   background: #ddd;
-  height:100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  
 }
 .notifier{
             position: absolute;
