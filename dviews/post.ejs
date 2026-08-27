@@ -11,7 +11,55 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <h1><%= post.title %></h1>
-    <div><%= post.content %></div>
+    
+<div class="postCard">
+        <div class="post-header" dataset="/post/<%= post.user_id%>">
+            <div class="author-details">
+                <div class="author-image">
+                     <a href="/user/<%= post.user_id %>" id="author-image">
+                         <img src="<%= post.author_profile_pic || 'images/default-user.png' %>" loading="lazy" id="author-pic" alt="author profile picture" />
+                     </a>
+                     </div>
+                     <div class="username-posttime">
+                          <a href="/user/<%= post.user_id %>" class="author-link">
+                              <p class="author-username"><%= post.author_username || null %></p>
+                          </a>
+                          <small><%= post.created_at %> </small>
+                     </div>
+            </div> 
+            <div class="post-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="post">
+            <p class="post-content"><%= post.content %></p>
+            <div class="post-images">
+                
+            </div>
+        </div>
+        <div class="interactions">
+            <div class="post-likes">
+                <button>
+                <i class="fa-regular fa-heart"></i>
+                </button>
+                    <span class="like-count"></span>
+            </div>
+              <div class="comments">
+                <button>
+                <i class="fa-regular fa-comment"></i>
+                </button>
+                    <span class="comment-count"></span>
+            </div>
+              <div class="shares">
+                <button>
+                <i class="fa-solid fa-share"></i>
+                </button>
+                    <span class="shares-count"></span>
+            </div>
+        </div>
+       
+    </div>
 </body>
 </html>
