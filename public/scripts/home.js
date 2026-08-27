@@ -19,7 +19,7 @@ async function fetchPosts() {
 function displayPost(post){
 const postCard = document.createElement("div");
 postCard.textContent = post.content; 
-
+console.log(post);
 document.body.appendChild(postCard);
 
 }
