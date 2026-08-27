@@ -634,6 +634,8 @@ res.status(200).json({posts: result.rows});
 
 //fetch one post
 app.get('/post/:id', async (req, res) => {
+  console.log('post fetched \n');
+try{
     const postId = req.params.id;
     const postQuery= await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
   if (postQuery.rows.length === 0) {
@@ -644,6 +646,13 @@ app.get('/post/:id', async (req, res) => {
     
     // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
     res.render('post', { post: postData }); 
+}catch(e){
+  console.error('Error fetching post',e);
+  return res.status(500).json({ 
+    error: "Internal server error",
+    errorMessage : e
+  });
+}
 });
 
 
