@@ -10,15 +10,23 @@ async function fetchPosts() {
  
         const posts = data.posts
       postsContainer.innerHTML = '';
-       posts.forEach((post) => { 
-             displayPost(post);
+            
+      for (let i=posts.length-1; i >=0; i--){
+             displayPost(posts[i]);
              setTimeout(()=>{loadDefaultImage()},2000);
        })
       } catch (err) {
+       notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
       }
 }
-function displayPost(post){
+function async displayPost(post){
+try{
+ const postImages = post.images
+let imgs = "";
+ if(postImages.length > 0){
+imgs = await sortImages(postImages);
+ }
 const postCard = `
 <div class="postCard">
         <div class="post-header">
@@ -44,7 +52,7 @@ const postCard = `
         <div class="post">
             <p class="post-content">${post.content}</p>
             <div class="post-images">
-                <img src="/images/joli.png" loading="lazy" alt="post image"/>
+                ${imgs}
             </div>
         </div>
         <div class="interactions">
@@ -74,6 +82,9 @@ console.log(post);
 
       
 postsContainer.innerHTML += postCard;
+}catch(e){
+      console.error(e);
+}
 
 }
 
@@ -100,6 +111,14 @@ return `${Math.floor(mDifference)}m`;
 return `${Math.floor(sDifference)}s`;
 }
 
+}
+
+function sortImages(images){
+      let result ;
+      images.forEach(imgLink=>{
+             result += `<img src="${imgLink}" loading="lazy" alt="post image"/>`
+       });
+return result;
 }
 
 //setTimeout(() =>{
