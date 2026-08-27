@@ -190,6 +190,10 @@ main{
         .post-images{
             width: 100%;
             text-align:center;
+          max-height: 500px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          gap:5px;
         }
         .post-images img{
             width:100%;
