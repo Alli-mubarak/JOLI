@@ -54,13 +54,13 @@ const postCard = `
             </div>
               <div class="comments">
                 <button>
-                <i class="fa-regular fa-heart"></i>
+                <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count"></span>
             </div>
               <div class="shares">
                 <button>
-                <i class="fa-regular fa-heart"></i>
+                <i class="fa-solid fa-share"></i>
                 </button>
                     <span class="shares-count"></span>
             </div>
