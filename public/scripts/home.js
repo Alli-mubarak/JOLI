@@ -1,17 +1,5 @@
 const postsContainer = document.getElementById("posts");
-const imagesOnPage = document.querySelectorAll('img');
 
-function loadDefaultImage(){ 
-imagesOnPage.forEach(img => {
-    img.addEventListener('error', function handleError() {
-      // Set the fallback image
-      this.src = '/images/default-user.png';
-      
-      // Remove the listener so it doesn't loop if the default image fails
-      this.removeEventListener('error', handleError);
-    });
-  });
-}
 
 async function fetchPosts() {
       postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
