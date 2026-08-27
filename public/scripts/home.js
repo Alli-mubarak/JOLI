@@ -12,6 +12,7 @@ async function fetchPosts() {
       postsContainer.innerHTML = '';
             
       for (let i=posts.length-1; i >=0; i--){
+            console.log(posts[i]);
              await displayPost(posts[i]);
             // setTimeout(()=>{loadDefaultImage()},2000);
        }
@@ -23,7 +24,7 @@ async function fetchPosts() {
 
 async function displayPost(post){
 try{
- const postImages = post.images
+ const postImages = post.media_url
 let imgs = "";
  if(postImages.length > 0){
 imgs = await sortImages(postImages);
