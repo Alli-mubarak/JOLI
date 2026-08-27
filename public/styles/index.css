@@ -9,7 +9,7 @@
 body{
   position:relative;
   width: 100%;
-  background: #fff;
+  background: #ddd;
 }
 .notifier{
             position: absolute;
@@ -85,45 +85,137 @@ background:#000;
   border-radius: 50%;
 }
 main{
-    padding:20px 0;
     width:100%;
 }
-  main h2{
-    text-align:center;
+        .postCard{
+            background:#fff;
+            display: flex; 
+            align-items: center;
+            justify-content:center;
+            gap: 15px;
+            flex-direction: column;
+            width:100%;
+            overflow:hidden;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+        .post-header{
+            width:100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .author-details{
+             display: flex;
+            align-items: center;
+            justify-content: start;
+            gap:10px;
+            width: 100%;
+          
+        }
+        .author-image{
+            width: 45px;
+            height:45px;
+            border-radius: 50%;
+            border: 2px solid #777;
+        }
+        .author-image a{
+            text-decoration: none;
+        }
+        .author-image img{
+            width: 45px;
+            height:45px;
+            border-radius: 50%;
+        }
+        .username-posttime {
+             display: flex;
+            align-items: start;
+            justify-content: center;
+            gap:5px;
+            flex-direction:column;
+          }
+        .author-link{
+            text-decoration: none;
+        }
+        .author-username {
+            font-weight: 500;
+            color: #222;
+            font-size: 1.3rem;
+        }
+        .post-menu{
+            width: 30px;
+            height: 30px;
+            border-radius:5px;
+            cursor:pointer;
+            background: transparent;
+            position: relative;
+            transition: all 0.3 ease;
+        }
+        .post-menu:hover {
+            background:rgba(0,0,0,0.05)
+        }
+        .post-menu > div{
+            position: absolute;
+            width:4px;
+            height:4px;
+            background:#222;
+            border-radius:5px;
+            left: 13px;
+            top: 6px;
+        }
+        .post-menu > div:nth-child(2){
+            top: 13px;
+        }
+        .post-menu > div:nth-child(3){
+            top: 20px;
+        }
+        .post{
+            width:100%;
+        }
+        .post-content{
+           width:100%;
+            font-size: 1.2rem;
+            padding: 10px 0;
+            
+        }
+        .post-images{
+            width: 100%;
+            text-align:center;
+        }
+        .post-images img{
+            width:100%;
+            height: auto;
+            max-height:500px;
+            object-fit: cover;  
+           object-position: center; 
+           border-radius: 10px;
+           border: 1px solid #ccc;
+        }
+        .interactions{
+           padding: 5px;
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .interactions> div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .interactions > div button{
+            font-size: 1rem;
+            border-radius:5px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+        }
+        .interactions > div button:hover{
+            background:#eee;
   }
-.posts{
-  display: flex;
-  flex-direction: column;
-  gap:5px;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  position: relative;
-  background: #eee;
-}
-.post{
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  gap:10px;
-  align-items: center;
-  justify-content:center;
-  width: 100%;
-  min-height: 120px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-  .post:before{
-    position: absolute;
-    content: '';
-    width: 150px;
-    height: 100%;
-    background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
-    left: -155px;
-    transition: all 0.4s ease;
-    animation: load linear infinite 2s;
-  }
+  
   @keyframes load{
     to{
       left: 110%;
