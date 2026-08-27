@@ -11,6 +11,43 @@ body{
   width: 100%;
   background: #ddd;
 }
+header{
+  width:100%;
+  height: 75px;
+  background: #fff;
+  position: sticky;
+  z-index: 90;
+  left:0;
+  top:0;
+  border-bottom: 2px solid #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+}
+header #logo{
+  text-decoration: none ;
+  height: 100%;
+  display: block;
+}
+header #logo img{
+  height:100%;
+  width: auto;
+}
+header button{
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 1.3rem;
+  color: #222;
+  cursor:pointer;
+  padding: 10px 20px;
+  border: none;
+  background: transparent;
+}
+header button:hover {
+  background: #eee;
+}
 .postCard{
             background:#fff;
             display: flex; 
