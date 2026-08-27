@@ -1,5 +1,17 @@
 const postsContainer = document.getElementById("posts");
+const imagesOnPage = document.querySelectorAll('img');
 
+function loadDefaultImage(){ 
+imagesOnPage.forEach(img => {
+    img.addEventListener('error', function handleError() {
+      // Set the fallback image
+      this.src = '/images/default-user.png';
+      
+      // Remove the listener so it doesn't loop if the default image fails
+      this.removeEventListener('error', handleError);
+    });
+  });
+}
 
 async function fetchPosts() {
       postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
@@ -10,9 +22,9 @@ async function fetchPosts() {
  
         const posts = data.posts
       postsContainer.innerHTML = '';
-       posts.forEach((post) => {
-             
-             displayPost(post)
+       posts.forEach((post) => { 
+             displayPost(post);
+             setTimeout(()=>{loadDefaultImage()},2000);
        })
       } catch (err) {
         console.error("Error fetching posts:", err);
