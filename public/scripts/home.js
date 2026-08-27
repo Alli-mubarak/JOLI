@@ -89,15 +89,15 @@ const dDifference = msDifference / (1000 * 60 * 60 * 24);
 const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
 
 if(mtDifference > 1){
-return Math.floor(mtDifference) + "<bold>M</bold>"; 
+return `${Math.floor(mtDifference)}<bold>M</bold>`; 
 }else if (dDifference > 1){
-return Math.floor(dDifference) + "<bold>d</bold>";
+return `${Math.floor(dDifference)}<bold>d</bold>`;
 }else if (hDifference > 1){
-return Math.floor(hDifference) + "<bold>h</bold>";
+return `${Math.floor(hDifference)}<bold>h</bold>`;
 }else if (mDifference > 1){
-return Math.floor(mDifference) + "<bold>m</bold>";
+return `${Math.floor(mDifference)}<bold>m</bold>`;
 }else {
-return Math.floor(sDifference) + "<bold>s</bold>";
+return `${Math.floor(sDifference)}<bold>s</bold>`;
 }
 
 }
