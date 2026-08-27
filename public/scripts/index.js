@@ -578,7 +578,8 @@ try {
     mediaFilesDisplayer.innerHTML = "";
     input.value = "";
     const msg = "post created!";
-    notify(msg, "success","view post", "#");
+    const postLink = `/post/${result.id}`;
+    notify(msg, "success","view post", postLink);
     
     console.log('Upload successful:', result);
     
