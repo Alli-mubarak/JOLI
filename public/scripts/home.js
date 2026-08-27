@@ -104,5 +104,5 @@ return `${Math.floor(sDifference)}<bold>s</bold>`;
 
 setTimeout(() =>{
 fetchPosts()
-},6000);
+},4000);
 
