@@ -14,6 +14,7 @@ async function fetchPosts() {
       for (let i=posts.length-1; i >=0; i--){
             console.log(posts[i]);
              await displayPost(posts[i]);
+            
             // setTimeout(()=>{loadDefaultImage()},2000);
        }
       } catch (err) {
@@ -31,15 +32,15 @@ imgs = await sortImages(postImages);
  }
 const postCard = `
 <div class="postCard">
-        <div class="post-header">
+        <div class="post-header" dataset="/post/${post.id}">
             <div class="author-details">
                 <div class="author-image">
-                     <a href="#" id="author-image">
+                     <a href="/user/${post.user_id}" id="author-image">
                          <img src="${post.author_profile_pic || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
-                          <a href="#" class="author-link">
+                          <a href="/user/${post.user_id}" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
                           <small>${getPostTime(post.created_at)}</small>
