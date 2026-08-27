@@ -36,14 +36,15 @@ header #logo img{
 }
 header button{
   position: absolute;
-  left: 0;
-  top: 10px;
+  left: 20px;
+  top: 15px;
   font-size: 1.3rem;
   color: #222;
   cursor:pointer;
   padding: 10px 20px;
   border: none;
   background: transparent;
+  border-radius: 10px;
 }
 header button:hover {
   background: #eee;
