@@ -121,7 +121,7 @@ function sortImages(images){
 return result;
 }
 
-//setTimeout(() =>{
+setTimeout(() =>{
 fetchPosts()
-//},4000);
+},4000);
 
