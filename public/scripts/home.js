@@ -71,7 +71,7 @@ const postCard = `
 console.log(post);
 
       
-document.body.appendChild(postCard);
+postsContainer.innerHTML += postCard;
 
 }
 
