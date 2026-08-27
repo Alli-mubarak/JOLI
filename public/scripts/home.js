@@ -32,7 +32,7 @@ const postCard = `
                           <a href="#" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
-                          <small>${getHours(post.created_at)}h</small>
+                          <small>${getPostTime(post.created_at)}</small>
                      </div>
             </div> 
             <div class="post-menu">
@@ -77,15 +77,28 @@ postsContainer.innerHTML += postCard;
 
 }
 
-function getHours(postTime){
+function getPostTime(postTime){
 const targetDate = new Date(postTime);
 const currentDate = new Date();
 
 const msDifference = currentDate - targetDate;
+const sDifference = msDifference / 1000;
+const mDifference = msDifference / (1000/60);
+const hDifference = msDifference / (1000 * 60 * 60);
+const dDifference = msDifference / (1000 * 60 * 60 * 24);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
 
-const hourDifference = msDifference / (1000 * 60 * 60);
-
-return Math.floor(hourDifference); 
+if(mtDifference > 1){
+return Math.floor(mtDifference) + "M"; 
+}else if (dDifference > 1){
+return Math.floor(dDifference) + "d";
+}else if (hDifference > 1){
+return Math.floor(hDifference) + "h";
+}else if (mDifference > 1){
+return Math.floor(mDifference) + "m";
+}else {
+return Math.floor(sDifference) + "s";
+}
 
 }
 
