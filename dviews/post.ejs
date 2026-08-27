@@ -45,6 +45,14 @@ function sortImages(images){
 return result;
 }
 %>
+<header>
+  <a href="/" id="logo">
+    <img src="images/joli-light.png" alt="logo" class="logo" />
+  </a>
+  <button id="return-btn">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+  </header>
 <div class="postCard">
         <div class="post-header" dataset="/post/<%= post.user_id%>">
             <div class="author-details">
@@ -94,5 +102,11 @@ return result;
         </div>
        
     </div>
+<script>
+const backBtn = document.getElementById("return-btn");
+backBtn.onclick = () =>{
+history.back();
+}
+</script>
 </body>
 </html>
