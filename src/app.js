@@ -17,7 +17,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import rateLimit  from 'express-rate-limit';
 //import { sendCustomEmail } from '../Utils/mailer.js';
 import { v2 as cloudinary } from 'cloudinary';
-
+import 'ejs';
 
 dotenv.config();
 const app = express();
