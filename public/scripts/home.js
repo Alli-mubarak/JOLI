@@ -23,7 +23,7 @@ const postCard = `
             <div class="author-details">
                 <div class="author-image">
                      <a href="#" id="author-image">
-                         <img src="${post.author_profile_pic || '/images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
+                         <img src="${post.author_profile_pic || null}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
