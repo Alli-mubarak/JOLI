@@ -161,6 +161,9 @@ app.use(session({
     secure: true
   }
 }));
+
+app.set('view engine', 'ejs');
+app.set('views', '../dviews');
   
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -628,6 +631,16 @@ res.status(200).json({posts: result.rows});
   res.status(500).json({error: 'Internal Server Error'});
 }
 });
+
+//fetch one post
+app.get('/post/:id', async (req, res) => {
+    const postId = req.params.id;
+    const postData = await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
+    
+    // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
+    res.render('post', { post: postData }); 
+});
+
 
 //default page  route
 app.get('/',(req, res)=>{
