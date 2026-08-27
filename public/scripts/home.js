@@ -2,7 +2,7 @@ const postsContainer = document.getElementById("posts");
 
 
 async function fetchPosts() {
-      postsContainer.innerHTML = `<pre>Fetching posts....</pre>`;
+      postsContainer.innerHTML = `<p style="text-align:center; padding: 10px;">Fetching posts....</>`;
       try {
         
         const response = await fetch("/api/getPosts" );
@@ -102,7 +102,7 @@ return `${Math.floor(sDifference)}s`;
 
 }
 
-setTimeout(() =>{
+//setTimeout(() =>{
 fetchPosts()
-},4000);
+//},4000);
 
