@@ -11,4 +11,153 @@ body{
   width: 100%;
   background: #ddd;
 }
-
+.postCard{
+            background:#fff;
+            display: flex; 
+            align-items: center;
+            justify-content:center;
+            gap: 15px;
+            flex-direction: column;
+            width:100%;
+            overflow:hidden;
+            margin-bottom: 10px;
+            padding: 20px;
+        }
+        .post-header{
+            width:100%;
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+        }
+        .author-details{
+             display: flex;
+            align-items: center;
+            justify-content: start;
+            gap:10px;
+            width: 100%;
+          
+        }
+        .author-image{
+            width: 45px;
+            height:45px;
+            border-radius: 50%;
+            border: 2px solid #777;
+        }
+        .author-image a{
+            text-decoration: none;
+        }
+        .author-image img{
+            width: 100%;
+            height:100%;
+          display:block;
+            border-radius: 50%;
+          object-fit: cover;  
+           object-position: center; 
+        }
+        .username-posttime {
+             display: flex;
+            align-items: start;
+            justify-content: center;
+            gap:5px;
+            flex-direction:column;
+          font-weight: 500;
+          font-size: 0.95rem;
+          }
+  .username-posttime small{
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+        .author-link{
+            text-decoration: none;
+        }
+        .author-username {
+            font-weight: 500;
+            color: #222;
+            font-size: 1.3rem;
+        }
+        .post-menu{
+            width: 30px;
+            height: 30px;
+            border-radius:5px;
+            cursor:pointer;
+            background: transparent;
+            position: relative;
+            transition: all 0.3 ease;
+        }
+        .post-menu:hover {
+            background:rgba(0,0,0,0.05)
+        }
+        .post-menu > div{
+            position: absolute;
+            width:4px;
+            height:4px;
+            background:#222;
+            border-radius:5px;
+            left: 13px;
+            top: 6px;
+        }
+        .post-menu > div:nth-child(2){
+            top: 13px;
+        }
+        .post-menu > div:nth-child(3){
+            top: 20px;
+        }
+        .post{
+            width:100%;
+        }
+        .post-content{
+           width:100%;
+            font-size: 0.95rem;
+            padding: 10px 0;
+          font-weight:500;
+            
+        }
+        .post-images{
+            width: 100%;
+            text-align:center;
+          height: fit-content;
+          overflow: auto;
+          max-height: 500px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap:5px;
+          border-radius: 10px;
+        }
+        .post-images img{
+            width:100%;
+            height: 100%;
+            max-height:500px;
+            object-fit: cover;  
+           object-position: center; 
+           border-radius: 10px;
+           border: 1px solid #ccc;
+        }
+        .interactions{
+           padding: 5px;
+            width:100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .interactions> div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+          padding: 10px 15px;
+          border: 1px solid #eee;
+          border-radius: 10px;
+        }
+        .interactions > div button{
+            border-radius:5px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            
+        }
+  .interactions > div button i{
+            font-size: 1.3rem;
+  }
+        .interactions > div button:hover{
+            background:#eee;
+          }
