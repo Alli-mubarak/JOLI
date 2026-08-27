@@ -12,8 +12,8 @@ async function fetchPosts() {
       postsContainer.innerHTML = '';
             
       for (let i=posts.length-1; i >=0; i--){
-             displayPost(posts[i]);
-             setTimeout(()=>{loadDefaultImage()},2000);
+             await displayPost(posts[i]);
+            // setTimeout(()=>{loadDefaultImage()},2000);
        })
       } catch (err) {
        notify("Error fetching posts", "error");
