@@ -19,6 +19,19 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
+  const imagesOnPage = document.querySelectorAll('img');
+
+function loadDefaultImage(){ 
+imagesOnPage.forEach(img => {
+    img.addEventListener('error', function handleError() {
+      // Set the fallback image
+      this.src = '/images/default-user.png';
+      
+      // Remove the listener so it doesn't loop if the default image fails
+      this.removeEventListener('error', handleError);
+    });
+  });
+}
 let canPost = false;
 let closeNID;
         
@@ -80,6 +93,8 @@ async function checkAuthStatus() {
           pUserPic.src = data.user.profile_picture || "images/default-user.png";
           pUsername.textContent = data.user.username
         userPic.classList.remove("hidden");
+
+          setTimeout(()=>{loadDefaultImage()},1000);
           
         } else {
           canPost = false;
@@ -594,7 +609,6 @@ try {
   }
 }
 
-setTimeout(()=>{
-  checkAuthStatus();
-},5000);
+
+checkAuthStatus();
 
