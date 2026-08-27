@@ -639,7 +639,8 @@ try{
     const postId = req.params.id;
     const postQuery= await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
   if (postQuery.rows.length === 0) {
-    return res.status(404).json({error: 'Post not found!'});
+    console.error('post not found!');
+    return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
   }
   const postData = postQuery.rows[0];
    postData.title = "A recent post";
@@ -648,10 +649,7 @@ try{
     res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
-  return res.status(500).json({ 
-    error: "Internal server error",
-    errorMessage : e
-  });
+  return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
 }
 });
 
