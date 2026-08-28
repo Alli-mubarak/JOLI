@@ -1,5 +1,4 @@
 const postsContainer = document.getElementById("posts");
-let canViewPost = true;
 
 
 async function fetchPosts() {
@@ -141,14 +140,14 @@ try{
       viewPostImage(e);
       return;
       } 
-     if(canViewPost){
+     
       const targetUrl = e.currentTarget.getAttribute('data-url');
       
     
     if (targetUrl) {
       window.location.href = targetUrl; 
       }
-     }
+     
 }catch(e){
       console.error(e);
 }
@@ -156,18 +155,15 @@ try{
 
 function viewPostImage(e){
 try{
-     canViewPost = false;
-      const targetSrc = e.currentTarget.getAttribute('src');
+      const targetSrc = e.target.src;
       
     
     if (targetSrc) {
       console.log(targetSrc);
       alert(targetSrc);
-      canViewPost = true;
       }
      
 }catch(e){
-      canViewPost = true;
       console.error(e);
 }
 }
