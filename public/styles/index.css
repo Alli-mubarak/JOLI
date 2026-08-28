@@ -221,7 +221,7 @@ main{
           gap:5px;
           border-radius: 10px;
         }
-    .post-images:has(.grid-item:last-child:nth-child(odd)) .grid-item:last-child {
+    .post-images:has(.grid-item:last-child:nth-child(odd)) .grid-item:first-child {
   grid-column: 1 / -1;
   text-align: center; 
     }
