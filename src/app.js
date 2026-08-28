@@ -120,6 +120,14 @@ const initDb = async () => {
         like_count >= 0 AND repost_count >= 0 AND reply_count >= 0 AND view_count >= 0
     )
 );
+   CREATE TABLE IF NOT exists likes (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    post_id INT NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_user_post_like UNIQUE (user_id, post_id)
+);
+
   `;
   try {
     await pool.query(setupScript);
