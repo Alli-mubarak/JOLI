@@ -223,6 +223,7 @@ main{
         }
     .post-images:has(.grid-item:last-child:nth-child(odd)) .grid-item:first-child {
   grid-column: 1 / -1;
+  max-height: 300px;
   text-align: center; 
     }
         .post-images img{
