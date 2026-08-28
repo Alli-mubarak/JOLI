@@ -362,6 +362,28 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+//Helper functions 
+
+//function for fetching post author details 
+async function fetchAuthorDetails(authorId){
+  try{
+      const user = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [authorId]
+  );
+    const author = user.rows[0];
+    const authorDetails = {
+      profile_pic: author.profile_picture,
+      username : author.username,
+      is_active: author.is_active,
+      is_verified: author.is_verified
+    }
+    return authorDetails;
+  }catch(e){
+    return console.error(e);
+  }
+}
+
 // --- Auth Routes ---
 
 //sign up API
@@ -643,7 +665,12 @@ try{
     return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
   }
   const postData = postQuery.rows[0];
-   postData.title = "A recent post";
+const author = await  fetchAuthorDetails(postData.user_id);
+  postData.author_username = author.username;
+  postData.author_is_verified = author.is_verified;
+  postData.author_is_active = author.is_active;
+  postData.author_profile_picture = author.profile_pic;
+   postData.title = `JOLI - post made by ${author.username} `;
     
     // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
     res.render('post', { post: postData }); 
