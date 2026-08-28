@@ -125,7 +125,7 @@ return result;
 
 function allowPostView(){
 try{
- const everyPosts = document.querySelectorAll(".posts");
+ const everyPosts = document.querySelectorAll(".postCard");
 everyPosts.forEach((post, index) => {
       post.onclick = (e) => {viewPost(e)};
 });
