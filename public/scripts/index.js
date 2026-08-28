@@ -19,7 +19,30 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
-  const imagesOnPage = document.querySelectorAll('img');
+const imagesOnPage = document.querySelectorAll('img');
+const pageHeader = document.querySelector("header");
+const pageTabs = document.querySelector(".tabs");
+let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+
+
+window.addEventListener('scroll', function() {
+try{
+ let currentScroll = window.scrollY || document.documentElement.scrollTop;
+
+ if (currentScroll > lastScrollTop) {
+       pageHeader.style.top = "-100px";
+       pageTabs.style.bottom = "-100px";
+ } else if (currentScroll < lastScrollTop) {
+       pageHeader.style.top = 0;
+       pageTabs.style.bottom = 0;
+ }
+
+       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+}catch(e){
+      console.error(e);
+      return;
+}
+ }, { passive: true }); 
 
 function loadDefaultImage(){ 
 imagesOnPage.forEach(img => {
