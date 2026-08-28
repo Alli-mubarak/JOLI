@@ -1,6 +1,5 @@
 const postsContainer = document.getElementById("posts");
-const pageHeader = document.querySelector("header");
-const pageTabs = document.querySelector(".tabs");
+
 
 
 async function fetchPosts() {
@@ -122,25 +121,7 @@ function sortImages(images){
        });
 return result;
 }
-let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
-window.addEventListener('scroll', function() {
-try{
- let currentScroll = window.scrollY || document.documentElement.scrollTop;
 
- if (currentScroll > lastScrollTop) {
-       pageHeader.style.top = "-100px";
-       pageTabs.style.bottom = "-100px";
- } else if (currentScroll < lastScrollTop) {
-       pageHeader.style.top = 0;
-       pageTabs.style.bottom = 0;
- }
-
-       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
-}catch(e){
-      console.error(e);
-      return;
-}
- }, { passive: true }); 
 
 //setTimeout(() =>{
 fetchPosts()
