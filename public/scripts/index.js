@@ -490,10 +490,7 @@ if (index !== -1) {
   cropBox.appendChild(imageToCrop);
   image = imageInfo.image;
   imageInCropperId = imageInfo.id;
-   checkImageDownload(image)
-       
-  console.log(imageInfo);
-  
+   checkImageDownload(image);
 }
   imageCropper.classList.remove("hidden");
   }catch(e){
