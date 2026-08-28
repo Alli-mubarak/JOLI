@@ -646,8 +646,15 @@ app.get('/api/getPosts',async(req, res)=>{
 console.log('all posts fetched \n');
 try{
 const result = await pool.query('SELECT * FROM posts');
-
-res.status(200).json({posts: result.rows});
+const posts = result.rows
+for(let i = 0; i < posts.length; i++){
+  const author = await fetchAuthorDetails(posts[i].user_id);
+  posts[i].author_username = author.username;
+  posts[i].author_is_verified = author.is_verified;
+  posts[i].author_is_active = author.is_active;
+  posts[i].author_profile_picture = author.profile_pic;
+}
+res.status(200).json({posts: posts});
 }catch(e){
   console.error('Error fetching posts:', e);
   res.status(500).json({error: 'Internal Server Error'});
