@@ -648,11 +648,12 @@ try{
 const result = await pool.query('SELECT * FROM posts');
 const posts = result.rows
 for(let i = 0; i < posts.length; i++){
-  const author = await fetchAuthorDetails(posts[i].user_id);
+  let author = await fetchAuthorDetails(posts[i].user_id);
   posts[i].author_username = author.username;
   posts[i].author_is_verified = author.is_verified;
   posts[i].author_is_active = author.is_active;
   posts[i].author_profile_picture = author.profile_pic;
+  author = [];
 }
 res.status(200).json({posts: posts});
 }catch(e){
@@ -672,11 +673,12 @@ try{
     return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
   }
   const postData = postQuery.rows[0];
-const author = await  fetchAuthorDetails(postData.user_id);
+let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_username = author.username;
   postData.author_is_verified = author.is_verified;
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
+  author = [];
    postData.title = `JOLI - post made by ${author.username} `;
     
     // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
