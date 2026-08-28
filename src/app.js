@@ -56,10 +56,10 @@ function getCountryNameFromReq(req) {
 //session checker
 const checkSession = (req, res, next) => {
   try{
-    if (req.session && req.session.userId) {
-        next(); // User is logged in, proceed to like the post
+    if (req.session) {
+        next(); 
     } else {
-        console.error("Unauthorized usage", req.session);
+        console.error("Unauthorized usage");
         res.status(401).json({ error: 'You must be logged in to do this' });
        
     }
