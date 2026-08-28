@@ -353,8 +353,9 @@ form textarea{
        position: fixed;
          z-index: 90;
          bottom:0; left:0;
-            background: #fff;
-            border-top: 2px solid #ddd;
+       background: #fff;
+     border-top: 2px solid #ddd;
+  transition: all 0.3s ease;
         }
   
         .tabs > div{
