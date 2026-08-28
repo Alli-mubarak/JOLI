@@ -132,9 +132,9 @@ function hideHeadernTab(){
 }
 let startY;
 document.body.ontouchstart = (e) =>  {
-      startY = e.touches[0]
+      startY = e.touches[0].clientY;
 }
-//setTimeout(() =>{
+setTimeout(() =>{
 fetchPosts()
-//},4000);
+},4000);
 
