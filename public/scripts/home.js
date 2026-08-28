@@ -1,5 +1,5 @@
 const postsContainer = document.getElementById("posts");
-
+let isPostLoaded = false;
 
 async function fetchPosts() {
       try {
@@ -15,6 +15,8 @@ async function fetchPosts() {
             
             // setTimeout(()=>{loadDefaultImage()},2000);
        }
+            isPostLoaded = true;
+            hideHeadernTab();
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
@@ -78,9 +80,7 @@ const postCard = `
         </div>
        
     </div>
-`
-console.log(post);
-
+    `;
       
 postsContainer.innerHTML += postCard;
 }catch(e){
@@ -121,7 +121,19 @@ function sortImages(images){
        });
 return result;
 }
+function hideHeadernTab(){
+      const header = document.querySelector("header");
+      const tabs = document.querySelecttor(".tabs");
 
+      if(isLoaded){
+            header.classList.add("hidden");
+            tabs.classList.add("hidden");
+      }
+}
+let startY;
+document.body.ontouchstart = (e) =>  {
+      startY = e.touches[0]
+}
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
