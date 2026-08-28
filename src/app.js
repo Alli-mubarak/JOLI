@@ -580,7 +580,6 @@ app.post('/api/create-post', checkSession, async (req, res) => {
   }
   
   const userId = req.user.id;
-  const username = req.user.username;
 
   if (!userId) {
     return res.status(400).json({ error: 'user id is required' });
@@ -630,11 +629,11 @@ app.post('/api/create-post', checkSession, async (req, res) => {
   }
     
 const queryText = `
-  INSERT INTO posts (user_id, content, media_urls, post_type, author_username)
-  VALUES ($1, $2, $3, $4, $5)
+  INSERT INTO posts (user_id, content, media_urls, post_type)
+  VALUES ($1, $2, $3, $4)
   RETURNING *;
 `;
-    const values = [userId, content, mediaURLs, postType, username];
+    const values = [userId, content, mediaURLs, postType];
     
 
     const result = await pool.query(queryText, values);
