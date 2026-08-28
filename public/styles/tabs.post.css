@@ -355,7 +355,7 @@ form textarea{
          bottom:0; left:0;
        background: #fff;
      border-top: 2px solid #ddd;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
         }
   
         .tabs > div{
