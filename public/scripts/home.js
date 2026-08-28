@@ -1,5 +1,5 @@
 const postsContainer = document.getElementById("posts");
-let isPostLoaded = false;
+
 
 async function fetchPosts() {
       try {
@@ -15,8 +15,7 @@ async function fetchPosts() {
             
             // setTimeout(()=>{loadDefaultImage()},2000);
        }
-            isPostLoaded = true;
-            hideHeadernTab();
+            
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
@@ -121,20 +120,7 @@ function sortImages(images){
        });
 return result;
 }
-function hideHeadernTab(){
- //     const header = document.querySelector("header");
-  //   const tabs = document.querySelector(".tabs");
 
-//      if(isPostLoaded){
-    //        header.classList.add("hidden");
-       //     tabs.classList.add("hidden");
-  //    }
-      alert("loading");
-}
-let startY;
-//document.body.ontouchstart = (e) =>  {
-//      startY = e.touches[0].clientY;
-//}
 setTimeout(() =>{
 fetchPosts()
 },4000);
