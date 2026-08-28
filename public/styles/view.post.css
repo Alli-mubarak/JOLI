@@ -156,7 +156,6 @@ header button:hover {
             text-align:center;
           height: fit-content;
           overflow: auto;
-          max-height: 650px;
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap:5px;
