@@ -168,6 +168,7 @@ try{
     
     if (targetSrc) {
       console.log(targetSrc);
+      alert(targetSrc);
       canViewPost = true;
       }
      
