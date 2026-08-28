@@ -123,17 +123,18 @@ return result;
 }
 function hideHeadernTab(){
       const header = document.querySelector("header");
-      const tabs = document.querySelector(".tabs");
+     const tabs = document.querySelector(".tabs");
 
-      if(isPostLoaded){
-            header.classList.add("hidden");
-            tabs.classList.add("hidden");
-      }
+//      if(isPostLoaded){
+    //        header.classList.add("hidden");
+       //     tabs.classList.add("hidden");
+  //    }
+      alert("loading");
 }
 let startY;
-document.body.ontouchstart = (e) =>  {
-      startY = e.touches[0].clientY;
-}
+//document.body.ontouchstart = (e) =>  {
+//      startY = e.touches[0].clientY;
+//}
 setTimeout(() =>{
 fetchPosts()
 },4000);
