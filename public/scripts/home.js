@@ -134,20 +134,13 @@ everyPosts.forEach((post, index) => {
 }
 }
 
-function allowImagesView(){
-try{
- const everyPostImage = document.querySelectorAll(".grid-item");
-everyPostImage.forEach((img, index) => {
-      img.onclick = (e) => {viewPostImage(e)};
-});
-}catch(e){
-      console.error(e);
-}
-}
 
 function viewPost(e){
 try{
-      if(e.target.src && e.target.src !== null) return;
+      if(e.target.src && e.target.src !== null){
+      viewPostImage(e);
+      return;
+      } 
      if(canViewPost){
       const targetUrl = e.currentTarget.getAttribute('data-url');
       
