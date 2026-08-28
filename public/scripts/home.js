@@ -8,8 +8,8 @@ async function fetchPosts() {
         const response = await fetch("/api/getPosts" );
         const data = await response.json();
  
-        const posts = data.posts
-      console.log(typeof(posts));
+        const posts = data.posts;
+      console.log(posts);
       postsContainer.innerHTML = '';
             
       for (let i=posts.length-1; i >=0; i--){
@@ -37,7 +37,7 @@ const postCard = `
             <div class="author-details">
                 <div class="author-image">
                      <a href="/user/${post.user_id}" id="author-image">
-                         <img src="${post.author_profile_pic || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
+                         <img src="${post.author_profile_picture || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
