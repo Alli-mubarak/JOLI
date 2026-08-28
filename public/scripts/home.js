@@ -9,7 +9,6 @@ async function fetchPosts() {
         const data = await response.json();
  
         const posts = data.posts;
-      console.log(posts);
       postsContainer.innerHTML = '';
             
       for (let i=posts.length-1; i >=0; i--){
@@ -124,7 +123,7 @@ return result;
 }
 
 
-setTimeout(() =>{
+//setTimeout(() =>{
 fetchPosts()
-},4000);
+//},4000);
 
