@@ -164,6 +164,7 @@ header button:hover {
         }
   .post-images:has(.post-img:last-child:nth-child(odd)) .post-img:first-child {
   grid-column: 1 / -1;
+  max-height: 300px;
   text-align: center; 
   }
         .post-images img{
