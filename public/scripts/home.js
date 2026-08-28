@@ -125,7 +125,7 @@ function hideHeadernTab(){
       const header = document.querySelector("header");
       const tabs = document.querySelector(".tabs");
 
-      if(isLoaded){
+      if(isPostLoaded){
             header.classList.add("hidden");
             tabs.classList.add("hidden");
       }
