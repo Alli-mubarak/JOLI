@@ -59,7 +59,7 @@ const checkSession = (req, res, next) => {
     if (req.session && req.session.userId) {
         next(); // User is logged in, proceed to like the post
     } else {
-        console.error("Unauthorized usage");
+        console.error("Unauthorized usage", req.session);
         res.status(401).json({ error: 'You must be logged in to do this' });
        
     }
