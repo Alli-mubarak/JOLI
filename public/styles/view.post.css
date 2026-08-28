@@ -164,9 +164,12 @@ header button:hover {
         }
   .post-images:has(.post-img:last-child:nth-child(odd)) .post-img:first-child {
   grid-column: 1 / -1;
-  max-height: 300px;
   text-align: center; 
   }
+/* If the container has an odd number of total items AND more than 2 items */
+.post-images:has(> :nth-child(3)):has(> :last-child:nth-child(odd)) > :first-child {
+  max-height: 300px;
+}
         .post-images img{
             width:100%;
             height: 100%;
