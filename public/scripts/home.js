@@ -122,8 +122,8 @@ function sortImages(images){
 return result;
 }
 function hideHeadernTab(){
-      const header = document.querySelector("header");
-     const tabs = document.querySelector(".tabs");
+ //     const header = document.querySelector("header");
+  //   const tabs = document.querySelector(".tabs");
 
 //      if(isPostLoaded){
     //        header.classList.add("hidden");
