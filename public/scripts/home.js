@@ -1,5 +1,5 @@
 const postsContainer = document.getElementById("posts");
-
+let canViewPost = false;
 
 
 async function fetchPosts() {
@@ -16,7 +16,8 @@ async function fetchPosts() {
             
             // setTimeout(()=>{loadDefaultImage()},2000);
        }
-            
+        allowPostView();
+        return;
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
@@ -31,8 +32,8 @@ let imgs = "";
 imgs = await sortImages(postImages);
  }
 const postCard = `
-<div class="postCard">
-        <div class="post-header" dataset="/post/${post.id}">
+<div class="postCard" data-url="/post/${post.id}">
+        <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
                      <a href="/user/${post.user_id}" id="author-image">
@@ -122,8 +123,31 @@ function sortImages(images){
 return result;
 }
 
+function allowPostView(){
+try{
+ const everyPosts = document.querySelectorAll(".posts");
+everyPosts.forEach((post, index) => {
+      post.onclick = (e) => {viewPost(e)};
+});
+}catch(e){
+      console.error(e);
+}
+}
 
-//setTimeout(() =>{
+function viewPost(e){
+try{
+      canViewPost = true
+      const targetUrl = e.target.getAttribute('data-url');
+      canViewPost = false;
+    
+    if (targetUrl) {
+      window.location.href = targetUrl; 
+}
+}catch(e){
+      console.error(e);
+}
+}
+setTimeout(() =>{
 fetchPosts()
-//},4000);
+},4000);
 
