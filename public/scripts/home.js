@@ -120,8 +120,20 @@ function sortImages(images){
        });
 return result;
 }
+let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+window.addEventListener('scroll', function() {
+ let currentScroll = window.scrollY || document.documentElement.scrollTop;
 
-setTimeout(() =>{
+ if (currentScroll > lastScrollTop) {
+      console.log("scrolling down!");
+ } else if (currentScroll < lastScrollTop) {
+      console.log("scrolling up!");
+ }
+
+       lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+ }, { passive: true }); 
+
+//setTimeout(() =>{
 fetchPosts()
-},4000);
+//},4000);
 
