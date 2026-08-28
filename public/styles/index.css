@@ -102,10 +102,10 @@ main{
   .p-loader:before{
     position: absolute;
     content: '';
-    width: 150px;
+    width: 50%;
     height: 100%;
     background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
-    left: -155px;
+    left: -52%;
     transition: all 0.3s ease;
     animation: load linear infinite 1.8s;
   }
