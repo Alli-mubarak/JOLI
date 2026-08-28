@@ -117,7 +117,7 @@ return `${Math.floor(sDifference)}s`;
 function sortImages(images){
       let result = "";
       images.forEach(imgLink=>{
-             result += `<img src=${imgLink} loading="lazy" alt="post image"/>`
+             result += `<img src=${imgLink} loading="lazy" class="grid-item" alt="post image"/>`
        });
 return result;
 }
