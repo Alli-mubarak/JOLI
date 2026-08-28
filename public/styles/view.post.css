@@ -162,7 +162,7 @@ header button:hover {
           gap:5px;
           border-radius: 10px;
         }
-  .post-images:has(.post-img:last-child:nth-child(odd)) .post-img:last-child {
+  .post-images:has(.post-img:last-child:nth-child(odd)) .post-img:first-child {
   grid-column: 1 / -1;
   text-align: center; 
   }
