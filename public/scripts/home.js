@@ -147,6 +147,7 @@ everyPostImage.forEach((img, index) => {
 
 function viewPost(e){
 try{
+      if(e.target.src && e.target.src !== null) return;
      if(canViewPost){
       const targetUrl = e.currentTarget.getAttribute('data-url');
       
