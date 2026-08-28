@@ -123,7 +123,7 @@ return result;
 }
 function hideHeadernTab(){
       const header = document.querySelector("header");
-      const tabs = document.querySelecttor(".tabs");
+      const tabs = document.querySelector(".tabs");
 
       if(isLoaded){
             header.classList.add("hidden");
