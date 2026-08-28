@@ -137,7 +137,7 @@ everyPosts.forEach((post, index) => {
 function viewPost(e){
 try{
       canViewPost = true
-      const targetUrl = e.target.getAttribute('data-url');
+      const targetUrl = e.currentTarget.getAttribute('data-url');
       canViewPost = false;
     
     if (targetUrl) {
