@@ -1,5 +1,5 @@
 const postsContainer = document.getElementById("posts");
-let canViewPost = false;
+let canViewPost = true;
 
 
 async function fetchPosts() {
@@ -134,19 +134,49 @@ everyPosts.forEach((post, index) => {
 }
 }
 
-function viewPost(e){
+function allowImagesView(){
 try{
-      canViewPost = true
-      const targetUrl = e.currentTarget.getAttribute('data-url');
-      canViewPost = false;
-    
-    if (targetUrl) {
-      window.location.href = targetUrl; 
-}
+ const everyPostImage = document.querySelectorAll(".grid-item");
+everyPostImage.forEach((img, index) => {
+      img.onclick = (e) => {viewPostImage(e)};
+});
 }catch(e){
       console.error(e);
 }
 }
+
+function viewPost(e){
+try{
+     if(canViewPost){
+      const targetUrl = e.currentTarget.getAttribute('data-url');
+      
+    
+    if (targetUrl) {
+      window.location.href = targetUrl; 
+      }
+     }
+}catch(e){
+      console.error(e);
+}
+}
+
+function viewPostImage(e){
+try{
+     canViewPost = false;
+      const targetSrc = e.currentTarget.getAttribute('src');
+      
+    
+    if (targetSrc) {
+      console.log(targetSrc);
+      canViewPost = true;
+      }
+     
+}catch(e){
+      canViewPost = true;
+      console.error(e);
+}
+}
+
 setTimeout(() =>{
 fetchPosts()
 },4000);
