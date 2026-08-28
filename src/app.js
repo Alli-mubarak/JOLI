@@ -53,6 +53,15 @@ function getCountryNameFromReq(req) {
   }
 }
 
+//session checker
+const checkSession = (req, res, next) => {
+    if (req.session && req.session.userId) {
+        next(); // User is logged in, proceed to like the post
+    } else {
+        res.status(401).json({ error: 'You must be logged in to like posts' });
+    }
+};
+
 //database tables setup
 const initDb = async () => {
   const setupScript = `
@@ -131,7 +140,7 @@ const initDb = async () => {
   `;
   try {
     await pool.query(setupScript);
-    console.log('✅ PostgreSQL Users table is ready.');
+    console.log('✅ PostgreSQL tables are ready.');
   } catch (err) {
     console.error('❌ Database initialization failed:', err.message);
   }
@@ -151,8 +160,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 
-// apply limiter to routes starting with /api/auth/
-//app.use('/api/auth/', limiter);
 
 // Configure and use the session middleware
 const PostgresStore = connectPgSimple(session);
@@ -567,7 +574,7 @@ app.get('/auth/google/callback', limiter, (req, res, next) => {
 
 
 // post creation api
-app.post('/api/create-post', async (req, res) => {
+app.post('/api/create-post', checkSession, async (req, res) => {
   if (!req.isAuthenticated() && !req.user){
    return  res.status(400).json({error: 'You need to log in first!'});
   }
@@ -785,7 +792,7 @@ app.get('/login-failed', (req, res) => {
 });
 
 // Logout Route
-app.get('/api/auth/logout', limiter, (req, res) => {
+app.get('/api/auth/logout', checkSession, limiter, (req, res) => {
   req.logout((err) => {
     if (err) return next(err);
     
@@ -801,8 +808,7 @@ app.get('/api/auth/logout', limiter, (req, res) => {
 });
 
 //user details download route
-//app.get('/user/:id/download-txt', async (req, res) => {
-app.get('/user/download-txt', async (req, res) => {
+app.get('/user/download-txt', checkSession, async (req, res) => {
   if(!req.isAuthenticated()) {
     return res.status(401).send('Unauthorized. Please log in.');
   }
@@ -863,51 +869,8 @@ app.get('/user/download-txt', async (req, res) => {
   }
 });
 
-//fetch all users at once
-app.get('/api/users/summary-optimized', async (req, res) => {
-  if(!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorized. Please log in.');
-  }
-  try {
-    // Runs both database actions at the exact same time
-    const [totalCount, usersList] = await Promise.all([
-      User.countDocuments({}), // Fast internal database counter
-      User.find({}).select('email entries -_id country') // Fetches emails
-    ]);
-
-    return res.status(200).json({
-      success: true,
-      totalUsers: totalCount,
-      users: usersList.map(u => ({id:u._id, createdAt:u.createdAt, email: u.email, country: u.country || 'unknown', entries: u.entries.length}))
-    });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-});
-    //temporary api
-app.get('/api/alter-table/kshhyruurj', async (req, res) =>{
-      try{
-      //  await pool.query(`
-        //    TRUNCATE TABLE session
-      //  `);
-
-        res.json({
-            success: true,
-            message: "Updated successfully."
-        });
-
-    } catch (err) {
-        console.error(err);
-
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
-});
-
 //fetch all users
-app.get('/api/get-all-users', limiter, async(req, res) => {
+app.get('/api/get-all-users', checkSession, limiter, async(req, res) => {
   try{
     if(!req.user || req.user.role !== "admin"){
       return res.json({
@@ -933,7 +896,7 @@ app.get('/api/get-all-users', limiter, async(req, res) => {
 });
 
 //api for uploading pictures 
-app.post('/upload/profile-picture', limiter, async(req,res) =>{
+app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
   }
@@ -1001,7 +964,7 @@ app.post('/upload/profile-picture', limiter, async(req,res) =>{
 });
 
 // user role change api
-app.get('/api/change-role/user/:id/:newRole', limiter, async(req,res) => {
+app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
   const {newRole, id} = req.params;
  try{
    if(!newRole && !id){
