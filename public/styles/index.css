@@ -6,15 +6,14 @@
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
 }
+:root{
+  --primary-color: #2bff43;
+  --touch-color: #c5ff95;
+}
 body{
   position:relative;
   width: 100%;
   background: #ddd;
-  
-}
-:root{
-  --primary-color: #2bff43;
-  --touch-color: #c5ff95;
 }
 .notifier{
             position: absolute;
