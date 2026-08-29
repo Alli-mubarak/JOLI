@@ -145,9 +145,7 @@ try{
       e.currentTarget.style.background = "var(--touch-color)";
     
     if (targetUrl) {
-      setTimeout(()=>{
       e.currentTarget.style.background = "#fff";
-      },300)
       window.location.href = targetUrl; 
       }
      
