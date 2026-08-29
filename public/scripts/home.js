@@ -145,11 +145,10 @@ try{
       e.currentTarget.style.background = "var(--touch-color)";
     
     if (targetUrl) {
-      window.location.href = targetUrl; 
       setTimeout(()=>{
       e.currentTarget.style.background = "#fff";
       },300)
-      
+      window.location.href = targetUrl; 
       }
      
 }catch(e){
