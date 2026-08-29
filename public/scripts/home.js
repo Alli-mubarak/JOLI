@@ -148,7 +148,7 @@ try{
       setTimeout(() =>{
       currentPostCard.style.background = "#fff";
       window.location.href = targetUrl; 
-      },300);
+      },100);
       }
      
 }catch(e){
