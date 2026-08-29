@@ -46,7 +46,7 @@ const postCard = `
                           <small>${getPostTime(post.created_at)}</small>
                      </div>
             </div> 
-            <div class="post-menu" dataset="menu">
+            <div class="post-menu" data-type="menu">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -59,19 +59,19 @@ const postCard = `
             </div>
         </div>
         <div class="interactions">
-            <div class="post-likes" dataset="likes">
+            <div class="post-likes" data-type="likes">
                 <button>
                 <i class="fa-regular fa-heart"></i>
                 </button>
                     <span class="like-count"></span>
             </div>
-              <div class="comments" dataset="comments">
+              <div class="comments" data-type="comments">
                 <button>
                 <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count"></span>
             </div>
-              <div class="shares" dataset="shares">
+              <div class="shares" data-type="shares">
                 <button>
                 <i class="fa-solid fa-share"></i>
                 </button>
@@ -136,7 +136,9 @@ everyPosts.forEach((post, index) => {
 
 function viewPost(e){
 try{
-      if(e.target.dataset && e.target.dataset !== null) return;
+      
+      if(e.target.getAttribute('data-type') !== null) return;
+      if(e.target.parentElement.getAttribute('data-type') !== null) return;
       if(e.target.src && e.target.src !== null){
       viewPostImage(e);
       return;
