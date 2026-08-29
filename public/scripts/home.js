@@ -60,19 +60,19 @@ const postCard = `
         </div>
         <div class="interactions">
             <div class="post-likes" data-type="likes">
-                <button>
+                <button data-type="like-btn">
                 <i class="fa-regular fa-heart"></i>
                 </button>
                     <span class="like-count"></span>
             </div>
               <div class="comments" data-type="comments">
-                <button>
+                <button data-type="comment-btn">
                 <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count"></span>
             </div>
               <div class="shares" data-type="shares">
-                <button>
+                <button data-type="share-btn">
                 <i class="fa-solid fa-share"></i>
                 </button>
                     <span class="shares-count"></span>
