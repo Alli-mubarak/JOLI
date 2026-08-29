@@ -140,13 +140,13 @@ try{
       viewPostImage(e);
       return;
       } 
-     
-      const targetUrl = e.currentTarget.getAttribute('data-url');
-      e.currentTarget.style.background = "var(--touch-color)";
+     let currentPostCard = e.currentTarget
+      const targetUrl = currentPostCard.getAttribute('data-url');
+      currentPostCard.style.background = "var(--touch-color)";
     
     if (targetUrl) {
       setTimeout(() =>{
-      e.currentTarget.style.background = "#fff";
+      currentPostCard.style.background = "#fff";
       window.location.href = targetUrl; 
       },300);
       }
