@@ -150,6 +150,7 @@ header button:hover {
             padding: 10px 0;
           font-weight:500;
           line-height: 25px;
+          white-space: pre-wrap;
         }
         .post-images{
             width: 100%;
