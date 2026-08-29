@@ -12,6 +12,10 @@ body{
   background: #ddd;
   
 }
+:root{
+  --primary-color: #2bff43;
+  --touch-color: #c5ff95;
+}
 .notifier{
             position: absolute;
             width:100%;
@@ -121,6 +125,9 @@ main{
             margin-bottom: 10px;
             padding: 20px;
         }
+  .postCard:hover{
+    background: var(--touch-color);
+  }
         .post-header{
             width:100%;
             display: flex;
