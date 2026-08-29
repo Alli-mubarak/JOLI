@@ -142,10 +142,14 @@ try{
       } 
      
       const targetUrl = e.currentTarget.getAttribute('data-url');
-      
+      e.currentTarget.style.background = "var(--touch-color)";
     
     if (targetUrl) {
       window.location.href = targetUrl; 
+      setTimeout(()=>{
+      e.currentTarget.style.background = "#fff";
+      },300)
+      
       }
      
 }catch(e){
