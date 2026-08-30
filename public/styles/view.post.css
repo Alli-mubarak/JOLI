@@ -161,7 +161,7 @@ header button:hover {
           height: fit-content;
           overflow: auto;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(2fr, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(0.5fr, 1fr));
           gap:5px;
           border-radius: 10px;
         }
