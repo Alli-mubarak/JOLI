@@ -102,6 +102,21 @@ return `${Math.floor(sDifference)}s`;
         </div>
        
     </div>
+<div id="media-viewer" class="hidden">
+        <button id="mv-closer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button id="mv-left" class="mover">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="mv-right" class="mover">
+          <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        <div id="viewer">
+            <img id="image-view" src="#" alt="image in view" />
+        </div>
+        <div id="media-counter"></div>
+   </div>
 <script>
 const backBtn = document.getElementById("return-btn");
 backBtn.onclick = () =>{
