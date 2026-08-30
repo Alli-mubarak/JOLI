@@ -154,7 +154,7 @@ try{
       viewPostImage(e);
       return;
       }
-        
+        return;
       } 
      let currentPostCard = e.currentTarget
       const targetUrl = currentPostCard.getAttribute('data-url');
