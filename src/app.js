@@ -699,8 +699,6 @@ let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
   author = [];
-   postData.title = `JOLI - post made by ${author.username} `;
-    
     // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
     res.render('post', { post: postData }); 
 }catch(e){
