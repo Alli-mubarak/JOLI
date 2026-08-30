@@ -13,7 +13,7 @@ const mediaViewer = document.getElementById("media-viewer");
   let inViewMode = false;
 
   if (postImagesContainer.children.length > 0){
-    imgArray = Array.from(postImagesContainer);
+    imgArray = Array.from(postImagesContainer.children);
     imgArray.forEach(img=>{
       img.onclick = (e) =>{viewPostImage(e)}
     })
