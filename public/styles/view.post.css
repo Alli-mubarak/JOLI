@@ -11,6 +11,9 @@ body{
   width: 100%;
   background: #ddd;
 }
+.hidden{
+  display: none !important;
+}
 header{
   width:100%;
   height: 75px;
@@ -207,4 +210,72 @@ header button:hover {
   }
         .interactions > div button:hover{
             background:#eee;
+          }
+#media-viewer{
+            width: 100%;
+            height:100vh;
+            background:#222;
+            position: fixed;
+            top:0;
+            left:0;
+            padding: 10px;
+            z-index:100;
+        }
+        #mv-closer{
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        #viewer{
+            width: 100%;
+            height:80vh;
+            display: flex;
+            align-items: center ;
+            justify-content: center;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap; 
+            padding: 0 35px;
+        }
+        #viewer img{
+            max-width:100%;
+            height: auto;
+            display: block ;
+            max-height : 80vh;
+            margin: auto;
+            border-radius: 10px;
+            border: 1px solid #eef9ee;
+            background:#fff;
+        }
+        #media-counter{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            width:100%;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        #media-counter > div{
+            width: 10px; height:10px;
+            background: transparent;
+            border-radius: 10px;
+            border: 1px solid #eef9ee;
+        }
+        .mover{
+            position: absolute;
+            top: 50%;
+            font-size:1rem;
+            padding: 10px 5px;
+            border-radius: 10px;
+            cursor:pointer;
+            border: none;
+        }
+        #mv-left{
+            left:5px;
+        }
+        #mv-right{
+            right:5px;
           }
