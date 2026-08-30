@@ -1,5 +1,4 @@
-function runScript(){
-try{
+
   const postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
@@ -173,7 +172,7 @@ try{
 function viewPostImage(e){
    try{
    inViewMode = true;
-    const img = e.currentTarget;
+    const img = e.target;
     const src = img.src
     imgArray = Array.from(img.parentElement.children);
    
@@ -275,9 +274,3 @@ function viewPostImage(e){
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
-}catch(e){
-  console.error(e);
-}
-}
-
-setTimeout(() =>{runScript()},4000)
