@@ -150,8 +150,11 @@ try{
       if(e.target.getAttribute('data-type') !== null) return;
       if(e.target.parentElement.getAttribute('data-type') !== null) return;
       if(e.target.src && e.target.src !== null){
+      if(e.target.getAttribute("class") === "grid-item"){
       viewPostImage(e);
       return;
+      }
+        
       } 
      let currentPostCard = e.currentTarget
       const targetUrl = currentPostCard.getAttribute('data-url');
