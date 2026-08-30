@@ -119,3 +119,4 @@ function viewPostImage(e){
            console.error(e);
        }
            }
+alert("post loading");
