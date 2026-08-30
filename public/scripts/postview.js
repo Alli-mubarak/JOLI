@@ -5,10 +5,20 @@ const mediaViewer = document.getElementById("media-viewer");
   const viewer = document.getElementById("viewer");
   const mediaCounter = document.getElementById("media-counter");
   const imageBox = document.getElementById("image-view");
+  const postImagesContainer = document.querySelector(".post-images");
+
+
   let imgArray;
   let currIndex;
   let inViewMode = false;
-    
+
+  if (postImagesContainer.children.length > 0){
+    imgArray = Array.from(postImagesContainer);
+    imgArray.forEach(img=>{
+      img.onclick = (e) =>{viewPostImage(e)}
+    })
+  }
+
 function viewPostImage(e){
    try{
    inViewMode = true;
