@@ -118,5 +118,4 @@ function viewPostImage(e){
      }catch(e){
            console.error(e);
        }
-           }
-alert("post loading");
+      }
