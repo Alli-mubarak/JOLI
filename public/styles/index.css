@@ -288,15 +288,15 @@ main{
             position: fixed;
             top:0;
             left:0;
-            padding: 5px;
+            padding: 10px;
             z-index:100;
         }
         #mv-closer{
             border: none;
-            padding: 8px 20px;
+            padding: 8px 15px;
             cursor: pointer;
             border-radius: 10px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             margin-bottom: 30px;
         }
         #viewer{
@@ -337,7 +337,7 @@ main{
         .mover{
             position: absolute;
             top: 50%;
-            font-size:1.2rem;
+            font-size:1rem;
             padding: 10px 5px;
             border-radius: 10px;
             cursor:pointer;
