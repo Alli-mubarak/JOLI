@@ -23,8 +23,9 @@ const imagesOnPage = document.querySelectorAll('img');
 const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
+let scrollPosition = 0;
 
-
+//page tab & header hider toggle
 window.addEventListener('scroll', function() {
 try{
  let currentScroll = window.scrollY || document.documentElement.scrollTop;
@@ -44,6 +45,8 @@ try{
 }
  }, { passive: true }); 
 
+
+//function for loading default images 
 function loadDefaultImage(){ 
 imagesOnPage.forEach(img => {
     img.addEventListener('error', function handleError() {
@@ -138,14 +141,34 @@ async function checkAuthStatus() {
         }
         return 
     }
-//post adder
+
+//post adder display
 postAdder.onclick = () => {
+  try{
   if(canPost){
   postContainer.classList.remove("hidden");
+  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  pageHeader.style.top = 0;
+  document.body.style.width = '100%';
   }
   return
+  }catch(e){
+    console.error(e);
+  }
 }
+
+
+//post adder closer
 postCloser.onclick = () => {
+  try{
+  document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
   postContainer.classList.add("hidden");
   mediaFilesDisplayer.innerHTML = "";
   input.value = "";
@@ -154,6 +177,9 @@ postCloser.onclick = () => {
   mediaCover.classList.remove('hidden');
   mediaAdder.style.background = "#c5ff95";
   mediaAdder.style.color = "#bbb";
+  }catch(e){
+    console.error(e);
+  }
 }
 input.value = "";
 input.oninput = () => {
