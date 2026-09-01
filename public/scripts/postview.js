@@ -14,7 +14,7 @@ const postImagesContainer = document.querySelector(".post-images");
   let currIndex;
   let inViewMode = false;
 
-  if (postImagesContainer.children.length > 0){
+  if (postImagesContainer && postImagesContainer.children.length > 0){
     imgArray = Array.from(postImagesContainer.children);
     imgArray.forEach(img=>{
       img.onclick = (e) =>{viewPostImage(e)}
