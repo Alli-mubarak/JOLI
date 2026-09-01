@@ -1,3 +1,4 @@
+alert("fetching post!");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
