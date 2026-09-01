@@ -2,11 +2,11 @@
 A social media app
 
 
-*UI
+#UI
 Vanilla HTML % Vanilla CSS
 
-*Server
+#Server
 Express, NodeJS
 
-*Database 
+#Database 
 PostgreSQL (Aiven)
