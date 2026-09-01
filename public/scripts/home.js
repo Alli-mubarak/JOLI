@@ -158,6 +158,7 @@ try{
       
       if(e.target.getAttribute('data-type') !== null) return;
       if(e.target.parentElement.getAttribute('data-type') !== null) return;
+      if(e.target.getAttribute('href') && e.target.getAttribute('href') !== null) return;
       if(e.target.src && e.target.src !== null){
       if(e.target.getAttribute("class") === "grid-item"){
       viewPostImage(e);
