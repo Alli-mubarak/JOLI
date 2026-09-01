@@ -1,13 +1,12 @@
-const postContent = document.querySelector(".post-content");
 const mediaViewer = document.getElementById("media-viewer");
-  const mediaViewerCloser = document.getElementById("mv-closer");
-  const moveLeft = document.getElementById("mv-left");
-  const moveRight = document.getElementById("mv-right");
-  const viewer = document.getElementById("viewer");
-  const mediaCounter = document.getElementById("media-counter");
-  const imageBox = document.getElementById("image-view");
-  const postImagesContainer = document.querySelector(".post-images");
-
+const mediaViewerCloser = document.getElementById("mv-closer");
+const moveLeft = document.getElementById("mv-left");
+const moveRight = document.getElementById("mv-right");
+const viewer = document.getElementById("viewer");
+const mediaCounter = document.getElementById("media-counter");
+const imageBox = document.getElementById("image-view");
+const postImagesContainer = document.querySelector(".post-images");
+const postContent = document.querySelector(".post-content");
 
   let imgArray;
   let currIndex;
