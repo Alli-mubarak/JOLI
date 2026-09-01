@@ -28,8 +28,10 @@ function linkify(text) {
     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
-postContent.innerHTML = linkify(postContent.texrContent);
 
+setTimeout(()=>{
+postContent.innerHTML = linkify(postContent.texrContent);
+},4000);
 
 function viewPostImage(e){
    try{
