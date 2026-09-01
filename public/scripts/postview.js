@@ -28,7 +28,7 @@ function linkify(text) {
   });
 }
 
-  alert(postContent.innerHTML)
+  alert(postContent)
 alert(postContent.textContent);
 
 setTimeout(()=>{
