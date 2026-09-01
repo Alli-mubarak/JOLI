@@ -28,13 +28,10 @@ function linkify(text) {
   });
 }
 
-  alert("hey");
-
-setTimeout(()=>{
+  alert("loading post!");
 const postContent = document.querySelector(".post-content");
 postContent.innerHTML = linkify(postContent.textContent);
-  alert('linkified!');
-},4000);
+
 
 function viewPostImage(e){
    try{
