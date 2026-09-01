@@ -709,8 +709,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
   author = [];
-  postData.content = await linkify(postData.content);
-    res.render('post', { post: postData }); 
+ res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
   return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
