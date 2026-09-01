@@ -4,6 +4,95 @@
 body{
 position: relative;
   }
+
+#menu-options{
+            width: 70%;
+            height: 100%;
+            background:#fff;
+            border-radius: 10px 0 0 10px;            
+            box-shadow: -2px 0 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            padding: 20px;
+        }
+        #menu-options a{
+           
+            text-decoration: none;
+            color:#222;
+        }
+        #profile-info, #account-settings{
+            height: 20%;
+            
+        }
+        #profile-info{
+            display: flex;
+            align-items:start;
+            justify-content: space-between;
+        }
+        
+        #profile-pic{
+            width: 45px;
+            height:45px;
+            background:#fff;
+            border-radius:50%;
+            object-fit: cover;
+            object-position: center;
+        }
+        #u-name{
+            margin: 10px 0;
+        }
+        #logout-link{
+            background: #2bff43;
+            border-radius: 10px;
+            padding: 10px 15px;
+            color:#222 !important;
+            font-size: 1.1rem;
+            font-weight:500;
+        }
+        #extras{
+            height:60%;
+            border:1px solid rgba(0,0,0,0.05);
+            border-left: none;
+            border-right: none;
+            padding: 20px 0;
+            font-size: 1.3rem;
+        }
+        #account-settings{
+            display: flex;
+            align-items: start;
+            flex-direction: column;
+            justify-content: end;
+            font-size:1.3rem;
+        }
+        #extras a, #account-settings a{
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap:10px;
+            width:100%;
+            padding: 10px 0;
+            border-radius: 10px;
+        }
+        #m-closer{
+            width:30%;
+            padding:20px;
+            height: 100%;
+        }
+        #m-closer > div{
+            width:30px;
+            height:30px;
+            display: flex ;
+            align-items :center;
+            justify-content: center;
+            background:#2bff43;
+            border-radius:50%;
+            
+        }
+        #m-closer-btn{
+            font-size:1rem;
+            color:#222;
+            display: block;
+            cursor:pointer;
+          }
 #notifier{
             position: fixed;
             bottom:110px;
@@ -19,6 +108,7 @@ position: relative;
             font-size: 0.9rem;
             font-weight: 500;
         }
+  
         #n-link{
             font-weight:600;
             color: blue;
