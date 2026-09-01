@@ -3,6 +3,9 @@ const menuBox = document.getElementById("menu-container");
 const menuCloser = document.getElementById("m-closer");
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
+const pPic = document.getElementById("profile-pic");
+const sUsername = document.getElementById("u-name");
+const sEmail = document.getElementById("user-email");
 const postAdder = document.querySelector(".add-post");
   const mediaFilesDisplayer = document.getElementById('media-files-displayer');
 const postContainer = document.getElementById('create-post-container');
@@ -150,6 +153,10 @@ async function checkAuthStatus() {
          userPic.src = data.user.profile_picture || "images/default-user.png";
           pUserPic.src = data.user.profile_picture || "images/default-user.png";
           pUsername.textContent = data.user.username
+          pPic.src = data.user.profile_picture || "images/default-user.png";
+          sUsername.textContent = data.user.username;
+          sEmail.textContent = data.user.email || "";
+          
         userPic.classList.remove("hidden");
 
           setTimeout(()=>{loadDefaultImage()},1000);
