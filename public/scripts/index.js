@@ -1,4 +1,4 @@
-const menu = document.getElementById("pp");
+
 const menuBox = document.getElementById("menu-container");
 const menuCloser = document.getElementById("m-closer");
 const signInLink = document.getElementById("sign-in-link");
@@ -29,7 +29,7 @@ let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
 
 
-menu.onclick = () =>{
+userPic.onclick = () =>{
       menuBox.style.left = "0";
       setTimeout(() =>{
       menuBox.style.background = "rgba(0,0,0,0.2)";
