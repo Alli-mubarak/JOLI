@@ -25,8 +25,14 @@ header{
   border-bottom: 2px solid #555;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: 10px 20px;
+}
+.title{
+display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
 }
 header #logo{
   text-decoration: none ;
@@ -38,13 +44,10 @@ header #logo img{
   width: auto;
 }
 header button{
-  position: absolute;
-  left: 20px;
-  top: 15px;
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: #222;
   cursor:pointer;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border: none;
   background: transparent;
   border-radius: 10px;
