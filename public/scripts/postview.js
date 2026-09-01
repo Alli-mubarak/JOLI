@@ -30,7 +30,8 @@ function linkify(text) {
 }
 
 setTimeout(()=>{
-postContent.innerHTML = linkify(postContent.texrContent);
+postContent.innerHTML = linkify(postContent.textContent);
+  alert('linkified!');
 },4000);
 
 function viewPostImage(e){
