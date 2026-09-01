@@ -36,14 +36,6 @@ return `${Math.floor(sDifference)}s`;
 }
 
 }
-function linkify(text) {
-  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
-  
-  return text.replace(urlRegex, (url) => {
-    const href = url.startsWith('http') ? url : `https://${url}`;
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-  });
-}
 
 %>
 <header id="header">
@@ -76,7 +68,7 @@ function linkify(text) {
             </div>
         </div>
         <div class="post">
-            <p class="post-content"><%= linkify(post.content) %></p>
+            <p class="post-content"><%= post.content %></p>
             
                 <% if (post.media_urls && post.media_urls.length > 0) { %>
         <div class="post-images">
