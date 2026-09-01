@@ -1,3 +1,6 @@
+const menu = document.getElementById("pp");
+const menuBox = document.getElementById("menu-container");
+const menuCloser = document.getElementById("m-closer");
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
 const postAdder = document.querySelector(".add-post");
@@ -25,6 +28,35 @@ const pageTabs = document.querySelector(".tabs");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
 
+
+menu.onclick = () =>{
+      menuBox.style.left = "0";
+      setTimeout(() =>{
+      menuBox.style.background = "rgba(0,0,0,0.2)";
+      },200);
+      
+  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  header.style.top = 0;
+  document.body.style.width = '100%';
+  }
+  
+  menuCloser.onclick = () =>{
+     menuBox.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      menuBox.style.left = "100%";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+      
+  }
 //page tab & header hider toggle
 window.addEventListener('scroll', function() {
 try{
