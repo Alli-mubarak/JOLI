@@ -1,12 +1,7 @@
 # JOLI
 A social media app
 
-
-#UI
-Vanilla HTML % Vanilla CSS
-
-#Server
-Express, NodeJS
-
-#Database 
-PostgreSQL (Aiven)
+-Development
+* UI : Vanilla HTML & Vanilla CSS , 
+* Server : Express - Nodejs, 
+* Database: PostgreSQL(Aiven)
