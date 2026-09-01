@@ -6,7 +6,7 @@ const viewer = document.getElementById("viewer");
 const mediaCounter = document.getElementById("media-counter");
 const imageBox = document.getElementById("image-view");
 const postImagesContainer = document.querySelector(".post-images");
-const postContent = document.querySelector(".post-content");
+
 
   let imgArray;
   let currIndex;
@@ -28,10 +28,10 @@ function linkify(text) {
   });
 }
 
-  alert(postContent)
-alert(postContent.textContent);
+  alert("hey");
 
 setTimeout(()=>{
+const postContent = document.querySelector(".post-content");
 postContent.innerHTML = linkify(postContent.textContent);
   alert('linkified!');
 },4000);
