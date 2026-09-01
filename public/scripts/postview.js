@@ -1,5 +1,3 @@
-alert("fetching post!");
-document.addEventListener('DOMContentLoaded', ()=>{
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -30,7 +28,7 @@ function linkify(text) {
   });
 }
 
-  alert("loading post!");
+  
 const postContent = document.querySelector(".post-content");
 postContent.innerHTML = linkify(postContent.textContent);
 
@@ -135,4 +133,4 @@ function viewPostImage(e){
            console.error(e);
        }
       }
-});
+
