@@ -1,3 +1,4 @@
+const postContent = document.querySelector(".post-content");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
   const moveLeft = document.getElementById("mv-left");
@@ -18,6 +19,17 @@ const mediaViewer = document.getElementById("media-viewer");
       img.onclick = (e) =>{viewPostImage(e)}
     })
   }
+
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
+postContent.innerHTML = linkify(postContent.texrContent);
+
 
 function viewPostImage(e){
    try{
