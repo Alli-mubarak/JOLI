@@ -10,6 +10,15 @@ const mediaViewer = document.getElementById("media-viewer");
   let imgArray;
   let currIndex;
   let inViewMode = false;
+
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
     
 async function fetchPosts() {
       try {
@@ -63,7 +72,7 @@ const postCard = `
             </div>
         </div>
         <div class="post">
-            <p class="post-content">${post.content}</p>
+            <p class="post-content">${linkify(post.content)}</p>
             <div class="post-images">
                 ${imgs}
             </div>
