@@ -80,7 +80,7 @@ function linkify(text) {
             
                 <% if (post.media_urls && post.media_urls.length > 0) { %>
         <div class="post-images">
-            <!-- Loop through each image URL and render an img tag -->
+            
             <% post.media_urls.forEach(function(url) { %>
                 <img src="<%= url %>" alt="Post Media" class="post-img" />
             <% }) %>
