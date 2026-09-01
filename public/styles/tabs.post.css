@@ -56,7 +56,7 @@ position: relative;
             justify-content:space-between;
         }
         .header .closer{
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
             width: 35px;
             height: 35px;
@@ -73,7 +73,7 @@ position: relative;
         .header button {
             background: #c5ff95;
             padding: 10px 30px;
-            font-size: 1.25rem;
+            font-size: 1rem;
            border: none;
             border-radius: 15px;
             font-weight: 500;
@@ -121,7 +121,7 @@ position: relative;
             border: 1px solid #ccc;
         }
         .user-details p{
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
         #media-files-displayer{
@@ -218,7 +218,7 @@ form textarea{
             height: 250px;
             border-radius: 15px;
             resize: none;
-            font-size: 1.2rem;
+            font-size: 1rem;
             outline:none; 
             border: 1px solid #ccc;
             line-height: 30px;
