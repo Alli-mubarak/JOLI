@@ -40,12 +40,16 @@ return `${Math.floor(sDifference)}s`;
 
 %>
 <header id="header">
+<div class="title">
+<button id="return-btn">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+<h3>Post</h3>
+</div>
   <a href="/" id="logo">
     <img src="/images/joli-light.png" alt="logo" class="logo" />
   </a>
-  <button id="return-btn">
-  <i class="fa-solid fa-arrow-left"></i>
-  </button>
+  
   </header>
 <div class="postCard">
         <div class="post-header" dataset="/post/<%= post.user_id%>">
