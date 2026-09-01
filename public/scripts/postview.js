@@ -29,6 +29,9 @@ function linkify(text) {
   });
 }
 
+  alert(postContent.innerHTML)
+alert(postContent.textContent);
+
 setTimeout(()=>{
 postContent.innerHTML = linkify(postContent.textContent);
   alert('linkified!');
