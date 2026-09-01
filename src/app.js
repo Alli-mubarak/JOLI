@@ -405,6 +405,16 @@ async function fetchAuthorDetails(authorId){
   }
 }
 
+//function for linkifying text
+async function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
+
 // --- Auth Routes ---
 
 //sign up API
@@ -699,7 +709,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
   author = [];
-    // Looks for ./dviews/post.ejs, injects data, and sends it as finished HTML
+  postData.content = await linkify(postData.content);
     res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
