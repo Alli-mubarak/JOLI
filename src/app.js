@@ -716,6 +716,56 @@ let author = await  fetchAuthorDetails(postData.user_id);
 }
 });
 
+//post liking 
+app.post('/posts/:postId/like', checkSession,  async (req, res) => {
+  try {
+    const { postId } = req.params;
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized"});
+  }
+    
+    const userId = req.user.id
+
+    if (!userId || !postId) {
+        return res.status(400).json({ error: 'Missing userId or postId' });
+    }
+
+    const toggleQuery = `
+        WITH deleted AS (
+            DELETE FROM likes 
+            WHERE user_id = $1 AND post_id = $2
+            RETURNING *
+        )
+        INSERT INTO likes (user_id, post_id)
+        SELECT $1, $2
+        WHERE NOT EXISTS (SELECT 1 FROM deleted)
+        RETURNING id;
+    `;
+
+    
+        const result = await pool.query(toggleQuery, [userId, postId]);
+
+        // If the query returned a row with an 'id', it means the INSERT executed (Liked)
+        if (result.rows.length > 0) {
+            return res.status(201).json({ 
+                success: true, 
+                action: 'liked', 
+                message: 'Post liked successfully' 
+            });
+        } else {
+            // If result.rows is empty, it means the DELETE executed instead (Unliked)
+            return res.status(200).json({ 
+                success: true, 
+                action: 'unliked', 
+                message: 'Post unliked successfully' 
+            });
+        }
+
+    } catch (error) {
+        console.error('Error toggling like:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 //default page  route
 app.get('/',(req, res)=>{
