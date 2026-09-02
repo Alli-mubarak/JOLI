@@ -82,7 +82,8 @@ const postCard = `
                 <button data-type="like" class="like-btn">
                 <i class="fa-regular fa-heart"></i>
                 </button>
-                    <span class="like-count">${post.like_count}</span>
+                ${post.like_count? `<span class="like-count">${post.like_count}</span>` : "<span class='like-count'></span>"}
+                    
             </div>
               <div class="comments" data-type="comments">
                 <button data-type="comment" class="comment-btn">
