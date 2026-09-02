@@ -298,8 +298,9 @@ function viewPostImage(e){
         });
 
         if (!response.ok) {
-          
+          console.error(response);
         }
+          console.log(response);
         
         const data = await response.json();
 
