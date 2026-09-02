@@ -29,7 +29,7 @@ async function fetchPosts() {
         const posts = data.posts;
       postsContainer.innerHTML = '';
             
-      for (let i=posts.length-1; i >=0; i--){
+      for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
             
             // setTimeout(()=>{loadDefaultImage()},2000);
