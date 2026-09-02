@@ -82,7 +82,7 @@ const postCard = `
                 <button data-type="like" class="like-btn">
                 <i class="fa-regular fa-heart"></i>
                 </button>
-                    <span class="like-count"></span>
+                    <span class="like-count">${post.like_count}</span>
             </div>
               <div class="comments" data-type="comments">
                 <button data-type="comment" class="comment-btn">
@@ -290,6 +290,7 @@ function viewPostImage(e){
     async function likePost(e){
       try{
       const postId = e.currentTarget.id;
+      const likeContainer = e.currentTarget.querySelector(".like-count");
         try {
         
         const response = await fetch(`/api/posts/${postId}/like`, {
@@ -299,18 +300,20 @@ function viewPostImage(e){
 
         if (!response.ok) {
           console.error(response);
+          notify("like failed!", "error");
+          return 
         }
           console.log(response);
         
         const data = await response.json();
 
         alert(data.action);
-        console.log(data.likesCount);
-        if (data.action === 'liked') {
+        likeContainer.textContent = data.likesCount;
+        if (data.action === 'inserted') {
            // button.setAttribute('data-liked', 'true');
           //  heartIcon.textContent = '♥';
           alert("liked");
-        } else if (data.action === 'unliked') {
+        } else if (data.action === 'deleted') {
           //  button.setAttribute('data-liked', 'false');
           //  heartIcon.textContent = '☆';
           alert("unliked");
