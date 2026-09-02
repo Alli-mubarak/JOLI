@@ -742,7 +742,7 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
             RETURNING *
         )
         UPDATE posts
-        SET likes_count = likes_count + (
+        SET like_count = like_count + (
             CASE 
                 WHEN EXISTS (SELECT 1 FROM inserted) THEN 1
                 ELSE -1
@@ -750,7 +750,7 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
         )
         WHERE id = $2
         RETURNING 
-            likes_count,
+            like_count,
             CASE 
                 WHEN EXISTS (SELECT 1 FROM inserted) THEN 'inserted'
                 ELSE 'deleted'
@@ -766,13 +766,13 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
         }
 
         // Destructure values from database response row
-        const { likes_count, action } = result.rows[0];
+        const { like_count, action } = result.rows[0];
 
         // Send payload structure back to frontend
         return res.status(200).json({ 
             success: true, 
             action: action,          // Sends 'inserted' or 'deleted'
-            likesCount: likes_count  // Sends absolute truth number
+            likesCount: like_count  // Sends absolute truth number
         });
 
     } catch (error) {
