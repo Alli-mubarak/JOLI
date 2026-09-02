@@ -716,8 +716,8 @@ let author = await  fetchAuthorDetails(postData.user_id);
 }
 });
 
-//post liking 
-app.post('/posts/:postId/like', checkSession,  async (req, res) => {
+//post liking api
+app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
   try {
     const { postId } = req.params;
   if (!req.isAuthenticated() && !req.user){
