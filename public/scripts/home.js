@@ -307,9 +307,14 @@ function viewPostImage(e){
           console.log(response);
         
         const data = await response.json();
+        const postLikes = data.likesCount
 
         alert(data.action);
-        likeContainer.textContent = data.likesCount;
+        if(postLikes > 0){
+        likeContainer.textContent = postLikes;
+        }else{
+          likeContainer.textContent = '';
+        }
         if (data.action === 'inserted') {
            // button.setAttribute('data-liked', 'true');
           //  heartIcon.textContent = '♥';
