@@ -675,7 +675,7 @@ const queryText = `
 app.get('/api/getPosts',async(req, res)=>{
 console.log('all posts fetched \n');
 try{
-const result = await pool.query('SELECT * FROM posts');
+const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 30');
 const posts = result.rows
 for(let i = 0; i < posts.length; i++){
   let author = await fetchAuthorDetails(posts[i].user_id);
