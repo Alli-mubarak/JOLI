@@ -50,7 +50,7 @@ let imgs = "";
 imgs = await sortImages(postImages);
  }
 const postCard = `
-<div class="postCard" data-url="/post/${post.id}">
+<div class="postCard" data-url="/post/${post.id}" id=${post.id}>
         <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
@@ -79,19 +79,19 @@ const postCard = `
         </div>
         <div class="interactions">
             <div class="post-likes" data-type="likes">
-                <button data-type="like-btn">
+                <button data-type="like" class="like-btn">
                 <i class="fa-regular fa-heart"></i>
                 </button>
                     <span class="like-count"></span>
             </div>
               <div class="comments" data-type="comments">
-                <button data-type="comment-btn">
+                <button data-type="comment" class="comment-btn">
                 <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count"></span>
             </div>
               <div class="shares" data-type="shares">
-                <button data-type="share-btn">
+                <button data-type="share" class="share-btn">
                 <i class="fa-solid fa-share"></i>
                 </button>
                     <span class="shares-count"></span>
@@ -156,8 +156,13 @@ everyPosts.forEach((post, index) => {
 function viewPost(e){
 try{
       
-      if(e.target.getAttribute('data-type') !== null) return;
-      if(e.target.parentElement.getAttribute('data-type') !== null) return;
+      if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
+        if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
+          likePost(e);
+        }
+        
+        return;
+      }
       if(e.target.getAttribute('href') && e.target.getAttribute('href') !== null) return;
       if(e.target.src && e.target.src !== null){
       if(e.target.getAttribute("class") === "grid-item"){
@@ -282,7 +287,9 @@ function viewPostImage(e){
            console.error(e);
        }
     }
-    
+    function likePost(e){
+      alert(e.currentTarget.id);
+    }
 
 //setTimeout(() =>{
 fetchPosts()
