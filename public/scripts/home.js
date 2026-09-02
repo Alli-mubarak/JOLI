@@ -309,7 +309,7 @@ function viewPostImage(e){
         const data = await response.json();
         const postLikes = data.likesCount
 
-        alert(data.action);
+        
         if(postLikes > 0){
         likeContainer.textContent = postLikes;
         }else{
