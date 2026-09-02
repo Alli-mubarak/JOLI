@@ -303,7 +303,8 @@ function viewPostImage(e){
         
         const data = await response.json();
 
-        
+        alert(data.action);
+        console.log(data.likesCount);
         if (data.action === 'liked') {
            // button.setAttribute('data-liked', 'true');
           //  heartIcon.textContent = '♥';
