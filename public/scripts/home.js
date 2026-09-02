@@ -287,8 +287,46 @@ function viewPostImage(e){
            console.error(e);
        }
     }
-    function likePost(e){
-      alert(e.currentTarget.id);
+    async function likePost(e){
+      try{
+      const postId = e.currentTarget.id;
+        try {
+        
+        const response = await fetch(`/api/posts/${postId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+          
+        }
+        
+        const data = await response.json();
+
+        
+        if (data.action === 'liked') {
+           // button.setAttribute('data-liked', 'true');
+          //  heartIcon.textContent = '♥';
+          alert("liked");
+        } else if (data.action === 'unliked') {
+          //  button.setAttribute('data-liked', 'false');
+          //  heartIcon.textContent = '☆';
+          alert("unliked");
+        }
+
+    } catch (error) {
+        console.error('Like toggle failed:', error);
+        notify("like failed!", "error");
+        
+    } finally {
+        console.log("final");
+        //button.disabled = false;
+    }
+
+      }catch(e){
+        notify("like failed!", "error");
+        console.error(e);
+      }
     }
 
 //setTimeout(() =>{
