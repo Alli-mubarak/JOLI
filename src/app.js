@@ -729,37 +729,51 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
     if (!userId || !postId) {
         return res.status(400).json({ error: 'Missing userId or postId' });
     }
-
-    const toggleQuery = `
+    const toggleWithStatusQuery = `
         WITH deleted AS (
             DELETE FROM likes 
             WHERE user_id = $1 AND post_id = $2
             RETURNING *
+        ),
+        inserted AS (
+            INSERT INTO likes (user_id, post_id)
+            SELECT $1, $2
+            WHERE NOT EXISTS (SELECT 1 FROM deleted)
+            RETURNING *
         )
-        INSERT INTO likes (user_id, post_id)
-        SELECT $1, $2
-        WHERE NOT EXISTS (SELECT 1 FROM deleted)
-        RETURNING id;
+        UPDATE posts
+        SET likes_count = likes_count + (
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM inserted) THEN 1
+                ELSE -1
+            END
+        )
+        WHERE id = $2
+        RETURNING 
+            likes_count,
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM inserted) THEN 'inserted'
+                ELSE 'deleted'
+            END AS action;
     `;
 
     
-        const result = await pool.query(toggleQuery, [userId, postId]);
+        const result = await pool.query(toggleWithStatusQuery, [userId, postId]);
 
-        // If the query returned a row with an 'id', it means the INSERT executed (Liked)
-        if (result.rows.length > 0) {
-            return res.status(201).json({ 
-                success: true, 
-                action: 'liked', 
-                message: 'Post liked successfully' 
-            });
-        } else {
-            // If result.rows is empty, it means the DELETE executed instead (Unliked)
-            return res.status(200).json({ 
-                success: true, 
-                action: 'unliked', 
-                message: 'Post unliked successfully' 
-            });
+        // Guard rails if the post ID doesn't exist in the system
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Post not found' });
         }
+
+        // Destructure values from database response row
+        const { likes_count, action } = result.rows[0];
+
+        // Send payload structure back to frontend
+        return res.status(200).json({ 
+            success: true, 
+            action: action,          // Sends 'inserted' or 'deleted'
+            likesCount: likes_count  // Sends absolute truth number
+        });
 
     } catch (error) {
         console.error('Error toggling like:', error);
