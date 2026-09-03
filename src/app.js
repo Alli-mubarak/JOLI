@@ -383,7 +383,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-//Helper functions 
+//**********Helper functions *****""""""
 
 //function for fetching post author details 
 async function fetchAuthorDetails(authorId){
@@ -401,6 +401,23 @@ async function fetchAuthorDetails(authorId){
     }
     return authorDetails;
   }catch(e){
+    return console.error(e);
+  }
+}
+
+// function for detecting post like
+async function getPostLikeStatus(postId, userId){
+  try{
+    const result = await pool.query(
+      "SELECT * FROM likes WHERE post_id = $1 AND user_id = $2", [postId, userId]
+    );
+    if(result.rows.length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+  catch(e){
     return console.error(e);
   }
 }
@@ -684,6 +701,10 @@ for(let i = 0; i < posts.length; i++){
   posts[i].author_is_active = author.is_active;
   posts[i].author_profile_picture = author.profile_pic;
   author = [];
+  if(req.user.id){
+    const likeStat = await getPostLikeStatus(post[i].id, req.user.id);
+    post[i].likeStatus = likeStat
+  }
 }
 res.status(200).json({posts: posts});
 }catch(e){
@@ -709,6 +730,10 @@ let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
   author = [];
+  if(req.user.id){
+    const likeStat = await getPostLikeStatus(postData.id, req.user.id);
+    postData.likeStatus = likeStat
+  }
  res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
