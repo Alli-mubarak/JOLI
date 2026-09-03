@@ -1,4 +1,5 @@
 const postCard = document.querySelector(".postCard");
+const postContent = document.querySelector(".post-content");
 const likeBtn = document.getElementById("like-btn"):
 const commentBtn = document.getElementById("comment-btn"):
 const shareBtn = document.getElementById("share-btn"):
@@ -10,6 +11,10 @@ const viewer = document.getElementById("viewer");
 const mediaCounter = document.getElementById("media-counter");
 const imageBox = document.getElementById("image-view");
 const postImagesContainer = document.querySelector(".post-images");
+const notifier = document.getElementById("notifier");
+const nMessage = document.getElementById("n-message");
+const nLink = document.getElementById("n-link");
+const nCloser = document.getElementById("n-closer");
 let isAuthorised = false;
 
   let imgArray;
@@ -33,8 +38,27 @@ function linkify(text) {
 }
 
   
-const postContent = document.querySelector(".post-content");
+
 postContent.innerHTML = linkify(postContent.textContent);
+
+function notify(msg,mType = "success",linkText = null, link = null){
+    nMessage.textContent = msg;
+    if(mType === "error"){
+        nMessage.style.color = 'red';
+    }else{
+      nMessage.style.color = '#111';
+     }
+            
+    nLink.textContent = linkText;
+     nLink.href = link;
+    
+    notifier.classList.remove("hidden");
+            
+    closeNID = setTimeout(()=>{
+     notifier.classList.add("hidden");
+    },4000)
+}
+
 
 async function likePost(){
       try{
