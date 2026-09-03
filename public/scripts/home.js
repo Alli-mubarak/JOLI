@@ -366,7 +366,7 @@ function viewPostMenu(e){
   const authorId = authorLink.split("user/")[1];
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <b>${authorUsername.trim()}</b> as friend</button>` : ""}
+  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <span>${authorUsername.trim()}</span> as friend</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
