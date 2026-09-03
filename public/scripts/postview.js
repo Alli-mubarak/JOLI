@@ -1,4 +1,5 @@
-setInterval(()=>{
+setTimeout(()=>{
+  try{
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
 const likeBtn = document.getElementById("like-btn"):
@@ -226,5 +227,7 @@ function viewPostImage(e){
            console.error(e);
        }
       }
-
+}catch(e){
+           console.error(e);
+  }
 }, 4000);
