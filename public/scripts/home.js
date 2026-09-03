@@ -362,7 +362,8 @@ function viewPostMenu(e){
   try{
   alert(e.currentTarget.id);
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
-  const authorId = e.currentTarget.querySelector("#author-image").href;
+  const authorLink = e.currentTarget.querySelector("#author-image").href;
+  const authorId = authorLink.split("user/")[1];
   alert(authorUsername);
   alert(authorId);
       postMenuContainer.style.bottom = 0;
