@@ -51,8 +51,8 @@ return `${Math.floor(sDifference)}s`;
   </a>
   
   </header>
-<div class="postCard">
-        <div class="post-header" dataset="/post/<%= post.user_id%>">
+<div class="postCard" id=<%= post.id %> >
+        <div class="post-header" >
             <div class="author-details">
                 <div class="author-image">
                      <a href="/user/<%= post.user_id %>" id="author-image">
@@ -87,7 +87,7 @@ return `${Math.floor(sDifference)}s`;
         </div>
         <div class="interactions">
             <div class="post-likes">
-                <button>
+                <button id="like-btn">
                 <% if (post.likeStatus) { %>
                 <i class="fa-solid fa-heart like-icon" style="color:#2bff43;"></i>
               <% } else { %>
@@ -99,13 +99,13 @@ return `${Math.floor(sDifference)}s`;
                   </span>
             </div>
               <div class="comments">
-                <button>
+                <button id="comment-btn">
                 <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count"></span>
             </div>
               <div class="shares">
-                <button>
+                <button id="share-btn">
                 <i class="fa-solid fa-share"></i>
                 </button>
                     <span class="shares-count"></span>
