@@ -702,8 +702,8 @@ for(let i = 0; i < posts.length; i++){
   posts[i].author_profile_picture = author.profile_pic;
   author = [];
   if(req.user.id){
-    const likeStat = await getPostLikeStatus(post[i].id, req.user.id);
-    post[i].likeStatus = likeStat
+    const likeStat = await getPostLikeStatus(posts[i].id, req.user.id);
+    posts[i].likeStatus = likeStat
   }
 }
 res.status(200).json({posts: posts});
