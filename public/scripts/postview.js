@@ -1,3 +1,4 @@
+alert("fetching post!");
 setTimeout(()=>{
   try{
 const postCard = document.querySelector(".postCard");
