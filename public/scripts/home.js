@@ -295,7 +295,11 @@ function viewPostImage(e){
       const likeContainer = e.currentTarget.querySelector(".like-count");
       const likeIcon = e.currentTarget.querySelector(".like-icon");
         try {
-        
+        //make it show liked status
+          likeIcon.classList.remove("fa-regular");
+          likeIcon.style.color = "#2bff43";
+          likeIcon.classList.add("fa-solid");
+          
         const response = await fetch(`/api/posts/${postId}/like`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -303,6 +307,9 @@ function viewPostImage(e){
 
         if (!response.ok) {
           console.error(response);
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
           notify("like failed!", "error");
           return 
         }
@@ -317,12 +324,8 @@ function viewPostImage(e){
         }else{
           likeContainer.textContent = '';
         }
-        if (data.action === 'inserted') {
-          likeIcon.classList.remove("fa-regular");
-          likeIcon.style.color = "#2bff43";
-          likeIcon.classList.add("fa-solid");
-        }
-        else if (data.action === 'deleted') {
+       // if (data.action === 'inserted') {}
+         if (data.action === 'deleted') {
           likeIcon.classList.remove("fa-solid");
           likeIcon.style.color = "#222";
           likeIcon.classList.add("fa-regular");
@@ -330,15 +333,18 @@ function viewPostImage(e){
 
     } catch (error) {
         console.error('Like toggle failed:', error);
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
         notify("like failed!", "error");
         
-    } finally {
-        console.log("final");
-        //button.disabled = false;
-    }
+    } 
 
       }catch(e){
         notify("like failed!", "error");
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
         console.error(e);
       }
     }
