@@ -88,9 +88,16 @@ return `${Math.floor(sDifference)}s`;
         <div class="interactions">
             <div class="post-likes">
                 <button>
-                <i class="fa-regular fa-heart"></i>
+                <% if (post.likeStatus) { %>
+                <i class="fa-solid fa-heart like-icon" style="color:#2bff43;"></i>
+              <% } else { %>
+                 <i class="fa-regular fa-heart like-icon" style="color:#222;"></i>
+               <% } %>
                 </button>
                     <span class="like-count"></span>
+                  <span class="like-count">
+                   <%= post.like_count ? post.like_count : '' %>
+                  </span>
             </div>
               <div class="comments">
                 <button>
