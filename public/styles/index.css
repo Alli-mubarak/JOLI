@@ -15,28 +15,6 @@ body{
   width: 100%;
   background: #ddd;
 }
-.notifier{
-            position: absolute;
-            width:100%;
-            height:40px;
-            display:flex; 
-            padding: 10px;
-            align-items:center;
-            justify-content: center;
-            gap:30px;
-            background: tan;
-            top:-40px;
-            left:0;
-            transition: all ease 0.3s;
-        }
-        .notifier p{
-            font-size: 19px;
-            font-weight: 500;
-        }
-notifier i{
-  font-size: 0.9rem;
-  cursor:pointer;
-}
 header{
   width:100%;
   height: 65px;
@@ -346,6 +324,68 @@ main{
         }
         #mv-right{
             right:5px;
+          }
+   #post-menu-container{
+            position: fixed;
+            bottom:0;
+            transition: all 0.3s ease;
+            height :100vh; 
+            width:100vw;
+            background: transparent;
+            z-index:100;
+         }
+         #p-closer-space{
+             width:100%;
+             min-height:90vh;
+             background: transparent;
+         }
+         #p-closer-btn{
+            font-size:1.3rem;
+            color:#222;
+            display: flex;
+            align-items: center;
+            justify-content :center;
+            cursor:pointer;
+            padding:10px;
+            background: #2bff43;
+            width:30px; height:30px;
+            border-radius:50%;
+            position: absolute;
+            top:-40px;
+            right:20px;
+            
+        }
+         #post-menu{
+            background:#fff;
+            border:  1px solid;
+            width:100%;
+            border-radius: 10px 10px 0 0;
+            padding: 20px;
+            display: flex; 
+            align-items: start;
+            justify-content: space-between;
+            gap:10px;
+            flex-direction: column;
+            position: absolute;
+            bottom:0;
+            height:fit-content;
+            
+        }
+        #post-menu button{
+            font-size:1.3rem;
+            padding:10px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            border-radius:10px;
+            width:100%;
+            gap:15px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+         }
+         #post-menu button:hover{
+            background:#eee;
           }
 @media screen and (min-width:762px){
 /*styling for large screens */
