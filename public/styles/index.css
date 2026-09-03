@@ -267,11 +267,9 @@ main{
             
         }
   .interactions > div button i{
-            font-size: 1.3rem;
+            font-size: 1.2rem;
   }
-        .interactions > div button:hover{
-            background:#eee;
-  }
+        
   
   @keyframes load{
     to{
