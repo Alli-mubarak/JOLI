@@ -164,6 +164,7 @@ async function checkAuthStatus() {
           
         } else {
           canPost = false;
+          isAuthorised = false;
           signInLink.classList.remove("hidden");
           userPic.classList.add("hidden");
           console.log("unauthenticated");
