@@ -1,4 +1,4 @@
-
+let isAuthorised = false;
 const menuBox = document.getElementById("menu-container");
 const menuCloser = document.getElementById("m-closer");
 const signInLink = document.getElementById("sign-in-link");
@@ -148,7 +148,8 @@ async function checkAuthStatus() {
  
         
         if (data.loggedIn) {
-          canPost = true
+          canPost = true;
+          isAuthorised = true;
         signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture || "images/default-user.png";
           pUserPic.src = data.user.profile_picture || "images/default-user.png";
