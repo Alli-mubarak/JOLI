@@ -291,6 +291,7 @@ function viewPostImage(e){
     }
     async function likePost(e){
       try{
+        alert(isAuthorised);
       const postId = e.currentTarget.id;
       const likeContainer = e.currentTarget.querySelector(".like-count");
       const likeIcon = e.currentTarget.querySelector(".like-icon");
