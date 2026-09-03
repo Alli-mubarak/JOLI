@@ -80,7 +80,8 @@ const postCard = `
         <div class="interactions">
             <div class="post-likes" data-type="likes">
                 <button data-type="like" class="like-btn">
-                <i class="fa-regular fa-heart"></i>
+                ${post.isLiked? '<i class="fa-solid fa-heart" style="color:#2bff43;"></i>' : '<i class="fa-regular fa-heart" style="color:#222;"></i>'}
+                <i class="fa-regular fa-heart like-icon"></i>
                 </button>
                 ${post.like_count? `<span class="like-count">${post.like_count}</span>` : "<span class='like-count'></span>"}
                     
@@ -292,6 +293,7 @@ function viewPostImage(e){
       try{
       const postId = e.currentTarget.id;
       const likeContainer = e.currentTarget.querySelector(".like-count");
+      const likeIcon = e.currentTarget.querySelector(".like-icon");
         try {
         
         const response = await fetch(`/api/posts/${postId}/like`, {
@@ -316,13 +318,14 @@ function viewPostImage(e){
           likeContainer.textContent = '';
         }
         if (data.action === 'inserted') {
-           // button.setAttribute('data-liked', 'true');
-          //  heartIcon.textContent = '♥';
-          alert("liked");
-        } else if (data.action === 'deleted') {
-          //  button.setAttribute('data-liked', 'false');
-          //  heartIcon.textContent = '☆';
-          alert("unliked");
+          likeIcon.classList.remove("fa-regular");
+          likeIcon.style.color = "#2bff43";
+          likeIcon.classList.add("fa-solid");
+        }
+        else if (data.action === 'deleted') {
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
         }
 
     } catch (error) {
