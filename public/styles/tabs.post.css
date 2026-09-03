@@ -69,14 +69,14 @@ position: relative;
             border-left: none;
             border-right: none;
             padding: 20px 0;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
         #account-settings{
             display: flex;
             align-items: start;
             flex-direction: column;
             justify-content: end;
-            font-size:1.3rem;
+            font-size:1.1rem;
         }
         #extras a, #account-settings a{
             display: flex;
