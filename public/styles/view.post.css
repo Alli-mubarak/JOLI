@@ -239,11 +239,8 @@ header button:hover {
             
         }
   .interactions > div button i{
-            font-size: 1.3rem;
+            font-size: 1.2rem;
   }
-        .interactions > div button:hover{
-            background:#eee;
-          }
 #media-viewer{
             width: 100%;
             height:100vh;
