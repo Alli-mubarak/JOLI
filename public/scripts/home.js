@@ -373,6 +373,20 @@ function viewPostMenu(e){
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
+
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+      }
+    
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
@@ -403,18 +417,7 @@ function viewPostMenu(e){
   window.scrollTo(0, scrollPosition);
   }
   
-  pmCloserBtn.onclick = () =>{
-    postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
-  }
+
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
