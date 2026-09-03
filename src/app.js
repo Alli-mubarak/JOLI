@@ -701,7 +701,7 @@ for(let i = 0; i < posts.length; i++){
   posts[i].author_is_active = author.is_active;
   posts[i].author_profile_picture = author.profile_pic;
   author = [];
-  if(req.user.id){
+  if(req.user && req.user.id){
     const likeStat = await getPostLikeStatus(posts[i].id, req.user.id);
     posts[i].likeStatus = likeStat
   }
@@ -730,7 +730,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
   postData.author_is_active = author.is_active;
   postData.author_profile_picture = author.profile_pic;
   author = [];
-  if(req.user.id){
+  if(req.user && req.user.id){
     const likeStat = await getPostLikeStatus(postData.id, req.user.id);
     postData.likeStatus = likeStat
   }
