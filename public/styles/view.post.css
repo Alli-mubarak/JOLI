@@ -14,6 +14,36 @@ body{
 .hidden{
   display: none !important;
 }
+#notifier{
+            position: fixed;
+            bottom:110px;
+            left: 100px;
+            width: fit-content;
+            border-radius: 20px;
+            background:#eee;
+            padding: 8px 15px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+            gap:10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+  
+        #n-link{
+            font-weight:600;
+            color: blue;
+        }
+        #n-closer{
+            padding: 5px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.05);
+            width:20px; height:20px;
+            display: flex;
+            align-items :center ;
+            justify-content: center;
+            border-radius: 50%;
+        }
 header{
   width:100%;
   height: 65px;
