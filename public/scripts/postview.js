@@ -1,3 +1,7 @@
+const postCard = document.querySelector(".postCard");
+const likeBtn = document.getElementById("like-btn"):
+const commentBtn = document.getElementById("comment-btn"):
+const shareBtn = document.getElementById("share-btn"):
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -32,15 +36,15 @@ function linkify(text) {
 const postContent = document.querySelector(".post-content");
 postContent.innerHTML = linkify(postContent.textContent);
 
-async function likePost(e){
+async function likePost(){
       try{
       if(!isAuthorised){
         notify("please, log in first!", "error", "click here", "/");
         return;
       }
-      const postId = e.currentTarget.id;
-      const likeContainer = e.currentTarget.querySelector(".like-count");
-      const likeIcon = e.currentTarget.querySelector(".like-icon");
+      const postId = postCard.id;
+      const likeContainer = postCard.querySelector(".like-count");
+      const likeIcon = postCard.querySelector(".like-icon");
         try {
         //make it show liked status
           likeIcon.classList.remove("fa-regular");
@@ -95,7 +99,7 @@ async function likePost(e){
         console.error(e);
       }
                                   }
-
+likeBtn.onclick = () =>{likePost()}
 
 function viewPostImage(e){
    try{
