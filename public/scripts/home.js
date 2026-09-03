@@ -80,8 +80,8 @@ const postCard = `
         <div class="interactions">
             <div class="post-likes" data-type="likes">
                 <button data-type="like" class="like-btn">
-                ${post.isLiked? '<i class="fa-solid fa-heart" style="color:#2bff43;"></i>' : '<i class="fa-regular fa-heart" style="color:#222;"></i>'}
-                <i class="fa-regular fa-heart like-icon"></i>
+                ${post.isLiked? '<i class="fa-solid fa-heart like-icon" style="color:#2bff43;"></i>' : '<i class="fa-regular fa-heart like-icon" style="color:#222;"></i>'}
+                
                 </button>
                 ${post.like_count? `<span class="like-count">${post.like_count}</span>` : "<span class='like-count'></span>"}
                     
