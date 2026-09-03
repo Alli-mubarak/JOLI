@@ -64,70 +64,8 @@ function notify(msg,mType = "success",linkText = null, link = null){
 }
 
 
-async function likePost(){
-      try{
-      if(!isAuthorised){
-        notify("please, log in first!", "error", "click here", "/");
-        return;
-      }
-      const postId = postCard.id;
-      const likeContainer = postCard.querySelector(".like-count");
-      const likeIcon = postCard.querySelector(".like-icon");
-        try {
-        //make it show liked status
-          likeIcon.classList.remove("fa-regular");
-          likeIcon.style.color = "#2bff43";
-          likeIcon.classList.add("fa-solid");
-          
-        const response = await fetch(`/api/posts/${postId}/like`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-        });
 
-        if (!response.ok) {
-          console.error(response);
-          likeIcon.classList.remove("fa-solid");
-          likeIcon.style.color = "#222";
-          likeIcon.classList.add("fa-regular");
-          notify("like failed!", "error");
-          return 
-        }
-          console.log(response);
-        
-        const data = await response.json();
-        const postLikes = data.likesCount
-
-        
-        if(postLikes > 0){
-        likeContainer.textContent = postLikes;
-        }else{
-          likeContainer.textContent = '';
-        }
-       // if (data.action === 'inserted') {}
-         if (data.action === 'deleted') {
-          likeIcon.classList.remove("fa-solid");
-          likeIcon.style.color = "#222";
-          likeIcon.classList.add("fa-regular");
-        }
-
-    } catch (error) {
-        console.error('Like toggle failed:', error);
-        likeIcon.classList.remove("fa-solid");
-          likeIcon.style.color = "#222";
-          likeIcon.classList.add("fa-regular");
-        notify("like failed!", "error");
-        
-    } 
-
-      }catch(e){
-        notify("like failed!", "error");
-        likeIcon.classList.remove("fa-solid");
-          likeIcon.style.color = "#222";
-          likeIcon.classList.add("fa-regular");
-        console.error(e);
-      }
-   }
-likeBtn.onclick = () => {likePost()}
+//likeBtn.onclick = () => {likePost()}
 
 function viewPostImage(e){
    try{
