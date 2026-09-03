@@ -15,7 +15,7 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   const pmCloserBtn = document.getElementById("p-closer-btn");
   
-  function viewPostMenu(){
+  function viewPostMenu(postId, authorId, authorUsername){
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
