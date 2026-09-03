@@ -10,6 +10,51 @@ const mediaViewer = document.getElementById("media-viewer");
   let imgArray;
   let currIndex;
   let inViewMode = false;
+const postMenuContainer = document.getElementById("post-menu-container");
+  const postMenuCloser = document.getElementById("p-closer-space");
+  const postMenu = document.getElementById("post-menu");
+  const pmCloserBtn = document.getElementById("p-closer-btn");
+  
+  function viewPostMenu(){
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  header.style.top = 0;
+  document.body.style.width = '100%';
+  }
+  
+  postMenuCloser.onclick = () =>{
+      
+      postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+  }
+  
+  pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+}
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
