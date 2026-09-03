@@ -12,7 +12,7 @@ const mediaViewer = document.getElementById("media-viewer");
 const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
-  const pmCloserBtn = document.getElementById("p-closer-btn");
+  let pmCloserBtn = document.getElementById("p-closer-btn");
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -366,12 +366,13 @@ function viewPostMenu(e){
   const authorId = authorLink.split("user/")[1];
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-         <button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername} as friend</button>
-         <button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername}'s profile</button>
-         ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
-        <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername} as friend</button>` : ""}
+   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername}'s profile</button>` : ""}
+    ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
+     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
     postMenu.innerHTML = htmlElements;
+    pmCloserBtn = document.getElementById("p-closer-btn");
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
