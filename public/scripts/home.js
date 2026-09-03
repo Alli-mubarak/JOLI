@@ -360,12 +360,18 @@ function viewPostImage(e){
 
 function viewPostMenu(e){
   try{
-  alert(e.currentTarget.id);
+  const postId = e.currentTarget.id;
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
   const authorLink = e.currentTarget.querySelector("#author-image").href;
   const authorId = authorLink.split("user/")[1];
-  alert(authorUsername);
-  alert(authorId);
+  const htmlElements = `
+  <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+         <button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername} as friend</button>
+         <button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername}'s profile</button>
+         ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
+        <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+  `;
+    postMenu.innerHTML = htmlElements;
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
