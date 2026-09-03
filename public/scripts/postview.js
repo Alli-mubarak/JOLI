@@ -1,5 +1,7 @@
 alert("fetching post!");
-setTimeout(()=>{
+setTimeout(()=>{loadScript()},5000);
+
+async function loadScript(){
   try{
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
@@ -231,4 +233,4 @@ function viewPostImage(e){
 }catch(e){
            console.error(e);
   }
-}, 4000);
+}
