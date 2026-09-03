@@ -396,7 +396,6 @@ function viewPostMenu(e){
   
   document.body.style.position = 'fixed';
   document.body.style.top = `-${scrollPosition}px`;
-  header.style.top = 0;
   document.body.style.width = '100%';
   }catch(error){
     console.error(error);
