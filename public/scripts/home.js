@@ -14,47 +14,6 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
   const pmCloserBtn = document.getElementById("p-closer-btn");
-  
-  function viewPostMenu(postId, authorId, authorUsername){
-      postMenuContainer.style.bottom = 0;
-      setTimeout(() =>{
-      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
-      },300);
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  header.style.top = 0;
-  document.body.style.width = '100%';
-  }
-  
-  postMenuCloser.onclick = () =>{
-      
-      postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
-  }
-  
-  pmCloserBtn.onclick = () =>{
-    postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
-}
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -110,7 +69,7 @@ const postCard = `
                           <small>${getPostTime(post.created_at)}</small>
                      </div>
             </div> 
-            <div class="post-menu" data-type="menu">
+            <div class="post-menu" data-type="post-menu">
                 <div></div>
                 <div></div>
                 <div></div>
@@ -206,6 +165,8 @@ try{
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
           likePost(e);
+        }else if(e.target.getAttribute('data-type') === "post-menu" || e.target.parentElement.getAttribute('data-type') === "post-menu"){
+          viewPostMenu(e);
         }
         
         return;
@@ -398,6 +359,55 @@ function viewPostImage(e){
       }
     }
 
+function viewPostMenu(e){
+  try{
+  alert(e.currentTarget.id);
+  const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
+  const authorId = e.currentTarget.querySelector(".author-image").href;
+  alert(authorUsername);
+  alert(authorId);
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  header.style.top = 0;
+  document.body.style.width = '100%';
+  }catch(error){
+    console.error(error);
+  }
+  }
+  
+  postMenuCloser.onclick = () =>{
+      
+      postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+  }
+  
+  pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+  }
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
