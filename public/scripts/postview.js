@@ -1,7 +1,3 @@
-alert("fetching post!");
-
-
-async function loadScript(){
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
 const likeBtn = document.getElementById("like-btn");
@@ -21,9 +17,28 @@ const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
 let isAuthorised = false;
 
+
   let imgArray;
   let currIndex;
   let inViewMode = false;
+
+async function checkAuthStatus() {
+      try {
+        // 'credentials: include' forces the browser to send the session cookie
+        const response = await fetch("/api/auth/user", { credentials: 'include' });
+        data = await response.json();
+ 
+        
+        if (data.loggedIn) {
+          isAuthorised = true;
+        } else {
+          isAuthorised = false;
+        }
+      } catch (err) {
+        console.error("Error verifying authentication status:", err);
+      }
+}
+checkAuthStatus();
 
   if (postImagesContainer && postImagesContainer.children.length > 0){
     imgArray = Array.from(postImagesContainer.children);
@@ -229,6 +244,4 @@ function viewPostImage(e){
            console.error(e);
        }
       }
-    
-}
-setTimeout(()=>{loadScript()},5000);
+  
