@@ -2,7 +2,6 @@ alert("fetching post!");
 setTimeout(()=>{loadScript()},5000);
 
 async function loadScript(){
-  try{
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
 const likeBtn = document.getElementById("like-btn"):
@@ -128,7 +127,7 @@ async function likePost(){
         console.error(e);
       }
    }
-likeBtn.onclick = () =>{likePost()}
+likeBtn.onclick = () => {likePost()}
 
 function viewPostImage(e){
    try{
@@ -160,7 +159,7 @@ function viewPostImage(e){
        }catch(e){
            console.error(e);
        }     
-        }
+     }
         
     mediaViewerCloser.onclick = (e) =>{
     try{
@@ -230,7 +229,5 @@ function viewPostImage(e){
            console.error(e);
        }
       }
-}catch(e){
-           console.error(e);
-  }
+    
 }
