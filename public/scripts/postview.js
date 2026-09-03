@@ -6,7 +6,7 @@ const viewer = document.getElementById("viewer");
 const mediaCounter = document.getElementById("media-counter");
 const imageBox = document.getElementById("image-view");
 const postImagesContainer = document.querySelector(".post-images");
-
+let isAuthorised = false;
 
   let imgArray;
   let currIndex;
@@ -31,6 +31,70 @@ function linkify(text) {
   
 const postContent = document.querySelector(".post-content");
 postContent.innerHTML = linkify(postContent.textContent);
+
+async function likePost(e){
+      try{
+      if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+      }
+      const postId = e.currentTarget.id;
+      const likeContainer = e.currentTarget.querySelector(".like-count");
+      const likeIcon = e.currentTarget.querySelector(".like-icon");
+        try {
+        //make it show liked status
+          likeIcon.classList.remove("fa-regular");
+          likeIcon.style.color = "#2bff43";
+          likeIcon.classList.add("fa-solid");
+          
+        const response = await fetch(`/api/posts/${postId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+          console.error(response);
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+          notify("like failed!", "error");
+          return 
+        }
+          console.log(response);
+        
+        const data = await response.json();
+        const postLikes = data.likesCount
+
+        
+        if(postLikes > 0){
+        likeContainer.textContent = postLikes;
+        }else{
+          likeContainer.textContent = '';
+        }
+       // if (data.action === 'inserted') {}
+         if (data.action === 'deleted') {
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        }
+
+    } catch (error) {
+        console.error('Like toggle failed:', error);
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        notify("like failed!", "error");
+        
+    } 
+
+      }catch(e){
+        notify("like failed!", "error");
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        console.error(e);
+      }
+                                  }
 
 
 function viewPostImage(e){
