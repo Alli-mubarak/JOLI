@@ -59,6 +59,12 @@ function linkify(text) {
   
 
 postContent.innerHTML = linkify(postContent.textContent);
+let closeNID;
+        
+nCloser.onclick = () =>{
+    notifier.classList.add("hidden");
+    clearTimeout(closeNID);
+ }
 
 function notify(msg,mType = "success",linkText = null, link = null){
     nMessage.textContent = msg;
