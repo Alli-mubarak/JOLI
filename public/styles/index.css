@@ -340,14 +340,14 @@ main{
              background: transparent;
          }
          #p-closer-btn{
-            font-size:1.3rem;
+            font-size:1rem;
             color:#222;
             display: flex;
             align-items: center;
             justify-content :center;
             cursor:pointer;
             padding:10px;
-            background: #2bff43;
+            background: var(--primary-color);
             width:30px; height:30px;
             border-radius:50%;
             position: absolute;
