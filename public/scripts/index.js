@@ -167,7 +167,6 @@ async function checkAuthStatus() {
           isAuthorised = false;
           signInLink.classList.remove("hidden");
           userPic.classList.add("hidden");
-          console.log("unauthenticated");
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
