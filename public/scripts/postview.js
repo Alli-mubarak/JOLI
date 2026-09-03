@@ -98,7 +98,7 @@ async function likePost(){
           likeIcon.classList.add("fa-regular");
         console.error(e);
       }
-                                  }
+   }
 likeBtn.onclick = () =>{likePost()}
 
 function viewPostImage(e){
