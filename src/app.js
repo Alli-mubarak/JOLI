@@ -806,6 +806,49 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
     }
 });
 
+//post deletion api
+app.delete('/post/:id', async (req, res) => {
+  try{
+    const postId = req.params.id;
+    const userId = req.user.id; 
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized"});
+  }
+    if (!userId || !postId) {
+        return res.status(400).json({ error: 'Missing userId or postId' });
+    }
+    const deleteQuery = `
+        DELETE FROM posts 
+        WHERE id = $1 AND user_id = $2
+        RETURNING id;
+    `;
+
+    
+        const result = await pool.query(deleteQuery, [postId, userId]);
+        if (result.rows.length === 0) {
+            return res.status(403).json({ 
+                error: 'Unauthorized or post not found. You can only delete your own posts.' 
+            });
+        }
+
+        return res.status(200).json({ 
+            success: true, 
+            message: 'Post deleted successfully' 
+        });
+
+    } catch (error) {
+        console.error('Error executing post deletion:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+
+
+
+
+
+//***********///
 //default page  route
 app.get('/',(req, res)=>{
 console.log('default path requested! \n');
