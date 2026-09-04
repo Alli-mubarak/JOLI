@@ -160,7 +160,7 @@ everyPosts.forEach((post, index) => {
 
 function viewPost(e){
 try{
-      e.currentTarget.style.background = "#ffeeee";
+      
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
           likePost(e);
@@ -438,11 +438,13 @@ function viewPostMenu(e){
 async function deletePost(postId){
   try{
     const currPost = document.getElementById(`${postId}`);
+    currPost.style.background = "#ffeeee";
+    
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         });
-    currPost.style.background = "#ffeeee";
+    
         if (!response.ok) {
           console.error(response);
           notify("post deletion failed!", "error");
