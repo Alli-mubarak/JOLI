@@ -373,10 +373,16 @@ function viewPostMenu(e){
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-
+    const delBtn = postMenu.querySelector("#delete-post-btn');
+    if(delBtn){
+      delBtn.onclick = () =>{
+        deletePost(postId);
+      }
+    }
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
      document.body.classList.remove('no-scroll'); 
+    
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
@@ -416,7 +422,39 @@ function viewPostMenu(e){
   window.scrollTo(0, scrollPosition);
   }
   
+async function deletePost(postId){
+  try{
+    const postContainer = document.getElementById(`${postId}`);
+    const response = await fetch(`/post/${postId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        });
 
+        if (!response.ok) {
+          console.error(response);
+          notify("post deletion failed!", "error");
+          return 
+        }
+          console.log(response);
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+     //remove in the UI
+    notify("post deleted!");
+  }
+  catch(err){
+    notify("Post delete failed!", "error");
+    console.error(err);
+  }
+}
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
