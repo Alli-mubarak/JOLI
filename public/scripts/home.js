@@ -379,6 +379,17 @@ function viewPostMenu(e){
       if(confirm("Are you sure you want to delete this post?")){
        deletePost(postId);
       }
+        postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
       }
     }
     pmCloserBtn.onclick = () =>{
