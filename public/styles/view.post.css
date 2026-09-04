@@ -189,10 +189,6 @@ header button:hover {
           white-space: pre-wrap;
           display: -webkit-box;
   -webkit-box-orient: vertical;
-/*  -webkit-line-clamp: 2; */
-/*  line-clamp: 2; */
-/*  overflow: hidden; */
-  
   /* Better for mixed content: wraps normal words nicely, but breaks long URLs */
   overflow-wrap: anywhere; 
         }
