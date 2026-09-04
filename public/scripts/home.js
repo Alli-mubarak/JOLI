@@ -1,4 +1,7 @@
-  const postsContainer = document.getElementById("posts");
+async function loadSctipt(){
+  try{
+
+const postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
   const moveLeft = document.getElementById("mv-left");
@@ -427,7 +430,7 @@ async function deletePost(postId){
     const postContainer = document.getElementById(`${postId}`);
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' }
         });
 
         if (!response.ok) {
@@ -458,3 +461,9 @@ async function deletePost(postId){
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
+
+      }catch(e){ console.error(e)}
+}
+setTimeout(() =>{
+  loadSCript()
+},5000);
