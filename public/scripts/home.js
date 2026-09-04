@@ -1,6 +1,3 @@
-async function loadScript(){
-  try{
-
 const postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
@@ -379,8 +376,9 @@ function viewPostMenu(e){
     const delBtn = postMenu.querySelector("#delete-post-btn");
     if(delBtn){
       delBtn.onclick = () =>{
-        confirm("Are you sure you want to delete this post?");
-    //    deletePost(postId);
+      if(confirm("Are you sure you want to delete this post?")){
+       deletePost(postId);
+      }
       }
     }
     pmCloserBtn.onclick = () =>{
@@ -428,7 +426,7 @@ function viewPostMenu(e){
   
 async function deletePost(postId){
   try{
-    const postContainer = document.getElementById(`${postId}`);
+    const currPost = document.getElementById(`${postId}`);
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
@@ -452,6 +450,7 @@ async function deletePost(postId){
   
   window.scrollTo(0, scrollPosition);
      //remove in the UI
+    postsContainer.removeChild(currPost);
     notify("post deleted!");
   }
   catch(err){
@@ -462,9 +461,3 @@ async function deletePost(postId){
 //setTimeout(() =>{
 fetchPosts()
 //},4000);
-
-      }catch(e){ console.error(e)}
-}
-setTimeout(() =>{
-  loadScript()
-},5000);
