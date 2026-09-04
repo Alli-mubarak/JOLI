@@ -19,6 +19,9 @@ function linkify(text) {
   
   return text.replace(urlRegex, (url) => {
     const href = url.startsWith('http') ? url : `https://${url}`;
+    if (href.length > 30){
+      href = href.slice(0,30)+"...";
+    }
     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
