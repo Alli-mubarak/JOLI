@@ -266,11 +266,11 @@ function viewPostImage(e){
        }
       }
 
-function viewPostMenu(e){
+function viewPostMenu(){
   try{
-  const postId = e.currentTarget.id;
-  const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
-  const authorLink = e.currentTarget.querySelector("#author-image").href;
+  const postId = postCard.id;
+  const authorUsername = document.querySelector(".author-username").innerHTML;
+  const authorLink = document.querySelector("#author-image").href;
   const authorId = authorLink.split("user/")[1];
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
@@ -329,8 +329,8 @@ function viewPostMenu(e){
   }
   }
 
-  postMenuCtrl.onclick = (e) => {
-    viewPostMenu(e);
+  postMenuCtrl.onclick = () => {
+    viewPostMenu();
   }
 
   postMenuCloser.onclick = () =>{
@@ -361,7 +361,7 @@ async function deletePost(postId){
           console.error(response);
           notify("post deletion failed!", "error");
           currPost.style.background = "#fff";
-          return 
+          return;
         }
           console.log(response);
     postMenuCloser.style.background = "transparent";
@@ -376,8 +376,10 @@ async function deletePost(postId){
   
   window.scrollTo(0, scrollPosition);
      //remove in the UI
-    postsContainer.removeChild(currPost);
-    notify("post deleted!");
+    notify("post deleted!, redirecting........");
+    setTimeout(()=>{
+      alert("redirecting!");
+    },3000)
   }
   catch(err){
     notify("Post delete failed!", "error");
