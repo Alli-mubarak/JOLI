@@ -431,10 +431,11 @@ async function deletePost(postId){
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         });
-
+    currPost.style.background = "#ffeeee";
         if (!response.ok) {
           console.error(response);
           notify("post deletion failed!", "error");
+          currPost.style.background = "#fff";
           return 
         }
           console.log(response);
@@ -455,6 +456,7 @@ async function deletePost(postId){
   }
   catch(err){
     notify("Post delete failed!", "error");
+    currPost.style.background = "#fff";
     console.error(err);
   }
 }
