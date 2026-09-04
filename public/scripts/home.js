@@ -18,7 +18,7 @@ function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
   
   return text.replace(urlRegex, (url) => {
-    const href = url.startsWith('http') ? url : `https://${url}`;
+    let href = url.startsWith('http') ? url : `https://${url}`;
     if (href.length > 30){
       href = href.slice(0,30)+"...";
     }
