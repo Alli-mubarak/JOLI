@@ -611,7 +611,7 @@ imageInfo = "";
 }
 
 function convertCanvas(canvas){
-  return canvas.toDataURL('image/jpeg', 0.75);
+  return canvas.toDataURL('image/jpeg', 0.8);
 }
 
 
