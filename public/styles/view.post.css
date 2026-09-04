@@ -187,6 +187,14 @@ header button:hover {
           font-weight:500;
           line-height: 25px;
           white-space: pre-wrap;
+          display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  line-clamp: 2;
+  overflow: hidden; 
+  
+  /* Better for mixed content: wraps normal words nicely, but breaks long URLs */
+  overflow-wrap: anywhere; 
         }
         .post-images{
             width: 100%;
