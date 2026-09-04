@@ -1,4 +1,4 @@
-async function loadSctipt(){
+async function loadScript(){
   try{
 
 const postsContainer = document.getElementById("posts");
@@ -379,7 +379,8 @@ function viewPostMenu(e){
     const delBtn = postMenu.querySelector("#delete-post-btn");
     if(delBtn){
       delBtn.onclick = () =>{
-        deletePost(postId);
+        confirm("Are you sure you want to delete this post?");
+    //    deletePost(postId);
       }
     }
     pmCloserBtn.onclick = () =>{
