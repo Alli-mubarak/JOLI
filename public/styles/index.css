@@ -191,6 +191,10 @@ main{
           font-weight:500;
           line-height: 25px;
           white-space: pre-wrap;
+          display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /* Better for mixed content: wraps normal words nicely, but breaks long URLs */
+  overflow-wrap: anywhere; 
         }
         .post-images{
             width: 100%;
