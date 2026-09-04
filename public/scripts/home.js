@@ -160,7 +160,7 @@ everyPosts.forEach((post, index) => {
 
 function viewPost(e){
 try{
-      
+      e.currentTarget.style.background = "#ffeeee";
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
           likePost(e);
