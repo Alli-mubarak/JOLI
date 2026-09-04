@@ -466,5 +466,5 @@ fetchPosts()
       }catch(e){ console.error(e)}
 }
 setTimeout(() =>{
-  loadSCript()
+  loadScript()
 },5000);
