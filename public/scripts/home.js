@@ -376,7 +376,7 @@ function viewPostMenu(e){
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-    const delBtn = postMenu.querySelector("#delete-post-btn');
+    const delBtn = postMenu.querySelector("#delete-post-btn");
     if(delBtn){
       delBtn.onclick = () =>{
         deletePost(postId);
