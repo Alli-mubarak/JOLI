@@ -1,3 +1,4 @@
+let currentUserId;
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
 const likeBtn = document.getElementById("like-btn");
@@ -15,6 +16,7 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
+const postMenuCtrl = document.querySelector(".post-menu");
 let isAuthorised = false;
 
 
@@ -31,8 +33,10 @@ async function checkAuthStatus() {
         
         if (data.loggedIn) {
           isAuthorised = true;
+          currentUserId = data.user.id
         } else {
           isAuthorised = false;
+          currentUserId = "";
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
@@ -253,4 +257,123 @@ function viewPostImage(e){
            console.error(e);
        }
       }
+
+function viewPostMenu(e){
+  try{
+  const postId = e.currentTarget.id;
+  const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
+  const authorLink = e.currentTarget.querySelector("#author-image").href;
+  const authorId = authorLink.split("user/")[1];
+  const htmlElements = `
+  <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
+   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+    ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
+     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+  `;
+    postMenu.innerHTML = htmlElements;
+    pmCloserBtn = document.getElementById("p-closer-btn");
+    const delBtn = postMenu.querySelector("#delete-post-btn");
+    if(delBtn){
+      delBtn.onclick = () =>{
+      if(confirm("Are you sure you want to delete this post?")){
+       deletePost(postId);
+      }
+        postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
   
+  window.scrollTo(0, scrollPosition);
+      }
+    }
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+      }
+    
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+  }catch(error){
+    console.error(error);
+  }
+  }
+
+  postMenuCtrl.onclick = (e) => {
+    viewPostMenu(e);
+  }
+
+  postMenuCloser.onclick = () =>{
+      
+      postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+  }
+  
+async function deletePost(postId){
+  try{
+    const currPost = document.getElementById(`${postId}`);
+    currPost.style.background = "#ffeeee";
+    
+    const response = await fetch(`/post/${postId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+    
+        if (!response.ok) {
+          console.error(response);
+          notify("post deletion failed!", "error");
+          currPost.style.background = "#fff";
+          return 
+        }
+          console.log(response);
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+     //remove in the UI
+    postsContainer.removeChild(currPost);
+    notify("post deleted!");
+  }
+  catch(err){
+    notify("Post delete failed!", "error");
+    currPost.style.background = "#fff";
+    console.error(err);
+  }
+    }
