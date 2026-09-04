@@ -52,6 +52,9 @@ function linkify(text) {
   
   return text.replace(urlRegex, (url) => {
     const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
