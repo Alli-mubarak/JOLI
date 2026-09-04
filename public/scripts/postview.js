@@ -1,3 +1,6 @@
+async function loadScript(){
+  try{
+
 let currentUserId;
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
@@ -380,3 +383,9 @@ async function deletePost(postId){
     console.error(err);
   }
     }
+
+  }catch(err){
+    console.error(err);
+  }}
+setTimeout(()=>{loadScript()},5000);
+alert("loading!");
