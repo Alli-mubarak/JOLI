@@ -6,6 +6,10 @@
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
 }
+:root{
+  --primary-color: #2bff43;
+  --touch-color:#eef9ee;
+}
 body{
   position:relative;
   width: 100%;
