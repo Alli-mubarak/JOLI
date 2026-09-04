@@ -16,6 +16,9 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
+const postMenuCloser = document.getElementById("p-closer-space");
+  const postMenu = document.getElementById("post-menu");
+  let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 let isAuthorised = false;
 
