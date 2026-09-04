@@ -313,3 +313,65 @@ header button:hover {
         #mv-right{
             right:5px;
           }
+   #post-menu-container{
+            position: fixed;
+            bottom:0;
+            transition: all 0.3s ease;
+            height :100vh; 
+            width:100vw;
+            background: transparent;
+            z-index:100;
+         }
+         #p-closer-space{
+             width:100%;
+             min-height:90vh;
+             background: transparent;
+         }
+         #p-closer-btn{
+            font-size:1rem;
+            color:#222;
+            display: flex;
+            align-items: center;
+            justify-content :center;
+            cursor:pointer;
+            padding:10px;
+            background: var(--primary-color);
+            width:30px; height:30px;
+            border-radius:50%;
+            position: absolute;
+            top:-40px;
+            right:20px;
+            
+        }
+         #post-menu{
+            background:#fff;
+            border:  1px solid;
+            width:100%;
+            border-radius: 10px 10px 0 0;
+            padding: 20px;
+            display: flex; 
+            align-items: start;
+            justify-content: space-between;
+            gap:10px;
+            flex-direction: column;
+            position: absolute;
+            bottom:0;
+            height:fit-content;
+            
+        }
+        #post-menu button{
+            font-size:1.1rem;
+            padding:10px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            border-radius:10px;
+            width:100%;
+            gap:15px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+         }
+         #post-menu button:hover{
+            background:#eee;
+          }
