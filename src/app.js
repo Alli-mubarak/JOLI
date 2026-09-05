@@ -990,7 +990,7 @@ const user = result.rows[0];
     ].join('\n'); // Separates lines correctly for text files
 
     //Set headers to force download and define the file extension
-    res.attachment(`${user.displayName.replace(/\s+/g, '_')}_profile.txt`);
+    res.attachment(`${user.username.replace(/\s+/g, '_')}_profile.txt`);
     res.type('text/plain');
 
     // Send the text content out directly
