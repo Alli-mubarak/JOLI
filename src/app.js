@@ -675,7 +675,7 @@ const queryText = `
   VALUES ($1, $2, $3, $4)
   RETURNING *;
 `;
-    const values = [userId, content, mediaURLs, postType];
+    const values = [userId, content.trim(), mediaURLs, postType];
     
 
     const result = await pool.query(queryText, values);
@@ -835,8 +835,63 @@ app.post('/api/posts/:postId/like', checkSession,  async (req, res) => {
     }
 });
 
+// post commenting api
+app.post('/post/:id/comment',checkSession, async (req, res) => {
+  try{
+  const postId = req.params.id;
+  const { content } = req.body;
+
+  
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You must be logged in to comment!"});
+  }
+
+  const userId = req.user.id;
+
+  // 2. Validation: Ensure the comment body has actual text
+  if (!content || content.trim() === '') {
+    return res.status(400).json({ message: "Comment content cannot be empty." });
+  }
+
+    const postCheck = await pool.query('SELECT id FROM posts WHERE id = $1', [postId]);
+    if (postCheck.rows.length === 0) {
+      return res.status(404).json({ message: "The post you are trying to comment on does not exist." });
+    }
+
+    // 4. Insert the comment and immediately JOIN with the users table to get the author's username
+    const insertQuery = `
+      WITH inserted_comment AS (
+        INSERT INTO comments (post_id, user_id, content)
+        VALUES ($1, $2, $3)
+        RETURNING id, post_id, user_id, content, created_at
+      )
+      SELECT 
+        ic.id AS comment_id,
+        ic.post_id,
+        ic.content,
+        ic.created_at,
+        ic.user_id AS commenter_id,          -
+        u.username AS commenter,
+        u.profile_picture_url                
+      FROM inserted_comment ic
+      JOIN users u ON ic.user_id = u.id;
+    `;
+
+    const result = await pool.query(insertQuery, [postId, userId, content.trim()]);
+    
+    return res.status(201).json({
+      message: "Comment added successfully",
+      comment: result.rows[0]
+    });
+
+  } catch (error) {
+    console.error("Error occurred while adding comment:", error);
+    return res.status(500).json({ message: "Internal server error." });
+  }
+});
+
 //post deletion api
-app.delete('/post/:id', async (req, res) => {
+app.delete('/post/:id', checkSession, async (req, res) => {
   try{
     const postId = req.params.id;
     const userId = req.user.id; 
