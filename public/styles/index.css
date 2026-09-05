@@ -97,16 +97,22 @@ main{
     justify-content: center;
   }
   #more-posts-btn{
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
+    border: 2px solid var #222;
+    border-radius: 12px;
     background: transparent;
     outline: none;
-    color: var(--primary-color);
+    color: #222;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     padding: 10px 15px;
     display: block;
+    transition: all 0.3s ease;
   }
+  #more-posts-btn:hover{
+    background: #222;
+    color:#fff;
+  }
+  
         .postCard{
             background:#fff;
             display: flex; 
@@ -178,7 +184,7 @@ main{
             cursor:pointer;
             background: transparent;
             position: relative;
-            transition: all 0.3 ease;
+            transition: all 0.3s ease;
         }
         .post-menu:hover {
             background:rgba(0,0,0,0.05)
