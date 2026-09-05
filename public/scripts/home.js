@@ -37,7 +37,7 @@ async function fetchPosts() {
             
       for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
-            console.log(posts[i].comment);
+            console.log(posts[i].comments);
        }
         allowPostView();
         return;
