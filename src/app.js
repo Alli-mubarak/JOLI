@@ -737,7 +737,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
  res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
-  return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
+  return res.sendFile(path.join(__dirname, "../", "/views/post-error.html"));
 }
 });
 
@@ -888,15 +888,6 @@ console.log('followers page  requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/friends.html"));
 });
 
-//Add post page route
-app.get('/create-post',(req, res)=>{
-console.log('add post page  requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
-  res.sendFile(path.join(__dirname, "../", "/views/addpost.html"));
-});
-
 //cropper test page
 app.get('/test-cropper',(req, res)=>{
 console.log('image cropper page  requested! \n');
@@ -976,34 +967,22 @@ app.get('/user/download-txt', checkSession, async (req, res) => {
   
   const userId = req.user.id
   try {
-    // Fetch user data from MongoDB
-    const user = await User.findById(userId);
-    if (!user) {
+    // Fetch user data from AIVEN DV
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
+    if (result.rows.length < 1) {
       return res.status(404).json({ error: 'User not found' });
     }
-
+const user = result.rows[0];
     //Format the user information nicely for the .txt file
-    const userEntries = user.entries.map(e => ({entryId:  e._id, content:  e.description, created:  e.createdAt.toLocaleString(), lastUpdated:  e.updatedAt.toLocaleString()}))
-    const formattedEntries = user.entries && user.entries.length > 0
-      ? userEntries.map((item, index) => {
-          return `  ${index + 1}. [
-         entryId : ${item.entryId},
-         content: ${item.content},
-         created : ${item.created},
-         last updated: ${item.lastUpdated}
-        ]`;
-        }).join('\n')
-      : '  No entries found.';
+    
     const country = user.country || 'unknown';
     const fileContent = [
       `User Profile Report`,
       `===================`,
-      `ID:         ${user._id}`,
-      `Name:       ${user.displayName}`,
+      `ID:         ${user.id}`,
+      `Name:       ${user.username}`,
       `Email:      ${user.email}`,
       `Country:    ${country}`,
-      `Entries:    ${user.entries.length} entries`,
-       `${formattedEntries}`,
       `Role:       ${user.role}`,
       `Joined On:  ${new Date(user.createdAt).toLocaleString()}`,
       `===================`,
