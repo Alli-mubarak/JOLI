@@ -715,7 +715,9 @@ for(let i = 0; i < posts.length; i++){
     posts[i].likeStatus = likeStat
   }
   const commentsQuery = `
-      SELECT c.*, u.username AS commenter 
+      SELECT c.*, 
+      u.username AS commenter,
+      u.profile_picture AS commenter_pic
       FROM comments c 
       JOIN users u ON c.user_id = u.id 
       WHERE c.post_id = $1 
@@ -754,7 +756,9 @@ let author = await  fetchAuthorDetails(postData.user_id);
     postData.likeStatus = likeStat
   }
   const commentsQuery = `
-      SELECT c.*, u.username AS commenter 
+      SELECT c.*, 
+      u.username AS commenter,
+      u.profile_picture AS commenter_pic
       FROM comments c 
       JOIN users u ON c.user_id = u.id 
       WHERE c.post_id = $1 
@@ -872,7 +876,7 @@ app.post('/post/:id/comment',checkSession, async (req, res) => {
         ic.created_at,
         ic.user_id AS commenter_id,          -
         u.username AS commenter,
-        u.profile_picture_url                
+        u.profile_picture AS commenter_pic               
       FROM inserted_comment ic
       JOIN users u ON ic.user_id = u.id;
     `;
