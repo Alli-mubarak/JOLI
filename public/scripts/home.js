@@ -37,8 +37,7 @@ async function fetchPosts() {
             
       for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
-            
-            // setTimeout(()=>{loadDefaultImage()},2000);
+            console.log(posts[i].comment);
        }
         allowPostView();
         return;
