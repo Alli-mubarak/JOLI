@@ -844,6 +844,106 @@ app.delete('/post/:id', async (req, res) => {
 });
 
 
+//user role change api
+app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
+  const {newRole, id} = req.params;
+ try{
+   if(!newRole && !id){
+   return res.json({
+      error: 'role or id is missing'
+    });
+   }
+   const getUser = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
+   const user = getUser.rows[0];
+  const roles = ["user","moderator","admin"];
+  if(!user){
+   return res.status(400).json({
+      error: 'user not found!'
+    });
+  }
+   if(!roles.includes(newRole)){
+    return res.json({
+      error: 'role does not exist!'
+    });
+   }
+   if(user.role === newRole){
+    return res.json({
+      error: 'user already has the role!'
+    });
+   }
+   if(!req.user){
+    return res.json({
+      error: 'You need to log in first!'
+    });
+   }
+   const initiatorRole = req.user.role
+   if(initiatorRole !== roles[2]){
+    return res.json({
+     error: 'You are not authorised to do this!'
+    });
+  }
+   
+       await pool.query(
+        `
+        UPDATE users
+        SET role = $1
+         WHERE id = $2
+        `,
+        [
+            newRole,
+            id
+        ]
+    );
+   res.json({
+     message: `user role changed to ${newRole}`,
+     userId: id
+   })
+  }
+  catch(error){
+    res.json({
+      error: error,
+      errorMessage: error.message
+    })
+  }
+});
+
+// Logout API
+app.get('/api/auth/logout', checkSession, limiter, async(req, res) => {
+  try {
+    if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+    }
+  const userId = req.user.id;
+  await pool.query(
+      'UPDATE users SET is_active = false WHERE id = $1',
+      [userId]
+    );
+
+  req.logout((err) => {
+    if (err) return next(err);
+    
+    // Destroy the session in Database 
+    req.session.destroy((err) => {
+      if (err) return res.send('Error logging out');
+      
+      // Clear the cookie on the client side
+      res.clearCookie('connect.sid',{
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+      });
+      res.redirect('/');
+    });
+  });
+  } catch (error) {
+    console.error("Database error during logout:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 
 
@@ -939,41 +1039,6 @@ app.get('/api/auth/user',  (req, res) => {
 
 app.get('/login-failed', (req, res) => {
   res.send('Authentication failed. Please try again.');
-});
-
-// Logout Route
-app.get('/api/auth/logout', checkSession, limiter, (req, res) => {
-  try {
-    if(!req.isAuthenticated() || !req.user) {
-    return res.status(401).send('Unauthorized. Please log in.');
-    }
-  const userId = req.user.id;
-  await pool.query(
-      'UPDATE users SET is_active = false WHERE id = $1',
-      [userId]
-    );
-
-  req.logout((err) => {
-    if (err) return next(err);
-    
-    // Destroy the session in Database 
-    req.session.destroy((err) => {
-      if (err) return res.send('Error logging out');
-      
-      // Clear the cookie on the client side
-      res.clearCookie('connect.sid',{
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      });
-      res.redirect('/');
-    });
-  });
-  } catch (error) {
-    console.error("Database error during logout:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
 });
 
 //user details download route
@@ -1120,71 +1185,7 @@ app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   }
 });
 
-// user role change api
-app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
-  const {newRole, id} = req.params;
- try{
-   if(!newRole && !id){
-   return res.json({
-      error: 'role or id is missing'
-    });
-   }
-   const getUser = await pool.query(
-    "SELECT * FROM users WHERE id = $1",
-    [id]
-  );
-   const user = getUser.rows[0];
-  const roles = ["user","moderator","admin"];
-  if(!user){
-   return res.status(400).json({
-      error: 'user not found!'
-    });
-  }
-   if(!roles.includes(newRole)){
-    return res.json({
-      error: 'role does not exist!'
-    });
-   }
-   if(user.role === newRole){
-    return res.json({
-      error: 'user already has the role!'
-    });
-   }
-   if(!req.user){
-    return res.json({
-      error: 'You need to log in first!'
-    });
-   }
-   const initiatorRole = req.user.role
-   if(initiatorRole !== roles[2]){
-    return res.json({
-     error: 'You are not authorised to do this!'
-    });
-  }
-   
-       await pool.query(
-        `
-        UPDATE users
-        SET role = $1
-         WHERE id = $2
-        `,
-        [
-            newRole,
-            id
-        ]
-    );
-   res.json({
-     message: `user role changed to ${newRole}`,
-     userId: id
-   })
-  }
-  catch(error){
-    res.json({
-      error: error,
-      errorMessage: error.message
-    })
-  }
-})
+
     
 
 //response to all wrong paths
