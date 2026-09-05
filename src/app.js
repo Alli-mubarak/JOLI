@@ -714,6 +714,16 @@ for(let i = 0; i < posts.length; i++){
     const likeStat = await getPostLikeStatus(posts[i].id, req.user.id);
     posts[i].likeStatus = likeStat
   }
+  const commentsQuery = `
+      SELECT c.*, u.username AS commenter 
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1 
+      ORDER BY c.created_at DESC
+    `;
+    const commentsResult = await pool.query(commentsQuery, [posts[i].id]);
+    posts[i].comments = commentsResult.rows;
+  
 }
 res.status(200).json({posts: posts});
 }catch(e){
@@ -743,6 +753,16 @@ let author = await  fetchAuthorDetails(postData.user_id);
     const likeStat = await getPostLikeStatus(postData.id, req.user.id);
     postData.likeStatus = likeStat
   }
+  const commentsQuery = `
+      SELECT c.*, u.username AS commenter 
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1 
+      ORDER BY c.created_at DESC
+    `;
+    const commentsResult = await pool.query(commentsQuery, [postData.id]);
+    postData.comments = commentsResult.rows;
+  
  res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
