@@ -858,6 +858,20 @@ console.log('default path requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/index.html"));
 });
 
+//robots.txt configuration 
+app.get('/robots.txt', (req, res) => {
+    res.type('text/plain');
+    res.send(
+        `User-agent: *\n` +
+        `Allow: /profile/\n` +
+        `Allow: /post/\n` +
+        `Disallow: /api/\n` +
+        `Disallow: /settings/\n` +
+        `Sitemap: https://joli-indol.vercel.app`
+    );
+});
+
+
 //homepage route
 app.get('/home',(req, res)=>{
 console.log('home page  requested! \n');
