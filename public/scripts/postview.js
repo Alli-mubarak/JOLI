@@ -373,10 +373,10 @@ async function deletePost(postId){
   
   window.scrollTo(0, scrollPosition);
      //remove in the UI
-    notify("post deleted!, redirecting........");
+    notify("post deleted!, redirecting......");
     setTimeout(()=>{
       window.location.href = '/'; 
-    },3000)
+    },1200)
   }
   catch(err){
     notify("Post delete failed!", "error");
