@@ -943,6 +943,16 @@ app.get('/login-failed', (req, res) => {
 
 // Logout Route
 app.get('/api/auth/logout', checkSession, limiter, (req, res) => {
+  try {
+    if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+    }
+  const userId = req.user.id;
+  await pool.query(
+      'UPDATE users SET is_active = false WHERE id = $1',
+      [userId]
+    );
+
   req.logout((err) => {
     if (err) return next(err);
     
@@ -951,10 +961,19 @@ app.get('/api/auth/logout', checkSession, limiter, (req, res) => {
       if (err) return res.send('Error logging out');
       
       // Clear the cookie on the client side
-      res.clearCookie('connect.sid');
+      res.clearCookie('connect.sid',{
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+      });
       res.redirect('/');
     });
   });
+  } catch (error) {
+    console.error("Database error during logout:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 //user details download route
