@@ -384,3 +384,75 @@ async function deletePost(postId){
     console.error(err);
   }
     }
+
+
+function sharePost(){
+  try{
+  const postUrl = postCard.getAttribute('data-url');
+   let authorUsername = document.querySelector(".author-username").innerHTML;
+  const authorLink = document.querySelector("#author-image").href;
+  const authorId = authorLink.split("user/")[1];
+    if(currentUserId === authorId){
+      authorUsername = "your";
+    }else{
+      authorUsername = authorUsername+"'s";
+    }
+     const htmlElements = `
+     <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+     <h3>Share ${authorUsername} post</h3>
+     <p >Copy post link below to share</p>
+     <div id="post-link-container">
+     <input type="text" readonly value="https://joli-indol.vercel.app${postUrl}"/>
+     <i class="fa-solid fa-copy" id="copy-link-btn"></i>
+     </div>
+     `
+      postMenu.innerHTML = htmlElements
+    pmCloserBtn = document.getElementById("p-closer-btn");
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+      }
+    const copyLinkBtn = document.getElementById("copy-link-btn");
+    
+    copyLinkBtn.onclick = (e) => {
+     const currPostLink = e.target.previousElementSibling.value;
+      
+    navigator.clipboard
+      .writeText(currPostLink)
+      .then(() => {
+        copyLinkBtn.classList.remove("fa-copy");
+        copyLinkBtn.classList.add("fa-check");
+        setTimeout(() => {
+         copyLinkBtn.classList.remove("fa-check");
+          copyLinkBtn.classList.add("fa-copy");
+        }, 1500);
+      })
+      .catch((err) => console.error(err));
+  } 
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+  }catch(err){
+    console.error(err)
+    notify("Post sharing failed!", "error");
+    return;
+  }
+      }
+shareBtn.onclick = () => {sharePost()}
