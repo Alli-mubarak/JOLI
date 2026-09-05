@@ -401,6 +401,7 @@ main{
             justify-content: space-between ;
             width:100%;
             padding:0;
+          margin-bottom: 10px;
             gap: 15px;
         }
         #post-link-container input{
@@ -413,7 +414,6 @@ main{
             border-radius: 10px;
             padding: 5px;
             width: 100%;
-          margin-bottom: 10px;
         }
         #copy-link-btn{
             font-size:1rem;
