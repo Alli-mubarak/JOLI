@@ -984,7 +984,7 @@ const user = result.rows[0];
       `Email:      ${user.email}`,
       `Country:    ${country}`,
       `Role:       ${user.role}`,
-      `Joined On:  ${new Date(user.createdAt).toLocaleString()}`,
+      `Joined On:  ${new Date(user.created_at).toLocaleString()}`,
       `===================`,
       `Generated on: ${new Date().toLocaleString()}`
     ].join('\n'); // Separates lines correctly for text files
