@@ -721,7 +721,7 @@ try{
     const postQuery= await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
   if (postQuery.rows.length === 0) {
     console.error('post not found!');
-    return res.sendFile(path.join(__dirname, "../", "/views/error.html"));
+    return res.sendFile(path.join(__dirname, "../", "/views/post-error.html"));
   }
   const postData = postQuery.rows[0];
 let author = await  fetchAuthorDetails(postData.user_id);
@@ -980,7 +980,7 @@ const user = result.rows[0];
       `User Profile Report`,
       `===================`,
       `ID:         ${user.id}`,
-      `Name:       ${user.username}`,
+      `Username:   ${user.username}`,
       `Email:      ${user.email}`,
       `Country:    ${country}`,
       `Role:       ${user.role}`,
