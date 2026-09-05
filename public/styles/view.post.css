@@ -379,3 +379,40 @@ header button:hover {
          #post-menu button:hover{
             background:#eee;
           }
+  #post-menu h3, #post-menu p{
+           font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        #post-link-container{
+            display: flex; 
+            align-items:center;
+            justify-content: space-between ;
+            width:100%;
+            padding:0;
+          margin-bottom: 10px;
+            gap: 15px;
+        }
+        #post-link-container input{
+            display: block;
+            font-size: 1.1rem;
+            color : #555;
+            background:#eee;
+            outline: none;
+            border: 2px solid #555;
+            border-radius: 10px;
+            padding: 5px;
+            width: 100%;
+        }
+        #copy-link-btn{
+            font-size:1rem;
+            color:#222;
+            display: flex;
+            align-items: center;
+            justify-content :center;
+            cursor:pointer;
+            padding:10px;
+            background: #2bff43;
+            width:30px; height:30px;
+            border-radius:10px;
+            
+          }
