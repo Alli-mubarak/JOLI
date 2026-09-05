@@ -437,7 +437,10 @@ function sharePost(){
           copyLinkBtn.classList.add("fa-copy");
         }, 1500);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        notify("link copying failed!", "error");
+        console.error(err);
+      });
   } 
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
