@@ -503,6 +503,7 @@ function sharePost(e){
      `
       postMenu.innerHTML = htmlElements
     pmCloserBtn = document.getElementById("p-closer-btn");
+    
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
      document.body.classList.remove('no-scroll'); 
@@ -516,7 +517,23 @@ function sharePost(e){
   
   window.scrollTo(0, scrollPosition);
       }
+    const copyLinkBtn = document.getElementById("copy-link-btn");
     
+    copyLinkBtn.onclick = (e) => {
+     const currPostLink = e.target.previousElementSibling.value;
+      
+    navigator.clipboard
+      .writeText(currPostLink)
+      .then(() => {
+        copyLinkBtn.classList.remove("fa-copy");
+        copyLinkBtn.classList.add("fa-check");
+        setTimeout(() => {
+         copyLinkBtn.classList.remove("fa-check");
+          copyLinkBtn.classList.add("fa-copy");
+        }, 1500);
+      })
+      .catch((err) => console.error(err));
+  } 
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
