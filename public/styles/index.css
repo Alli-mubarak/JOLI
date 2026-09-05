@@ -392,7 +392,7 @@ main{
             background:#eee;
           }
   #post-menu h3, #post-menu p{
-           font-size: 1.3rem;
+           font-size: 1.2rem;
             margin-bottom: 10px;
         }
         #post-link-container{
@@ -413,6 +413,7 @@ main{
             border-radius: 10px;
             padding: 5px;
             width: 100%;
+          margin-bottom: 10px;
         }
         #copy-link-btn{
             font-size:1rem;
