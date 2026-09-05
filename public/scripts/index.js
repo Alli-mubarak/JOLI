@@ -188,7 +188,10 @@ async function checkAuthStatus() {
 //post adder display
 postAdder.onclick = () => {
   try{
-  if(canPost){
+  if(!canPost){
+    notify("sign up to post!", "error", "click here", "/");
+    return;
+  }
   postContainer.classList.remove("hidden");
   scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   
@@ -196,7 +199,7 @@ postAdder.onclick = () => {
   document.body.style.top = `-${scrollPosition}px`;
   pageHeader.style.top = 0;
   document.body.style.width = '100%';
-  }
+  
   return
   }catch(e){
     console.error(e);
