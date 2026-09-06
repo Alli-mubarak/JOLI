@@ -398,7 +398,7 @@ main{
             height:fit-content;
             
         }
-        #post-menu button{
+        #post-menu button:not(#submit-comment-btn){
             font-size:1.1rem;
             padding:10px;
             display: flex;
@@ -472,6 +472,7 @@ main{
     background: var(--primary-color);
     padding: 10px 15px;
     color: #222;
+    width: fit-content;
   }
 @media screen and (min-width:762px){
 /*styling for large screens */
