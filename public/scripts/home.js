@@ -168,7 +168,9 @@ try{
           likePost(e);
         }else if(e.target.getAttribute('data-type') === "share" || e.target.parentElement.getAttribute('data-type') === "share"){
           sharePost(e);
-        }
+        }else if(e.target.getAttribute('data-type') === "comment" || e.target.parentElement.getAttribute('data-type') === "comment"){
+          makeComment(e);
+      }
         else if(e.target.getAttribute('data-type') === "post-menu" || e.target.parentElement.getAttribute('data-type') === "post-menu"){
           viewPostMenu(e);
         }
@@ -550,6 +552,57 @@ function sharePost(e){
     console.error(err)
     notify("Post sharing failed!", "error");
     return;
+  }
+}
+async function makeComment(e){
+  try{
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+    }
+const postId = e.currentTarget.id;
+const commentFormNCloser = `
+<i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+<form method="post">
+<div class="pic-input">
+<img src=${userPic.src} alt="user picture" />
+<textarea id="comment-input" name="comment" placeholder="post your comment"></textarea>
+</div>
+<div class="submit-container">
+<button type="submit" id="submit-comment-btn">Post</button>
+</div>
+</form>
+`
+ postMenu.innerHTML = commentFormNCloser;
+  pmCloserBtn = document.getElementById("p-closer-btn");
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
+    }
+  postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+  }catch(error){
+    console.error(error);
+    notify("comment failed!", "error");
+    
   }
 }
 //setTimeout(() =>{
