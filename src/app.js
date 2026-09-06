@@ -874,7 +874,7 @@ app.post('/post/:id/comment',checkSession, async (req, res) => {
         ic.post_id,
         ic.content,
         ic.created_at,
-        ic.user_id AS commenter_id,          -
+        ic.user_id AS commenter_id,
         u.username AS commenter,
         u.profile_picture AS commenter_pic               
       FROM inserted_comment ic
