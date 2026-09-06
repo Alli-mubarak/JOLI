@@ -563,7 +563,7 @@ async function makeComment(e){
 const postId = e.currentTarget.id;
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-<form method="post">
+<form action="/post/${postId}/comment" method="POST">
 <div class="pic-input">
 <img src=${userPic.src} alt="user picture" />
 <textarea id="comment-input" name="comment" placeholder="post your comment"></textarea>
