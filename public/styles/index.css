@@ -411,7 +411,7 @@ main{
             cursor: pointer;
             background: transparent;
          }
-         #post-menu button:hover{
+         #post-menu button:not(#submit-comment-btn):hover{
             background:#eee;
           }
   #post-menu h3, #post-menu p{
