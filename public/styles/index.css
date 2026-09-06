@@ -451,6 +451,28 @@ main{
             border-radius:10px;
             
     }
+  #post-menu form{
+    width:100%;
+  }
+  .pic-submit{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+  }
+  #commenter-pic{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border: 2px solid #ddd;
+  }
+  #submit-comment-btn{
+    border-radius:12px;
+    font-size:1.1rem;
+    background: var(--primary-color);
+    padding: 10px 15px;
+    color: #222;
+  }
 @media screen and (min-width:762px){
 /*styling for large screens */
 }
