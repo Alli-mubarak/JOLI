@@ -564,13 +564,13 @@ const postId = e.currentTarget.id;
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
 <form action="/post/${postId}/comment" method="POST">
-<div class="pic-input">
-<img src=${userPic.src} alt="user picture" />
-<textarea id="comment-input" name="content" placeholder="post your comment"></textarea>
+<div class="pic-submit">
+<img src=${userPic.src} alt="user picture" id="commenter-pic"/>
+<button type="submit" id="submit-comment-btn" disabled>Post</button>
 </div>
-<div class="submit-container">
-<button type="submit" id="submit-comment-btn">Post</button>
-</div>
+<div id="comment-media-container"></div>
+<textarea id="comment-input" name="content" placeholder="post your comment" id="comment-input"></textarea>
+
 </form>
 `
  postMenu.innerHTML = commentFormNCloser;
