@@ -32,6 +32,20 @@ const pageTabs = document.querySelector(".tabs");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
 
+function disableScrolling(){
+  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  header.style.top = 0;
+  document.body.style.width = '100%';
+}
+
+function enableScrolling(){
+  document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollPosition);
+}
 
 userPic.onclick = () =>{
       menuBox.style.left = "0";
@@ -39,13 +53,7 @@ userPic.onclick = () =>{
       menuBox.style.background = "rgba(0,0,0,0.2)";
       },200);
       
-  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  header.style.top = 0;
-  document.body.style.width = '100%';
+  disableScrolling();
   }
   
   menuCloser.onclick = () =>{
@@ -54,11 +62,7 @@ userPic.onclick = () =>{
      setTimeout(() =>{
       menuBox.style.left = "100%";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
       
   }
 //page tab & header hider toggle
@@ -193,12 +197,7 @@ postAdder.onclick = () => {
     return;
   }
   postContainer.classList.remove("hidden");
-  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  pageHeader.style.top = 0;
-  document.body.style.width = '100%';
+  disableScrolling()
   
   return
   }catch(e){
@@ -210,11 +209,7 @@ postAdder.onclick = () => {
 //post adder closer
 postCloser.onclick = () => {
   try{
-  document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+  enableScrolling();
   postContainer.classList.add("hidden");
   mediaFilesDisplayer.innerHTML = "";
   input.value = "";
@@ -533,7 +528,7 @@ cropHolder.addEventListener('touchmove', (e) => {
     crop.style.left = newX + "px";
     crop.style.top = newY + "px";
     
-  // Prevent mobile screen from scrolling while dragging the box
+
   e.preventDefault();
 }, { passive: false });
 
@@ -572,9 +567,6 @@ if (index !== -1) {
 
 cropSaver.onclick = (e) => {
   try{
- //   console.log(crop.clientWidth, crop.clientHeight, crop.offsetLeft, crop.offsetTop);
- //   console.log(initialHeight, initialWidth, initialLeft, initialTop);
-
 const index = selectedPictures.findIndex( image => image.id === imageInfo.id);
 if (index !== -1) {
 if(!selectedPictures[index].cropped) selectedPictures[index].cropped = true;
