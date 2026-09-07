@@ -624,7 +624,7 @@ commentInput.oninput = () =>{
     cLoader.classList.add("roll");
   
     try{
-      const response = await fetch(`/posts/${postId}/comment`, {
+      const response = await fetch(`/post/${postId}s/comment`, {
         method: "POST",
         headers: {
       'Content-Type': 'application/json'
