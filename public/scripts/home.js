@@ -625,7 +625,7 @@ commentInput.oninput = () =>{
     try{
       const response = await fetch("/post/`${postId}`/comment", {
         method: "POST",
-        body: JSON.stringify({content: commentForm.content.value})
+        body: JSON.stringify({content: commentInput.value})
       });
    cLoader.classList.add("hidden");
       if (response.ok) {
