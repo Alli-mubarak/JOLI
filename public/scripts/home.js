@@ -622,6 +622,7 @@ commentInput.oninput = () =>{
      enableScrolling();
       currPost.style.background = "#fff";
       if (response.ok) {
+        notify("comment added!");
      window.location.href= `/post/${postId}` ;
       } else {
         notify("commenting failed!", "error");
