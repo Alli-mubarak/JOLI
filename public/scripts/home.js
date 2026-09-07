@@ -624,7 +624,7 @@ commentInput.oninput = () =>{
       
       if (response.ok) {
         const commentContainer = postOnFocus.querySelector(".comment-count");
-        if(commentContainer.textContent = ""){
+        if(commentContainer.textContent === ""){
           commentContainer.textContent = 1;
         }else{
           commentContainer.textContent = Number(commentContainer.textContent) + 1;
