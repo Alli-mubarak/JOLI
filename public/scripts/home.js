@@ -13,6 +13,7 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
+let postOnFocus;
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -115,6 +116,7 @@ postsContainer.innerHTML += postCard;
 
 }
 
+//function that calculates the time the post was created compared to the current time
 function getPostTime(postTime){
 const targetDate = new Date(postTime);
 const currentDate = new Date();
@@ -148,6 +150,7 @@ function sortImages(images){
 return result;
 }
 
+//function that activates post card functionalities 
 function allowPostView(){
 try{
  const everyPosts = document.querySelectorAll(".postCard");
@@ -159,7 +162,7 @@ everyPosts.forEach((post, index) => {
 }
 }
 
-
+//function that makes the post card work
 function viewPost(e){
 try{
       
@@ -201,6 +204,7 @@ try{
 }
 }
 
+//function for viewing post images
 function viewPostImage(e){
    try{
    inViewMode = true;
@@ -302,7 +306,9 @@ function viewPostImage(e){
            console.error(e);
        }
     }
-    async function likePost(e){
+
+// function that activates/deactivates post like
+  async function likePost(e){
       try{
       if(!isAuthorised){
         notify("please, log in first!", "error", "click here", "/");
@@ -366,6 +372,7 @@ function viewPostImage(e){
       }
     }
 
+//function thatt shows post menu
 function viewPostMenu(e){
   try{
   const postId = e.currentTarget.id;
@@ -380,6 +387,7 @@ function viewPostMenu(e){
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
     const currPost = document.getElementById(`${postId}`);
+    postOnFocus = currPost;
     currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
@@ -397,6 +405,7 @@ function viewPostMenu(e){
    enableScrolling();
       }
     }
+    
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
     
@@ -417,17 +426,18 @@ function viewPostMenu(e){
     console.error(error);
   }
   }
-  
+
+//post menu closer - blank space 
   postMenuCloser.onclick = () =>{
-      
       postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
-    currPost.style.background = "#fff";
+    postOnFocus.style.background = "#fff";
   }
-  
+
+//post deleter
 async function deletePost(postId){
   try{
     const currPost = document.getElementById(`${postId}`);
@@ -461,6 +471,7 @@ async function deletePost(postId){
   }
 }
 
+//post sharing function 
 function sharePost(e){
   try{
     let currentPostCard = e.currentTarget
@@ -483,9 +494,9 @@ function sharePost(e){
      </div>
      `
       postMenu.innerHTML = htmlElements
-    
+    pmCloserBtn = document.getElementById("p-closer-btn");
     currentPostCard.style.background = "var(--touch-color)";
-    
+    postOnFocus = currentPostCard;
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
@@ -528,6 +539,7 @@ function sharePost(e){
   }
 }
 
+//post commenting function 
 async function makeComment(e){
   try{
     if(!isAuthorised){
@@ -536,6 +548,7 @@ async function makeComment(e){
     }
 const postId = e.currentTarget.id;
 const currPost = document.getElementById(`${postId}`);
+postOnFocus = currPost;
 currPost.style.background = "var(--touch-color)";
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
@@ -626,6 +639,7 @@ commentInput.oninput = () =>{
     
   }
 }
-//setTimeout(() =>{
+
+//post fetcher function call
 fetchPosts()
-//},4000);
+
