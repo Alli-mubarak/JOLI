@@ -621,6 +621,7 @@ commentInput.oninput = () =>{
     e.preventDefault();
     const cLoader = document.getElementById("c-loader");
     cLoader.classList.remove("hidden");
+    cLoader.classList.add("roll");
   
     try{
       const response = await fetch(`/post/${postId}/comment`, {
@@ -631,6 +632,7 @@ commentInput.oninput = () =>{
         body: JSON.stringify({content: commentInput.value})
       });
    cLoader.classList.add("hidden");
+  cLoader.classList.remove("roll");
     postMenuCloser.style.background = "transparent";
      document.body.classList.remove('no-scroll'); 
     
