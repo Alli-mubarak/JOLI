@@ -566,7 +566,10 @@ const commentFormNCloser = `
 <form action="/post/${postId}/comment" method="POST">
 <div class="pic-submit">
 <img src=${userPic.src} alt="user picture" id="commenter-pic"/>
-<button type="submit" id="submit-comment-btn" disabled>Post</button>
+<button type="submit" id="submit-comment-btn" disabled>
+<span>Post</span>
+  <div id="c-loader" class="hidden"></div>
+</button>
 </div>
 <div id="comment-media-container"></div>
 <textarea id="comment-input" name="content" placeholder="post your comment" id="comment-input"></textarea>
