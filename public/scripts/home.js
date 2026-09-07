@@ -379,6 +379,8 @@ function viewPostMenu(e){
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
+    const currPost = document.getElementById(`${postId}`);
+    currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
@@ -402,6 +404,7 @@ function viewPostMenu(e){
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
+      currPost.style.background = "#fff";
       }
     
       postMenuContainer.style.bottom = 0;
@@ -409,6 +412,7 @@ function viewPostMenu(e){
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
       disableScrolling();
+    
   }catch(error){
     console.error(error);
   }
@@ -421,6 +425,7 @@ function viewPostMenu(e){
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
+    currPost.style.background = "#fff";
   }
   
 async function deletePost(postId){
@@ -478,7 +483,9 @@ function sharePost(e){
      </div>
      `
       postMenu.innerHTML = htmlElements
-    pmCloserBtn = document.getElementById("p-closer-btn");
+    
+    currentPostCard.style.background = "var(--touch-color)";
+    
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
@@ -487,6 +494,7 @@ function sharePost(e){
       postMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
+      currentPostCard.style.background = "#fff";
       }
     const copyLinkBtn = document.getElementById("copy-link-btn");
     
@@ -527,6 +535,8 @@ async function makeComment(e){
         return;
     }
 const postId = e.currentTarget.id;
+const currPost = document.getElementById(`${postId}`);
+currPost.style.background = "var(--touch-color)";
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
 <form id="comment-form">
@@ -552,6 +562,7 @@ const commentFormNCloser = `
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
+  currPost.style.background = "#fff";
     }
     
   postMenuContainer.style.bottom = 0;
@@ -596,6 +607,7 @@ commentInput.oninput = () =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
+      currPost.style.background = "#fff";
       if (response.ok) {
      window.location.href= `/post/${postId}` ;
       } else {
