@@ -1,4 +1,3 @@
-if(postComments) alert(postComments);
 let currentUserId;
 const postCard = document.querySelector(".postCard");
 const postContent = document.querySelector(".post-content");
