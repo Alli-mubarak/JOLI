@@ -631,12 +631,20 @@ commentInput.oninput = () =>{
         body: JSON.stringify({content: commentInput.value})
       });
    cLoader.classList.add("hidden");
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  
+  window.scrollTo(0, scrollPosition);
       if (response.ok) {
-        // Run your code here after successful submission
-        alert('comment submitted successfully!');
- // window.location.href= "#";
+     window.location.href= `/post/${postId}` ;
       } else {
-        alert('Server returned an error.');
         notify("commenting failed!", "error");
       }
     }
