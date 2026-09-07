@@ -621,7 +621,14 @@ commentInput.oninput = () =>{
       },200);
      enableScrolling();
       currPost.style.background = "#fff";
+      
       if (response.ok) {
+        const commentContainer = postOnFocus.querySelector(".comment-count");
+        if(commentContainer.textContent = ""){
+          commentContainer.textContent = 1;
+        }else{
+          commentContainer.textContent = Number(commentContainer.textContent) + 1;
+        }
         notify("comment added!");
      window.location.href= `/post/${postId}` ;
       } else {
