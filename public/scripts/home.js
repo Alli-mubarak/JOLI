@@ -610,7 +610,7 @@ const commentFormNCloser = `
 commentInput.oninput = () =>{
   if(commentInput.value.length < 1){
     SubmitCommentBtn.disabled = true;
-    SubmitCommentBtn.style.background = "pink";
+    SubmitCommentBtn.style.background = "#c5ff95";
   }else{
     SubmitCommentBtn.disabled = false;
     SubmitCommentBtn.style.background = "var(--primary-color)";
@@ -632,7 +632,7 @@ commentInput.oninput = () =>{
         // Run your code here after successful submission
         alert('comment submitted successfully!');
     SubmitCommentBtn.disabled = true;
-    SubmitCommentBtn.style.background = "pink";
+    SubmitCommentBtn.style.background = "#c5ff95";
         commentForm.reset();
       } else {
         alert('Server returned an error.');
