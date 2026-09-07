@@ -37,6 +37,7 @@ return `${Math.floor(sDifference)}s`;
 }
 
 }
+const comments = post.comments
 
 %>
 <header id="header">
@@ -108,11 +109,15 @@ return `${Math.floor(sDifference)}s`;
                 <button id="share-btn">
                 <i class="fa-solid fa-share"></i>
                 </button>
-                    <span class="shares-count"></span>
+                    <span class="shares-count">
+                   <%= post.comments.length > 0 ? post.comments.length : "" %>
+            </div>
+                    </span>
             </div>
         </div>
        
     </div>
+   <div id="comments"> </div>
 <div id="media-viewer" class="hidden">
         <button id="mv-closer">
           <i class="fa-solid fa-xmark"></i>
