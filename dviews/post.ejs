@@ -118,7 +118,9 @@ const postComments = post.comments
         </div>
        
     </div>
-   <div id="comments"> </div>
+   <div id="comments">
+    <%= post.comments.length > 0 ? <div id="c-loader"></div> : "" %>
+    </div>
 <div id="media-viewer" class="hidden">
         <button id="mv-closer">
           <i class="fa-solid fa-xmark"></i>
