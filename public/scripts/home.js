@@ -563,7 +563,7 @@ async function makeComment(e){
 const postId = e.currentTarget.id;
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-<form action="/post/${postId}/comment" method="POST">
+<form id="comment-form">
 <div class="pic-submit">
 <img src=${userPic.src} alt="user picture" id="commenter-pic"/>
 <button type="submit" id="submit-comment-btn" disabled>
@@ -602,9 +602,52 @@ const commentFormNCloser = `
   document.body.style.position = 'fixed';
   document.body.style.top = `-${scrollPosition}px`;
   document.body.style.width = '100%';
+    
+  const SubmitCommentBtn = document.getElementById("submit-comment-btn");
+  const commentInput = document.getElementById("comment-input");
+  const commentForm = document.getElementById("comment-form");
+    
+commentInput.oninput = () =>{
+  if(commentInput.value.length < 1){
+    SubmitCommentBtn.disabled = true;
+    SubmitCommentBtn.style.background = "pink";
+  }else{
+    SubmitCommentBtn.disabled = false;
+    SubmitCommentBtn.style.background = "var(--primary-color)";
+  }
+}
+    
+  commentForm.onsubmit = async(e) => {
+    e.preventDefault();
+    const cLoader = document.getElementById("c-loader");
+    cLoader.classList.remove("hidden");
+    const formData = new FormData(commentForm)
+    try{
+      const response = await fetch("/post/`${postId}`/comment", {
+        method: "POST",
+        body: formData
+      });
+   cLoader.classList.add("hidden");
+      if (response.ok) {
+        // Run your code here after successful submission
+        alert('comment submitted successfully!');
+    SubmitCommentBtn.disabled = true;
+    SubmitCommentBtn.style.background = "pink";
+        commentForm.reset();
+      } else {
+        alert('Server returned an error.');
+        notify("commenting failed!", "error");
+      }
+    }
+    catch(err){
+      console.error(err);
+      notify("commenting failed!", "error");
+    }
+  }
+    
   }catch(error){
     console.error(error);
-    notify("comment failed!", "error");
+    notify("commenting failed!", "error");
     
   }
 }
