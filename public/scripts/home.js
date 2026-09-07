@@ -226,7 +226,7 @@ function viewPostImage(e){
          }
      
         mediaViewer.classList.remove("hidden");
-      
+       disableScrolling();
       
        }catch(e){
            console.error(e);
@@ -236,6 +236,7 @@ function viewPostImage(e){
     mediaViewerCloser.onclick = (e) =>{
     try{
         mediaViewer.classList.add("hidden");
+        enableScrolling();
         mediaCounter.innerHTML = "";
         inViewMode = false;
         moveLeft.classList.remove("hidden");
@@ -387,42 +388,27 @@ function viewPostMenu(e){
        deletePost(postId);
       }
         postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
       }
     }
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
       }
     
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  document.body.style.width = '100%';
+      disableScrolling();
   }catch(error){
     console.error(error);
   }
@@ -431,15 +417,10 @@ function viewPostMenu(e){
   postMenuCloser.onclick = () =>{
       
       postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
   }
   
 async function deletePost(postId){
@@ -460,16 +441,10 @@ async function deletePost(postId){
         }
           console.log(response);
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
-    
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
      //remove in the UI
     postsContainer.removeChild(currPost);
     notify("post deleted!");
@@ -507,16 +482,11 @@ function sharePost(e){
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+     enableScrolling();
       }
     const copyLinkBtn = document.getElementById("copy-link-btn");
     
@@ -542,18 +512,14 @@ function sharePost(e){
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  document.body.style.width = '100%';
+    disableScrolling();
   }catch(err){
     console.error(err)
     notify("Post sharing failed!", "error");
     return;
   }
 }
+
 async function makeComment(e){
   try{
     if(!isAuthorised){
@@ -581,27 +547,18 @@ const commentFormNCloser = `
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
     }
+    
   postMenuContainer.style.bottom = 0;
-      setTimeout(() =>{
+  setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  document.body.style.width = '100%';
+  disableScrolling();
     
   const SubmitCommentBtn = document.getElementById("submit-comment-btn");
   const commentInput = document.getElementById("comment-input");
@@ -634,16 +591,11 @@ commentInput.oninput = () =>{
    cLoader.classList.add("hidden");
   cLoader.classList.remove("roll");
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+     enableScrolling();
       if (response.ok) {
      window.location.href= `/post/${postId}` ;
       } else {
