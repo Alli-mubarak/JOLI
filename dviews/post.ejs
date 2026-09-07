@@ -37,7 +37,7 @@ return `${Math.floor(sDifference)}s`;
 }
 
 }
-const comments = post.comments
+const postComments = post.comments
 
 %>
 <header id="header">
@@ -103,15 +103,16 @@ const comments = post.comments
                 <button id="comment-btn">
                 <i class="fa-regular fa-comment"></i>
                 </button>
-                    <span class="comment-count"></span>
+                    <span class="comment-count">
+                    <%= post.comments.length > 0 ? post.comments.length : "" %>
+                    </span>
             </div>
               <div class="shares">
                 <button id="share-btn">
                 <i class="fa-solid fa-share"></i>
                 </button>
                     <span class="shares-count">
-                   <%= post.comments.length > 0 ? post.comments.length : "" %>
-            </div>
+                   
                     </span>
             </div>
         </div>
