@@ -621,19 +621,17 @@ commentInput.oninput = () =>{
     e.preventDefault();
     const cLoader = document.getElementById("c-loader");
     cLoader.classList.remove("hidden");
-    const formData = new FormData(commentForm)
+  
     try{
       const response = await fetch("/post/`${postId}`/comment", {
         method: "POST",
-        body: formData
+        body: JSON.stringify({content: commentForm.content.value})
       });
    cLoader.classList.add("hidden");
       if (response.ok) {
         // Run your code here after successful submission
         alert('comment submitted successfully!');
-    SubmitCommentBtn.disabled = true;
-    SubmitCommentBtn.style.background = "#c5ff95";
-        commentForm.reset();
+ // window.location.href= "#";
       } else {
         alert('Server returned an error.');
         notify("commenting failed!", "error");
