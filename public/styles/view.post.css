@@ -432,8 +432,11 @@ header button:hover {
         animation: roll linear infinite 2s;
         
 }
-      @keyframes load{
-    to{
-      left: 110%;
-    }
-      }
+       @keyframes roll{
+         from{
+        transform: rotate(0deg);
+         }
+         to{
+          transform: rotate(360deg);
+         }
+ }
