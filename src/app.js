@@ -743,7 +743,7 @@ if(!time){
   return res.status(400).json({ error: 'a specific time is required' });
 }
 try{
-const result = await pool.query(`SELECT * FROM posts WHERE created_at < ${time} LIMIT 30`);
+const result = await pool.query(`SELECT * FROM posts WHERE created_at < '${time}'::timestamptz LIMIT 30`);
 const posts = result.rows
 if(posts.length < 1){
   return res.status(404).json({ message: 'No more posts to fetch' });
