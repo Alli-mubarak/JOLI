@@ -669,6 +669,11 @@ try {
     //insert new post in UI
     if(postsContainer){
       const post = result;
+      const postImages = post.media_urls
+      let imgs = "";
+     if(postImages.length > 0){
+      imgs = await sortImages(postImages);
+     }
       const postCard = `
    <div class="postCard" data-url="/post/${post.id}" id=${post.id}>
         <div class="post-header">
