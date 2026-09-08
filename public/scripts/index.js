@@ -680,14 +680,14 @@ try {
             <div class="author-details">
                 <div class="author-image">
                      <a href="/user/${post.user_id}" id="author-image">
-                         <img src="${post.author_profile_picture || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
+                         <img src="${userPic.src || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
                           <a href="/user/${post.user_id}" class="author-link">
-                              <p class="author-username">${post.author_username || null}</p>
+                              <p class="author-username">${pUsername.textContent || null}</p>
                           </a>
-                          <small>${getPostTime(post.created_at)}</small>
+                          <small>now</small>
                      </div>
             </div> 
             <div class="post-menu" data-type="post-menu">
