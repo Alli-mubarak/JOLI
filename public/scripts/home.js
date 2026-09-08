@@ -15,6 +15,7 @@ const postMenuContainer = document.getElementById("post-menu-container");
   let pmCloserBtn = document.getElementById("p-closer-btn");
 let postOnFocus;
 let lastPostCreationTime;
+let morePostsBtn = document.getElementById("more-posts-btn");
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -41,7 +42,6 @@ async function fetchPosts() {
             
       for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
-            console.log(posts[i].comments);
        }
         allowPostView();
         return;
@@ -53,7 +53,7 @@ async function fetchPosts() {
 
 async function fetchMorePosts() {
       try {
-        
+        postsContainer.removeChild(morePostsBtn);
         const response = await fetch("/api/getPosts" );
         const response = await fetch("/api/getPosts", {
         method: "POST",
@@ -67,18 +67,39 @@ async function fetchMorePosts() {
         const posts = data.posts;
         lastPostCreationTime = posts[posts.length - 1].created_at;
         
-      postsContainer.innerHTML = '';
+      
             
       for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
-            console.log(posts[i].comments);
+    
        }
         allowPostView();
+        morePostsBtn = "<button id="more-posts-btn">Show more posts</button>"
+        postsContainer.innerHTML += morePostsBtn;
+        morePostsBtn.onclick = () => {
+           try{
+            fetchMorePosts()
+             }
+             catch(err){
+    notify("error fetching more posts", "error");
+    console.error(err);
+  }
+        }
         return;
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
       }
+}
+
+morePostsBtn.onclick = () => {
+  try{
+    fetchMorePosts()
+  }
+  catch(err){
+    notify("error fetching more posts", "error");
+    console.error(err);
+  }
 }
 
 async function displayPost(post){
