@@ -31,7 +31,6 @@ const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
-const postsContainer = document.getElementById("posts");
 
 function disableScrolling(){
   scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
