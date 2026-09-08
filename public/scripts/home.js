@@ -54,7 +54,8 @@ async function fetchPosts() {
 
 async function fetchMorePosts() {
       try {
-        
+        morePostsBtn.disabled = true;
+        morePostsBtn.textContent  = "fetching posts...";
         const response = await fetch("/api/getPosts", {
         method: "POST",
         headers: {
@@ -64,6 +65,8 @@ async function fetchMorePosts() {
       });
         const data = await response.json();
        if(data.posts){
+         morePostsBtn.disabled = false;
+         morePostsBtn.textContent  = "fetch more posts";
         const posts = data.posts;
         lastPostCreationTime = posts[0].created_at;
         
@@ -74,12 +77,16 @@ async function fetchMorePosts() {
         allowPostView();
        }
         if(data.message){
+          morePostsBtn.disabled = false;
+          morePostsBtn.textContent  = "fetch more posts";
           notify(data.message);
         }
         return;
       } catch (err) {
        notify("Error fetching posts", "error");
         console.error("Error fetching posts:", err);
+        morePostsBtn.disabled = false;
+        morePostsBtn.textContent  = "fetch more posts";
       }
 }
 
