@@ -65,11 +65,11 @@ async function fetchMorePosts() {
         const data = await response.json();
  
         const posts = data.posts;
-        lastPostCreationTime = posts[posts.length - 1].created_at;
+        lastPostCreationTime = posts[0].created_at;
         
       
             
-      for (let i=0; i < posts.length; i++){
+      for (let i = posts.length - 1; i >= 0; i--){
              await displayPost(posts[i]);
     
        }
