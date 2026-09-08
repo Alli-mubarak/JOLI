@@ -741,6 +741,7 @@ try {
     const msg = "error occurred, please try again!";
     notify(msg, "error");
   }
+  enableScrolling();
 } catch (error) {
   console.error('Network dispatch failure:', error);
   postContainer.classList.add("hidden");
