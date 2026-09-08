@@ -54,7 +54,7 @@ async function fetchPosts() {
 async function fetchMorePosts() {
       try {
         postsContainer.removeChild(morePostsBtn);
-        const response = await fetch("/api/getPosts" );
+        
         const response = await fetch("/api/getPosts", {
         method: "POST",
         headers: {
