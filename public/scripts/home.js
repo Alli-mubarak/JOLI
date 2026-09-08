@@ -63,7 +63,7 @@ async function fetchMorePosts() {
         body: JSON.stringify({time:  lastPostCreationTime})
       });
         const data = await response.json();
- 
+       if(data.posts){
         const posts = data.posts;
         lastPostCreationTime = posts[0].created_at;
         
@@ -74,6 +74,10 @@ async function fetchMorePosts() {
     
        }
         allowPostView();
+       }
+        if(data.message){
+          notify(data.message);
+        }
         return;
       } catch (err) {
        notify("Error fetching posts", "error");
