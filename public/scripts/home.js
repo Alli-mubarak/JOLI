@@ -1,4 +1,4 @@
-const postsContainer = document.getElementById("posts");
+postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
   const moveLeft = document.getElementById("mv-left");
@@ -14,7 +14,6 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
 let postOnFocus;
-let postsContainer = document.getElementById("posts");
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
