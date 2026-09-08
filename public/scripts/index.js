@@ -31,6 +31,7 @@ const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
+const postsContainer = document.getElementById("posts");
 
 function disableScrolling(){
   scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -621,16 +622,16 @@ postBtn.onclick = async() =>{
     compressedImagesArray.push(compressedImage);
   imagesSize += compressedImage.length;
   });
-  console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
+ // console.log(`Images size: ${(imagesSize / 1024).toFixed(2)} KB`);
  const imagesSizeInMb = (imagesSize / 1024 / 1024).toFixed(2);
   
-  console.log(imagesSizeInMb + "MB");
+ // console.log(imagesSizeInMb + "MB");
     if(input.value.length < 1) return;
   if(imagesSizeInMb > 10){
   alert("images are too much or too large, crop them and retry or use different images");
     return;
   }
-console.log(compressedImagesArray);
+
 const payload = {
   content: input.value,
   images: compressedImagesArray,
@@ -665,8 +666,11 @@ try {
     const postLink = `/post/${result.id}`;
     notify(msg, "success","view post", postLink);
     
-    console.log('Upload successful:', result);
-    
+    //insert new post in UI
+    if(postsContainer){
+      postsContainer.insertAdjacentHTML('afterbegin', '<p>New post</p>');
+    }
+  
   } else {
     console.error('Server error status:', response.status);
     postContainer.classList.add("hidden");
