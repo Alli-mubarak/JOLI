@@ -76,7 +76,7 @@ async function fetchMorePosts() {
     
        }
         allowPostView();
-        morePostsBtn = "<button id="more-posts-btn">Show more posts</button>"
+        morePostsBtn = "<button id='more-posts-btn'>Show more posts</button>";
         postsContainer.innerHTML += morePostsBtn;
         morePostsBtn.onclick = () => {
            try{
