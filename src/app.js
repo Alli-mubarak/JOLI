@@ -699,10 +699,54 @@ const queryText = `
 
 //api for fetching posts
 app.get('/api/getPosts',async(req, res)=>{
-console.log('all posts fetched \n');
+console.log('posts fetched initially \n');
 try{
 const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 30');
 const posts = result.rows
+for(let i = 0; i < posts.length; i++){
+  let author = await fetchAuthorDetails(posts[i].user_id);
+  posts[i].author_username = author.username;
+  posts[i].author_is_verified = author.is_verified;
+  posts[i].author_is_active = author.is_active;
+  posts[i].author_profile_picture = author.profile_pic;
+  author = [];
+  if(req.user && req.user.id){
+    const likeStat = await getPostLikeStatus(posts[i].id, req.user.id);
+    posts[i].likeStatus = likeStat
+  }
+  const commentsQuery = `
+      SELECT c.*, 
+      u.username AS commenter,
+      u.profile_picture AS commenter_pic
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1 
+      ORDER BY c.created_at DESC
+    `;
+    const commentsResult = await pool.query(commentsQuery, [posts[i].id]);
+    posts[i].comments = commentsResult.rows;
+  
+}
+res.status(200).json({posts: posts});
+}catch(e){
+  console.error('Error fetching posts:', e);
+  res.status(500).json({error: 'Internal Server Error'});
+}
+});
+
+  //api for fetching more posts
+app.post('/api/getPosts',async(req, res)=>{
+console.log('more posts fetched \n');
+const time = req.body;
+if(!time){
+  return res.status(400).json({ error: 'a specific time is required' });
+}
+try{
+const result = await pool.query(`SELECT * FROM posts WHERE created_at < ${time} LIMIT 30;`);
+const posts = result.rows
+if(posts.length < 1){
+  return res.status(404).json({ message: 'No more posts to fetch' });
+}
 for(let i = 0; i < posts.length; i++){
   let author = await fetchAuthorDetails(posts[i].user_id);
   posts[i].author_username = author.username;
