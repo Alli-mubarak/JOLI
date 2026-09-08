@@ -67,12 +67,10 @@ async function fetchMorePosts() {
         const posts = data.posts;
         lastPostCreationTime = posts[0].created_at;
         
-      
-            
       for (let i = posts.length - 1; i >= 0; i--){
              await displayPost(posts[i]);
-    
        }
+         
         allowPostView();
        }
         if(data.message){
