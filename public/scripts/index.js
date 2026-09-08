@@ -668,7 +668,62 @@ try {
     
     //insert new post in UI
     if(postsContainer){
-      postsContainer.insertAdjacentHTML('afterbegin', '<p>New post</p>');
+      const post = result;
+      const postCard = `
+   <div class="postCard" data-url="/post/${post.id}" id=${post.id}>
+        <div class="post-header">
+            <div class="author-details">
+                <div class="author-image">
+                     <a href="/user/${post.user_id}" id="author-image">
+                         <img src="${post.author_profile_picture || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
+                     </a>
+                     </div>
+                     <div class="username-posttime">
+                          <a href="/user/${post.user_id}" class="author-link">
+                              <p class="author-username">${post.author_username || null}</p>
+                          </a>
+                          <small>${getPostTime(post.created_at)}</small>
+                     </div>
+            </div> 
+            <div class="post-menu" data-type="post-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="post">
+            <p class="post-content">${linkify(post.content)}</p>
+            <div class="post-images">
+                ${imgs}
+            </div>
+        </div>
+        <div class="interactions">
+            <div class="post-likes" data-type="likes">
+                <button data-type="like" class="like-btn">
+                ${post.likeStatus? '<i class="fa-solid fa-heart like-icon" style="color:#2bff43;"></i>' : '<i class="fa-regular fa-heart like-icon" style="color:#222;"></i>'}
+                
+                </button>
+                ${post.like_count? `<span class="like-count">${post.like_count}</span>` : "<span class='like-count'></span>"}
+                    
+            </div>
+              <div class="comments" data-type="comments">
+                <button data-type="comment" class="comment-btn">
+                <i class="fa-regular fa-comment"></i>
+                </button>
+                ${post.comments.length > 0? `<span class="comment-count">${post.comments.length}</span>` : "<span class='comment-count'></span>"}
+            </div>
+              <div class="shares" data-type="shares">
+                <button data-type="share" class="share-btn">
+                <i class="fa-solid fa-share"></i>
+                </button>
+                    <span class="shares-count"></span>
+            </div>
+        </div>
+       
+    </div>
+    `;
+      postsContainer.insertAdjacentHTML('afterbegin',postCard);
+      allowPostView();
     }
   
   } else {
