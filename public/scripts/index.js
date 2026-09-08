@@ -715,7 +715,7 @@ try {
                 <button data-type="comment" class="comment-btn">
                 <i class="fa-regular fa-comment"></i>
                 </button>
-                ${post.comments.length > 0? `<span class="comment-count">${post.comments.length}</span>` : "<span class='comment-count'></span>"}
+                ${post.comments && post.comments.length > 0? `<span class="comment-count">${post.comments.length}</span>` : "<span class='comment-count'></span>"}
             </div>
               <div class="shares" data-type="shares">
                 <button data-type="share" class="share-btn">
