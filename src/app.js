@@ -737,7 +737,7 @@ res.status(200).json({posts: posts});
   //api for fetching more posts
 app.post('/api/getPosts',async(req, res)=>{
 console.log('more posts fetched \n');
-const time = req.body;
+const {time} = req.body;
   console.log(time);
 if(!time){
   return res.status(400).json({ error: 'a specific time is required' });
