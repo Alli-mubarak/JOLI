@@ -36,7 +36,37 @@ async function fetchPosts() {
  
         const posts = data.posts;
         lastPostCreationTime = posts[posts.length - 1].created_at;
-        alert(lastPostCreationTime)
+        
+      postsContainer.innerHTML = '';
+            
+      for (let i=0; i < posts.length; i++){
+             await displayPost(posts[i]);
+            console.log(posts[i].comments);
+       }
+        allowPostView();
+        return;
+      } catch (err) {
+       notify("Error fetching posts", "error");
+        console.error("Error fetching posts:", err);
+      }
+}
+
+async function fetchMorePosts() {
+      try {
+        
+        const response = await fetch("/api/getPosts" );
+        const response = await fetch("/api/getPosts", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({time:  lastPostCreationTime})
+      });
+        const data = await response.json();
+ 
+        const posts = data.posts;
+        lastPostCreationTime = posts[posts.length - 1].created_at;
+        
       postsContainer.innerHTML = '';
             
       for (let i=0; i < posts.length; i++){
