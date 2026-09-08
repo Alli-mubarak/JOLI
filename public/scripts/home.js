@@ -1,3 +1,5 @@
+async function loadScript(){
+  try{
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
@@ -705,3 +707,6 @@ commentInput.oninput = () =>{
 //post fetcher function call
 fetchPosts()
 
+}catch(err){console.error(err)}
+}
+setTimeout(()=>{loadScript()},5000);
