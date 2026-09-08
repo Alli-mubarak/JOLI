@@ -14,6 +14,7 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
 let postOnFocus;
+let lastPostCreationTime;
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -34,6 +35,8 @@ async function fetchPosts() {
         const data = await response.json();
  
         const posts = data.posts;
+        lastPostCreationTime = posts[posts.length - 1].created_at;
+        alert(lastPostCreationTime)
       postsContainer.innerHTML = '';
             
       for (let i=0; i < posts.length; i++){
