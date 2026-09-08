@@ -29,6 +29,7 @@ const nCloser = document.getElementById("n-closer");
 const imagesOnPage = document.querySelectorAll('img');
 const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
+let postsContainer = document.getElementById("posts");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
 
