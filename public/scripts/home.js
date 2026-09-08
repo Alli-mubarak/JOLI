@@ -15,9 +15,10 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
+  const morePostsBtn = document.getElementById("more-posts-btn");
 let postOnFocus;
 let lastPostCreationTime;
-let morePostsBtn = document.getElementById("more-posts-btn");
+
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -55,7 +56,6 @@ async function fetchPosts() {
 
 async function fetchMorePosts() {
       try {
-        postsContainer.removeChild(morePostsBtn);
         
         const response = await fetch("/api/getPosts", {
         method: "POST",
@@ -76,17 +76,6 @@ async function fetchMorePosts() {
     
        }
         allowPostView();
-        morePostsBtn = "<button id='more-posts-btn'>Show more posts</button>";
-        postsContainer.innerHTML += morePostsBtn;
-        morePostsBtn.onclick = () => {
-           try{
-            fetchMorePosts()
-             }
-             catch(err){
-    notify("error fetching more posts", "error");
-    console.error(err);
-  }
-        }
         return;
       } catch (err) {
        notify("Error fetching posts", "error");
