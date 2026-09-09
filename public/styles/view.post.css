@@ -414,8 +414,13 @@ header button:hover {
             background: #2bff43;
             width:30px; height:30px;
             border-radius:10px;
-            
           }
+    #c-chain{
+      width:2px;
+      height: 150px;
+      margin-left: 50px;
+      border-left: 2px dotted #ccc;
+    }
        #c-loader{
         width: 25px;
         height: 25px;
