@@ -457,11 +457,17 @@ commentInput.oninput = () =>{
      enableScrolling();
       
       if (response.ok) {
+        const newComment = `<p>new Comment</p>`;
         const commentContainer = document.querySelector(".comment-count");
         if(commentContainer.textContent === ""){
           commentContainer.textContent = 1;
+          const commentsBox = document.getElementById("comments");
+          commentsBox.innerHTML = "<div id='c-chain'></div>";
+          commentsBox.innerHTML += newComment;
         }else{
+          const commentChain = document.getElementById("c-chain");
           commentContainer.textContent = Number(commentContainer.textContent) + 1;
+          commentChain.insertAdjacentHTML('afterend', newComment);
         }
         notify("comment added!");
      //**** update UI
