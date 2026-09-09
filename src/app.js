@@ -927,7 +927,9 @@ app.post('/post/:id/comment',checkSession, async (req, res) => {
     `;
 
     const result = await pool.query(insertQuery, [postId, userId, content.trim()]);
-    
+    //******
+    console.log(result)
+    //*******
     return res.status(201).json({
       message: "Comment added successfully",
       comment: result.rows[0]
