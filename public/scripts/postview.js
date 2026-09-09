@@ -462,9 +462,9 @@ commentInput.oninput = () =>{
       if (response.ok) {
         const result = await response.json();
         const newComment = result.comment;
-        console.log(newComment)
+        
         const newCommentHTML = `
-        <div class="comment" id="c${newComment.id}">
+        <div class="comment" id="c${newComment.comment_id}">
        <img src=${userPic} alt="Commenter picture" class="commenter-pic" />
        <div class="comment-details">
         <div class="comment-header">
