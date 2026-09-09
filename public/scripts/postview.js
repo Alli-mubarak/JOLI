@@ -463,6 +463,7 @@ commentInput.oninput = () =>{
       if (response.ok) {
         const newComment = `<p>new Comment</p>`;
         const commentContainer = document.querySelector(".comment-count");
+        alert(commentContainer.textContent);
         if(commentContainer.textContent === ""){
           commentContainer.textContent = 1;
           const commentsBox = document.getElementById("comments");
