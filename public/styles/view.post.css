@@ -163,7 +163,7 @@ header button:hover {
             transition: all 0.3 ease;
         }
         .post-menu:hover {
-            background:rgba(0,0,0,0.05)
+            background:rgba(0,0,0,0.05);
         }
         .post-menu > div{
             position: absolute;
@@ -420,6 +420,73 @@ header button:hover {
       margin-left: 30px;
       border-left: 3px dashed #777;
     }
+  .comment{
+    background:#fff;
+   margin-bottom: 5px;
+  display: flex; 
+   align-items: start;
+  justify-content:start;
+  gap: 15px;
+ width:100%;
+ overflow:hidden;
+  padding: 20px;
+  }
+.commenter-pic{
+  width: 40px;
+  height:40px;
+   border-radius: 50%;
+  border: 2px solid #777;
+}
+.comment-header{
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  width:100%;
+}
+.commenter{
+  font-weight: 500;
+  color: #222
+  font-size: 1.3rem;
+}
+.comment-menu{
+  width: 30px;
+  height: 30px;
+border-radius:5px;
+cursor:pointer;
+ background: transparent;
+position: relative;
+transition: all 0.3 ease;
+}
+.comment-menu:hover{
+  background:rgba(0,0,0,0.05);
+}
+.comment-menu > div{
+            position: absolute;
+            width:4px;
+            height:4px;
+            background:#222;
+            border-radius:5px;
+            left: 13px;
+            top: 6px;
+        }
+        .comment-menu > div:nth-child(2){
+            top: 13px;
+        }
+        .comment-menu > div:nth-child(3){
+            top: 20px;
+        }
+.comment-content{
+  width:100%;
+  font-size: 1rem;
+   padding: 10px 0;
+  font-weight:500;
+  line-height: 25px;
+  white-space: pre-wrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /* Better for mixed content: wraps normal words nicely, but breaks long URLs */
+  overflow-wrap: anywhere; 
+}
        #c-loader{
         width: 25px;
         height: 25px;
