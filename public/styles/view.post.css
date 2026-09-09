@@ -362,7 +362,7 @@ header button:hover {
             height:fit-content;
             
         }
-        #post-menu button{
+        #post-menu button:not(#submit-comment-btn){
             font-size:1.1rem;
             padding:10px;
             display: flex;
@@ -375,7 +375,7 @@ header button:hover {
             cursor: pointer;
             background: transparent;
          }
-         #post-menu button:hover{
+         #post-menu button:not(#submit-comment-btn):hover{
             background:#eee;
           }
   #post-menu h3, #post-menu p{
@@ -501,6 +501,22 @@ transition: all 0.3 ease;
 #post-menu form{
     width:100%;
   }
+form textarea{
+            width: 100%;
+            border: none;
+            background: rgba(0,0,0,0.03);
+            padding: 10px;
+            height: 250px;
+            border-radius: 15px;
+            resize: none;
+            font-size: 1rem;
+            outline:none; 
+            border: 1px solid #ccc;
+            line-height: 30px;
+        }
+        form textarea:focus{
+            border: 1px solid #011;
+        }
   .pic-submit{
     display:flex;
     align-items: center;
