@@ -123,7 +123,7 @@ return `${Math.floor(sDifference)}s`;
    <% post.comments.forEach(function(comment) { %>
      <div class="comment">
        <img src="<%= comment.commenter_pic %>" alt="Commenter picture" class="commenter-pic" />
-       <div>
+       <div class="comment-details">
         <div class="comment-header">
          <div class="commenter-time">
           <a href="/user/<%= comment.user_id %>" class="commenter-link">
