@@ -29,6 +29,7 @@ let scrollPosition = 0;
   let currIndex;
   let inViewMode = false;
   let userPic;
+  let userName;
 
 async function checkAuthStatus() {
       try {
@@ -41,10 +42,12 @@ async function checkAuthStatus() {
           isAuthorised = true;
           currentUserId = data.user.id;
           userPic = data.user.profile_picture;
+          userName = data.user.username;
         } else {
           isAuthorised = false;
           currentUserId = "";
           userPic = "";
+          userName = "";
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
@@ -456,23 +459,41 @@ commentInput.oninput = () =>{
       },200);
      enableScrolling();
       
-      //****************
-      console.log(response.comment);
-      //*********
-      
       if (response.ok) {
-        const newComment = `<p>new Comment</p>`;
+        const result = await response.json();
+        const newComment = result.comment;
+        const newCommentHTML = `
+        <div class="comment" id="c${newComment.id}">
+       <img src=${userPic} alt="Commenter picture" class="commenter-pic" />
+       <div class="comment-details">
+        <div class="comment-header">
+         <div class="commenter-time">
+          <a href="/user/${result.user_id}" class="commenter-link">
+             <p class="commenter">${userName || "user" }</p>
+           </a>
+           <small>now </small>
+          </div>
+           <div class="comment-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <p class="comment-content">${ newComment.content }</p>
+      </div>
+     </div>
+        `;
         const commentContainer = document.querySelector(".comment-count");
         
         if(commentContainer.textContent.trim() === ""){
           commentContainer.textContent = 1;
           const commentsBox = document.getElementById("comments");
           commentsBox.innerHTML = "<div id='c-chain'></div>";
-          commentsBox.innerHTML += newComment;
+          commentsBox.innerHTML += newCommentHTML;
         }else{
           const commentChain = document.getElementById("c-chain");
           commentContainer.textContent = Number(commentContainer.textContent) + 1;
-          commentChain.insertAdjacentHTML('afterend', newComment);
+          commentChain.insertAdjacentHTML('afterend', newCommentHTML);
         }
         notify("comment added!");
      //**** update UI
