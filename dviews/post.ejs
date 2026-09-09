@@ -121,7 +121,7 @@ return `${Math.floor(sDifference)}s`;
    <% if (post.comments.length > 0) { %>
    <div id="c-chain"></div>
    <% post.comments.forEach(function(comment) { %>
-     <div class="comment" id="c<%= comment.id %>">
+     <div class="comment" id=<%= comment.id %> >
        <img src="<%= comment.commenter_pic %>" alt="Commenter picture" class="commenter-pic" />
        <div class="comment-details">
         <div class="comment-header">
