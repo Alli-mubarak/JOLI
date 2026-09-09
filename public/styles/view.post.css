@@ -437,15 +437,22 @@ header button:hover {
    border-radius: 50%;
   border: 2px solid #777;
 }
+.comment-details{
+  width:100%;
+}
 .comment-header{
   display: flex;
   align-items: start;
   justify-content: space-between;
   width:100%;
+  margin-bottom: 10px;
+}
+.commenter-link{
+  text-decoration: none;
 }
 .commenter{
   font-weight: 500;
-  color: #222
+  color: #222;
   font-size: 1.3rem;
 }
 .comment-menu{
@@ -464,7 +471,7 @@ transition: all 0.3 ease;
             position: absolute;
             width:4px;
             height:4px;
-            background:#222;
+            background:#444;
             border-radius:5px;
             left: 13px;
             top: 6px;
