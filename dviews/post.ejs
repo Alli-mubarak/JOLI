@@ -121,7 +121,25 @@ return `${Math.floor(sDifference)}s`;
    <% if (post.comments.length > 0) { %>
    <div id="c-chain"></div>
    <% post.comments.forEach(function(comment) { %>
-                <div class="comment"> <%= comment.content %> </div>
+     <div class="comment">
+       <img src="<%= comment.commenter_pic %>" alt="Commenter picture" class="commenter-pic" />
+       <div>
+        <div class="comment-header">
+         <div class="commenter-time">
+          <a href="/user/<%= comment.user_id %>" class="commenter-link">
+             <p class="commenter"><%= comment.commenter || user %></p>
+           </a>
+           <small><%= getPostTime(comment.created_at) %> </small>
+          </div>
+           <div class="comment-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <p class="comment-content"> <%= comment.content %> </p>
+      </div>
+     </div>
             <% }) %>
         <% } %>
     </div>
