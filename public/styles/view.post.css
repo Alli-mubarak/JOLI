@@ -447,13 +447,17 @@ header button:hover {
   width:100%;
   margin-bottom: 10px;
 }
+.comment-header small{
+  font-weight: 600;
+  font-size: 0.7rem;
+}
 .commenter-link{
   text-decoration: none;
 }
 .commenter{
   font-weight: 500;
   color: #222;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .comment-menu{
   width: 30px;
