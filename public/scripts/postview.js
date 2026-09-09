@@ -457,7 +457,7 @@ commentInput.oninput = () =>{
      enableScrolling();
       
       //****************
-      console.log(response);
+      console.log(response.comment);
       //*********
       
       if (response.ok) {
