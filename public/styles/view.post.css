@@ -522,6 +522,7 @@ form textarea{
     align-items: center;
     justify-content: space-between;
     width:100%;
+    margin-bottom: 12px;
   }
   #commenter-pic{
     width:40px;
