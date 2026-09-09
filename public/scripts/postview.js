@@ -464,7 +464,7 @@ commentInput.oninput = () =>{
         const newComment = result.comment;
         
         const newCommentHTML = `
-        <div class="comment" id="c${newComment.comment_id}">
+        <div class="comment" id=${newComment.comment_id}>
        <img src=${userPic} alt="Commenter picture" class="commenter-pic" />
        <div class="comment-details">
         <div class="comment-header">
