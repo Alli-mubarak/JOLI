@@ -99,7 +99,6 @@ header button:hover {
             flex-direction: column;
             width:100%;
             overflow:hidden;
-            margin-bottom: 10px;
             padding: 20px;
         }
         .post-header{
@@ -416,10 +415,10 @@ header button:hover {
             border-radius:10px;
           }
     #c-chain{
-      width:2px;
-      height: 150px;
-      margin-left: 50px;
-      border-left: 2px dotted #ccc;
+      width:3px;
+      height: 100px;
+      margin-left: 40px;
+      border-left: 3px dotted #555;
     }
        #c-loader{
         width: 25px;
