@@ -456,6 +456,10 @@ commentInput.oninput = () =>{
       },200);
      enableScrolling();
       
+      //****************
+      console.log(response);
+      //*********
+      
       if (response.ok) {
         const newComment = `<p>new Comment</p>`;
         const commentContainer = document.querySelector(".comment-count");
