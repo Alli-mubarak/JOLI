@@ -380,14 +380,11 @@ async function deletePost(postId){
 
 async function makeComment(){
   try{
-    alert("not ready yet!");
     if(!isAuthorised){
         notify("please, log in first!", "error", "click here", "/");
         return;
     }
 const postId = postCard.id;
-const currPost = document.getElementById(`${postId}`);
-postCard.style.background = "var(--touch-color)";
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
 <form id="comment-form">
@@ -413,7 +410,7 @@ const commentFormNCloser = `
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
-  currPost.style.background = "#fff";
+  
     }
     
   postMenuContainer.style.bottom = 0;
@@ -458,7 +455,6 @@ commentInput.oninput = () =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
-      currPost.style.background = "#fff";
       
       if (response.ok) {
         const commentContainer = document.querySelector(".comment-count");
