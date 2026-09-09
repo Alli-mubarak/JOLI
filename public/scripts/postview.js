@@ -28,6 +28,7 @@ let scrollPosition = 0;
   let imgArray;
   let currIndex;
   let inViewMode = false;
+  let userPic;
 
 async function checkAuthStatus() {
       try {
@@ -38,16 +39,32 @@ async function checkAuthStatus() {
         
         if (data.loggedIn) {
           isAuthorised = true;
-          currentUserId = data.user.id
+          currentUserId = data.user.id;
+          userPic = data.user.profile_picture;
         } else {
           isAuthorised = false;
           currentUserId = "";
+          userPic = "";
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
       }
 }
 checkAuthStatus();
+
+function enableScrolling(){
+  document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollPosition);
+}
+
+function disableScrolling(){
+  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+}
 
   if (postImagesContainer && postImagesContainer.children.length > 0){
     imgArray = Array.from(postImagesContainer.children);
@@ -285,16 +302,11 @@ function viewPostMenu(){
        deletePost(postId);
       }
         postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+     enableScrolling();
       }
     }
     pmCloserBtn.onclick = () =>{
@@ -304,23 +316,14 @@ function viewPostMenu(){
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+     enableScrolling();
       }
     
       postMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
-      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  
-  
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  document.body.style.width = '100%';
+   disableScrolling();
   }catch(error){
     console.error(error);
   }
@@ -337,11 +340,7 @@ function viewPostMenu(){
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
+   enableScrolling();
   }
   
 async function deletePost(postId){
@@ -362,17 +361,11 @@ async function deletePost(postId){
         }
           console.log(response);
     postMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  
-  window.scrollTo(0, scrollPosition);
-     //remove in the UI
+   enableScrolling();
     notify("post deleted!, redirecting......");
     setTimeout(()=>{
       window.location.href = '/'; 
@@ -388,6 +381,104 @@ async function deletePost(postId){
 async function makeComment(){
   try{
     alert("not ready yet!");
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+    }
+const postId = postCard.id;
+const currPost = document.getElementById(`${postId}`);
+postCard.style.background = "var(--touch-color)";
+const commentFormNCloser = `
+<i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+<form id="comment-form">
+<div class="pic-submit">
+<img src=${userPic} alt="user picture" id="commenter-pic"/>
+<button type="submit" id="submit-comment-btn" disabled>
+<span>Post</span>
+  <div id="c-loader" class="hidden"></div>
+</button>
+</div>
+<div id="comment-media-container"></div>
+<textarea id="comment-input" name="content" placeholder="post your comment" id="comment-input"></textarea>
+
+</form>
+`
+ postMenu.innerHTML = commentFormNCloser;
+  pmCloserBtn = document.getElementById("p-closer-btn");
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+  currPost.style.background = "#fff";
+    }
+    
+  postMenuContainer.style.bottom = 0;
+  setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+  disableScrolling();
+    
+  const SubmitCommentBtn = document.getElementById("submit-comment-btn");
+  const commentInput = document.getElementById("comment-input");
+  const commentForm = document.getElementById("comment-form");
+    
+commentInput.oninput = () =>{
+  if(commentInput.value.length < 1){
+    SubmitCommentBtn.disabled = true;
+    SubmitCommentBtn.style.background = "#c5ff95";
+  }else{
+    SubmitCommentBtn.disabled = false;
+    SubmitCommentBtn.style.background = "var(--primary-color)";
+  }
+}
+    
+  commentForm.onsubmit = async(e) => {
+    e.preventDefault();
+    const cLoader = document.getElementById("c-loader");
+    cLoader.classList.remove("hidden");
+    cLoader.classList.add("roll");
+  
+    try{
+      const response = await fetch(`/post/${postId}/comment`, {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({content: commentInput.value})
+      });
+   cLoader.classList.add("hidden");
+  cLoader.classList.remove("roll");
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      currPost.style.background = "#fff";
+      
+      if (response.ok) {
+        const commentContainer = document.querySelector(".comment-count");
+        if(commentContainer.textContent === ""){
+          commentContainer.textContent = 1;
+        }else{
+          commentContainer.textContent = Number(commentContainer.textContent) + 1;
+        }
+        notify("comment added!");
+     //**** update UI
+        
+      } else {
+        notify("commenting failed!", "error");
+      }
+    }
+    catch(err){
+      console.error(err);
+      notify("commenting failed!", "error");
+    }
+      }
   }
   catch(err){
     notify("commenting failed", "error");
