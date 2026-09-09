@@ -385,6 +385,16 @@ async function deletePost(postId){
   }
     }
 
+async function makeComment(){
+  try{
+    alert("not ready yet!");
+  }
+  catch(err){
+    notify("commenting failed", "error");
+    console.error(e);
+  }
+}
+commentBtn.onclick = () =>{makeComment()}
 
 function sharePost(){
   try{
