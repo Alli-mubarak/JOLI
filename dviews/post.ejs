@@ -120,6 +120,9 @@ return `${Math.floor(sDifference)}s`;
    <div id="comments">
    <% if (post.comments.length > 0) { %>
    <div id="c-chain"></div>
+   <% post.comments.forEach(function(comment) { %>
+                <div class="comment"> <%= comment.content %> </div>
+            <% }) %>
         <% } %>
     </div>
 <div id="media-viewer" class="hidden">
