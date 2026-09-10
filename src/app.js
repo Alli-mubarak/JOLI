@@ -150,7 +150,19 @@ CREATE TABLE IF NOT exists comments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX idx_comments_post_id ON comments(post_id); 
-
+CREATE TABLE IF NOT exists friendships (
+    sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    receiver_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'accepted', 'blocked'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Prevents duplicates like (1, 2) and (1, 2)
+    PRIMARY KEY (sender_id, receiver_id),
+    
+    -- Prevents users from friending themselves
+    CONSTRAINT check_not_self CHECK (sender_id <> receiver_id)
+);
   `;
   try {
     await pool.query(setupScript);
