@@ -69,7 +69,8 @@ try{
  const userOnFocus = e.currentTarget
 if(e.target.getAttribute("data-type") && e.target.getAttribute("data-type") === "add-user"){
       const userId = e.target.getAttribute("data-id");
-      addUser(e.target, userId)
+    //  addUser(e.target, userId)
+notify("coming soon!");
       return 
 }
 const userPage = userOnFocus.getAttribute("data-url");
