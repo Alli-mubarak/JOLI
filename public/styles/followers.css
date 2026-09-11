@@ -90,6 +90,7 @@ main{
 }
   main h2{
     text-align:center;
+    margin-bottom:30px;
   }
 
 .users{
@@ -99,10 +100,8 @@ main{
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             padding: 10px;
           position: relative;
-       background: #eee;
         }
         .user{
-          /*  border:2px solid #eee; */
           width:100%;
          max-width: 300px;
             height: fit-content;
