@@ -1141,13 +1141,11 @@ app.get('/user/friends', checkSession,  async (req, res) => {
   }
 
     const userId = req.user.id;
-        // Query to join friendships with users to get friend profiles
-        const query = "SELECT * FROM frienships WHERE (sender_id = $1 OR receiver_id = $1)"
+    const query = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1)"
 
-        const result = await pool.query(query, [userId]);
+    const result = await pool.query(query, [userId]);
 
-        // Success Response
-        return res.status(200).json({
+     return res.status(200).json({
             friendships: result.rows
         });
 
