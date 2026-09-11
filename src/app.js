@@ -1405,6 +1405,32 @@ app.get('/api/get-all-users', checkSession, limiter, async(req, res) => {
 
 });
 
+//fetch friends to add
+app.get('/api/get-users', checkSession, limiter, async(req, res) => {
+  try{
+    if(!req.user || !req.isAuthenticated()){
+      return res.status(401).json({
+        error: "You are not authorised to do this"
+    })
+    }
+   const users = await pool.query(
+        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private = false LIMIT 10"
+   );
+      res.json({
+      totalUsers : users.rows.length,
+      users: users.rows 
+      });
+  }
+    
+  catch(e){
+    res.json({
+      error: e,
+      errorMessage: e.message
+    })
+  }
+
+});
+
 //api for uploading pictures 
 app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   if(!req.isAuthenticated() || !req.user) {
