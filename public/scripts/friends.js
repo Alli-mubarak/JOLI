@@ -1,6 +1,9 @@
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
-let pendingRequests = []
+let pendingRequests = [];
+let pendingRequestsTime = [];
+let pendingAccepts = [];
+let pendingAcceptsTime = [];
 
 
 async function fetchUsers() {
@@ -15,11 +18,30 @@ async function fetchUsers() {
            // alert(currentUserId)
        // lastUserFetched = 
         if(currentUserId){
-      const friendships = await fetch("/user/friends");
+      const fetchFriendships = await fetch("/user/friends");
+      const friendshipsResult  = await fetchFriendships.json();
+      const friendships = friendshipsResult.friendships;
+      friendships.forEach(f => {
+      if(f.status === "pending"){
+            if(f.sender_id === currentUserId){
+                  pendingRequests.push(f.receiver_id);
+                  pendingRequestsTime.push(f.created_at);
+                  
+            }
+            else{
+                  pendingAccepts.push(f.sender_id);
+                  pendingAcceptsTime.push(f.created_at);
+            }
+      }else{return;}
+      });
+      console.log(pendingRequests);
+      console.log(pendingAccepts);
         }
       usersContainer.innerHTML = '';
             
       for (let i=0; i < users.length; i++){
+            if(pendingAccepts.includes(users[i])) return;
+            if(pendingRequests.includes(users[i])) return;
              await displayUser(users[i]);
 
        }
