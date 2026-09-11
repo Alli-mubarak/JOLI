@@ -69,7 +69,7 @@ try{
  const userOnFocus = e.currentTarget
 if(e.target.getAttribute("data-type") && e.target.getAttribute("data-type") === "add-user"){
       const userId = e.target.getAttribute("data-id");
-      alert(userId);
+      addUser(e.target, userId)
       return 
 }
 const userPage = userOnFocus.getAttribute("data-url");
@@ -77,5 +77,28 @@ window.location.href = userPage;
 }catch(err){
       console.error(err)
 }
+}
+
+async function addUser(btn, rId){
+      try{
+      const response = await fetch("/user/friend/request", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({receiverId: rId})
+      });
+      if(response.ok){
+            notify("request sent!");
+            btn.textContent = "sent";
+      }else{
+            notify("request failed!", "error");
+            btn.textContent = "failed";
+      }
+      }
+      catch(e){
+            notify("failed to add friend", "error")
+            console.error(e);
+      }
 }
 fetchUsers();
