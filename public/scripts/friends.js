@@ -1,5 +1,6 @@
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
+
 async function fetchUsers() {
       try {
         
@@ -48,4 +49,4 @@ usersContainer.innerHTML += userCard;
 
 }
 
-
+fetchUsers();
