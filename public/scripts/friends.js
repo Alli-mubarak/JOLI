@@ -1,9 +1,13 @@
+const mainEl = document.querySelector("main");
+const pendingRequestsContainer = document.getElementById("pending-requests")
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
 let pendingRequests = [];
 let pendingRequestsTime = [];
 let pendingAccepts = [];
 let pendingAcceptsTime = [];
+let pendingAcceptsPic = [];
+let pendingAcceptsUsername= [];
 
 
 async function fetchUsers() {
@@ -38,14 +42,31 @@ async function fetchUsers() {
       }else{
             notify("Error fetching friendships", "error");
       }
-      console.log(pendingRequests);
-      console.log(pendingAccepts);
+      
+      
         }
       usersContainer.innerHTML = '';
-            
+      if(users.length < 1){
+            return;
+      }   
       for (let i=0; i < users.length; i++){
+      usersContainer += '<h2 >Add friends</h2>';
+      if(pendingAccepts.includes(user.id)){
+ pendingAcceptsPic.push(user.profile_picture);
+pendingAcceptsUsername.push(user.username);
+}
+else if(pendingRequests.includes(user.id)){
+      console.log("hi")
+}else{
              await displayUser(users[i]);
+}
        }
+  if(pendingAccepts.length > 0){
+      pendingRequestsContainer += '<h2>Pending Requests</h2>';
+      pendingAccepts.forEach((a,i) => {
+      displayPendingAccepts(i);
+            })
+            }
        allowUserView();
         return;
       } catch (err) {
@@ -53,11 +74,10 @@ async function fetchUsers() {
         console.error("Error fetching users:", err);
       }
 }
-
+function displayPendingAccepts(
 async function displayUser(user){
 try{
- if(pendingAccepts.includes(user.id)) return;
-if(pendingRequests.includes(user.id)) return;
+ 
 const userCard = `
 <div class="user" data-url="/user/${user.username}">
     <div class="pp-box">
@@ -80,6 +100,50 @@ usersContainer.innerHTML += userCard;
 
 }
 
+//function that calculates the time the request was created compared to the current time
+function getReqTime(reqTime){
+const targetDate = new Date(reqTime);
+const currentDate = new Date();
+
+const msDifference = currentDate - targetDate;
+const sDifference = msDifference / 1000;
+const mDifference = msDifference / (1000 * 60);
+const hDifference = msDifference / (1000 * 60 * 60);
+const dDifference = msDifference / (1000 * 60 * 60 * 24);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
+
+if(mtDifference > 1){
+return `${Math.floor(mtDifference)}M`; 
+}else if (dDifference > 1){
+return `${Math.floor(dDifference)}d`;
+}else if (hDifference > 1){
+return `${Math.floor(hDifference)}h`;
+}else if (mDifference > 1){
+return `${Math.floor(mDifference)}m`;
+}else {
+return `${Math.floor(sDifference)}s`;
+}
+
+}
+
+function displayPendingAccepts(i){
+      const htmlEl = `
+      <div class="p-user>
+       <img src=${pendingAcceptsPic[i]} alt="user picture" />
+       <div class="req-options">
+         <div class="req-details">
+          <p class="p-username">${pendingAcceptsUsername[i]}</p>
+          <small>${getReqTime(pendingAcceptsTime[i])}</small>
+         </div>
+         <div class="req-btns">
+         <button class="accept-btn">Accept</button>
+         <button class="remove-btn">Remove</button>
+         </div>
+       </div>
+      </div>
+      `;
+      pendingRequestsContainer += htmlEl;
+}
 function allowUserView(){
  try{
       const usersCard = document.querySelectorAll(".user")
