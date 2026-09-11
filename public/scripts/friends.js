@@ -1,6 +1,7 @@
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
 
+
 async function fetchUsers() {
       try {
         
@@ -8,6 +9,9 @@ async function fetchUsers() {
         const data = await response.json();
  
         const users = data.users;
+            alert(scrollPosition)
+            alert(isAuthorised)
+            alert(currentUserId)
        // lastUserFetched = 
         
       usersContainer.innerHTML = '';
