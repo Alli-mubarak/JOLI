@@ -82,7 +82,7 @@ window.location.href = userPage;
 
 async function addUser(btn, rId){
       try{
-      const response = await fetch("/user/friend/request", {
+      const response = await fetch("/api/friendship/request", {
         method: "POST",
         headers: {
       'Content-Type': 'application/json'
