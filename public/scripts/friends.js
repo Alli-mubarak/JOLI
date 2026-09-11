@@ -9,9 +9,9 @@ async function fetchUsers() {
         const data = await response.json();
  
         const users = data.users;
-            alert(scrollPosition)
-            alert(isAuthorised)
-            alert(currentUserId)
+           // alert(scrollPosition)
+            //alert(isAuthorised)
+           // alert(currentUserId)
        // lastUserFetched = 
         
       usersContainer.innerHTML = '';
