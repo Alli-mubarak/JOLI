@@ -46,6 +46,7 @@ async function fetchPosts() {
         console.log(posts[i].comments);
        }
         allowPostView();
+        document.body.background = "#ddd";
         return;
       } catch (err) {
        notify("Error fetching posts", "error");
