@@ -18,8 +18,9 @@ async function fetchUsers() {
            // alert(currentUserId)
        // lastUserFetched = 
         if(currentUserId){
-      const fetchFriendships = await fetch("/user/friends");
-      const friendshipsResult  = await fetchFriendships.json();
+      const fResponse = await fetch("/user/friends");
+      if(fResponse.ok){
+      const friendshipsResult  = await fResponse.json();
       const friendships = friendshipsResult.friendships;
       friendships.forEach(f => {
       if(f.status === "pending"){
@@ -34,14 +35,17 @@ async function fetchUsers() {
             }
       }else{return;}
       });
+      }else{
+            notify("Error fetching friendships", "error");
+      }
       console.log(pendingRequests);
       console.log(pendingAccepts);
         }
       usersContainer.innerHTML = '';
             
       for (let i=0; i < users.length; i++){
-            if(pendingAccepts.includes(users[i])) return;
-            if(pendingRequests.includes(users[i])) return;
+            if(pendingAccepts.includes(users[i].sender_id)) return;
+            if(pendingRequests.includes(users[i].receiver_id)) return;
              await displayUser(users[i]);
 
        }
@@ -108,7 +112,7 @@ window.location.href = userPage;
 async function addUser(btn, rId){
       try{
       if(!isAuthorised){
-            notify("please, log in first!", "error");
+            notify("please, log in first!", "error","click here", "/");
             return;
       }
       const response = await fetch("/api/friendship/request", {
