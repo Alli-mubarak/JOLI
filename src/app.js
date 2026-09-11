@@ -1269,8 +1269,8 @@ console.log('home page  requested! \n');
 });
 
 //followers page route
-app.get('/followers',(req, res)=>{
-console.log('followers page  requested! \n');
+app.get('/friends',(req, res)=>{
+console.log('followers page requested! \n');
  // if (req.isAuthenticated()){
  //  return  res.redirect('/');
 //  }
