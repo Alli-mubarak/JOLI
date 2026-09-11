@@ -64,7 +64,7 @@ const userCard = `
        <img src=${user.profile_picture || "/images/default-user.png"} class="user-pic" alt="user picture" />
     </div>
     <div class="user-details">
-       <button class="add-friend-btn" data-type="add-user" data-id=${user.id}><i class="fa-solid fa-plus"></i> Add </button>
+       <button class="add-friend-btn" data-type="add-user" data-id=${user.id}><i class="fa-solid fa-plus add-loader"></i> Add </button>
        <div class="username-bio">
           <p class="username">${user.username}</p>
           <small class="bio">${user.bio || "Happy to be here on JOLI"}</small>
@@ -96,7 +96,7 @@ try{
  const userOnFocus = e.currentTarget
 if(e.target.getAttribute("data-type") && e.target.getAttribute("data-type") === "add-user"){
       const userId = e.target.getAttribute("data-id");
-      addUser(e.target, userId)
+      addUser(e.target,userOnFocus, userId)
 //notify("coming soon!");
       return 
 }
@@ -107,12 +107,16 @@ window.location.href = userPage;
 }
 }
 
-async function addUser(btn, rId){
+async function addUser(btn, userCard, rId){
       try{
       if(!isAuthorised){
             notify("please, log in first!", "error","click here", "/");
             return;
       }
+      const addLoader = btn.querySelector(".add-loader");
+      addLoader.classList.remove("fa-plus");
+      addLoader.classList.add("fa-circle-notch");
+       addLoader.classList.add("roll");
       const response = await fetch("/api/friendship/request", {
         method: "POST",
         headers: {
@@ -121,11 +125,15 @@ async function addUser(btn, rId){
         body: JSON.stringify({receiverId: rId})
       });
       if(response.ok){
+            
             notify("request sent!");
-            btn.textContent = "sent";
+            usersContainer.removeChild(userCard);
       }else{
             notify("request failed!", "error");
-            btn.textContent = "failed";
+      addLoader.classList.remove("fa-circle-notch");
+       addLoader.classList.remove("roll");
+      addLoader.classList.add("fa-plus");
+            
       }
       }
       catch(e){
