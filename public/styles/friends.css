@@ -88,13 +88,13 @@ background:#000;
   border-radius: 50%;
 }
 main{
-    padding:20px;
+    padding:0 10px;
     width:100%;
 }
   main h2{
     text-align:center;
     font-size: 1.3rem;
-    margin-bottom:20px;
+    margin:20px 0;
   }
   #pending-requests{
     position: relative;
