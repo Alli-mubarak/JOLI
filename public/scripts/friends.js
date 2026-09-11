@@ -50,7 +50,7 @@ async function fetchUsers() {
             return;
       }   
       for (let i=0; i < users.length; i++){
-      usersContainer += '<h2 >Add friends</h2>';
+      usersContainer.innerHTML += '<h2 >Add friends</h2>';
       if(pendingAccepts.includes(user.id)){
  pendingAcceptsPic.push(user.profile_picture);
 pendingAcceptsUsername.push(user.username);
@@ -62,7 +62,7 @@ else if(pendingRequests.includes(user.id)){
 }
        }
   if(pendingAccepts.length > 0){
-      pendingRequestsContainer += '<h2>Pending Requests</h2>';
+      pendingRequestsContainer.innerHTML += '<h2>Pending Requests</h2>';
       pendingAccepts.forEach((a,i) => {
       displayPendingAccepts(i);
             })
@@ -142,7 +142,7 @@ function displayPendingAccepts(i){
        </div>
       </div>
       `;
-      pendingRequestsContainer += htmlEl;
+      pendingRequestsContainer.innerHTML += htmlEl;
 }
 function allowUserView(){
  try{
