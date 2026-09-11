@@ -94,7 +94,7 @@ main{
 
 .users{
     display: grid;
-            gap:10px;
+            gap:20px;
             width:100%;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             padding: 10px;
