@@ -92,11 +92,94 @@ main{
     width:100%;
 }
   main h2{
-    text-align:center;
     font-size: 1.3rem;
     margin-bottom:30px;
   }
-
+  #pending-requests{
+    padding: 10px;
+    position: relative;
+    margin-bottom:10px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    width:100%;
+  }
+  .p-user{
+    display:flex;
+    align-items: center;
+    justify-content: start;
+    width:100%;
+    border-radius:12px ;
+    overflow: hidden;
+    height: fit-content;
+    background: #fff;
+    position: relative;
+    box-shadow: 3px 3px 10px #ddd;
+     transition: all 0.3s ease;
+  }
+.p-user:hover{
+   transform: translate(3px, 3px);
+    box-shadow: 0 0 10px #ddd;  
+}
+  .p-user img{
+    width: 200px;
+    height:200px;
+    display:inline-block;
+  }
+  .req-options{
+    width:100%;
+    padding: 15px 0;
+  }
+  .req-details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width:100%;
+    gap: 10px;
+  }
+  .p-username{
+    font-size:1.2rem;
+        font-weight:600;
+          max-width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+  }
+  .req-details small{
+    font-size: 0.9rem;
+  }
+  .req-btns{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .accept-btn{
+    border: none;
+    background: var(--primary-color);
+    color: #222;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    font-size:1rem;
+  }
+  .remove-btn{
+    border: none;
+    background: #222;
+    color: #fff;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    font-size:1rem;
+  }
+  .req-btns button:hover {
+    transform: scale(1.1);
+  }
 .users{
     display: grid;
             gap:20px;
@@ -120,7 +203,6 @@ main{
         .user:hover{
             transform: translate(3px, 3px);
             box-shadow: 0 0 10px #ddd;
-            
         }
         .pp-box{
             width:100%;
@@ -157,6 +239,7 @@ main{
             justify-content: center;
             gap:10px;
             transition: all ease 0.3s;
+          cursor:pointer;
         }
         .add-friend-btn:hover{
             
