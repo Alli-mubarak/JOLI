@@ -88,7 +88,7 @@ background:#000;
   border-radius: 50%;
 }
 main{
-    padding:20px 0;
+    padding:20px;
     width:100%;
 }
   main h2{
@@ -96,7 +96,6 @@ main{
     margin-bottom:30px;
   }
   #pending-requests{
-    padding: 10px;
     position: relative;
     margin-bottom:10px;
     display: grid;
@@ -192,7 +191,6 @@ main{
             gap:20px;
             width:100%;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            padding: 10px;
           position: relative;
         margin-bottom: 15px;
         }
