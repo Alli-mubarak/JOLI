@@ -12,7 +12,6 @@ let pendingAcceptsUsername = [];
 
 async function fetchUsers() {
       try {
-        
         const response = await fetch("/api/get-users" );
         const data = await response.json();
  
@@ -74,7 +73,7 @@ else if(pendingRequests.includes(user.id)){
         console.error("Error fetching users:", err);
       }
 }
-function displayPendingAccepts(
+
 async function displayUser(user){
 try{
  
@@ -127,8 +126,9 @@ return `${Math.floor(sDifference)}s`;
 }
 
 function displayPendingAccepts(i){
+      try{
       const htmlEl = `
-      <div class="p-user>
+      <div class="p-user">
        <img src=${pendingAcceptsPic[i]} alt="user picture" />
        <div class="req-options">
          <div class="req-details">
@@ -143,6 +143,9 @@ function displayPendingAccepts(i){
       </div>
       `;
       pendingRequestsContainer.innerHTML += htmlEl;
+      }catch(err){
+            console.error(err)
+      }
 }
 function allowUserView(){
  try{
