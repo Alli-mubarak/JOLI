@@ -986,7 +986,8 @@ app.delete('/post/:id', checkSession, async (req, res) => {
     }
 });
 
-//friendship api
+//friendship api 
+//api for friend request 
 app.post('/api/friendship/request', checkSession, async (req, res) => {
   try{
     if (!req.isAuthenticated() && !req.user){
@@ -1061,6 +1062,7 @@ app.post('/api/friendship/request', checkSession, async (req, res) => {
     }
 });
 
+//api for friendship acceptance 
 app.post('/api/friendship/accept', checkSession, async (req, res) => {
   try{
     if (!req.isAuthenticated() && !req.user){
@@ -1130,7 +1132,31 @@ app.post('/api/friendship/accept', checkSession, async (req, res) => {
         return res.status(500).json({ error: "Internal server error." });
     }
 });
-  
+
+//api for getting user's friendship list
+app.get('/user/friends', checkSession,  async (req, res) => {
+  try {
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized, please log in"});
+  }
+
+    const userId = req.user.id;
+        // Query to join friendships with users to get friend profiles
+        const query = "SELECT * FROM frienships WHERE (sender_id = $1 OR receiver_id = $1)"
+
+        const result = await pool.query(query, [userId]);
+
+        // Success Response
+        return res.status(200).json({
+            friendships: result.rows
+        });
+
+    } catch (error) {
+        console.error("Fetch friendship list error:", error);
+        return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
 
 //user role change api
 app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
