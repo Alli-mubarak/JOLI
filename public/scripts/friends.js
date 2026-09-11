@@ -44,8 +44,8 @@ async function fetchUsers() {
       usersContainer.innerHTML = '';
             
       for (let i=0; i < users.length; i++){
-            if(pendingAccepts.includes(users[i].sender_id)) return;
-            if(pendingRequests.includes(users[i].receiver_id)) return;
+            if(pendingAccepts.includes(users[i].id)) return;
+            if(pendingRequests.includes(users[i].id)) return;
              await displayUser(users[i]);
 
        }
