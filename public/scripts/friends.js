@@ -20,7 +20,7 @@ async function fetchUsers() {
              await displayUser(users[i]);
 
        }
-     //   allowPostView();
+       allowUserView();
         return;
       } catch (err) {
        notify("Error fetching users", "error");
@@ -32,7 +32,7 @@ async function displayUser(user){
 try{
  
 const userCard = `
-<div class="user">
+<div class="user" data-url="/user/${user.username}">
     <div class="pp-box">
        <img src=${user.profile_picture || "/images/default-user.png"} class="user-pic" alt="user picture" />
     </div>
@@ -53,4 +53,15 @@ usersContainer.innerHTML += userCard;
 
 }
 
+function allowUserView(){
+      const usersCard = document.querySelectorAll(".user")
+      usersCard.forEach(user =>{
+            user.onclick = (e) => {viewUser(e)}
+      })
+      
+}
+function viewUser(e){
+      const userOnFocus = e.currentTarget
+      alert(userOnFocus);
+}
 fetchUsers();
