@@ -123,12 +123,13 @@ main{
     box-shadow: 0 0 10px #ddd;  
 }
   .p-user img{
-    width: 200px;
-    height:200px;
+    width: 80px;
+    height:80px;
     display:inline-block;
   }
   .req-options{
     width:100%;
+    height:100%;
     padding: 15px 0;
   }
   .req-details{
@@ -136,6 +137,7 @@ main{
     align-items: center;
     justify-content: space-between;
     width:100%;
+    height:50%;
     gap: 10px;
   }
   .p-username{
@@ -154,6 +156,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height:50%;
   }
   .accept-btn{
     border: none;
