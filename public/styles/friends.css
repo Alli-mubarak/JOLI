@@ -98,7 +98,7 @@ main{
   }
   #pending-requests{
     position: relative;
-    margin-bottom:10px;
+    margin-bottom:40px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     width:100%;
