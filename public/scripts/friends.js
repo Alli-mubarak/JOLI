@@ -1,4 +1,3 @@
-const mainEl = document.querySelector("main");
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
@@ -7,7 +6,7 @@ let pendingRequestsTime = [];
 let pendingAccepts = [];
 let pendingAcceptsTime = [];
 let pendingAcceptsPic = [];
-let pendingAcceptsUsername= [];
+let pendingAcceptsUsername = [];
 
 
 async function fetchUsers() {
