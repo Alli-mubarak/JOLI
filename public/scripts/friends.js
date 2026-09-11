@@ -44,10 +44,7 @@ async function fetchUsers() {
       usersContainer.innerHTML = '';
             
       for (let i=0; i < users.length; i++){
-            if(pendingAccepts.includes(users[i].id)) return;
-            if(pendingRequests.includes(users[i].id)) return;
              await displayUser(users[i]);
-
        }
        allowUserView();
         return;
@@ -59,7 +56,8 @@ async function fetchUsers() {
 
 async function displayUser(user){
 try{
- 
+ if(pendingAccepts.includes(user.id)) return;
+if(pendingRequests.includes(user.id)) return;
 const userCard = `
 <div class="user" data-url="/user/${user.username}">
     <div class="pp-box">
