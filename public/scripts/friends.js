@@ -1,5 +1,6 @@
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
+let pendingRequests = []
 
 
 async function fetchUsers() {
@@ -13,7 +14,9 @@ async function fetchUsers() {
             //alert(isAuthorised)
            // alert(currentUserId)
        // lastUserFetched = 
-        
+        if(currentUserId){
+      const friendships = await fetch("/user/friends");
+        }
       usersContainer.innerHTML = '';
             
       for (let i=0; i < users.length; i++){
@@ -82,6 +85,10 @@ window.location.href = userPage;
 
 async function addUser(btn, rId){
       try{
+      if(!isAuthorised){
+            notify("please, log in first!", "error");
+            return;
+      }
       const response = await fetch("/api/friendship/request", {
         method: "POST",
         headers: {
