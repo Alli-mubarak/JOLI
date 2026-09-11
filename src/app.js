@@ -1408,14 +1408,20 @@ app.get('/api/get-all-users', checkSession, limiter, async(req, res) => {
 //fetch friends to add
 app.get('/api/get-users', checkSession, limiter, async(req, res) => {
   try{
-    if(!req.user || !req.isAuthenticated()){
-      return res.status(401).json({
-        error: "You are not authorised to do this"
+    let users
+    if(req.user && req.isAuthenticated()){
+      users = await pool.query(
+        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE AND id != $1 LIMIT 10",
+        [req.user.id]
+   );
+      return res.status(200).json({
+        users: users.rows 
     })
     }
-   const users = await pool.query(
-        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private = false LIMIT 10"
+   users = await pool.query(
+        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE LIMIT 10"
    );
+    
       res.json({
       totalUsers : users.rows.length,
       users: users.rows 
