@@ -168,11 +168,15 @@ main{
           margin-bottom: 5px;
           max-width: 100%;
           overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
         .bio{
             font-size: 0.8rem;
           max-width: 100%;
           overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           }
 .loader{
   background: #fff;
