@@ -92,8 +92,7 @@ main{
     width:100%;
 }
   main h2{
-    text-align:center;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     margin:20px 0;
   }
   #pending-requests{
