@@ -9,8 +9,5 @@ router.get('/mails', (req, res) => {
     res.json({ message: 'Error fetching all mails', error: err });
   }
 });
-
-
-module.exports = router;
     
 export default router;
