@@ -1,5 +1,6 @@
 
 const pendingRequestsContainer = document.getElementById("pending-requests")
+const fReqHeading = document.getElementById("f-req")
 const addFriendsHeading = document.getElementById("add-fr-h")
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
@@ -64,7 +65,7 @@ for (let i=0; i < users.length; i++){
       }
        }
   if(pendingAccepts.length > 0){
-      pendingRequestsContainer.innerHTML += '<h2>Pending Requests</h2>';
+      fReqHeading.classList.remove("hidden");
       pendingAccepts.forEach((a,i) => {
       displayPendingAccepts(i);
             })
