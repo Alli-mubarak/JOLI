@@ -4,6 +4,9 @@
 body{
 position: relative;
   }
+header{
+  margin-bottom: 30px;
+}
 header marquee{
   position: absolute;
   width:100%;
