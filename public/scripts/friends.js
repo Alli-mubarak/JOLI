@@ -50,7 +50,7 @@ async function fetchUsers() {
             return;
       }   
 
-addFriendsHeading.classList.remove("hidden")
+
 for (let i=0; i < users.length; i++){
       if(pendingAccepts.includes(users[i].id)){
        pendingAcceptsPic.push(users[i].profile_picture);
@@ -60,6 +60,7 @@ for (let i=0; i < users.length; i++){
       console.log("hi")
         }else{
              await displayUser(users[i]);
+            addFriendsHeading.classList.remove("hidden")
       }
        }
   if(pendingAccepts.length > 0){
