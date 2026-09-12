@@ -48,17 +48,17 @@ async function fetchUsers() {
       if(users.length < 1){
             return;
       }   
-      for (let i=0; i < users.length; i++){
+for (let i=0; i < users.length; i++){
       usersContainer.innerHTML += '<h2 >Add friends</h2>';
-      if(pendingAccepts.includes(user.id)){
- pendingAcceptsPic.push(user.profile_picture);
-pendingAcceptsUsername.push(user.username);
-}
-else if(pendingRequests.includes(user.id)){
+      if(pendingAccepts.includes(users[i].id)){
+       pendingAcceptsPic.push(users[i].profile_picture);
+       pendingAcceptsUsername.push(users[i].username);
+       }
+         else if(pendingRequests.includes(users[i].id)){
       console.log("hi")
-}else{
+        }else{
              await displayUser(users[i]);
-}
+      }
        }
   if(pendingAccepts.length > 0){
       pendingRequestsContainer.innerHTML += '<h2>Pending Requests</h2>';
