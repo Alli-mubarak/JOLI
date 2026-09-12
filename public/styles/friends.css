@@ -92,7 +92,7 @@ main{
     width:100%;
 }
   main h2{
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin:20px 0;
   }
   #pending-requests{
@@ -119,7 +119,7 @@ main{
     overflow: hidden;
   }
   .p-user img{
-    width: 100px;
+    width: 150px;
     height:100%;
     display:inline-block;
     object-fit: cover;
@@ -142,7 +142,7 @@ main{
     gap: 25px;
   }
   .p-username{
-    font-size:1.2rem;
+    font-size:1.1rem;
         font-weight:600;
           max-width: 100%;
           overflow: hidden;
@@ -150,7 +150,7 @@ main{
           text-overflow: ellipsis;
   }
   .req-details small{
-    font-size: 0.9rem;
+    font-size: 0.7rem;
   }
   .req-btns{
     width:100%;
