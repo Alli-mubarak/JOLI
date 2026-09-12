@@ -94,6 +94,7 @@ main{
   main h2{
     font-size: 1.2rem;
     margin:20px 0;
+    background:pink;
   }
   #pending-requests{
     position: relative;
@@ -102,6 +103,7 @@ main{
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     width:100%;
     gap:15px;
+    background:teal;
   }
   .p-user{
     display:flex;
