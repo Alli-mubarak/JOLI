@@ -1536,11 +1536,66 @@ if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
 }
     // Function to send mail
-  const mailOptions = {
+  const mailOption1 = {
     from: process.env.EMAIL_USER,
     to: req.user.email,
     subject: 'Welcome to JOLI',
     text: `Hi ${req.user.username}, thanks for joining us on JOLI!`,
+  };
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: req.user.email,
+    subject: 'New notification on JOLI',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Notification on JOLI</title>
+      </head>
+      <body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
+          
+          <!-- Header Banner -->
+          <tr>
+            <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">ConnectHub</h1>
+            </td>
+          </tr>
+
+          <!-- Main Body Content -->
+          <tr>
+            <td style="padding: 40px 30px; color: #333333; font-size: 16px; line-height: 1.6;">
+              <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Hey ${req.user.username},</h2>
+              <p style="margin-bottom: 25px;">Someone just interacted with your profile! Log back in to see your new followers, comments, and messages.</p>
+              
+              <!-- Styled Button -->
+              <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
+                <tr>
+                  <td align="center" style="border-radius: 6px; background-color: #667eea;">
+                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">View Notifications</a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin-bottom: 0; font-size: 14px; color: #666666;">If you didn't request this email, you can safely ignore it.</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding: 20px 30px; background-color: #fafafa; border-top: 1px solid #eeeeee; font-size: 12px; color: #999999;">
+              <p style="margin: 0 0 10px 0;">&copy; 2026 JOLI. All rights reserved.</p>
+              <p style="margin: 0;"><a href="https://joli-indol.vercel.app" style="color: #667eea; text-decoration: underline;">Unsubscribe from these alerts</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </body>
+      </html>
+    `,
   };
 
   
