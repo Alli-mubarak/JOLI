@@ -1561,7 +1561,7 @@ if(!req.isAuthenticated() || !req.user) {
           <!-- Header Banner -->
           <tr>
             <td align="center" style="padding: 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
-              <img src="https://joli-indol.vercel.app/images/joli-dark.png" alt="joli logo" style="height: 250px; width: auto;"/>
+              <img src="https://joli-indol.vercel.app/images/joli-dark.png" alt="joli logo" style="height: 150px; width: auto;"/>
             </td>
           </tr>
 
@@ -1569,7 +1569,7 @@ if(!req.isAuthenticated() || !req.user) {
           <tr>
             <td style="padding: 40px 30px; color: #333333; font-size: 16px; line-height: 1.6;">
               <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Hey ${req.user.username},</h2>
-              <p style="margin-bottom: 25px;">Someone just interacted with your profile! Log back in to see your new followers, comments, and messages.</p>
+              <p style="margin-bottom: 25px;">Someone just interacted with your profile! Log back in to see your new friend requests, comments, and messages.</p>
               
               <!-- Styled Button -->
               <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
