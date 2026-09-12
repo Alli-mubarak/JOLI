@@ -15,7 +15,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import rateLimit  from 'express-rate-limit';
-//import { sendCustomEmail } from '../Utils/mailer.js';
+import { tranporter} from '../Utils/mailer.js';
 import { v2 as cloudinary } from 'cloudinary';
 import 'ejs';
 
@@ -1529,7 +1529,33 @@ app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   }
 });
 
+//api for mailing
+app.get('/send-mail', checkSession, async(req, res) => {
+  try{
+if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+}
+    // Function to send mail
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: req.user.email,
+    subject: 'Welcome to JOLII',
+    text: `Hi ${req.user.username}, thanks for joining our platform!`,
+  };
 
+  
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ', info.response);
+res.status(200).json({
+      message : "mail sent successfully"
+    });
+    
+  }
+  catch(err){
+    console.error(err);
+    return res.status(500).json({ error: 'mail sending failed' });
+  }
+})
     
 
 //response to all wrong paths
