@@ -15,7 +15,7 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import rateLimit  from 'express-rate-limit';
-import { tranporter} from '../Utils/mailer.js';
+import { transporter} from '../Utils/mailer.js';
 import { v2 as cloudinary } from 'cloudinary';
 import 'ejs';
 
