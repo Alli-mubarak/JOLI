@@ -1560,8 +1560,8 @@ if(!req.isAuthenticated() || !req.user) {
           
           <!-- Header Banner -->
           <tr>
-            <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">JOLI</h1>
+            <td align="center" style="padding: 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
+              <img src="https://joli-indol.vercel.app/images/joli-dark.png" alt="joli logo" style="height: 250px; width: auto;"/>
             </td>
           </tr>
 
