@@ -4,6 +4,9 @@
 body{
 position: relative;
   }
+.hidden{
+    display: none !important;
+}
 #user-pic{
   cursor:pointer;
 }
