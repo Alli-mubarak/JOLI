@@ -48,8 +48,8 @@ async function fetchUsers() {
       if(users.length < 1){
             return;
       }   
+usersContainer.innerHTML += '<h2 >Add friends</h2>';
 for (let i=0; i < users.length; i++){
-      usersContainer.innerHTML += '<h2 >Add friends</h2>';
       if(pendingAccepts.includes(users[i].id)){
        pendingAcceptsPic.push(users[i].profile_picture);
        pendingAcceptsUsername.push(users[i].username);
