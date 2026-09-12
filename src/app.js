@@ -1539,8 +1539,8 @@ if(!req.isAuthenticated() || !req.user) {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: req.user.email,
-    subject: 'Welcome to JOLII',
-    text: `Hi ${req.user.username}, thanks for joining our platform!`,
+    subject: 'Welcome to JOLI',
+    text: `Hi ${req.user.username}, thanks for joining us on JOLI!`,
   };
 
   
