@@ -1,4 +1,4 @@
-alert("hello");
+
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const addFriendsHeading = document.getElementById("add-fr-h")
 const usersContainer = document.querySelector(".users");
