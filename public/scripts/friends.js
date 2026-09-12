@@ -1,5 +1,6 @@
 alert("hello");
 const pendingRequestsContainer = document.getElementById("pending-requests")
+const addFriendsHeading = document.getElementById("add-fr-h")
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
 let pendingRequests = [];
@@ -48,7 +49,8 @@ async function fetchUsers() {
       if(users.length < 1){
             return;
       }   
-usersContainer.innerHTML += '<h2 >Add friends</h2>';
+
+addFriendsHeading.classList.remove("hidden")
 for (let i=0; i < users.length; i++){
       if(pendingAccepts.includes(users[i].id)){
        pendingAcceptsPic.push(users[i].profile_picture);
