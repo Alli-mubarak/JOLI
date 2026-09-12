@@ -4,6 +4,16 @@
 body{
 position: relative;
   }
+header marquee{
+  position: absolute;
+  width:100%;
+  height: fit-content;
+  background: #2bff43;
+  padding: 5px 0;
+  font-size: 0.9rem;
+  top:100%; left:0;
+  color: #222;
+}
 .hidden{
     display: none !important;
 }
