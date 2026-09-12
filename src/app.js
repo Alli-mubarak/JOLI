@@ -1560,8 +1560,8 @@ if(!req.isAuthenticated() || !req.user) {
           
           <!-- Header Banner -->
           <tr>
-            <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">ConnectHub</h1>
+            <td align="center" style="padding: 30px 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
+              <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">JOLI</h1>
             </td>
           </tr>
 
@@ -1574,7 +1574,7 @@ if(!req.isAuthenticated() || !req.user) {
               <!-- Styled Button -->
               <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
                 <tr>
-                  <td align="center" style="border-radius: 6px; background-color: #667eea;">
+                  <td align="center" style="border-radius: 6px; background-color: #555;">
                     <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">View Notifications</a>
                   </td>
                 </tr>
