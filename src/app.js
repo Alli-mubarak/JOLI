@@ -1,7 +1,7 @@
 import express from 'express';
 import {pool} from '../config/db.js'; 
 import mailRoutes from './router/mailer.js'; 
-import {authRoutes} from './router/auth.js'; 
+import authRoutes from './router/auth.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -435,7 +435,7 @@ async function fetchAuthorDetails(authorId){
 
 //***"""""""""""
 app.use('/api/m', mailRoutes);
-app.use('/api/auth', authRoutes);
+//app.use('/api/auth', authRoutes);
 //***********
 // function for detecting post like
 async function getPostLikeStatus(postId, userId){
