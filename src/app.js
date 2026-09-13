@@ -278,13 +278,15 @@ passport.use(new GoogleStrategy({
             google_id = $1,
             google_full_name = $2,
             profile_picture = $3,
+            is_verified = $4
             last_login_at = CURRENT_TIMESTAMP
-        WHERE id = $4
+        WHERE id = $5
         `,
         [
             profile.id,
             profile.displayName,
             profile.photos?.[0]?.value || null,
+            true,
             user.id
         ]
     );
@@ -311,6 +313,7 @@ INSERT INTO users
     profile_picture,
     preferences,
     country,
+    is_verified,
     last_login_at
 )
 
@@ -324,6 +327,7 @@ VALUES
     $6,
     $7,
     $8,
+    $9
     CURRENT_TIMESTAMP
 )
 
@@ -337,6 +341,7 @@ RETURNING *;
     profile.displayName,
     profile.photos?.[0]?.value || null,
     preferences,
+    true,
     country
 ]);
     return done(null, newUser.rows[0]);
