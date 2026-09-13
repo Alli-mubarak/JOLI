@@ -1,6 +1,6 @@
 import express from 'express'; 
 import geoip from "geoip-lite";
-import {pool} from '../config/db.js'; 
+import {pool} from '.../config/db.js'; 
 
 const router = express.Router();
 
