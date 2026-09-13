@@ -4,7 +4,16 @@ import {pool} from '../../config/db.js';
 import path from 'node:path';
 const router = express.Router();
 const __dirname = import.meta.dirname;
+import { v2 as cloudinary } from 'cloudinary';
+import 'dotenv/config'; // Automatically loads environment variables
 import 'ejs'
+
+// cloudinary configuration
+cloudinary.config({ 
+        cloud_name: process.env.CLOUD_NAME, 
+        api_key: process.env.CLOUD_API_KEY, 
+        api_secret: process.env.CLOUD_API_SECRET 
+    });
 
 function getCountryNameFromReq(req) {
   // Extract client IP address from request header
@@ -76,6 +85,90 @@ async function getPostLikeStatus(postId, userId){
   }
       }
 
+// post creation api
+router post('/v1/create-post', checkSession, async (req, res) => {
+  try{
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: 'You need to log in first!'});
+  }
+  
+  const userId = req.user.id;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'user id is required' });
+  }
+  const { content, images, postType } = req.body;
+  if (!content) {
+    return res.status(400).json({ error: 'Post must contain text content ' });
+  }
+  
+  let mediaURLs;
+  if(images){
+    let imagesSize = 0;
+    
+  images.forEach(file =>{
+    imagesSize += file.length
+  });
+  const imagesSizeInMb = (imagesSize / 1024 / 1024).toFixed(2);
+    
+  if(imagesSizeInMb > 10){
+  return res.status(400).json({error: "images are too much or too large, crop them and retry or use different images"});
+  }
+  const uploadPromises = images.map((base64String) => {
+    
+      return cloudinary.uploader.upload(base64String, {
+        folder: `postPictures/${userId}`,
+        resource_type: 'image' // Cloudinary auto-detects the jpeg metadata inside the string
+      });
+    });
+    
+ const uploadResults = await Promise.all(uploadPromises);
+    console.log(uploadResults);
+    const urls = uploadResults.map(result => {
+     return  cloudinary.url(result.public_id, {
+      fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
+      quality: 'auto',            // q_auto: Compresses file size without losing visual quality
+      width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
+      crop: 'limit',              // was massive, saving your free tier bandwidth
+      secure: true
+    });
+    
+    });
+    const optimizedUrls = await Promise.all(urls);
+    console.log(optimizedUrls);
+    mediaURLs =  JSON.stringify(optimizedUrls);
+  }else{
+    mediaURLs =  [];
+  }
+    
+const queryText = `
+  INSERT INTO posts (user_id, content, media_urls, post_type)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;
+`;
+    const values = [userId, content.trim(), mediaURLs, postType];
+    
+
+    const result = await pool.query(queryText, values);
+
+    if (postType === 'reply' && parent_id) {
+      await pool.query(
+        'UPDATE posts SET reply_count = reply_count + 1 WHERE id = $1',
+        [parent_id]
+      );
+    }
+    const newPost = result.rows[0];
+    console.log('Post successfully created!');
+    console.log(newPost);
+    return res.status(201).json(newPost);
+
+  } catch (error) {
+    console.error('Error creating post:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//api for fetching a post and deletion
 router.route('/:id')
   .get(async (req, res) => {
   console.log('post fetched \n');
@@ -151,6 +244,72 @@ let author = await  fetchAuthorDetails(postData.user_id);
     }
 });
 
+//post liking api
+router.post('/v1/:postId/like', checkSession,  async (req, res) => {
+  try {
+    const { postId } = req.params;
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized"});
+  }
+    
+    const userId = req.user.id
+
+    if (!userId || !postId) {
+        return res.status(400).json({ error: 'Missing userId or postId' });
+    }
+    const toggleWithStatusQuery = `
+        WITH deleted AS (
+            DELETE FROM likes 
+            WHERE user_id = $1 AND post_id = $2
+            RETURNING *
+        ),
+        inserted AS (
+            INSERT INTO likes (user_id, post_id)
+            SELECT $1, $2
+            WHERE NOT EXISTS (SELECT 1 FROM deleted)
+            RETURNING *
+        )
+        UPDATE posts
+        SET like_count = like_count + (
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM inserted) THEN 1
+                ELSE -1
+            END
+        )
+        WHERE id = $2
+        RETURNING 
+            like_count,
+            CASE 
+                WHEN EXISTS (SELECT 1 FROM inserted) THEN 'inserted'
+                ELSE 'deleted'
+            END AS action;
+    `;
+
+    
+        const result = await pool.query(toggleWithStatusQuery, [userId, postId]);
+
+        // Guard rails if the post ID doesn't exist in the system
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Destructure values from database response row
+        const { like_count, action } = result.rows[0];
+
+        // Send payload structure back to frontend
+        return res.status(200).json({ 
+            success: true, 
+            action: action,          // Sends 'inserted' or 'deleted'
+            likesCount: like_count  // Sends absolute truth number
+        });
+
+    } catch (error) {
+        console.error('Error toggling like:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+    
 router.route('/v1/getPosts')
   .get(async(req, res)=>{
 console.log('posts fetched initially \n');
