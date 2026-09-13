@@ -86,7 +86,7 @@ async function getPostLikeStatus(postId, userId){
       }
 
 // post creation api
-router post('/v1/create-post', checkSession, async (req, res) => {
+router.post('/v1/create-post', checkSession, async (req, res) => {
   try{
   if (!req.isAuthenticated() && !req.user){
    return  res.status(400).json({error: 'You need to log in first!'});
@@ -205,7 +205,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
  res.render('post', { post: postData }); 
 }catch(e){
   console.error('Error fetching post',e);
-  return res.sendFile(path.join(__dirname, "../", "/views/post-error.html"));
+  return res.sendFile(path.join(__dirname, "../../", "/views/post-error.html"));
 }
 })
  .delete(checkSession, async (req, res) => {
