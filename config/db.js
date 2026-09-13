@@ -30,7 +30,7 @@ const pgCaPath = path.join(__dirname, '..', 'pg-ca.pem');
 };
 
 //database tables setup
-const initDb = async () => {
+const initDb = async (pool) => {
   const setupScript = `
     CREATE EXTENSION IF NOT EXISTS "citext";
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
