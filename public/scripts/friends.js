@@ -52,19 +52,17 @@ async function fetchUsers() {
             return;
       }   
 
-
-for (let i=0; i < users.length; i++){
-      if(pendingAccepts.includes(users[i].id)){
-       pendingAcceptsPic.push(users[i].profile_picture);
-       pendingAcceptsUsername.push(users[i].username);
+    await users.forEach(user => {
+      if(pendingAccepts.includes(user.id)){
+       pendingAcceptsPic.push(user.profile_picture);
+       pendingAcceptsUsername.push(user.username);
        }
-         else if(pendingRequests.includes(users[i].id)){
-      console.log("hi")
-        }else{
-             await displayUser(users[i]);
+         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
+               await displayUser(user);
             addFriendsHeading.classList.remove("hidden")
-      }
-       }
+        }
+
+       });
   if(pendingAccepts.length > 0){
       fReqHeading.classList.remove("hidden");
       await pendingAccepts.forEach((a,i) => {
