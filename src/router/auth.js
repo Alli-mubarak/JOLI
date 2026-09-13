@@ -227,7 +227,7 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 
-/sign up API
+//sign up API
 authRouter.post('/sign-up', limiter, async (req, res) => {
   try {
     const { username, email, password } = req.body;
