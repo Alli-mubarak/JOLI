@@ -14,7 +14,7 @@ let pendingAcceptsUsername = [];
 
 async function fetchUsers() {
       try {
-        const response = await fetch("/api/get-users" );
+        const response = await fetch("/api/get-users");
         const data = await response.json();
  
         const users = data.users;
@@ -27,6 +27,7 @@ async function fetchUsers() {
       if(fResponse.ok){
       const friendshipsResult  = await fResponse.json();
       const friendships = friendshipsResult.friendships;
+            _
       await friendships.forEach(f => {
       if(f.status === "pending"){
             if(f.sender_id === currentUserId){
@@ -38,7 +39,7 @@ async function fetchUsers() {
                   pendingAccepts.push(f.sender_id);
                   pendingAcceptsTime.push(f.created_at);
             }
-      }else{return;}
+      }
       });
             
       }else{
@@ -57,7 +58,7 @@ async function fetchUsers() {
        pendingAcceptsUsername.push(user.username);
        }
          else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
-               await displayUser(user);
+                displayUser(user);
             addFriendsHeading.classList.remove("hidden")
         }
 
