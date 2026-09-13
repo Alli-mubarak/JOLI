@@ -1,6 +1,7 @@
 import express from 'express';
 import {pool} from '../config/db.js'; 
 import mailRoutes from './router/mailer.js'; 
+import authRoutes from './router/auth.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -434,6 +435,7 @@ async function fetchAuthorDetails(authorId){
 
 //***"""""""""""
 app.use('/api/m', mailRoutes);
+app.use('/api/auth', authRoutes);
 //***********
 // function for detecting post like
 async function getPostLikeStatus(postId, userId){
@@ -463,152 +465,6 @@ async function linkify(text) {
 }
 
 // --- Auth Routes ---
-
-//sign up API
-app.post('/api/auth/sign-up', limiter, async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-
-    // Validate inputs
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
-    
-   if (username.length < 5) {
-      return res.status(400).json({ message: 'Username is too short!' });
-    }
-    
-
-    // Check if email is taken
-    const emails = await pool.query(
-    "SELECT * FROM users WHERE email = $1",
-    [email]
-  );
-    let existingEmail;
-    if (emails){
-   existingEmail = emails.rows[0];
-    }
-    
-    if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
-    }
-
-    // Check if username is taken
-    const usernames = await pool.query(
-    "SELECT * FROM users WHERE username = $1",
-    [username]
-  );
-    let existingUsername;
-    if (usernames){
-   existingUsername = usernames.rows[0];
-    }
-    
-    if (existingUsername) {
-      return res.status(400).json({ message: 'Username is taken, choose another one!' });
-    }
-    const countryName = getCountryNameFromReq(req);
-  
-// Hash password and save user
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const country = countryName;
-    const preferences = { theme: 'light', notifications: true, language: 'en-US' };
-
-    const newUser = await pool.query(
-`
-INSERT INTO users
-(
-    username,
-    email,
-    password,
-    profile_picture,
-    preferences,
-    country,
-    last_login_at
-)
-
-VALUES
-(
-    $1,
-    $2,
-    $3,
-    $4,
-    $5,
-    $6,
-    CURRENT_TIMESTAMP
-)
-
-RETURNING *;
-`,
-[
-    username.toLowerCase(),
-    email.toLowerCase(),
-    hashedPassword,
-    null,
-    preferences,
-    country
-]);
-    
-    // Log the user in automatically
-    // Convert the new user document to a plain JavaScript object
-  const userObj = newUser.rows[0];
-        req.login(userObj, (err) => {
-            if (err) {
-                return next(err); // Handles passport login errors
-            }
-            // Success! The session is created!
-            res.status(201).json({ message: 'Registration successful!' });
-        });
-   
-  } catch (err) {
-    console.log(err+ ', ' + err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-//  Email or Username Login
-app.post('/api/auth/login', limiter, (req, res, next) => {
-  // 1. Extract values to validate that the frontend sent the required data
-  const { identifier, password } = req.body;
-
-  if (!identifier || !password) {
-    return res.status(400).json({ message: 'Email/Username and password are required.' });
-  }
-
-  // Invoke Passport's Local Strategy
-  // "info" contains the custom error messages we wrote inside the strategy
-  passport.authenticate('local', (err, user, info) => {
-    
-    //  A critical server or database error occurred
-    if (err) {
-      console.error('Passport Auth Error:', err);
-      return next(err); 
-    }
-
-    //  Authentication failed (wrong password, account doesn't exist, etc.)
-    if (!user) {
-      return res.status(401).json({ message: info?.message || 'Invalid credentials!.' });
-    }
-
-    //  Credentials are correct! Establish the user session
-    req.login(user, (loginErr) => {
-      if (loginErr) {
-        console.error('Session creation failed:', loginErr);
-        return next(loginErr);
-      }
-
-      return res.status(200).json({
-        message: 'Logged in successfully.',
-       user: { id: user.id, username: user.username, email: user.email }
-    });
-    });
-  })(req, res, next); // Necessary to pass the request and response objects to Passport
-});
-
-// Trigger Google Sign-Up / Login Flow
-app.get('/api/auth/google', limiter,
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
 
 //  Google OAuth Callback Route
 app.get('/auth/google/callback', limiter, (req, res, next) => {
@@ -1231,44 +1087,6 @@ app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,r
   }
 });
 
-// Logout API
-app.get('/api/auth/logout', checkSession, limiter, async(req, res) => {
-  try {
-    if(!req.isAuthenticated() || !req.user) {
-    return res.status(401).send('Unauthorized. Please log in.');
-    }
-  const userId = req.user.id;
-  await pool.query(
-      'UPDATE users SET is_active = false WHERE id = $1',
-      [userId]
-    );
-
-  req.logout((err) => {
-    if (err) return next(err);
-    
-    // Destroy the session in Database 
-    req.session.destroy((err) => {
-      if (err) return res.send('Error logging out');
-      
-      // Clear the cookie on the client side
-      res.clearCookie('connect.sid',{
-        path: '/',
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax'
-      });
-      res.redirect('/');
-    });
-  });
-  } catch (error) {
-    console.error("Database error during logout:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-
-
-
 
 //***********///
 //default page  route
@@ -1347,15 +1165,6 @@ console.log('admin page  requested! \n');
     return res.redirect('/home');
   }
   res.sendFile(path.join(__dirname, "../", "/views/admin.html"));
-});
-
-//user check route
-app.get('/api/auth/user',  (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ loggedIn: true, user: req.user });
-  } else {
-    res.json({ loggedIn: false, user: null });
-  }
 });
 
 app.get('/login-failed', (req, res) => {
