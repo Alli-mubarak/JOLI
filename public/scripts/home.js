@@ -33,7 +33,7 @@ function linkify(text) {
 async function fetchPosts() {
       try {
         
-        const response = await fetch("/api/getPosts" );
+        const response = await fetch("/post/v1/getPosts" );
         const data = await response.json();
  
         const posts = data.posts;
@@ -58,7 +58,7 @@ async function fetchMorePosts() {
       try {
         morePostsBtn.disabled = true;
         morePostsBtn.textContent  = "fetching posts...";
-        const response = await fetch("/api/getPosts", {
+        const response = await fetch("/post/v1/getPosts", {
         method: "POST",
         headers: {
       'Content-Type': 'application/json'
@@ -377,7 +377,7 @@ function viewPostImage(e){
           likeIcon.style.color = "#2bff43";
           likeIcon.classList.add("fa-solid");
           
-        const response = await fetch(`/api/posts/${postId}/like`, {
+        const response = await fetch(`/post/v1/${postId}/like`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         });
