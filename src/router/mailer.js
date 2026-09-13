@@ -1,7 +1,8 @@
 import express from 'express'; 
-const router = express.Router();
 import geoip from "geoip-lite";
 import {pool} from '../config/db.js'; 
+
+const router = express.Router();
 
 function getCountryNameFromReq(req) {
   // Extract client IP address from request header
