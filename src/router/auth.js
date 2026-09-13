@@ -330,7 +330,7 @@ RETURNING *;
 });
 
 //  Email or Username Login
-app.post('/login', limiter, (req, res, next) => {
+router.post('/login', limiter, (req, res, next) => {
   // 1. Extract values to validate that the frontend sent the required data
   const { identifier, password } = req.body;
 
@@ -369,7 +369,7 @@ app.post('/login', limiter, (req, res, next) => {
 });
 
 // Trigger Google Sign-Up / Login Flow
-app.get('/google', limiter,
+router.get('/google', limiter,
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
@@ -417,3 +417,4 @@ router.get('/logout', checkSession, limiter, async(req, res) => {
   }
 });
                                
+export default router;
