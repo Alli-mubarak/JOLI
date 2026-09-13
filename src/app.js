@@ -435,7 +435,7 @@ async function fetchAuthorDetails(authorId){
 
 //***"""""""""""
 app.use('/api/m', mailRoutes);
-//app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 //***********
 // function for detecting post like
 async function getPostLikeStatus(postId, userId){
