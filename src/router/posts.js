@@ -4,7 +4,7 @@ import {pool} from '../../config/db.js';
 import path from 'node:path';
 const router = express.Router();
 const __dirname = import.meta.dirname;
-const __filename = fileURLToPath(import.meta.url);
+import 'ejs'
 
 function getCountryNameFromReq(req) {
   // Extract client IP address from request header
