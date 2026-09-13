@@ -152,7 +152,7 @@ let author = await  fetchAuthorDetails(postData.user_id);
 });
 
 router.route('/v1/getPosts')
-.get(async(req, res)=>{
+  .get(async(req, res)=>{
 console.log('posts fetched initially \n');
 try{
 const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 30');
@@ -187,7 +187,7 @@ res.status(200).json({posts: posts});
   res.status(500).json({error: 'Internal Server Error'});
 }
 })
-.post('async(req, res)=>{
+  .post(async(req, res)=>{
 console.log('more posts fetched \n');
 const {time} = req.body;
   console.log(time);
