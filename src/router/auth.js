@@ -8,7 +8,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import rateLimit  from 'express-rate-limit';
 import transporter from '../../Utils/mailer.js';
 
-const router = express.Router();
+const authRouter = express.Router();
 
 function getCountryNameFromReq(req) {
   // Extract client IP address from request header
@@ -228,7 +228,7 @@ const limiter = rateLimit({
 });
 
 /sign up API
-router.post('/sign-up', limiter, async (req, res) => {
+authRouter.post('/sign-up', limiter, async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -330,7 +330,7 @@ RETURNING *;
 });
 
 //  Email or Username Login
-router.post('/login', limiter, (req, res, next) => {
+authRouter.post('/login', limiter, (req, res, next) => {
   // 1. Extract values to validate that the frontend sent the required data
   const { identifier, password } = req.body;
 
@@ -369,12 +369,12 @@ router.post('/login', limiter, (req, res, next) => {
 });
 
 // Trigger Google Sign-Up / Login Flow
-router.get('/google', limiter,
+authRouter.get('/google', limiter,
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 //user check api
-router.get('/user',  (req, res) => {
+authRouter.get('/user',  (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ loggedIn: true, user: req.user });
   } else {
@@ -383,7 +383,7 @@ router.get('/user',  (req, res) => {
 });
 
 // Logout API
-router.get('/logout', checkSession, limiter, async(req, res) => {
+authRouter.get('/logout', checkSession, limiter, async(req, res) => {
   try {
     if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
@@ -417,4 +417,4 @@ router.get('/logout', checkSession, limiter, async(req, res) => {
   }
 });
                                
-export default router;
+export default authRouter;
