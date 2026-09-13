@@ -1361,7 +1361,7 @@ async function startServer(){
  const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
-    await initDb();
+    await initDb(pool);
     pingAivenDatabase();
     setInterval(pingAivenDatabase, HALF_HOUR);
   }catch (err){
