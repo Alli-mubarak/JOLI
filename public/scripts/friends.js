@@ -27,7 +27,7 @@ async function fetchUsers() {
       if(fResponse.ok){
       const friendshipsResult  = await fResponse.json();
       const friendships = friendshipsResult.friendships;
-      friendships.forEach(f => {
+      await friendships.forEach(f => {
       if(f.status === "pending"){
             if(f.sender_id === currentUserId){
                   pendingRequests.push(f.receiver_id);
@@ -40,6 +40,7 @@ async function fetchUsers() {
             }
       }else{return;}
       });
+            
       }else{
             notify("Error fetching friendships", "error");
       }
@@ -66,7 +67,7 @@ for (let i=0; i < users.length; i++){
        }
   if(pendingAccepts.length > 0){
       fReqHeading.classList.remove("hidden");
-      pendingAccepts.forEach((a,i) => {
+      await pendingAccepts.forEach((a,i) => {
       displayPendingAccepts(i);
             })
             }
