@@ -132,7 +132,7 @@ async function likePost(){
           likeIcon.style.color = "#2bff43";
           likeIcon.classList.add("fa-solid");
           
-        const response = await fetch(`/api/posts/${postId}/like`, {
+        const response = await fetch(`/post/v1/${postId}/like`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         });
