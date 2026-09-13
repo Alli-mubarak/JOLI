@@ -1,0 +1,419 @@
+
+import express from 'express'; 
+import geoip from "geoip-lite";
+import {pool} from '../../config/db.js'; 
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import rateLimit  from 'express-rate-limit';
+import transporter from '../Utils/mailer.js';
+
+const router = express.Router();
+
+function getCountryNameFromReq(req) {
+  // Extract client IP address from request header
+  const clientIp = req.headers['x-forwarded-for']
+  // Lookup geolocation data using geoip-lite
+  const geo = geoip.lookup(clientIp);
+  let countryName = 'Unknown';
+  if (geo && geo.country) {
+    try {
+      // Convert the 2-letter code (e.g., 'US') to full name (e.g., 'United States')
+      countryName = countryNamesInEnglish.of(geo.country);
+    } catch (error) {
+      // Fallback to the country code if the lookup fails for any reason
+      countryName = geo.country;
+    }
+    return countryName;
+  }
+}
+
+//session checker
+const checkSession = (req, res, next) => {
+  try{
+    if (req.session) {
+        next(); 
+    } else {
+        console.error("Unauthorized usage");
+        res.status(401).json({ error: 'You must be logged in to do this' });
+       
+    }
+  }catch(e){
+    console.error(e);
+  }
+};
+        
+// Configure Passport Google Strategy
+// updated Passport Google Strategy with Async/Await Database Logic
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.CALLBACK_URL,
+    state: true,
+    passReqToCallback: true  // this will make the req object available for access
+  
+  },
+  async (req, accessToken, refreshToken, profile, done) => {
+    const countryName = getCountryNameFromReq(req);
+  try {
+    // Structure the data coming from Google profile payload
+    const google_id = profile.id;
+    const result = await pool.query(
+    "SELECT * FROM users WHERE google_id = $1",
+    [google_id]
+  );
+
+   let user = result.rows[0];
+    if (user) {
+    return done(null, user);
+    }
+    const email = profile.emails[0].value;
+
+   const existing = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email]
+   );
+    if (existing.rows.length > 0) {
+
+    user = existing.rows[0];
+
+    await pool.query(
+        `
+        UPDATE users
+        SET
+            google_id = $1,
+            google_full_name = $2,
+            profile_picture = $3,
+            is_verified = $4
+            last_login_at = CURRENT_TIMESTAMP
+        WHERE id = $5
+        `,
+        [
+            profile.id,
+            profile.displayName,
+            profile.photos?.[0]?.value || null,
+            true,
+            user.id
+        ]
+    );
+
+    return done(null, user);
+    }
+    const username =
+    profile.displayName
+        .toLowerCase()
+        .replace(/\s+/g, "") +
+    Math.floor(Math.random() * 10000);
+    const preferences = { theme: 'light', notifications: true, language: 'en-US' };
+    const country = countryName;
+
+const newUser = await pool.query(
+`
+INSERT INTO users
+(
+    username,
+    email,
+    password,
+    google_id,
+    google_full_name,
+    profile_picture,
+    preferences,
+    country,
+    is_verified,
+    last_login_at
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    $9
+    CURRENT_TIMESTAMP
+)
+
+RETURNING *;
+`,
+[
+    username,
+    profile.emails[0].value,
+    null,
+    profile.id,
+    profile.displayName,
+    profile.photos?.[0]?.value || null,
+    preferences,
+    true,
+    country
+]);
+    return done(null, newUser.rows[0]);
+    
+    } catch (err) {
+      console.error(err);
+      return done(err, null);
+    }
+  }
+));
+
+// Add the Local Strategy for Email/Password
+passport.use(new LocalStrategy(
+  {
+       usernameField: 'identifier', 
+      passwordField: 'password'
+            },
+            async (identifier, password, done) => {
+                try {
+                    // Search PostgreSQL for a matching email OR username
+                    const result = await pool.query(
+                        'SELECT * FROM users WHERE email = $1 OR username = $1',
+                        [identifier.toLowerCase().trim()]
+                    );
+
+                    if (result.rows.length === 0) {
+                        return done(null, false, { message: 'Invalid credentials.' });
+                    }
+
+                    const user = result.rows[0];
+
+                    // Check if they only signed up via Google and don't have a password
+                    if (!user.password) {
+                        return done(null, false, { message: 'Please sign in using Google.' });
+                    }
+
+                    // Compare hashes
+                    const isMatch = await bcrypt.compare(password, user.password);
+                    if (!isMatch) {
+                        return done(null, false, { message: 'Invalid credentials.' });
+                    }
+
+                    // Success! Pass the user object to Passport
+                    return done(null, user);
+
+        } catch (err) {
+            return done(err);
+        }
+    }
+));
+
+// Serialize and Deserialize User Session Data
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// 2. Take the ID from the session and look up the full user object
+passport.deserializeUser(async (id, done) => {
+  try {
+    const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
+    const user = result.rows[0];
+    
+    done(null, user); // This attaches the user object to req.user
+  } catch (err) {
+    done(err, null);
+  }
+});
+      
+
+
+//configure rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: 'Too many requests from this IP, please try again later.'
+});
+
+/sign up API
+router.post('/sign-up', limiter, async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Validate inputs
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    
+   if (username.length < 5) {
+      return res.status(400).json({ message: 'Username is too short!' });
+    }
+    
+
+    // Check if email is taken
+    const emails = await pool.query(
+    "SELECT * FROM users WHERE email = $1",
+    [email]
+  );
+    let existingEmail;
+    if (emails){
+   existingEmail = emails.rows[0];
+    }
+    
+    if (existingEmail) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+    // Check if username is taken
+    const usernames = await pool.query(
+    "SELECT * FROM users WHERE username = $1",
+    [username]
+  );
+    let existingUsername;
+    if (usernames){
+   existingUsername = usernames.rows[0];
+    }
+    
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username is taken, choose another one!' });
+    }
+    const countryName = getCountryNameFromReq(req);
+  
+// Hash password and save user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const country = countryName;
+    const preferences = { theme: 'light', notifications: true, language: 'en-US' };
+
+    const newUser = await pool.query(
+`
+INSERT INTO users
+(
+    username,
+    email,
+    password,
+    profile_picture,
+    preferences,
+    country,
+    last_login_at
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    CURRENT_TIMESTAMP
+)
+
+RETURNING *;
+`,
+[
+    username.toLowerCase(),
+    email.toLowerCase(),
+    hashedPassword,
+    null,
+    preferences,
+    country
+]);
+    
+    // Log the user in automatically
+    // Convert the new user document to a plain JavaScript object
+  const userObj = newUser.rows[0];
+        req.login(userObj, (err) => {
+            if (err) {
+                return next(err); // Handles passport login errors
+            }
+            // Success! The session is created!
+            res.status(201).json({ message: 'Registration successful!' });
+        });
+   
+  } catch (err) {
+    console.log(err+ ', ' + err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+//  Email or Username Login
+app.post('/login', limiter, (req, res, next) => {
+  // 1. Extract values to validate that the frontend sent the required data
+  const { identifier, password } = req.body;
+
+  if (!identifier || !password) {
+    return res.status(400).json({ message: 'Email/Username and password are required.' });
+  }
+
+  // Invoke Passport's Local Strategy
+  // "info" contains the custom error messages we wrote inside the strategy
+  passport.authenticate('local', (err, user, info) => {
+    
+    //  A critical server or database error occurred
+    if (err) {
+      console.error('Passport Auth Error:', err);
+      return next(err); 
+    }
+
+    //  Authentication failed (wrong password, account doesn't exist, etc.)
+    if (!user) {
+      return res.status(401).json({ message: info?.message || 'Invalid credentials!.' });
+    }
+
+    //  Credentials are correct! Establish the user session
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        console.error('Session creation failed:', loginErr);
+        return next(loginErr);
+      }
+
+      return res.status(200).json({
+        message: 'Logged in successfully.',
+       user: { id: user.id, username: user.username, email: user.email }
+    });
+    });
+  })(req, res, next); // Necessary to pass the request and response objects to Passport
+});
+
+// Trigger Google Sign-Up / Login Flow
+app.get('/google', limiter,
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+//user check api
+router.get('/user',  (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ loggedIn: true, user: req.user });
+  } else {
+    res.json({ loggedIn: false, user: null });
+  }
+});
+
+// Logout API
+router.get('/logout', checkSession, limiter, async(req, res) => {
+  try {
+    if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+    }
+  const userId = req.user.id;
+  await pool.query(
+      'UPDATE users SET is_active = false WHERE id = $1',
+      [userId]
+    );
+
+  req.logout((err) => {
+    if (err) return next(err);
+    
+    // Destroy the session in Database 
+    req.session.destroy((err) => {
+      if (err) return res.send('Error logging out');
+      
+      // Clear the cookie on the client side
+      res.clearCookie('connect.sid',{
+        path: '/',
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+      });
+      res.redirect('/');
+    });
+  });
+  } catch (error) {
+    console.error("Database error during logout:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+                               
