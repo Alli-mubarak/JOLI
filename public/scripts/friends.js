@@ -1,4 +1,4 @@
-
+aler6("hi");
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const fReqHeading = document.getElementById("f-req")
 const addFriendsHeading = document.getElementById("add-fr-h")
@@ -211,4 +211,6 @@ async function addUser(btn, userCard, rId){
             console.error(e);
       }
 }
+setTimeout(()=>{
 fetchUsers();
+},5000);
