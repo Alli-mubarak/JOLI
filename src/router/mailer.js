@@ -1,6 +1,7 @@
 import express from 'express'; 
 const router = express.Router();
-
+import geoip from "geoip-lite";
+import {pool} from '../config/db.js'; 
 
 router.get('/mails', (req, res) => {
   try{
