@@ -1,4 +1,4 @@
-aler6("hi");
+alert("hi");
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const fReqHeading = document.getElementById("f-req")
 const addFriendsHeading = document.getElementById("add-fr-h")
@@ -51,7 +51,17 @@ async function fetchUsers() {
       if(users.length < 1){
             return;
       }   
+  await users.forEach(user => {
+      if(pendingAccepts.includes(user.id)){
+       pendingAcceptsPic.push(user.profile_picture);
+       pendingAcceptsUsername.push(user.username);
+       }
+         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
+               await displayUser(user);
+            addFriendsHeading.classList.remove("hidden")
+        }
 
+       });
     
   if(pendingAccepts.length > 0){
       fReqHeading.classList.remove("hidden");
