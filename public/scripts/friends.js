@@ -27,7 +27,6 @@ async function fetchUsers() {
       if(fResponse.ok){
       const friendshipsResult  = await fResponse.json();
       const friendships = friendshipsResult.friendships;
-            _
       await friendships.forEach(f => {
       if(f.status === "pending"){
             if(f.sender_id === currentUserId){
