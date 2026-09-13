@@ -1,7 +1,7 @@
 import express from 'express';
 import {pool, initDb} from '../config/db.js'; 
 import mailRoutes from './router/mailer.js'; 
-//import authRoutes from './router/auth.js'; 
+import authRoutes from './router/auth.js'; 
 import postRoutes from './router/posts.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
@@ -334,7 +334,7 @@ async function fetchAuthorDetails(authorId){
 //***"""""""""""
 app.use('/api/m', mailRoutes);
 app.use('/api/auth', authRoutes);
-//app.use('/post', postRoutes);
+app.use('/post', postRoutes);
 //***********
 // function for detecting post like
 async function getPostLikeStatus(postId, userId){
@@ -393,6 +393,7 @@ app.get('/auth/google/callback', limiter, (req, res, next) => {
 
 // post creation api
 app.post('/api/create-post', checkSession, async (req, res) => {
+  try{
   if (!req.isAuthenticated() && !req.user){
    return  res.status(400).json({error: 'You need to log in first!'});
   }
@@ -406,7 +407,7 @@ app.post('/api/create-post', checkSession, async (req, res) => {
   if (!content) {
     return res.status(400).json({ error: 'Post must contain text content ' });
   }
-  try{
+  
   let mediaURLs;
   if(images){
     let imagesSize = 0;
@@ -775,7 +776,6 @@ app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,r
   }
 });
 
-
 //***********///
 //default page  route
 app.get('/',(req, res)=>{
@@ -798,7 +798,6 @@ app.get('/robots.txt', (req, res) => {
         `Sitemap: https://joli-indol.vercel.app`
     );
 });
-
 
 //homepage route
 app.get('/home',(req, res)=>{
@@ -969,11 +968,12 @@ app.get('/api/get-users', checkSession, limiter, async(req, res) => {
 
 //api for uploading pictures 
 app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
+  try{
   if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
   }
   
-  try{
+  
     const { imageStr } = req.body;
     const id = req.user.id
 
@@ -1116,8 +1116,7 @@ res.status(200).json({
     console.error(err);
     return res.status(500).json({ error: 'mail sending failed' });
   }
-})
-    
+});
 
 //response to all wrong paths
 app.use((req, res)=>{
