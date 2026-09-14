@@ -52,8 +52,9 @@ async function fetchUsers() {
             return;
       }   
   await users.forEach(user => {
-        const userPicUrl = user.profile_picture || "/images/default-user.png";
+      
       if(pendingAccepts.includes(user.id)){
+      try{
       fReqHeading.classList.remove("hidden");
       const htmlEl = `
       <div class="p-user">
@@ -71,6 +72,11 @@ async function fetchUsers() {
       </div>
       `;
       pendingRequestsContainer.innerHTML += htmlEl;
+      }catch(err){
+            notify("Error fetching friend requests", "error");
+        console.error("Error fetching users:", err);
+            
+      }
        }
          else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
                 displayUser(user);
