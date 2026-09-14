@@ -40,30 +40,31 @@
            <form id="email-signup" class="hidden">
              <h2>Create an Account</h2>
              <div class="input-box">
-               <label>Email</label>
-               <input name="email" type="email" placeholder="abc@mail.com">
+               <label for="email">Email</label>
+               <input name="email" type="email" placeholder="abc@mail.com" id="email">
                 <small id="email-error"></small>
              </div>
              <div class="input-box">
-               <label>Username</label>
-               <input name="username" type="text" placeholder="Create username">
+               <label for="username">Username</label>
+               <input name="username" type="text" placeholder="Create username" id="username">
                <small id="username-error"></small>
              </div>
              <div class="input-box">
-               <label>Password</label>
-               <input name="password" type="password">
-               <i class="fa-solid fa-eye" onclick="toggleReveal(this)"></i>
+               <label for="password">Password</label>
+               <input name="password" type="password" id="password">
+               <i class="fa-solid fa-eye pr-icon" ></i>
                 <small id="pwd-error"></small>
              </div>
              <div class="input-box">
-               <label>Confirm Password</label>
-               <input type="password" name="passwordConfirm">
-               <i class="fa-solid fa-eye" onclick="toggleReveal(this)"></i>
+               <label for="c-password">Confirm Password</label>
+               <input type="password" name="passwordConfirm" id="c-password">
+               <i class="fa-solid fa-eye pr-icon" ></i>
                 <small id="pwd-cfm-error"></small>
              </div>
              <small id="form-message"></small>
              <button type="submit" >Create My Account</button>
-             <p>Already have an account?, <span onclick="showSignInForm()">Sign In</span></p>
+             <p>Already have an account?, <span id="ssif-btn">Sign In</span></p>
+             <p>forgot password?, <span id="surp-btn">reset</span></p>
              <div class="other-login">
              <a href="/api/auth/google" class="google">
                     <img src="images/google-icon.png" alt="google-logo" />
@@ -79,17 +80,20 @@
            <form id="email-signin" class="hidden">
              <h2>Sign In to your Account</h2>
              <div class="input-box">
-               <label>Email or Username</label>
-               <input name="identifier" type="text" placeholder="Enter username or email">
+               <label for="identifier">Email or Username</label>
+               <input name="identifier" type="text" placeholder="Enter username or email" id="identifier">
              </div>
              <div class="input-box">
-               <label>Password</label>
-               <input name="password" type="password">
-               <i class="fa-solid fa-eye" onclick="toggleReveal(this)"></i>
+               <label for="i-password">Password</label>
+               <input name="password" type="password" id="i-password">
+               <i class="fa-solid fa-eye pr-icon"></i>
              </div>
               <small id="form-message"></small>
              <button type="submit" >Sign In</button>
-             <p>Are you new here?, <span onclick="showSignUpForm()">Sign Up</span></p>
+           
+             <p>Are you new here?, <span id="ssuf-btn">Sign Up</span></p>
+             <p>forgot password?, <span id="sirp-btn">reset</span></p>
+           
              <div class="other-login">
              <a href="/api/auth/google" class="google">
                     <img src="images/google-icon.png" alt="google-logo" />
@@ -101,6 +105,14 @@
                 </a>
              </div>
            </form>
+
+            <form id="reset-password" class="hidden">
+              <div class="input-box">
+               <label for>Email</label>
+               <input name="email" type="text" placeholder="Enter username or email">
+              </div>
+            </form>
+               
            </div>
         </div>
       </main>
