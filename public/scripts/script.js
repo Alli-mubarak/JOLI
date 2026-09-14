@@ -127,10 +127,10 @@ signUpForm.onsubmit = async(e) =>{
         return
     }
     if(!pwdRegex.test(pwdValue)){
-        pwdError.innerHTML = "use a strong password!. A strong password is a combination of lowercase letter(s), uppercase letter(s), special character(s) e.g $, and number(s)";
+        pwdError.innerHTML = "use a strong password, a strong password is a combination of lowercase letter(s), uppercase letter(s), special character(s) e.g $, and number(s).";
         setTimeout(()=>{
             pwdError.innerHTML = "";
-        },2000);
+        },3500);
         return
     }
     const pwdCfm = signUpForm.passwordConfirm.value;
