@@ -134,7 +134,7 @@ function displayPendingAccepts(i){
       try{
       const htmlEl = `
       <div class="p-user">
-       <img src=${pendingAcceptsPic[i]} alt="user picture" />
+       <img src=${pendingAcceptsPic[i] || "/images/default-user.png"} alt="user picture" />
        <div class="req-options">
          <div class="req-details">
           <p class="p-username">${pendingAcceptsUsername[i]}</p>
