@@ -40,7 +40,8 @@ async function fetchUsers() {
             }
       }
       });
-            
+            alert(pendingAccepts.length);
+            alert(pendingAcceptsTime.length);
       }else{
             notify("Error fetching friendships", "error");
       }
