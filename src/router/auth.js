@@ -147,8 +147,8 @@ RETURNING *;
     profile.displayName,
     profile.photos?.[0]?.value || null,
     preferences,
-    true,
-    country
+    country,
+   true
 ]);
     return done(null, newUser.rows[0]);
     
