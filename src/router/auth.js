@@ -171,7 +171,6 @@ async function sendGoogleMessage(email, username){
 
   
     const info = await transporter.sendMail(mailOptions);
-    console.log(info);
   return info;
   }catch(err){
     console.error("An error occurred while sending mail",err)
@@ -232,9 +231,9 @@ passport.use(new GoogleStrategy({
             user.id
         ]
     );
-    const greetNewUser = await sendGoogleMessage(email, user.username);
-    if(greetNewUser.error){
-      console.error("welcome message sending failed!");
+    const greetUpdatedUser = await sendGoogleMessage(email, user.username);
+    if(greetUpdatedUser.error){
+      console.error("Google message sending failed!");
     }else{
       console.log("Google message sent successfully!");
     }
@@ -291,8 +290,8 @@ RETURNING *;
     country,
    true
 ]);
-   const greetUpdatedUser = await sendWelcomeMessage(profile.emails[0].value, username);
-    if(greetUpdatedUser.error){
+   const greetNewUser = await sendWelcomeMessage(profile.emails[0].value, username);
+    if(greetNewUser.error){
       console.error("Welcome message sending failed!");
     }else{
       console.log("Welcome message sent successfully!");
