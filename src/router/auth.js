@@ -78,7 +78,7 @@ async function sendWelcomeMessage(email, username){
               <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
                 <tr>
                   <td align="center" style="border-radius: 6px; background-color: #555;">
-                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">View Notifications</a>
+                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">Explore Now!</a>
                   </td>
                 </tr>
               </table>
@@ -145,7 +145,7 @@ async function sendGoogleMessage(email, username){
               <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
                 <tr>
                   <td align="center" style="border-radius: 6px; background-color: #555;">
-                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">View Notifications</a>
+                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">Explore Now!</a>
                   </td>
                 </tr>
               </table>
