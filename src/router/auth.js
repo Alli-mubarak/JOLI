@@ -84,7 +84,7 @@ passport.use(new GoogleStrategy({
             google_id = $1,
             google_full_name = $2,
             profile_picture = $3,
-            is_verified = $4
+            is_verified = $4,
             last_login_at = CURRENT_TIMESTAMP
         WHERE id = $5
         `,
@@ -133,7 +133,7 @@ VALUES
     $6,
     $7,
     $8,
-    $9
+    $9,
     CURRENT_TIMESTAMP
 )
 
