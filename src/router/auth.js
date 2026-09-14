@@ -50,14 +50,14 @@ async function sendWelcomeMessage(email, username){
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'New notification on JOLI',
+    subject: 'Welcome message from JOLI',
     html: `
       <!DOCTYPE html>
       <html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>New Notification on JOLI</title>
+        <title>Welcome message from JOLI</title>
       </head>
       <body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
@@ -117,14 +117,14 @@ async function sendGoogleMessage(email, username){
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'New notification on JOLI',
+    subject: 'Google sign in message from JOLI',
     html: `
       <!DOCTYPE html>
       <html>
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>New Notification on JOLI</title>
+        <title>Google sign in message from JOLI</title>
       </head>
       <body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
         <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
