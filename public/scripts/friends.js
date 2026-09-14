@@ -52,6 +52,7 @@ async function fetchUsers() {
             return;
       }   
   await users.forEach(user => {
+        console.log(user);
       if(pendingAccepts.includes(user.id)){
        pendingAcceptsPic.push(user.profile_picture);
        pendingAcceptsUsername.push(user.username);
