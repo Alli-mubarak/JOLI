@@ -1,4 +1,4 @@
-alert("hi");
+
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const fReqHeading = document.getElementById("f-req")
 const addFriendsHeading = document.getElementById("add-fr-h")
