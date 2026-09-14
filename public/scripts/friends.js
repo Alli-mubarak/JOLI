@@ -40,8 +40,7 @@ async function fetchUsers() {
             }
       }
       });
-            alert(pendingAccepts.length);
-            alert(pendingAcceptsTime.length);
+            
       }else{
             notify("Error fetching friendships", "error");
       }
@@ -56,6 +55,7 @@ async function fetchUsers() {
       
       if(pendingAccepts.includes(user.id)){
       try{
+            alert("hey");
       fReqHeading.classList.remove("hidden");
       const htmlEl = `
       <div class="p-user">
