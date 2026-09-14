@@ -1,4 +1,4 @@
-const prIcons = document.querySelectorAll("pr-icon");
+const prIcons = document.querySelectorAll(".pr-icon");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
 const signInContainer = document.querySelector(".sign-in-container");
@@ -13,7 +13,12 @@ const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
 
-
+surpBtn.onclick = () =>{
+ notify("This feature will be available soon!")
+}
+sirpBtn.onclick = () =>{
+ notify("This feature will be available soon!")
+}
 function notify(msg){
           if(notifier.innerHTML === ""){
             const message = document.createElement('p');
