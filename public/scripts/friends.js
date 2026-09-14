@@ -54,8 +54,23 @@ async function fetchUsers() {
   await users.forEach(user => {
         const userPicUrl = user.profile_picture || "/images/default-user.png";
       if(pendingAccepts.includes(user.id)){
-       pendingAcceptsPic.push(userPicUrl);
-       pendingAcceptsUsername.push(user.username);
+      fReqHeading.classList.remove("hidden");
+      const htmlEl = `
+      <div class="p-user">
+       <img src=${user.profile_picture || "/images/default-user.png"} alt="user picture" />
+       <div class="req-options">
+         <div class="req-details">
+          <p class="p-username">${user.username}</p>
+          <small>${getReqTime(pendingAcceptsTime[pendingAccepts.indexOf(user_id)])}</small>
+         </div>
+         <div class="req-btns">
+         <button class="accept-btn">Accept</button>
+         <button class="remove-btn">Remove</button>
+         </div>
+       </div>
+      </div>
+      `;
+      pendingRequestsContainer.innerHTML += htmlEl;
        }
          else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
                 displayUser(user);
@@ -63,15 +78,7 @@ async function fetchUsers() {
         }
 
        });
-    
-  if(pendingAccepts.length > 0){
-        console.log(pendingAccepts);
-      fReqHeading.classList.remove("hidden");
-      await pendingAccepts.forEach((a,i) => {
-      displayPendingAccepts(i);
-            console.log(i);
-            })
-            }
+            
        allowUserView();
         return;
       } catch (err) {
@@ -131,28 +138,6 @@ return `${Math.floor(sDifference)}s`;
 
 }
 
-function displayPendingAccepts(i){
-      try{
-      const htmlEl = `
-      <div class="p-user">
-       <img src=${pendingAcceptsPic[i] || "/images/default-user.png"} alt="user picture" />
-       <div class="req-options">
-         <div class="req-details">
-          <p class="p-username">${pendingAcceptsUsername[i]}</p>
-          <small>${getReqTime(pendingAcceptsTime[i])}</small>
-         </div>
-         <div class="req-btns">
-         <button class="accept-btn">Accept</button>
-         <button class="remove-btn">Remove</button>
-         </div>
-       </div>
-      </div>
-      `;
-      pendingRequestsContainer.innerHTML += htmlEl;
-      }catch(err){
-            console.error(err)
-      }
-}
 function allowUserView(){
  try{
       const usersCard = document.querySelectorAll(".user")
