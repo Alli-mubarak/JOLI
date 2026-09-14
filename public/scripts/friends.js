@@ -52,8 +52,9 @@ async function fetchUsers() {
             return;
       }   
   await users.forEach(user => {
+        const userPicUrl = user.profile_picture || "/images/default-user.png";
       if(pendingAccepts.includes(user.id)){
-       pendingAcceptsPic.push(user.profile_picture || "/images/default-user.png");
+       pendingAcceptsPic.push(userPicUrl);
        pendingAcceptsUsername.push(user.username);
        }
          else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
