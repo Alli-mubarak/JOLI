@@ -92,7 +92,7 @@ signUpForm.onsubmit = async(e) =>{
     const emailValue = signUpForm.email.value;
     const emailError = signUpForm.querySelector("#email-error");
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(emailValue)) {
+    if (!emailRegex.test(emailValue.trim())) {
         emailError.innerHTML = "incorrect email format";
         setTimeout(()=>{
             emailError.innerHTML = "";
@@ -109,7 +109,7 @@ signUpForm.onsubmit = async(e) =>{
         },1200);
         return
     }
-    if (!usernameRegex.test(usernameValue)){
+    if (!usernameRegex.test(usernameValue.trim())){
         usernameError.innerHTML = "username can only contain lowercase, numbers and underscore";
         setTimeout(()=>{
             usernameError.innerHTML = "";
@@ -127,10 +127,10 @@ signUpForm.onsubmit = async(e) =>{
         return
     }
     if(!pwdRegex.test(pwdValue)){
-        pwdError.innerHTML = "use a strong password!";
+        pwdError.innerHTML = "use a strong password!. A strong password is a combination of lowercase letter(s), uppercase letter(s), special character(s) e.g $, and number(s)";
         setTimeout(()=>{
             pwdError.innerHTML = "";
-        },1200);
+        },2000);
         return
     }
     const pwdCfm = signUpForm.passwordConfirm.value;
