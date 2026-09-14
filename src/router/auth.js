@@ -227,6 +227,31 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.'
 });
 
+//  Google OAuth Callback Route
+authRouter.get('/google/callback', limiter, (req, res, next) => {
+  passport.authenticate('google', (err, user, info) => {
+    // Catch the TokenError / Bad Request gracefully
+    if (err) {
+      if (err.name === 'TokenError') {
+        console.log('Caught PWA Double-Exchange TokenError. Redirecting to app check.');
+        // If the cookie was already written successfully on the first trigger, 
+        // redirecting them straight to the dashboard will show them logged in.
+        return res.redirect('/');
+      }
+      return next(err);
+    }
+    
+    if (!user) {
+      return res.redirect('/');
+    }
+
+    req.logIn(user, (loginErr) => {
+      if (loginErr) return next(loginErr);
+      return res.redirect('/home');
+    });
+  })(req, res, next);
+});
+
 //sign up API
 authRouter.post('/sign-up', limiter, async (req, res) => {
   try {
