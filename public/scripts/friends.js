@@ -64,7 +64,7 @@ async function fetchUsers() {
        });
     
   if(pendingAccepts.length > 0){
-        console.log(pendindAccepts);
+        console.log(pendingAccepts);
       fReqHeading.classList.remove("hidden");
       await pendingAccepts.forEach((a,i) => {
       displayPendingAccepts(i);
