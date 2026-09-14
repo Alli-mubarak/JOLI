@@ -8,6 +8,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import rateLimit  from 'express-rate-limit';
 import transporter from '../../Utils/mailer.js';
 import 'dotenv/config'; // Automatically loads environment variables
+import bcrypt from 'bcrypt';
 
 const authRouter = express.Router();
 
