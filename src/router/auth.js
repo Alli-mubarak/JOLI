@@ -417,7 +417,7 @@ authRouter.post('/sign-up', limiter, async (req, res) => {
     // Check if email is taken
     const emails = await pool.query(
     "SELECT * FROM users WHERE email = $1",
-    [email]
+    [email.trim()]
   );
     let existingEmail;
     if (emails){
@@ -431,7 +431,7 @@ authRouter.post('/sign-up', limiter, async (req, res) => {
     // Check if username is taken
     const usernames = await pool.query(
     "SELECT * FROM users WHERE username = $1",
-    [username]
+    [username.trim()]
   );
     let existingUsername;
     if (usernames){
@@ -476,8 +476,8 @@ VALUES
 RETURNING *;
 `,
 [
-    username.toLowerCase(),
-    email.toLowerCase(),
+    username.toLowerCase().trim(),
+    email.toLowerCase().trim(),
     hashedPassword,
     null,
     preferences,
