@@ -52,7 +52,6 @@ async function fetchUsers() {
             return;
       }   
   await users.forEach(user => {
-        alert(user.username);
       if(pendingAccepts.includes(user.id)){
        pendingAcceptsPic.push(user.profile_picture);
        pendingAcceptsUsername.push(user.username);
@@ -65,9 +64,11 @@ async function fetchUsers() {
        });
     
   if(pendingAccepts.length > 0){
+        console.log(pendindAccepts);
       fReqHeading.classList.remove("hidden");
       await pendingAccepts.forEach((a,i) => {
       displayPendingAccepts(i);
+            console.log(i);
             })
             }
        allowUserView();
