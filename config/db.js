@@ -110,7 +110,6 @@ CREATE TABLE IF NOT exists comments (
     content TEXT NOT NULL,                                      
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-CREATE INDEX idx_comments_post_id ON comments(post_id); 
 CREATE TABLE IF NOT exists friendships (
     sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
     receiver_id UUID REFERENCES users(id) ON DELETE CASCADE,
