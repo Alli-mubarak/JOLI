@@ -1,10 +1,14 @@
-const authSection = document.getElementById("auth-section");
+const prIcons = document.querySelectorAll("pr-icon");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
 const signInContainer = document.querySelector(".sign-in-container");
 const caption = document.querySelector(".caption");
 const signUpForm = document.getElementById("email-signup");
+const ssufBtn = document.getElementById("ssuf-btn");
+const surpBtn = document.getElementById("surp-btn");
 const signInForm = document.getElementById("email-signin");
+const ssifBtn = document.getElementById("ssif-btn");
+const sirpBtn = document.getElementById("sirp-btn");
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
@@ -77,12 +81,12 @@ function proceedWithUsername(){
     signInForm.classList.remove("hidden");
     signInForm.identifier.value = emailInput.value.trim();
 }
-function showSignUpForm(){
+ssufBtn.onclick = () => {
     signInContainer.classList.add("hidden");
     signInForm.classList.add("hidden");
     signUpForm.classList.remove("hidden");
 }
-function showSignInForm(){
+ssifBtn.onclick = () => {
     signInContainer.classList.add("hidden");
     signUpForm.classList.add("hidden");
     signInForm.classList.remove("hidden");
@@ -271,6 +275,9 @@ if(identifier.length < 5 && password.length < 8){
         },1600)
  }
 }
+Array.from(prIcons).forEach(i => {
+ i.onclick = (e) => {toggleReveal(e.currentTarget)} 
+});
 function toggleReveal(el){
     const passwordInput = el.previousElementSibling;
     console.log(passwordInput);
