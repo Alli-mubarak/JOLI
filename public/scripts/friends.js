@@ -61,7 +61,7 @@ async function fetchUsers() {
        <div class="req-options">
          <div class="req-details">
           <p class="p-username">${user.username}</p>
-          <small>${getReqTime(pendingAcceptsTime[pendingAccepts.indexOf(user_id)])}</small>
+          <small>${getReqTime(pendingAcceptsTime[pendingAccepts.indexOf(user.id)])}</small>
          </div>
          <div class="req-btns">
          <button class="accept-btn">Accept</button>
