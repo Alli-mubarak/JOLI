@@ -591,7 +591,7 @@ app.get('/api/get-users', checkSession, limiter, async(req, res) => {
     let users
     if(req.user && req.isAuthenticated()){
       users = await pool.query(
-        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE AND id != $1 LIMIT 10",
+        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE AND id != $1 ",
         [req.user.id]
    );
       return res.status(200).json({
