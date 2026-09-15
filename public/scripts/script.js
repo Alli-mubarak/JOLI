@@ -316,16 +316,23 @@ rBtn.onclick = () =>{
  formsState = "";
  }else{return;}
 }
+
 prForm.onsubmit = async(e) => {
 try{
  e.preventDefault();
  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
- const emailValue = prForm.email.value
+ const emailValue = prForm.email.value;
+const formMessage = prForm.querySelector("#form-message");
   if (!emailRegex.test(emailValue.trim())) {
-        notify("incorrect email format");
+    formMessage.innerHTML = "";
+    formMessage.textContent = 'You will receive an OTP soon';
+    formMessage.style.color = 'green';
+   setTimeout(()=>{
+      formMessage.innerHTML = "";  
+   },2000);
         return
     }
-const formMessage = signInForm.querySelector("#form-message");
+
 const formLoader = document.createElement("div");
 formLoader.classList.add("form-loader");
 formMessage.appendChild(formLoader);
@@ -346,18 +353,26 @@ formMessage.appendChild(formLoader);
    formMessage.innerHTML = "";
     formMessage.textContent = 'You will receive an OTP soon';
     formMessage.style.color = 'green';
-
+setTimeout(()=>{
+      formMessage.innerHTML = "";  
+   },2000);
  return;
  }else{
    formMessage.innerHTML = "";
     formMessage.textContent = 'server error occurred, try again!';
     formMessage.style.color = 'red';
+setTimeout(()=>{
+      formMessage.innerHTML = "";  
+   },2000);
   return;
  }
 }catch(err){
  formMessage.innerHTML = "";
     formMessage.textContent = 'Network error. Cannot reach the server.';
     formMessage.style.color = 'red';
+setTimeout(()=>{
+      formMessage.innerHTML = "";  
+   },2000);
 console.error(err);
 }
     
