@@ -1,6 +1,7 @@
 const prIcons = document.querySelectorAll(".pr-icon");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
+const prBtn = document.getElementById("pr-btn");
 const signInContainer = document.querySelector(".sign-in-container");
 const caption = document.querySelector(".caption");
 const signUpForm = document.getElementById("email-signup");
@@ -65,6 +66,8 @@ function confirmEmailAndCheckUsername(){
         emailBtn.style.color = "#ccc";
     }
 }
+
+prBtn.onclick = () => {notify('This feature is not available yet!')}
 
 emailInput.oninput = () => {
    confirmEmailAndCheckUsername();
