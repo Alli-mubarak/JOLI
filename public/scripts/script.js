@@ -10,22 +10,43 @@ const signInForm = document.getElementById("email-signin");
 const ssifBtn = document.getElementById("ssif-btn");
 const sirpBtn = document.getElementById("sirp-btn");
 const prForm = document.getElementById("reset-password");
+const rBtn = document.getElementById("return-btn");
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
+let formsState;
 
 surpBtn.onclick = () =>{
  signInContainer.classList.add("hidden");
     signInForm.classList.add("hidden");
     signUpForm.classList.add("hidden");
  prForm.classList.remove("hidden");
+ formsState = "fsuf"
 }
 sirpBtn.onclick = () =>{
  signInContainer.classList.add("hidden");
     signInForm.classList.add("hidden");
     signUpForm.classList.add("hidden");
  prForm.classList.remove("hidden");
+ formsState = "fsif"
 }
+
+rBtn.onclick = () =>{
+ if(formsState === "fsif"){
+  signInContainer.classList.add("hidden");
+    signUpForm.classList.add("hidden");
+ prForm.classList.add("hidden");
+  signInForm.classList.remove("hidden");
+ formsState = "";
+ }else if(formsState === "fsuf"){
+  signInContainer.classList.add("hidden");
+    signInForm.classList.add("hidden");
+ prForm.classList.add("hidden");
+  signUpForm.classList.remove("hidden");
+ formsState = "";
+ }else{return;}
+}
+
 function notify(msg){
           if(notifier.innerHTML === ""){
             const message = document.createElement('p');
