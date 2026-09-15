@@ -17,30 +17,22 @@ let closeNotifierID;
 let formsState;
 
 surpBtn.onclick = () =>{
- signInContainer.classList.add("hidden");
-    signInForm.classList.add("hidden");
-    signUpForm.classList.add("hidden");
+ signUpForm.classList.add("hidden");
  prForm.classList.remove("hidden");
- formsState = "fsuf"
+ formsState = "fsuf";
 }
 sirpBtn.onclick = () =>{
- signInContainer.classList.add("hidden");
-    signInForm.classList.add("hidden");
-    signUpForm.classList.add("hidden");
+signInForm.classList.add("hidden");
  prForm.classList.remove("hidden");
- formsState = "fsif"
+ formsState = "fsif";
 }
 
 rBtn.onclick = () =>{
  if(formsState === "fsif"){
-  signInContainer.classList.add("hidden");
-    signUpForm.classList.add("hidden");
  prForm.classList.add("hidden");
   signInForm.classList.remove("hidden");
  formsState = "";
  }else if(formsState === "fsuf"){
-  signInContainer.classList.add("hidden");
-    signInForm.classList.add("hidden");
  prForm.classList.add("hidden");
   signUpForm.classList.remove("hidden");
  formsState = "";
