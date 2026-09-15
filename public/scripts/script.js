@@ -321,11 +321,11 @@ rBtn.onclick = () =>{
 }
 
 prForm.onsubmit = async(e) => {
-try{
  e.preventDefault();
  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
  const emailValue = prForm.email.value;
 const formMessage = prForm.querySelector("#form-message");
+try{
   if (!emailRegex.test(emailValue.trim())) {
     formMessage.innerHTML = "";
     formMessage.textContent = 'incorrect email format';
