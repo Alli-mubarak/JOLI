@@ -328,8 +328,8 @@ try{
 const formMessage = prForm.querySelector("#form-message");
   if (!emailRegex.test(emailValue.trim())) {
     formMessage.innerHTML = "";
-    formMessage.textContent = 'You will receive an OTP soon';
-    formMessage.style.color = 'green';
+    formMessage.textContent = 'incorrect email format';
+    formMessage.style.color = 'red';
    setTimeout(()=>{
       formMessage.innerHTML = "";  
    },2000);
