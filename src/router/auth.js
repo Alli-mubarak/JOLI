@@ -587,5 +587,26 @@ authRouter.get('/logout', checkSession, limiter, async(req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
-                               
+
+authRouter.post('/reset-password', limiter, (req, res, next) => {
+  try{
+  const {email} = req.body;
+  if(req.isAuthenticated() || req.user) {
+    return res.status(401).send('You are already logged in.');
+  }
+  if (!email) {
+      return res.status(400).json({ message: 'Email is required!'});
+    }
+  const findEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email.trim()]);
+  let existingEmail
+    if(findEmail.rows.length !=== 0)
+   existingEmail = findEmail.rows[0];
+    }
+    
+  }catch(err){
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });    
+  }
+});
+
 export default authRouter;
