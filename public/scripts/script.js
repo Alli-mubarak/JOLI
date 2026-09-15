@@ -16,29 +16,6 @@ const notifier = document.querySelector(".notifier");
 let closeNotifierID;
 let formsState;
 
-surpBtn.onclick = () =>{
- signUpForm.classList.add("hidden");
- prForm.classList.remove("hidden");
- formsState = "fsuf";
-}
-sirpBtn.onclick = () =>{
-signInForm.classList.add("hidden");
- prForm.classList.remove("hidden");
- formsState = "fsif";
-}
-
-rBtn.onclick = () =>{
- if(formsState === "fsif"){
- prForm.classList.add("hidden");
-  signInForm.classList.remove("hidden");
- formsState = "";
- }else if(formsState === "fsuf"){
- prForm.classList.add("hidden");
-  signUpForm.classList.remove("hidden");
- formsState = "";
- }else{return;}
-}
-
 function notify(msg){
           if(notifier.innerHTML === ""){
             const message = document.createElement('p');
@@ -317,3 +294,49 @@ function toggleReveal(el){
     }
 }
 
+surpBtn.onclick = () =>{
+ signUpForm.classList.add("hidden");
+ prForm.classList.remove("hidden");
+ formsState = "fsuf";
+}
+sirpBtn.onclick = () =>{
+signInForm.classList.add("hidden");
+ prForm.classList.remove("hidden");
+ formsState = "fsif";
+}
+
+rBtn.onclick = () =>{
+ if(formsState === "fsif"){
+ prForm.classList.add("hidden");
+  signInForm.classList.remove("hidden");
+ formsState = "";
+ }else if(formsState === "fsuf"){
+ prForm.classList.add("hidden");
+  signUpForm.classList.remove("hidden");
+ formsState = "";
+ }else{return;}
+}
+prForm.onsubmit = (e) => {
+ e.preventDefault();
+ const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+ const emailValue = prForm.email.value
+  if (!emailRegex.test(emailValue.trim())) {
+        notify("incorrect email format");
+        return
+    }
+   // Automatically extract data from the input fields
+  const formData = new FormData(signInForm);
+  const payload = Object.fromEntries(formData.entries());
+ const response = await fetch("/api/auth/reset-password", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Inform server we are sending JSON data
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
+    });
+ 
+    // 6. Parse the server JSON response
+    const data = await response.json();
+ 
+}
