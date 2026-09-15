@@ -317,6 +317,7 @@ rBtn.onclick = () =>{
  }else{return;}
 }
 prForm.onsubmit = async(e) => {
+try{
  e.preventDefault();
  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
  const emailValue = prForm.email.value
@@ -325,7 +326,7 @@ prForm.onsubmit = async(e) => {
         return
     }
    // Automatically extract data from the input fields
-  const formData = new FormData(signInForm);
+  const formData = new FormData(prForm);
   const payload = Object.fromEntries(formData.entries());
  const response = await fetch("/api/auth/reset-password", {
       method: 'POST',
@@ -343,6 +344,9 @@ prForm.onsubmit = async(e) => {
  }else{
            notify("An error occurred!");
  }
-    
+}catch(err){
+ notify("An error occurred!");
+console.error(err);
+}
     
 }
