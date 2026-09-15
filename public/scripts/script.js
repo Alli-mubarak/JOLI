@@ -325,6 +325,11 @@ try{
         notify("incorrect email format");
         return
     }
+const formMessage = signInForm.querySelector("#form-message");
+const formLoader = document.createElement("div");
+formLoader.classList.add("form-loader");
+formMessage.appendChild(formLoader);
+          
    // Automatically extract data from the input fields
   const formData = new FormData(prForm);
   const payload = Object.fromEntries(formData.entries());
@@ -337,15 +342,22 @@ try{
       body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
     });
  if(response.ok){
-           const data = await response.json();
- 
-           alert("success");
-           return;
+ const data = await response.json();
+   formMessage.innerHTML = "";
+    formMessage.textContent = 'You will receive an OTP soon';
+    formMessage.style.color = 'green';
+
+ return;
  }else{
-           notify("An error occurred!");
+   formMessage.innerHTML = "";
+    formMessage.textContent = 'server error occurred, try again!';
+    formMessage.style.color = 'red';
+  return;
  }
 }catch(err){
- notify("An error occurred!");
+ formMessage.innerHTML = "";
+    formMessage.textContent = 'Network error. Cannot reach the server.';
+    formMessage.style.color = 'red';
 console.error(err);
 }
     
