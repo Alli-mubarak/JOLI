@@ -9,15 +9,22 @@ const surpBtn = document.getElementById("surp-btn");
 const signInForm = document.getElementById("email-signin");
 const ssifBtn = document.getElementById("ssif-btn");
 const sirpBtn = document.getElementById("sirp-btn");
+const prForm = document.getElementById("reset-password");
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
 
 surpBtn.onclick = () =>{
- notify("This feature will be available soon!")
+ signInContainer.classList.add("hidden");
+    signInForm.classList.add("hidden");
+    signUpForm.classList.add("hidden");
+ prForm.classList.remove("hidden");
 }
 sirpBtn.onclick = () =>{
- notify("This feature will be available soon!")
+ signInContainer.classList.add("hidden");
+    signInForm.classList.add("hidden");
+    signUpForm.classList.add("hidden");
+ prForm.classList.remove("hidden");
 }
 function notify(msg){
           if(notifier.innerHTML === ""){
