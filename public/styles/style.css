@@ -247,12 +247,25 @@ form a:hover{
   color: #000;
   border-color:#222;
 }
-        .invisible{
-            opacity:0;
-        }
-        .hidden{
-            display:none;
-          }
+  #return-btn{
+    position: absolute;
+    left:10px; top:30px;
+    width: 30px; height:30px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    Justify-content: center;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  #return-btn:hover{
+    background:rgba(0,0,0,0.05);
+  }
+.invisible{opacity:0;}
+.hidden{
+  display:none;
+  }
 footer {
   height:70px;
   padding: 10px;
@@ -299,19 +312,6 @@ footer a{
     align-items :center ;
     justify-content:center;
   }
-  #return-btn{
-    position: absolute;
-    left:10px; top:30px;
-    width: 40px; height:40px;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    Justify-content: center;
-    transition: all 0.5s ease;
-    cursor: pointer;
-  }
-  #return-btn:hover{
-    background:rgba(0,0,0,0.05);
-  }
+
 }
   
