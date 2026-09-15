@@ -335,8 +335,14 @@ prForm.onsubmit = (e) => {
       },
       body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
     });
+ if(response.ok){
+           const data = await response.json();
  
-    // 6. Parse the server JSON response
-    const data = await response.json();
- 
+           alert("success");
+           return;
+ }else{
+           notify("An error occurred!");
+ }
+    
+    
 }
