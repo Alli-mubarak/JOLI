@@ -603,9 +603,9 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
       if(user.google_id && user.google_id.length > 1){
         return res.status(200).json({ message: 'Google login detected, log in with Google'});
       }
-      return res.status(200).json({ message: 'Email exists, otp will be sent'});
+      return res.status(200).json({ message: 'Email found, otp will be sent'});
     }else{
-      return res.status(400).json({ message: 'Email does not exist'});
+      return res.status(400).json({ message: 'Email not found'});
     }
     
   }catch(err){
