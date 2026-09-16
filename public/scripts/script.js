@@ -325,6 +325,7 @@ prForm.onsubmit = async(e) => {
  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
  const emailValue = prForm.email.value;
 const formMessage = prForm.querySelector("#form-message");
+const emailBox = prForm.querySelector(".input-box");
 try{
   if (!emailRegex.test(emailValue.trim())) {
     formMessage.innerHTML = "";
@@ -366,7 +367,14 @@ if(dataMessage.includes("Google")){
     formMessage.style.color = 'green';
 }
 setTimeout(()=>{
-      formMessage.innerHTML = "";  
+formMessage.innerHTML = "";
+if(dataMessage.includes("Email found")){
+emailBox.classList.add("hidden");
+const otpBox = `
+<p>You will enter otp here </p>
+`;
+emailBox.insertAdjacentHTML('afterend', otpBox);
+}
 },2000);
  return;
  }else{
