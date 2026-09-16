@@ -18,12 +18,13 @@ const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
 const postMenuContainer = document.getElementById("post-menu-container");
 const postMenuCloser = document.getElementById("p-closer-space");
-  const postMenu = document.getElementById("post-menu");
-  let pmCloserBtn = document.getElementById("p-closer-btn");
+const commentsBox = document.getElementById("comments");
+const postMenu = document.getElementById("post-menu");
+let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 let isAuthorised = false;
 let scrollPosition = 0;
-
+let commentContents
 
   let imgArray;
   let currIndex;
@@ -88,9 +89,21 @@ function linkify(text) {
   });
 }
 
+function linkifyComments(){
+  try{
+  commentContents = document.querySelectorAll("comment-content");
+  Array.from(commentContents).forEach(c => {
+    const cc = c.querySelector(".comment-content");
+    cc.innerHTML = linkify(cc.textContent);
+  });
+  }catch(err){console.error(err)}
+}
   
 
 postContent.innerHTML = linkify(postContent.textContent);
+if(commentsBox.children.length > 1){
+  linkifyComments();
+}
 let closeNID;
         
 nCloser.onclick = () =>{
@@ -488,13 +501,14 @@ commentInput.oninput = () =>{
         
         if(commentContainer.textContent.trim() === ""){
           commentContainer.textContent = 1;
-          const commentsBox = document.getElementById("comments");
           commentsBox.innerHTML = "<div id='c-chain'></div>";
           commentsBox.innerHTML += newCommentHTML;
+          linkifyComments();
         }else{
           const commentChain = document.getElementById("c-chain");
           commentContainer.textContent = Number(commentContainer.textContent) + 1;
           commentChain.insertAdjacentHTML('afterend', newCommentHTML);
+          linkifyComments();
         }
         notify("comment added!");
      //**** update UI
