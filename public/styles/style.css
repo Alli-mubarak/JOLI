@@ -262,6 +262,43 @@ form a:hover{
   #return-btn:hover{
     background:rgba(0,0,0,0.05);
   }
+#otp-form{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height:50px;
+        padding: 10px ;
+    }
+  .otp-container {
+    display: flex;
+    gap: 5px;
+    justify-content: start;
+    width: 300px;
+    position: relative;
+  }
+  .otp-input {
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+  }
+  .otp-input:focus {
+    border-color: #333;
+    outline: none;
+  }
+  #submit-otp{
+      height:45px;
+      display:block;
+      padding: 0 20px;
+      border-radius:10px;
+      border:none;
+      font-size:25px;
+      background:#999;
+      color:#bbb;
+      cursor: pointer;
+  }
 .invisible{opacity:0;}
 .hidden{
   display:none;
