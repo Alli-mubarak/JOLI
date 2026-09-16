@@ -269,14 +269,15 @@ form a:hover{
   .otp-container {
     display: flex;
     gap: 5px;
+    flex-direction: row !important;
     justify-content: start;
     width: 300px;
     position: relative;
     background:blue;
   }
   .otp-input {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     font-size: 18px;
     text-align: center;
     border: 2px solid #ccc;
