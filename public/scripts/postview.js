@@ -94,19 +94,16 @@ function linkifyComments(){
   commentContents = document.querySelectorAll(".comment-content");
   Array.from(commentContents).forEach(cc => {
     cc.innerHTML = linkify(cc.textContent);
-    alert(cc);
-    alert(cc.innerHTML)
   });
   }catch(err){console.error(err)}
 }
   
 postContent.innerHTML = linkify(postContent.textContent);
 if(commentsBox.children.length > 1){
-  setTimeout(()=>{
   linkifyComments();
-  },5000);
   alert("there's comment");
 }
+
 let closeNID;
         
 nCloser.onclick = () =>{
