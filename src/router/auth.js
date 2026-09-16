@@ -588,7 +588,7 @@ authRouter.get('/logout', checkSession, limiter, async(req, res) => {
   }
 });
 
-authRouter.post('/reset-password', limiter, (req, res) => {
+authRouter.post('/reset-password', limiter, async(req, res) => {
   try{
   const {email} = req.body;
   if(req.isAuthenticated() || req.user) {
