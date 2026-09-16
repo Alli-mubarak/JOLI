@@ -102,7 +102,9 @@ function linkifyComments(){
   
 postContent.innerHTML = linkify(postContent.textContent);
 if(commentsBox.children.length > 1){
+  setTimeout(()=>{
   linkifyComments();
+  },5000);
   alert("there's comment");
 }
 let closeNID;
