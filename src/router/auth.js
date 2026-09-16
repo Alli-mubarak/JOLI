@@ -50,6 +50,7 @@ async function sendWelcomeMessage(email, username){
     from: process.env.EMAIL_USER,
     to: email,
     subject: 'Welcome message from JOLI',
+    text: "You are welcome to JOLI, We are happy to have you.",
     html: `
       <!DOCTYPE html>
       <html>
@@ -117,6 +118,7 @@ async function sendGoogleMessage(email, username){
     from: process.env.EMAIL_USER,
     to: email,
     subject: 'Google sign in message from JOLI',
+    text: "You have now signed in with Google, We are happy to have you.",
     html: `
       <!DOCTYPE html>
       <html>
