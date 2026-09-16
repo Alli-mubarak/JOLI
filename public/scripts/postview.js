@@ -91,10 +91,9 @@ function linkify(text) {
 
 function linkifyComments(){
   try{
-  commentContents = document.querySelectorAll("comment-content");
-  Array.from(commentContents).forEach(c => {
-    const cc = c.querySelector(".comment-content");
-    cc.innerHTML = linkify(cc.textContent);
+  commentContents = document.querySelectorAll(".comment-content");
+  Array.from(commentContents).forEach(cc => {
+    cc.innerHTML = linkify(c.textContent);
   });
   }catch(err){console.error(err)}
 }
