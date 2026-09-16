@@ -354,7 +354,7 @@ formMessage.appendChild(formLoader);
 const data = await response.json();
  if(response.ok){
    formMessage.innerHTML = "";
-    formMessage.textContent = 'You will receive an OTP soon';
+    formMessage.textContent = data.message || 'You will receive an OTP soon';
     formMessage.style.color = 'green';
 setTimeout(()=>{
       formMessage.innerHTML = "";  
