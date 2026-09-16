@@ -264,6 +264,7 @@ form a:hover{
   }
 #otp-form{
         padding: 10px ;
+  background:red;
     }
   .otp-container {
     display: flex;
@@ -271,6 +272,7 @@ form a:hover{
     justify-content: start;
     width: 300px;
     position: relative;
+    background:blue;
   }
   .otp-input {
     width: 35px;
@@ -291,7 +293,7 @@ form a:hover{
       padding: 0 20px;
       border-radius:10px;
       border:none;
-      font-size:25px;
+      font-size:1.1rem;
       background:#999;
       color:#bbb;
       cursor: pointer;
