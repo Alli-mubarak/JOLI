@@ -12,6 +12,10 @@ const ssifBtn = document.getElementById("ssif-btn");
 const sirpBtn = document.getElementById("sirp-btn");
 const prForm = document.getElementById("reset-password");
 const rBtn = document.getElementById("return-btn");
+let otpForm;
+let inputs;
+let otpBtn;
+let otp = "" ;
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
@@ -369,11 +373,27 @@ if(dataMessage.includes("Google")){
 setTimeout(()=>{
 formMessage.innerHTML = "";
 if(dataMessage.includes("Email found")){
-emailBox.classList.add("hidden");
+prForm.classList.add("hidden");
 const otpBox = `
-<p>You will enter otp here </p>
+<p id="otp-label">Enter the otp received from <b>joli.app.connect@gmail.com</b> below</p>
+<form id="otp-form">
+<div class="otp-container">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  
+</div>
+<button id="submit-otp" disabled>Submit</button>
+</form>
 `;
-emailBox.insertAdjacentHTML('afterend', otpBox);
+prForm.insertAdjacentHTML('afterend', otpBox);
+otpForm = document.getElementById("otp-form");
+inputs = document.querySelectorAll('.otp-input');
+otpBtn = document.getElementById("submit-otp");
+activateInputs()
 }
 },2000);
  return;
@@ -397,3 +417,65 @@ console.error(err);
 }
     
 }
+
+function activateInputs(){
+try{
+inputs.forEach((input, index) => {
+    // Jump to next input when a character is typed
+    input.addEventListener('input', (e) => {
+     if(
+     inputs[0].value.length > 0 &&
+     inputs[1].value.length > 0 &&
+     inputs[2].value.length > 0 &&
+     inputs[3].value.length > 0 &&
+     inputs[4].value.length > 0 &&
+     inputs[5].value.length > 0 
+     ){
+     otpBtn.disabled = false;
+     otpBtn.style.background = "#222";
+     otpBtn.style.color = "#fff";
+     }else{
+     otpBtn.disabled = true;
+     otpBtn.style.background = "#999";
+     otpBtn.style.color = "#bbb";
+     otp = "";
+     }
+      if (e.target.value.length >= 1 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+        
+      }
+    });
+
+    // Move backward if user presses Backspace on an empty field
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+        inputs[index - 1].focus();
+         
+      }
+      
+    });
+  });
+}catch(err){
+notify("error occured, try again later!");
+ console.error(err);
+}
+}
+  
+  otpForm.onsubmit = (e) =>{
+  e.preventDefault();
+  propagateOtp();
+  otpBtn.disabled = true;
+  otpBtn.style.background = "#999";
+  otpBtn.style.color = "#bbb";
+  otp = "";
+  otpForm.reset();
+  
+  }
+  
+  function propagateOtp(){
+      inputs.forEach(input => {
+          otp += input.value;
+      });
+      otp = Number(otp);
+      alert(otp)
+               }
