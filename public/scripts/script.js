@@ -424,6 +424,7 @@ function activateInputs(){
 try{
 inputs.forEach((input, index) => {
  input.addEventListener('input', (e) => {
+try{
    if(input.value.length > 1) input.value = input.value.slice(0, 1);
    if(!Number(input.value)) input.value = "";
    if(
@@ -447,6 +448,10 @@ inputs.forEach((input, index) => {
         inputs[index + 1].focus();
         
       }
+}catch(err){
+          console.error(err);
+          input.value = "";
+}
     });
 
     // Move backward if user presses Backspace on an empty field
