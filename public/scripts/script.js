@@ -351,8 +351,8 @@ formMessage.appendChild(formLoader);
       },
       body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
     });
+const data = await response.json();
  if(response.ok){
- const data = await response.json();
    formMessage.innerHTML = "";
     formMessage.textContent = 'You will receive an OTP soon';
     formMessage.style.color = 'green';
@@ -362,7 +362,7 @@ setTimeout(()=>{
  return;
  }else{
    formMessage.innerHTML = "";
-    formMessage.textContent = 'server error occurred, try again!';
+    formMessage.textContent = data.message || 'server error occurred, try again!';
     formMessage.style.color = 'red';
 setTimeout(()=>{
       formMessage.innerHTML = "";  
@@ -371,7 +371,7 @@ setTimeout(()=>{
  }
 }catch(err){
  formMessage.innerHTML = "";
-    formMessage.textContent = 'Network error. Cannot reach the server.';
+    formMessage.textContent =  'Network error. Cannot reach the server.';
     formMessage.style.color = 'red';
 setTimeout(()=>{
       formMessage.innerHTML = "";  
