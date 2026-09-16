@@ -263,14 +263,13 @@ form a:hover{
     background:rgba(0,0,0,0.05);
   }
 #otp-form{
-        padding: 10px ;
-  background:red;
+  padding: 20px 10px ;
     }
   .otp-container {
     display: flex;
-    gap: 5px;
+    gap: 8px;
     flex-direction: row !important;
-    justify-content: start;
+    justify-content: center !important;
     width: 300px;
     position: relative;
     background:blue;
