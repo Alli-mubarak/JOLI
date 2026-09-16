@@ -353,12 +353,12 @@ formMessage.appendChild(formLoader);
     });
 const data = await response.json();
  if(response.ok){
-   formMessage.innerHTML = "";
+formMessage.innerHTML = "";
 const dataMessage = data.message;
-if(dataMessage.includes("Google"){
+if(dataMessage.includes("Google")){
     formMessage.textContent = data.message ;
     formMessage.style.color = 'red';
-}else if(dataMessage.includes("not"){
+}else if(dataMessage.includes("not")){
     formMessage.textContent = data.message ;
     formMessage.style.color = 'red';
 }else{
@@ -367,7 +367,7 @@ if(dataMessage.includes("Google"){
 }
 setTimeout(()=>{
       formMessage.innerHTML = "";  
-   },2000);
+},2000);
  return;
  }else{
    formMessage.innerHTML = "";
