@@ -425,6 +425,9 @@ try{
 inputs.forEach((input, index) => {
     // Jump to next input when a character is typed
     input.addEventListener('input', (e) => {
+   if(!Number(input.value)){
+        input.value = "";
+   }
      if(
      inputs[0].value.length > 0 &&
      inputs[1].value.length > 0 &&
