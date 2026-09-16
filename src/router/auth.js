@@ -598,7 +598,7 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
       return res.status(400).json({ message: 'Email is required!'});
     }
   const findEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email.trim()]);
-    if(findEmail.rows.length !=== 0){
+    if(findEmail.rows.length !== 0){
       const user = findEmail.rows[0];
       if(user.google_id && user.google_id.length > 1){
         return res.status(200).json({ message: 'Google login detected, log in with Google'});
