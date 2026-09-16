@@ -424,9 +424,9 @@ function activateInputs(){
 try{
 inputs.forEach((input, index) => {
  input.addEventListener('input', (e) => {
+   if(input.value.length > 1) input.value = input.value.slice(0, 1);
    if(!Number(input.value)) input.value = "";
-  if(input.value.length > 1) input.value = input.value.slice(0, 1);
-     if(
+   if(
      inputs[0].value.length > 0 &&
      inputs[1].value.length > 0 &&
      inputs[2].value.length > 0 &&
