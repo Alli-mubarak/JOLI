@@ -404,7 +404,7 @@ authRouter.post('/sign-up', limiter, async (req, res) => {
 
     // Validate inputs
     if (!username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+      return res.status(400).json({ message: 'All fields are required!' });
     }
     
    if (username.length < 5) {
@@ -423,7 +423,7 @@ authRouter.post('/sign-up', limiter, async (req, res) => {
     }
     
     if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: 'Email already exists!'});
     }
 
     // Check if username is taken
@@ -569,7 +569,7 @@ authRouter.get('/logout', checkSession, limiter, async(req, res) => {
     
     // Destroy the session in Database 
     req.session.destroy((err) => {
-      if (err) return res.send('Error logging out');
+      if (err) return res.send('Error logging out!');
       
       // Clear the cookie on the client side
       res.clearCookie('connect.sid',{
@@ -600,19 +600,19 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
     if(findEmail.rows.length !== 0){
       const user = findEmail.rows[0];
       if(user.google_id && user.google_id.length > 1){
-        return res.status(200).json({ message: 'Google login detected, log in with Google'});
+        return res.status(200).json({ message: 'Google login detected, log in with Google!'});
       }
       if(user.is_verified){
-      return res.status(200).json({ message: 'Email found, otp will be sent'});
+      return res.status(200).json({ message: 'Email found, otp will be sent!'});
       }
-      return res.status(200).json({ message: 'Email was not verified, password cannot be reset'});
+      return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
-      return res.status(400).json({ message: 'Email not found'});
+      return res.status(400).json({ message: 'Email not found!'});
     }
     
   }catch(err){
     console.error(err);
-    return res.status(500).json({ message: "Internal server error" });    
+    return res.status(500).json({ message: "Internal server error!" });    
   }
 });
 
