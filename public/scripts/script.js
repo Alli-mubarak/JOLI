@@ -354,8 +354,17 @@ formMessage.appendChild(formLoader);
 const data = await response.json();
  if(response.ok){
    formMessage.innerHTML = "";
-    formMessage.textContent = data.message || 'You will receive an OTP soon';
+const dataMessage = data.message;
+if(dataMessage.includes("Google"){
+    formMessage.textContent = data.message ;
+    formMessage.style.color = 'red';
+}else if(dataMessage.includes("not"){
+    formMessage.textContent = data.message ;
+    formMessage.style.color = 'red';
+}else{
+  formMessage.textContent = data.message ;
     formMessage.style.color = 'green';
+}
 setTimeout(()=>{
       formMessage.innerHTML = "";  
    },2000);
