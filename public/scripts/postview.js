@@ -99,9 +99,10 @@ function linkifyComments(){
   }catch(err){console.error(err)}
 }
   
-
+alert(commentsBox.children);
 postContent.innerHTML = linkify(postContent.textContent);
 if(commentsBox.children.length > 1){
+  alert("there's comment");
   linkifyComments();
 }
 let closeNID;
