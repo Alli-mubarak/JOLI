@@ -263,7 +263,7 @@ form a:hover{
     background:rgba(0,0,0,0.05);
   }
 #otp-form{
-  padding: 20px 10px ;
+  padding: 20px;
     }
   .otp-container {
     display: flex;
