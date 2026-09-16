@@ -393,6 +393,7 @@ prForm.insertAdjacentHTML('afterend', otpBox);
 otpForm = document.getElementById("otp-form");
 inputs = document.querySelectorAll('.otp-input');
 otpBtn = document.getElementById("submit-otp");
+otpForm.onsubmit = (e) =>{submitOtp(e)}
 activateInputs()
 }
 },2000);
@@ -461,7 +462,7 @@ notify("error occured, try again later!");
 }
 }
   
-  otpForm.onsubmit = (e) =>{
+ function submitOtp(e){
   e.preventDefault();
   propagateOtp();
   otpBtn.disabled = true;
