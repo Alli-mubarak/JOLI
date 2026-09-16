@@ -263,10 +263,6 @@ form a:hover{
     background:rgba(0,0,0,0.05);
   }
 #otp-form{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height:50px;
         padding: 10px ;
     }
   .otp-container {
@@ -277,9 +273,9 @@ form a:hover{
     position: relative;
   }
   .otp-input {
-    width: 45px;
-    height: 45px;
-    font-size: 24px;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
     text-align: center;
     border: 2px solid #ccc;
     border-radius: 6px;
@@ -291,6 +287,7 @@ form a:hover{
   #submit-otp{
       height:45px;
       display:block;
+    width:100%;
       padding: 0 20px;
       border-radius:10px;
       border:none;
