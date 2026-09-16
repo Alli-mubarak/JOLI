@@ -101,7 +101,6 @@ function linkifyComments(){
 postContent.innerHTML = linkify(postContent.textContent);
 if(commentsBox.children.length > 1){
   linkifyComments();
-  alert("there's comment");
 }
 
 let closeNID;
