@@ -375,8 +375,8 @@ formMessage.innerHTML = "";
 if(dataMessage.includes("Email found")){
 prForm.classList.add("hidden");
 const otpBox = `
-<p id="otp-label">Enter the otp received from <b>joli.app.connect@gmail.com</b> below</p>
 <form id="otp-form">
+<p id="otp-label">Enter the otp received from <b>joli.app.connect@gmail.com</b> below</p>
 <div class="otp-container">
   <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
   <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
