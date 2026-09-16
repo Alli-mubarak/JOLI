@@ -460,7 +460,6 @@ try{
         inputs[index - 1].focus();
          
       }
-      if(e.key === '.') input.value = input.value.slice(0, 1);
     });
   });
 }catch(err){
