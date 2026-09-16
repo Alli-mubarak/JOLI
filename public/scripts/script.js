@@ -379,12 +379,12 @@ const otpBox = `
 <p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b>. Check your spam folder if not found.</p>
 <p>Enter code below</p>
 <div class="otp-container">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input  class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
+  <input  class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
   
 </div>
 <button id="submit-otp" disabled>Submit</button>
