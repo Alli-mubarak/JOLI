@@ -376,14 +376,14 @@ if(dataMessage.includes("Email found")){
 prForm.classList.add("hidden");
 const otpBox = `
 <form id="otp-form">
-<p id="otp-label">Enter the otp received from <b>joli.app.connect@gmail.com</b> below</p>
+<p id="otp-label">Enter the otp received from <b>joli.app.connect@gmail.com</b>below. You may need to check your spam folder for the mail</p>
 <div class="otp-container">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input type="text" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input type="number" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
   
 </div>
 <button id="submit-otp" disabled>Submit</button>
