@@ -93,7 +93,7 @@ function linkifyComments(){
   try{
   commentContents = document.querySelectorAll(".comment-content");
   Array.from(commentContents).forEach(cc => {
-    cc.innerHTML = linkify(c.textContent);
+    cc.innerHTML = linkify(cc.textContent);
     alert(cc);
     alert(cc.innerHTML)
   });
