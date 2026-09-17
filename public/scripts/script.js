@@ -1,4 +1,3 @@
-const prIcons = document.querySelectorAll(".pr-icon");
 const emailInput = document.getElementById("email-input");
 const emailBtn = document.getElementById("email-btn");
 const prBtn = document.getElementById("pr-btn");
@@ -284,10 +283,12 @@ if(identifier.length < 5 && password.length < 8){
 }
 //password revelears activation 
 function activatePasswordRevealers(){
+const prIcons = document.querySelectorAll(".pr-icon");
 Array.from(prIcons).forEach(i => {
  i.onclick = (e) => {toggleReveal(e.currentTarget)} 
 });
 }
+activatePasswordRevealers();
 
 function toggleReveal(el){
     const passwordInput = el.previousElementSibling;
