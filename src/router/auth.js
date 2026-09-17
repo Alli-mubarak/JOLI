@@ -655,11 +655,14 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
 
 authRouter.post('/change-password', limiter, async(req, res) => {
   try{
-  const {resetCode, newPassword, email} = req.body;
+  const {resetCode, newPassword, email, passwordConfirm} = req.body;
   if(req.isAuthenticated() || req.user) {
     return res.status(401).send('You are already logged in.');
   }
-        const result = await db.query(
+  if (!resetCode || !mewPasssword || !email || !passwordConfirm) {
+    return res.status(400).json({ message: 'All fields are required.' });
+  }
+        const result = await pool.query(
             `SELECT pr.token_hash, pr.expires_at, pr.user_id 
              FROM password_resets pr
              JOIN users u ON pr.user_id = u.id
@@ -675,7 +678,7 @@ authRouter.post('/change-password', limiter, async(req, res) => {
 
         // Check if the token has expired
         if (new Date() > new Date(expires_at)) {
-            await db.query('DELETE FROM password_resets WHERE user_id = \$1', [user_id]);
+            await pool.query('DELETE FROM password_resets WHERE user_id = $1', [user_id]);
             return res.status(400).json({ error: 'Code has expired.' });
         }
 
@@ -695,7 +698,7 @@ authRouter.post('/change-password', limiter, async(req, res) => {
     
     }catch(err){
     console.error(err);
-    return res.status(500).json({ message: "Internal server error!" });    
+    return res.status(500).json({ error : "Internal server error!" });    
   }
 });
 
