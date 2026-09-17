@@ -537,7 +537,7 @@ const pwdError = e.target.parentElement.querySelector(".form-message");
            
  const code =  propagateOtp();
           
-  const payload = {
+  const rPayload = {
   email : emailForReset,
   resetCode : code,
   newPassword : nPassword.value,
@@ -551,7 +551,7 @@ const pwdError = e.target.parentElement.querySelector(".form-message");
         'Content-Type': 'application/json', // Inform server we are sending JSON data
         'Accept': 'application/json'
       },
-      body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
+      body: JSON.stringify(rPayload) // Convert JavaScript object into a JSON string
     });
  
     
