@@ -526,3 +526,39 @@ function setTimer(mins){
       },1000);
    
             }
+
+
+//**********†*********
+const otpBox = `
+<form id="otp-form">
+<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b>. Check your spam folder if not found.</p>
+<p>Enter code below</p>
+<div class="otp-timer-container">
+<div class="otp-container">
+  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
+  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+</div>
+<p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
+</div>
+<div class="input-box">
+  <label for="n-password">Password</label>
+ <input name="password" type="password" id="n-password">
+  <i class="fa-solid fa-eye pr-icon" ></i>
+   <small id="pwd-error"></small>
+ </div>
+  <div class="input-box">
+   <label for="nc-password">Confirm Password</label>
+   <input type="password" name="passwordConfirm" id="nc-password">
+   <i class="fa-solid fa-eye pr-icon" ></i>
+  <small id="pwd-cfm-error"></small>
+</div>
+<button id="submit-otp" disabled>Submit</button>
+</form>
+`;
+prForm.insertAdjacentHTML('afterend', otpBox);
+
+//**********
