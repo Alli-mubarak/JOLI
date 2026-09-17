@@ -267,19 +267,18 @@ form a:hover{
   text-align: left !important;
     }
 .code-label{
-  background:red;
-}
-#otp-form label{
-  background: tan;
+  display:block;
+  width:100%;
+  transform: translateY(-20px);
 }
 #otp-form span{
-  font-size:0.9rem;
+  font-size:0.9rem !important;
 }
 .timer{
 width: fit-content !important;
-  display: inline-block;
-  background: green;
+display: inline-block;
 }
+
 .otp-timer-container{
   width:100%;
   display:flex;
