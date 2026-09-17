@@ -267,11 +267,19 @@ form a:hover{
     }
 #otp-form p{
 text-align: left !important;
+background:tan;
 }
 .timer{
 width: fit-content !important;
   display: inline-block;
   background: green;
+}
+.otp-timer-container{
+  width:100%;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row !important;
 }
   .otp-container {
     display: flex;
