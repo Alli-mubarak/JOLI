@@ -659,7 +659,7 @@ authRouter.post('/change-password', limiter, async(req, res) => {
   if(req.isAuthenticated() || req.user) {
     return res.status(401).send('You are already logged in.');
   }
-  if (!resetCode || !mewPasssword || !email || !passwordConfirm) {
+  if (!resetCode || !newPassword || !email || !passwordConfirm) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
         const result = await pool.query(
