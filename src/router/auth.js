@@ -659,9 +659,19 @@ authRouter.post('/change-password', limiter, async(req, res) => {
   if(req.isAuthenticated() || req.user) {
     return res.status(401).send('You are already logged in.');
   }
-  if (!resetCode || !newPassword || !email || !passwordConfirm) {
-    return res.status(400).json({ message: 'All fields are required.' });
+  if (!email) {
+    return res.status(400).json({ message: 'email is required.' });
   }
+  if (!resetCode) {
+    return res.status(400).json({ message: 'code is required.' });
+  }
+  if (!newPassword) {
+    return res.status(400).json({ message: 'new password is required.' });
+  }
+  if (!passwordConfirm) {
+    return res.status(400).json({ message: 'password confirm is required.' });
+  }
+    
         const result = await pool.query(
             `SELECT pr.token_hash, pr.expires_at, pr.user_id 
              FROM password_resets pr
