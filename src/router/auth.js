@@ -8,6 +8,7 @@ import rateLimit  from 'express-rate-limit';
 import transporter from '../../Utils/mailer.js';
 import 'dotenv/config'; // Automatically loads environment variables
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 const authRouter = express.Router();
 
@@ -28,6 +29,23 @@ function getCountryNameFromReq(req) {
     return countryName;
   }
 }
+
+const numbers = "912837465";
+ async function generateCode(num){
+      try{
+      let code = "";
+        
+          for(let i = 0; i < num; i++){
+          let rN = Math.floor(Math.random() * numbers.length);
+           code += numbers[rN]
+          }
+          return code;
+      }
+      catch(e){
+          alert(e)
+          console.error(e)
+      }
+   }
 
 //session checker
 const checkSession = (req, res, next) => {
@@ -605,7 +623,8 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
         return res.status(200).json({ message: 'Google login detected, log in with Google!'});
       }
       if(user.is_verified){
-      return res.status(200).json({ message: 'Email found, otp will be sent!'});
+        const resetCode = await generateCode(6);
+      return res.status(200).json({ message: `Email found, otp will be sent!, ${resetCode}`});
       }
       return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
