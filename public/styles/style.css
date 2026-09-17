@@ -269,10 +269,10 @@ form a:hover{
 .code-label{
   display:block;
   width:100%;
-  transform: translateY(-20px);
+  transform: translateY(20px);
 }
 #otp-form span{
-  font-size:0.9rem !important;
+  font-size:1.2rem !important;
 }
 .timer{
 width: fit-content !important;
