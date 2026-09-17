@@ -566,12 +566,10 @@ payload.email = emailForReset;
       formMessage.textContent = data.error
       formMessage.style.color = 'red';
    }
-        setTimeout(()=>{
+  setTimeout(()=>{
             formMessage.textContent = '';
           window.location.href = '/';
-        },2000);
-      
-       
+  },2000);
     } else {
       // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
      formMessage.innerHTML = "";
@@ -579,11 +577,13 @@ payload.email = emailForReset;
       formMessage.style.color = 'red';
         setTimeout(()=>{
             formMessage.textContent = '';
-        },1600);
+        },2000);
+          return;
     }
  }catch(e){
  notify("server error occured!");
  console.error(err);
+ return;
  }
   otpBtn.disabled = true;
   otpBtn.style.background = "#999";
