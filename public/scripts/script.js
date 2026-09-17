@@ -598,10 +598,10 @@ const pwdError = e.target.parentElement.querySelector(".form-message");
  }
   
   function propagateOtp(){
+     otp = "";
       inputs.forEach(input => {
           otp += input.value;
       });
-      otp = Number(otp);
       return otp;
  }
 
