@@ -123,6 +123,14 @@ CREATE TABLE IF NOT exists friendships (
     -- Prevents users from friending themselves
     CONSTRAINT check_not_self CHECK (sender_id <> receiver_id)
 );
+CREATE TABLE IF NOT exists password_resets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(64) NOT NULL UNIQUE,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
   `;
   try {
     await pool.query(setupScript);
