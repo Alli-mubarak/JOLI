@@ -265,11 +265,15 @@ form a:hover{
 #otp-form{
   padding: 20px;
     }
+#otp-form p{
+text-align: left;
+}
   .otp-container {
     display: flex;
     gap: 8px;
     flex-direction: row !important;
-    justify-content: center !important;
+    justify-content: start !important;
+    background: pink;
     width: 300px;
     position: relative;
   }
