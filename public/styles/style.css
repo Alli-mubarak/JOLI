@@ -264,9 +264,9 @@ form a:hover{
   }
 #otp-form{
   padding: 20px;
+  text-align: left !important;
     }
 #otp-form p{
-text-align: left !important;
 background:tan;
 }
 .timer{
