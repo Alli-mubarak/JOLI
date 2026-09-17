@@ -12,7 +12,7 @@ const sirpBtn = document.getElementById("sirp-btn");
 const prForm = document.getElementById("reset-password");
 const rBtn = document.getElementById("return-btn");
 const numbers = "912837465";
-let closeNotifierID, minContainer, secContainer, otpForm, inputs, otpBtn, nPassword, ncPassword, formsState, otpTimerID;
+let closeNotifierID, emailForReset, minContainer, secContainer, otpForm, inputs, otpBtn, nPassword, ncPassword, formsState, otpTimerID;
 let otp = "" ;
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
@@ -362,6 +362,7 @@ formMessage.appendChild(formLoader);
 const data = await response.json();
  if(response.ok){
 formMessage.innerHTML = "";
+emailForReset = prForm.email.value;
 const dataMessage = data.message;
 if(dataMessage.includes("Google")){
     formMessage.textContent = data.message ;
@@ -394,14 +395,14 @@ const otpBox = `
 </div>
 <div class="input-box">
   <label for="n-password">New Password</label>
- <input name="password" type="password" id="n-password">
+ <input name="newPassword" type="password" id="n-password">
   <i class="fa-solid fa-eye pr-icon" ></i>
  </div>
   <div class="input-box">
    <label for="nc-password">Confirm New Password</label>
    <input type="password" name="passwordConfirm" id="nc-password">
    <i class="fa-solid fa-eye pr-icon" ></i>
-  <small class="form-error"></small>
+  <small class="form-message"></small>
 </div>
 <button id="submit-otp" disabled>Submit</button>
 </form>
@@ -490,10 +491,10 @@ notify("error occured, try again later!");
 }
 }
   
- function submitOtp(e){
+async function submitOtp(e){
 try{
   e.preventDefault();
-const pwdError = e.target.parentElement.querySelector(".form-error");
+const pwdError = e.target.parentElement.querySelector(".form-message");
 
     const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if(nPassword.value.length < 8){
@@ -534,7 +535,56 @@ const pwdError = e.target.parentElement.querySelector(".form-error");
     pwdError.appendChild(formLoader);
 
            
-  propagateOtp();
+ const code =  propagateOtp();
+
+  // Automatically extract data from the input fields
+  const formData = new FormData(signInForm);
+  const payload = Object.fromEntries(formData.entries());
+payload.resetCode = code;
+payload.email = emailForReset;
+ try {
+    // Send a POST request to the server API
+    const response = await fetch("/api/auth/change-password", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Inform server we are sending JSON data
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
+    });
+ 
+    // 6. Parse the server JSON response
+    const data = await response.json();
+   formMessage = pwdError;
+    // 7. Handle success vs server-side validation/errors
+    if (response.ok) {
+        formMessage.innerHTML = "";
+   if(data.message){
+      formMessage.textContent = data.message
+      formMessage.style.color = 'green';
+   }else if(data.error){
+      formMessage.textContent = data.error
+      formMessage.style.color = 'red';
+   }
+        setTimeout(()=>{
+            formMessage.textContent = '';
+          window.location.href = '/';
+        },2000);
+      
+       
+    } else {
+      // Server returned a bad status code (e.g., 400 Bad Request, 409 Email Exists)
+     formMessage.innerHTML = "";
+      formMessage.textContent = data.message || data.error || 'Login failed. Please try again.';
+      formMessage.style.color = 'red';
+        setTimeout(()=>{
+            formMessage.textContent = '';
+        },1600);
+    }
+ }catch(e){
+ notify("server error occured!");
+ console.error(err);
+ }
   otpBtn.disabled = true;
   otpBtn.style.background = "#999";
   otpBtn.style.color = "#bbb";
@@ -551,7 +601,7 @@ const pwdError = e.target.parentElement.querySelector(".form-error");
           otp += input.value;
       });
       otp = Number(otp);
-      alert(otp)
+      return otp;
  }
 
 function setTimer(mins){
