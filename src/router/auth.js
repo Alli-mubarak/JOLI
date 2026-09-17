@@ -102,7 +102,7 @@ async function sendWelcomeMessage(email, username){
                 </tr>
               </table>
               
-              <p style="margin-bottom: 0; font-size: 14px; color: #666666;">We will be sending updates afterwards, thank you for joining us.</p>
+              <p style="text-align:center; margin-bottom: 0; font-size: 14px; color: #666666;">We will be sending updates afterwards, thank you for joining us.</p>
             </td>
           </tr>
 
@@ -170,7 +170,7 @@ async function sendGoogleMessage(email, username){
                 </tr>
               </table>
               
-              <p style="margin-bottom: 0; font-size: 14px; color: #666666;">We will be sending more updates, thank you for being a member.</p>
+              <p style="text-align:center; margin-bottom: 0; font-size: 14px; color: #666666;">We will be sending more updates, thank you for being a member.</p>
             </td>
           </tr>
 
@@ -671,6 +671,7 @@ authRouter.get('/logout', checkSession, limiter, async(req, res) => {
   }
 });
 
+// api for resetting password 
 authRouter.post('/reset-password', limiter, async(req, res) => {
   try{
   const {email} = req.body;
@@ -684,13 +685,6 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
     if(findEmail.rows.length !== 0){
       const user = findEmail.rows[0];
       if(user.google_id && user.google_id.length > 1){
-        const code = await generateCode(6);
-        const sendOtp = await sendOTPMessage(user.email, user.username, code);
-    if(sendOtp.error){
-      console.error("Otp message sending failed!");
-    }else{
-      console.log("Otp message sent successfully!");
-    }
         return res.status(200).json({ message: 'Google login detected, log in with Google!'});
       }
       if(user.is_verified){
@@ -710,8 +704,16 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
             [user.id, tokenHash, expiresAt]
         );
         await pool.query('COMMIT');
-        //** send mail containing reset code
-      return res.status(200).json({ message: `Email found, reset code has been sent!, ${resetCode}`});
+        // send mail containing reset code
+        const code = await generateCode(6);
+        const sendOtp = await sendOTPMessage(user.email, user.username, code);
+    if(sendOtp.error){
+      console.error("Otp message sending failed!");
+      return res.status(400).json({ message: "Error sending code to mail!" });
+    }else{
+      console.log("Otp message sent successfully!");
+    }
+      return res.status(200).json({ message: 'Email found, reset code has been sent to your email!'});
       }
       return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
@@ -724,6 +726,8 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
   }
 });
 
+
+//api for changing password 
 authRouter.post('/change-password', limiter, async(req, res) => {
   try{
   const {resetCode, newPassword, email, passwordConfirm} = req.body;
