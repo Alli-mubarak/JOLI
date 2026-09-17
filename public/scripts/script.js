@@ -532,7 +532,7 @@ function setTimer(mins){
 const otpBox = `
 <form id="otp-form">
 <p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b> in your mail inbox. Check your spam folder if not found.</p>
-<label class="code-label">Enter code </label>
+<label class="code-label">Enter Code </label>
 <div class="otp-timer-container">
 <div class="otp-container">
   <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
@@ -545,16 +545,16 @@ const otpBox = `
 <p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
 </div>
 <div class="input-box">
-  <label for="n-password">Password</label>
+  <label for="n-password">New Password</label>
  <input name="password" type="password" id="n-password">
   <i class="fa-solid fa-eye pr-icon" ></i>
-   <small id="pwd-error"></small>
+   <small id="npwd-error"></small>
  </div>
   <div class="input-box">
-   <label for="nc-password">Confirm Password</label>
+   <label for="nc-password">Confirm New Password</label>
    <input type="password" name="passwordConfirm" id="nc-password">
    <i class="fa-solid fa-eye pr-icon" ></i>
-  <small id="pwd-cfm-error"></small>
+  <small id="npwd-cfm-error"></small>
 </div>
 <button id="submit-otp" disabled>Submit</button>
 </form>
