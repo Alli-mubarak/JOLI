@@ -186,9 +186,73 @@ async function sendGoogleMessage(email, username){
       </body>
       </html>
     `,
-  };
+  };  
+    const info = await transporter.sendMail(mailOptions);
+  return info;
+  }catch(err){
+    console.error("An error occurred while sending mail",err)
+    return {error: "An error occurred while sending mail"}
+  }
+}
 
-  
+//function for sending otp message
+async function sendOTPMessage(email, username, code){
+  try{
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: 'Password reset message from JOLI',
+    text: `You seem to have forgotten your password now, use this code to reset your password - ${code}`,
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Google sign in message from JOLI</title>
+      </head>
+      <body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
+          
+          <!-- Header Banner -->
+          <tr>
+            <td align="center" style="padding: 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
+              <img src="https://joli-indol.vercel.app/images/joli-dark.png" alt="joli logo" style="height: 150px; width: auto;"/>
+            </td>
+          </tr>
+
+          <!-- Main Body Content -->
+          <tr>
+            <td style="padding: 40px 30px; color: #333333; font-size: 16px; line-height: 1.6;">
+              <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Hello ${username},</h2>
+              <p style="margin-bottom: 25px;">You initiated a request to reset your password, use the code below to reset your password. Ignore if you didn't request for password change.</p>
+              
+              <!-- Styled Button -->
+              <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
+                <tr>
+                  <td align="center" style="border-radius: 6px; background-color: #555;">
+                    <p style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; border-radius: 6px; width:fit-content; ">${code}</p>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="text-align:center; margin-bottom: 0; font-size: 14px; color: #666666;">We will be expecting you on JOLI soon, thank you for being a member.</p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding: 20px 30px; background-color: #fafafa; border-top: 1px solid #eeeeee; font-size: 12px; color: #999999;">
+              <p style="margin: 0 0 10px 0;">&copy; 2026 JOLI. All rights reserved.</p>
+              <p style="margin: 0;"><a href="https://joli-indol.vercel.app" style="color: #667eea; text-decoration: underline;">Unsubscribe from these alerts</a></p>
+            </td>
+          </tr>
+
+        </table>
+      </body>
+      </html>
+    `,
+  };  
     const info = await transporter.sendMail(mailOptions);
   return info;
   }catch(err){
@@ -620,6 +684,13 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
     if(findEmail.rows.length !== 0){
       const user = findEmail.rows[0];
       if(user.google_id && user.google_id.length > 1){
+        const code = await generateCode(6);
+        const sendOtp = await sendOTPMessage(user.email, user.username, code);
+    if(sendOtp.error){
+      console.error("Otp message sending failed!");
+    }else{
+      console.log("Otp message sent successfully!");
+    }
         return res.status(200).json({ message: 'Google login detected, log in with Google!'});
       }
       if(user.is_verified){
