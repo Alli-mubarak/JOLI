@@ -536,14 +536,15 @@ const pwdError = e.target.parentElement.querySelector(".form-message");
 
            
  const code =  propagateOtp();
+          
+  const payload = {
+  email : emailForReset,
+  resetCode : code,
+  newPassword : nPassword.value,
+  confirmPassword : ncPassword.value
+  }
 
-  // Automatically extract data from the input fields
-  const formData = new FormData(signInForm);
-  const payload = Object.fromEntries(formData.entries());
-payload.resetCode = code;
-payload.email = emailForReset;
  try {
-    // Send a POST request to the server API
     const response = await fetch("/api/auth/change-password", {
       method: 'POST',
       headers: {
@@ -553,10 +554,10 @@ payload.email = emailForReset;
       body: JSON.stringify(payload) // Convert JavaScript object into a JSON string
     });
  
-    // 6. Parse the server JSON response
+    
     const data = await response.json();
    formMessage = pwdError;
-    // 7. Handle success vs server-side validation/errors
+    
     if (response.ok) {
         formMessage.innerHTML = "";
    if(data.message){
