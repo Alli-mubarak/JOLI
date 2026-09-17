@@ -703,7 +703,10 @@ authRouter.post('/change-password', limiter, async(req, res) => {
         //  Code is valid! 
         // **You can now allow them to proceed to update their password, 
         // ***or send a temporary session token to authorize the password change screen.
-        return res.status(200).json({ message: 'Code verified successfully.', userId: user_id });
+     const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+       await pool.query(`UPDATE users SET password = $1 WHERE email = $2`, [hashedPassword, email]);
+    return res.status(200).json({ message: 'password changed successfully. redirecting....' });
 
           
     
