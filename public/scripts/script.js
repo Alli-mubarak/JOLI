@@ -12,19 +12,12 @@ const ssifBtn = document.getElementById("ssif-btn");
 const sirpBtn = document.getElementById("sirp-btn");
 const prForm = document.getElementById("reset-password");
 const rBtn = document.getElementById("return-btn");
-let minContainer;
-let secContainer ;
 const numbers = "912837465";
-let otpForm;
-let inputs;
-let otpBtn;
+let closeNotifierID, minContainer, secContainer, otpForm, inputs, otpBtn, nPassword, ncPassword, formsState, otpTimerID;
 let otp = "" ;
 const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
-let closeNotifierID;
-let formsState;
 let isTimerOn = false;
-let otpTimerID;
 
 function notify(msg){
           if(notifier.innerHTML === ""){
@@ -289,9 +282,13 @@ if(identifier.length < 5 && password.length < 8){
         },1600)
  }
 }
+//password revelears activation 
+function activatePasswordRevealers(){
 Array.from(prIcons).forEach(i => {
  i.onclick = (e) => {toggleReveal(e.currentTarget)} 
 });
+}
+
 function toggleReveal(el){
     const passwordInput = el.previousElementSibling;
     console.log(passwordInput);
@@ -381,8 +378,9 @@ if(dataMessage.includes("Email found")){
 prForm.classList.add("hidden");
 const otpBox = `
 <form id="otp-form">
-<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b>. Check your spam folder if not found.</p>
-<p>Enter code below</p>
+<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b> in your mail inbox. Check your spam folder if not found.</p>
+<label class="code-label">Enter Code </label>
+<div class="otp-timer-container">
 <div class="otp-container">
   <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
   <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
@@ -392,6 +390,18 @@ const otpBox = `
   <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
 </div>
 <p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
+</div>
+<div class="input-box">
+  <label for="n-password">New Password</label>
+ <input name="password" type="password" id="n-password">
+  <i class="fa-solid fa-eye pr-icon" ></i>
+ </div>
+  <div class="input-box">
+   <label for="nc-password">Confirm New Password</label>
+   <input type="password" name="passwordConfirm" id="nc-password">
+   <i class="fa-solid fa-eye pr-icon" ></i>
+  <small class="form-error"></small>
+</div>
 <button id="submit-otp" disabled>Submit</button>
 </form>
 `;
@@ -401,6 +411,9 @@ inputs = document.querySelectorAll('.otp-input');
 otpBtn = document.getElementById("submit-otp");
  minContainer = document.getElementById("min");
  secContainer = document.getElementById("sec");
+nPassword = document.getElementById("n-password");
+ncPassword = document.getElementById("nc-password");
+activatePasswordRevealers()
 setTimer(10);
 otpForm.onsubmit = (e) =>{submitOtp(e)}
 activateInputs()
@@ -477,15 +490,60 @@ notify("error occured, try again later!");
 }
   
  function submitOtp(e){
+try{
   e.preventDefault();
+const pwdError = e.parentElement.querySelector(".form-error");
+
+    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if(nPassword.value.length < 8){
+        pwdError.innerHTML = "password cannot be less than 8 characters";
+        pwdError.style.color  = "red";
+        setTimeout(()=>{
+            pwdError.innerHTML = "";
+        },2000);
+        return
+    }
+    if(!nPassword.value.test(pwdValue)){
+       pwdError.style.color  = "red";
+        pwdError.innerHTML = "use a strong password, a strong password is a combination of lowercase letter(s), uppercase letter(s), special character(s) e.g $, and number(s).";
+        setTimeout(()=>{
+            pwdError.innerHTML = "";
+        },3500);
+        return
+    }
+    
+    if(nPassword.value !== ncPassword.value){
+        pwdError.innerHTML = "passwords do not match!";
+        pwdError.style.color  = "red";
+        setTimeout(()=>{
+            pwdError.innerHTML = "";
+        },2000);
+        return
+    }
+    if(!isTimerOn){
+          pwdError.innerHTML = "Time is up!";
+        pwdError.style.color  = "red";
+        setTimeout(()=>{
+            pwdError.innerHTML = "";
+        },2000);
+        return
+    }
+    const formLoader = document.createElement("div");
+    formLoader.classList.add("form-loader");
+    pwdError.appendChild(formLoader);
+
+           
   propagateOtp();
   otpBtn.disabled = true;
   otpBtn.style.background = "#999";
   otpBtn.style.color = "#bbb";
   otp = "";
   otpForm.reset();
-  
-  }
+ }catch(err){
+  notify("cannot send password details!");
+ console.error(err);
+ }
+ }
   
   function propagateOtp(){
       inputs.forEach(input => {
@@ -493,7 +551,8 @@ notify("error occured, try again later!");
       });
       otp = Number(otp);
       alert(otp)
-               }
+ }
+
 function setTimer(mins){
   isTimerOn = true;
   let sec = 59;
@@ -525,40 +584,4 @@ function setTimer(mins){
         
       },1000);
    
-            }
-
-
-//**********†*********
-const otpBox = `
-<form id="otp-form">
-<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b> in your mail inbox. Check your spam folder if not found.</p>
-<label class="code-label">Enter Code </label>
-<div class="otp-timer-container">
-<div class="otp-container">
-  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
-  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
-</div>
-<p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
-</div>
-<div class="input-box">
-  <label for="n-password">New Password</label>
- <input name="password" type="password" id="n-password">
-  <i class="fa-solid fa-eye pr-icon" ></i>
-   <small id="npwd-error"></small>
- </div>
-  <div class="input-box">
-   <label for="nc-password">Confirm New Password</label>
-   <input type="password" name="passwordConfirm" id="nc-password">
-   <i class="fa-solid fa-eye pr-icon" ></i>
-  <small id="npwd-cfm-error"></small>
-</div>
-<button id="submit-otp" disabled>Submit</button>
-</form>
-`;
-prForm.insertAdjacentHTML('afterend', otpBox);
-
-//**********
+ }
