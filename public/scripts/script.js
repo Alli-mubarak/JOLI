@@ -391,7 +391,7 @@ const otpBox = `
   <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
   <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
 </div>
-<p class="timer"><span id="min">00</span> : <span id="sec">00</span></p>
+<p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
 <button id="submit-otp" disabled>Submit</button>
 </form>
 `;
