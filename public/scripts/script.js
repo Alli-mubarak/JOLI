@@ -541,7 +541,7 @@ const pwdError = e.target.parentElement.querySelector(".form-message");
   email : emailForReset,
   resetCode : code,
   newPassword : nPassword.value,
-  confirmPassword : ncPassword.value
+  passwordConfirm : ncPassword.value
   }
 
  try {
