@@ -633,7 +633,7 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
 
         // Save hash to DB (overwriting any older tokens for this user)
         await pool.query('BEGIN');
-        await pool.query('DELETE FROM password_resets WHERE user_id = \$1', [userId]);
+        await pool.query('DELETE FROM password_resets WHERE user_id = \$1', [user.id]);
         await pool.query(
             'INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES (\$1, \$2, \$3)',
             [user.id, tokenHash, expiresAt]
