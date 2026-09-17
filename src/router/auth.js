@@ -656,6 +656,7 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
 authRouter.post('/change-password', limiter, async(req, res) => {
   try{
   const {resetCode, newPassword, email, passwordConfirm} = req.body;
+  console.log(req.body);
   if(req.isAuthenticated() || req.user) {
     return res.status(401).send('You are already logged in.');
   }
