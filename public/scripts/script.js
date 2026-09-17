@@ -503,7 +503,7 @@ const pwdError = e.target.parentElement.querySelector(".form-error");
         },2000);
         return
     }
-    if(!nPassword.value.test(pwdValue)){
+    if(!pwdRegex.test(nPassword.value)){
        pwdError.style.color  = "red";
         pwdError.innerHTML = "use a strong password, a strong password is a combination of lowercase letter(s), uppercase letter(s), special character(s) e.g $, and number(s).";
         setTimeout(()=>{
