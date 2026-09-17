@@ -492,7 +492,7 @@ notify("error occured, try again later!");
  function submitOtp(e){
 try{
   e.preventDefault();
-const pwdError = e.parentElement.querySelector(".form-error");
+const pwdError = e.target.parentElement.querySelector(".form-error");
 
     const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if(nPassword.value.length < 8){
