@@ -12,6 +12,9 @@ const ssifBtn = document.getElementById("ssif-btn");
 const sirpBtn = document.getElementById("sirp-btn");
 const prForm = document.getElementById("reset-password");
 const rBtn = document.getElementById("return-btn");
+let minContainer;
+let secContainer ;
+const numbers = "912837465";
 let otpForm;
 let inputs;
 let otpBtn;
@@ -20,6 +23,8 @@ const BACKEND_URL = "";
 const notifier = document.querySelector(".notifier");
 let closeNotifierID;
 let formsState;
+let isTimerOn = false;
+let otpTimerID;
 
 function notify(msg){
           if(notifier.innerHTML === ""){
@@ -385,8 +390,8 @@ const otpBox = `
   <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
   <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
   <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  
 </div>
+<p class="timer"><span id="min">00</span> : <span id="sec">00</span></p>
 <button id="submit-otp" disabled>Submit</button>
 </form>
 `;
@@ -394,6 +399,9 @@ prForm.insertAdjacentHTML('afterend', otpBox);
 otpForm = document.getElementById("otp-form");
 inputs = document.querySelectorAll('.otp-input');
 otpBtn = document.getElementById("submit-otp");
+ minContainer = document.getElementById("min");
+ secContainer = document.getElementById("sec");
+setTimer(10);
 otpForm.onsubmit = (e) =>{submitOtp(e)}
 activateInputs()
 }
@@ -486,3 +494,35 @@ notify("error occured, try again later!");
       otp = Number(otp);
       alert(otp)
                }
+function setTimer(mins){
+  isTimerOn = true;
+  let sec = 59;
+  let sMin = mins - 1
+  minContainer.textContent = mins;
+   otpTimerID = setInterval(() => {
+        if(sec === -1){
+         sec = 59;
+         sMin--
+         }
+         
+        secContainer.textContent = sec;
+        minContainer.textContent = sMin;
+        
+         if(sec < 10){
+         secContainer.textContent = "0"+sec;
+         }
+        if(sMin < 10){
+          minContainer.textContent = "0"+sMin;
+         }
+        if(sMin === 0 && sec === 0){
+         secContainer.textContent = "00";
+        minContainer.textContent = "00";
+        secContainer.parentElement.classList.add("pop");
+        clearInterval(otpTimerID);
+        isTimerOn = false;
+       }
+        sec--;
+        
+      },1000);
+   
+            }
