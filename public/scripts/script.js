@@ -531,8 +531,8 @@ function setTimer(mins){
 //**********†*********
 const otpBox = `
 <form id="otp-form">
-<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b>. Check your spam folder if not found.</p>
-<p>Enter code below</p>
+<p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b> in your mail inbox. Check your spam folder if not found.</p>
+<label class="code-label">Enter code </label>
 <div class="otp-timer-container">
 <div class="otp-container">
   <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
