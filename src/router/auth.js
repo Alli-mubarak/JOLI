@@ -8,7 +8,7 @@ import rateLimit  from 'express-rate-limit';
 import transporter from '../../Utils/mailer.js';
 import 'dotenv/config'; // Automatically loads environment variables
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
+
 
 const authRouter = express.Router();
 
@@ -624,7 +624,23 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
       }
       if(user.is_verified){
         const resetCode = await generateCode(6);
-      return res.status(200).json({ message: `Email found, otp will be sent!, ${resetCode}`});
+        const saltRounds = 10;
+        const tokenHash = await bcrypt.hash(resetCode, saltRounds);
+
+        //set expiry time - 11 minutes 
+        const expiresAt = new Date();
+        expiresAt.setMinutes(expiresAt.getMinutes() + 11);
+
+        // Save hash to DB (overwriting any older tokens for this user)
+        await pool.query('BEGIN');
+        await pool.query('DELETE FROM password_resets WHERE user_id = \$1', [userId]);
+        await pool.query(
+            'INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES (\$1, \$2, \$3)',
+            [user.id, tokenHash, expiresAt]
+        );
+        await pool.query('COMMIT');
+        //** send mail containing reset code
+      return res.status(200).json({ message: `Email found, reset code has been sent!, ${resetCode}`});
       }
       return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
@@ -632,6 +648,52 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
     }
     
   }catch(err){
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error!" });    
+  }
+});
+
+authRouter.post('/change-password', limiter, async(req, res) => {
+  try{
+  const {resetCode, newPassword, email} = req.body;
+  if(req.isAuthenticated() || req.user) {
+    return res.status(401).send('You are already logged in.');
+  }
+        const result = await db.query(
+            `SELECT pr.token_hash, pr.expires_at, pr.user_id 
+             FROM password_resets pr
+             JOIN users u ON pr.user_id = u.id
+             WHERE u.email = $1`, 
+            [email]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(400).json({ error: 'Invalid or expired code.' });
+        }
+
+        const { token_hash, expires_at, user_id } = result.rows[0];
+
+        // Check if the token has expired
+        if (new Date() > new Date(expires_at)) {
+            await db.query('DELETE FROM password_resets WHERE user_id = \$1', [user_id]);
+            return res.status(400).json({ error: 'Code has expired.' });
+        }
+
+        // Compare the plain user input with the database bcrypt hash
+        const isMatch = await bcrypt.compare(resetCode, token_hash);
+
+        if (!isMatch) {
+            return res.status(400).json({ error: 'Invalid or expired code.' });
+        }
+
+        //  Code is valid! 
+        // **You can now allow them to proceed to update their password, 
+        // ***or send a temporary session token to authorize the password change screen.
+        return res.status(200).json({ message: 'Code verified successfully.', userId: user_id });
+
+          
+    
+    }catch(err){
     console.error(err);
     return res.status(500).json({ message: "Internal server error!" });    
   }
