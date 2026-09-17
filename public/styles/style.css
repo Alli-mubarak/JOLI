@@ -269,7 +269,7 @@ form a:hover{
 .code-label{
   display:block;
   width:100%;
-  transform: translateY(20px);
+  transform: translateY(17px);
 }
 #otp-form span{
   font-size:1.3rem !important;
