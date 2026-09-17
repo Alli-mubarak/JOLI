@@ -266,7 +266,12 @@ form a:hover{
   padding: 20px;
     }
 #otp-form p{
-text-align: left;
+text-align: left !important;
+}
+.timer{
+width: fit-content !important;
+  display: inline-block;
+  background: green;
 }
   .otp-container {
     display: flex;
@@ -274,7 +279,7 @@ text-align: left;
     flex-direction: row !important;
     justify-content: start !important;
     background: pink;
-    width: 300px;
+    width: 300px !important;
     position: relative;
   }
   .otp-input {
