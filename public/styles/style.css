@@ -272,7 +272,7 @@ form a:hover{
   transform: translateY(20px);
 }
 #otp-form span{
-  font-size:1.2rem !important;
+  font-size:1.3rem !important;
 }
 .timer{
 width: fit-content !important;
@@ -291,7 +291,6 @@ display: inline-block;
     gap: 8px;
     flex-direction: row !important;
     justify-content: start !important;
-    background: pink;
     width: 300px !important;
     position: relative;
   }
