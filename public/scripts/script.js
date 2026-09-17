@@ -384,12 +384,12 @@ const otpBox = `
 <p id="otp-label">You have received a 6-digit code from <b>joli.app.connect@gmail.com</b>. Check your spam folder if not found.</p>
 <p>Enter code below</p>
 <div class="otp-container">
-  <input  class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code">
-  <input  class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
-  <input class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric">
+  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric" autocomplete="one-time-code">
+  <input  class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
+  <input class="otp-input" maxlength="1" pattern="[1-9]" inputmode="numeric">
 </div>
 <p class="timer"><span id="min">00</span> <span>:</span> <span id="sec">00</span></p>
 <button id="submit-otp" disabled>Submit</button>
