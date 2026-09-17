@@ -266,8 +266,14 @@ form a:hover{
   padding: 20px;
   text-align: left !important;
     }
-#otp-form p{
-background:tan;
+.code-label{
+  background:red;
+}
+#otp-form label{
+  background: tan;
+}
+#otp-form span{
+  font-size:0.9rem;
 }
 .timer{
 width: fit-content !important;
