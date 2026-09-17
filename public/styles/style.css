@@ -274,6 +274,9 @@ form a:hover{
 #otp-form span{
   font-size:1.3rem !important;
 }
+#otp-form .form-message{
+  margin-top: 10px;
+}
 .timer{
 width: fit-content !important;
 display: inline-block;
