@@ -218,7 +218,7 @@ fetchUsers();
 
 function prButtonsActivate(){
 try{
-if(pendingRequestsContainer.children.length > 1){
+if(pendingRequestsContainer.children.length > 0){
 const acceptBtns = document.querySelectorAll(".accept-btn");
 const removeBtns = document.querySelectorAll(".remove-btn");
  Array.from(acceptBtns).forEach(fr => {
@@ -258,7 +258,7 @@ const response = await fetch("/api/friendship/accept", {
       });
       const data = await response.json();
       const result = data.error || data.message;
-      alert(result);
+
       if(response.ok){
             notify("request accepted!");
             pendingRequestsContainer.removeChild(myParent);
@@ -279,14 +279,35 @@ if(!isAuthorised){
       notify("please, log in first!", "error","click here", "/");
       return;
 }
-const myParent = e.target.parentElement.parentElement.parentElement;
+const currBtn = e.target;
+const myParent = currBtn.parentElement.parentElement.parentElement;
 try{
-e.target.previousElementSibling.disabled = true;
-const myParent = e.target.parentElement.parentElement.parentElement;
+
+currBtn.previousElementSibling.disabled = true;
+myParent.style.background = "#ffeeee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
-e.target.disabled = true;
-e.target.innerHTML = `Remove  <i class="fa-solid fa-circle-notch roll"></i>`;
-//alert(pendingAccepts[rIndex]);
+currBtn.disabled = true;
+currBtn.innerHTML = `Remove  <i class="fa-solid fa-circle-notch roll"></i>`;
+const fId = pendingAccepts[rIndex];
+const response = await fetch("/api/friendship/delete", {
+        method: "DELETE",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({senderId: fId})
+      });
+      const data = await response.json();
+      const result = data.error || data.message;
+      alert(result);
+      if(response.ok){
+            notify("request removed!");
+            pendingRequestsContainer.removeChild(myParent);
+      }else{
+      notify("request removal failed!", "error");
+      currBtn.disabled = false;
+      currBtn.innerHTML = "Remove";      
+      }
+
 }catch(err){
       myParent.style.background = "#fff";
       notify("friend request rejection failed!", "error")
