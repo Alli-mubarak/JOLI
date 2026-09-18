@@ -10,7 +10,6 @@ let pendingAcceptsTime = [];
 let pendingAcceptsPic = [];
 let pendingAcceptsUsername = [];
 
-
 async function fetchUsers() {
       try {
         const response = await fetch("/api/get-users");
@@ -85,6 +84,7 @@ async function fetchUsers() {
        });
             
        allowUserView();
+      prButtonsActivate();
         return;
       } catch (err) {
        notify("Error fetching users", "error");
@@ -207,3 +207,40 @@ async function addUser(btn, userCard, rId){
 setTimeout(()=>{
 fetchUsers();
 },5000);
+
+function prButtonsActivate(){
+try{
+if(pendingRequestsContainer.children > 1){
+const acceptBtns = document.querySelectorAll(".accept-btn");
+const removeBtns = document.querySelectorAll(".remove-btn");
+ Array.from(acceptBtns).forEach(fr => {
+       fr.onclick = (e) =>{acceptRequest(e)}
+ });
+Array.from(removeBtns).forEach(fr => {
+       fr.onclick = (e) =>{deleteRequest(e)}
+ });
+}
+}catch(e){
+      notify("buttons activation failed!", "error")
+      console.error(e);
+}
+}
+
+async function acceptRequest(e){
+try{
+alert("accept request?");
+alert(e.target.parentElement);
+}catch(err){
+      notify("friend request accept failed!", "error")
+      console.error(err);
+}
+}
+async function deleteRequest(e){
+try{
+alert("delete request?");
+alert(e.target.parentElement);
+}catch(err){
+      notify("friend request rejection failed!", "error")
+      console.error(err);
+}
+}
