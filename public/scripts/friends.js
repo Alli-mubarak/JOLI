@@ -240,8 +240,7 @@ myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
 currBtn.disabled = true;
 currBtn.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
-//const fId = pendingRequests[rIndex];
-const fId = "";
+const fId = pendingRequests[rIndex];
 const response = await fetch("/api/friendship/accept", {
         method: "POST",
         headers: {
