@@ -269,6 +269,7 @@ const response = await fetch("/api/friendship/accept", {
       }
 }catch(err){
       myParent.style.background = "#fff";
+      currBtn.innerHTML = "Accept";
       notify("friend request accept failed!", "error")
       console.error(err);
 }
@@ -310,6 +311,7 @@ const response = await fetch("/api/friendship/delete", {
 
 }catch(err){
       myParent.style.background = "#fff";
+      currBtn.innerHTML = "Remove";
       notify("friend request rejection failed!", "error")
       console.error(err);
 }
