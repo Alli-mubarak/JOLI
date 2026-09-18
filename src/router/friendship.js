@@ -28,6 +28,7 @@ router.post('/request', checkSession, async (req, res) => {
     const { receiverId } = req.body;
     
     if (!receiverId) {
+      console.log('Missing receiver id');
         return res.status(400).json({ error: 'Missing receiver id' });
     }
     
@@ -103,6 +104,7 @@ router.post('/accept', checkSession, async (req, res) => {
     const { senderId } = req.body;  // The user who originally sent the request
     
     if (!senderId) {
+      console.log('Missing sender id');
         return res.status(400).json({ error: 'Missing sender id' });
     }
     
@@ -134,7 +136,7 @@ router.post('/accept', checkSession, async (req, res) => {
             const checkResult = await pool.query(checkQuery, [senderId, receiverId]);
 
             if (checkResult.rows.length === 0) {
-                return res.status(444).json({ error: "Friend request not found." });
+                return res.status(404).json({ error: "Friend request not found." });
             }
 
             const record = checkResult.rows[0];
