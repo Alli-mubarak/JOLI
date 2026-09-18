@@ -190,12 +190,13 @@ main{
     display: grid;
             gap:20px;
             width:100%;
-            grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           position: relative;
         margin-bottom: 15px;
         }
         .user{
-         max-width: 50%;
+            width: 50%;
+          max-width: 100%;
             height: fit-content;
             border-radius:12px ;
             overflow: hidden;
