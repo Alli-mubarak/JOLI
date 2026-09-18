@@ -240,7 +240,7 @@ myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
 currBtn.disabled = true;
 currBtn.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
-const fId = pendingRequests[rIndex];
+const fId = pendingAccepts[rIndex];
 const response = await fetch("/api/friendship/accept", {
         method: "POST",
         headers: {
@@ -278,7 +278,7 @@ const myParent = e.target.parentElement.parentElement.parentElement;
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
 e.target.disabled = true;
 e.target.innerHTML = `Remove  <i class="fa-solid fa-circle-notch roll"></i>`;
-//alert(pendingRequests[rIndex]);
+//alert(pendingAccepts[rIndex]);
 }catch(err){
       myParent.style.background = "#fff";
       notify("friend request rejection failed!", "error")
