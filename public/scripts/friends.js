@@ -227,29 +227,58 @@ Array.from(removeBtns).forEach(fr => {
 }
 
 async function acceptRequest(e){
+      if(!isAuthorised){
+            notify("please, log in first!", "error","click here", "/");
+            return;
+      }
+const currBtn = e.target;
+const myParent = currBtn.parentElement.parentElement.parentElement;
 try{
-e.target.nextElementSibling.disabled = true;
-const myParent = e.target.parentElement.parentElement.parentElement;
+
+currBtn.nextElementSibling.disabled = true;
 myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
-e.target.disabled = true;
-e.target.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
-alert(pendingRequests[rIndex]);
+currBtn.disabled = true;
+currBtn.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
+//const fId = pendingRequests[rIndex];
+const fId = "";
+const response = await fetch("/api/friendship/accept", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({senderId: fId})
+      });
+      if(response.ok){
+            notify("request accepted!");
+            pendingRequestsContainer.removeChild(myParent);
+      }else{
+      notify("request accept failed!", "error");
+      currBtn.disabled = false;
+      currBtn.innerHTML = "Accept";      
+      }
 }catch(err){
+      myParent.style.background = "#fff";
       notify("friend request accept failed!", "error")
       console.error(err);
 }
 }
+
 async function deleteRequest(e){
+if(!isAuthorised){
+      notify("please, log in first!", "error","click here", "/");
+      return;
+}
+const myParent = e.target.parentElement.parentElement.parentElement;
 try{
 e.target.previousElementSibling.disabled = true;
 const myParent = e.target.parentElement.parentElement.parentElement;
-myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
 e.target.disabled = true;
 e.target.innerHTML = `Remove  <i class="fa-solid fa-circle-notch roll"></i>`;
-alert(pendingRequests[rIndex]);
+//alert(pendingRequests[rIndex]);
 }catch(err){
+      myParent.style.background = "#fff";
       notify("friend request rejection failed!", "error")
       console.error(err);
 }
