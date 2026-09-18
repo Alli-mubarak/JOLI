@@ -233,6 +233,7 @@ myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
 e.target.disabled = true;
 e.target.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
+alert(pendingRequests[rIndex]);
 }catch(err){
       notify("friend request accept failed!", "error")
       console.error(err);
