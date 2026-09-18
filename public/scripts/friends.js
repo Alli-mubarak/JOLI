@@ -241,8 +241,12 @@ alert(pendingRequests[rIndex]);
 }
 async function deleteRequest(e){
 try{
-alert("delete request?");
-alert(e.target.parentElement);
+const myParent = e.target.parentElement.parentElement.parentElement;
+myParent.style.background = "#eef9ee";
+const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
+e.target.disabled = true;
+e.target.innerHTML = `Remove  <i class="fa-solid fa-circle-notch roll"></i>`;
+alert(pendingRequests[rIndex]);
 }catch(err){
       notify("friend request rejection failed!", "error")
       console.error(err);
