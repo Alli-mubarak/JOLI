@@ -228,6 +228,7 @@ Array.from(removeBtns).forEach(fr => {
 
 async function acceptRequest(e){
 try{
+e.target.nextElementSibling.disabled = true;
 const myParent = e.target.parentElement.parentElement.parentElement;
 myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
@@ -241,6 +242,7 @@ alert(pendingRequests[rIndex]);
 }
 async function deleteRequest(e){
 try{
+e.target.previousElementSibling.disabled = true;
 const myParent = e.target.parentElement.parentElement.parentElement;
 myParent.style.background = "#eef9ee";
 const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
