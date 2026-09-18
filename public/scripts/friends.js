@@ -230,7 +230,9 @@ async function acceptRequest(e){
 try{
 const myParent = e.target.parentElement.parentElement.parentElement;
 myParent.style.background = "#eef9ee";
-alert(Array.from(pendingRequestsContainer.children).indexOf(myParent));
+const rIndex = Array.from(pendingRequestsContainer.children).indexOf(myParent);
+e.target.disabled = true;
+e.target.innerHTML = `Accept  <i class="fa-solid fa-circle-notch roll"></i>`;
 }catch(err){
       notify("friend request accept failed!", "error")
       console.error(err);
