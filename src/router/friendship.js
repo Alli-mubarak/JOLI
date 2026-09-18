@@ -166,6 +166,48 @@ router.post('/accept', checkSession, async (req, res) => {
     }
 });
 
+//api for friendship deletion
+router.delete('/delete', checkSession, async (req, res) => {
+  try{
+    if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized"});
+  }
+    const receiverId = req.user.id; // The authenticated user accepting the request
+    const { senderId } = req.body;  // The user who originally sent the request
+    
+    if (!senderId) {
+      console.log('Missing sender id');
+        return res.status(400).json({ error: 'Missing sender id' });
+    }
+    if (receiverId === senderId) {
+            return res.status(400).json({ error: "You cannot unfriend yourself." });
+    }
+
+      const query = `
+            DELETE FROM friendships 
+            WHERE sender_id = $1 AND receiver_id = $2
+            RETURNING *;
+        `;
+        
+        const result = await pool.query(query, [senderId, receiverId]);
+
+        // Handle cases where no friendship record existed
+        if (result.rowCount === 0) {
+            return res.status(444).json({ error: "Friendship relationship not found." });
+        }
+
+        // Success Response
+        return res.status(200).json({
+            message: "Friend request deleted successfully.",
+            friendship: result.rows[0]
+        });
+
+    } catch (error) {
+        console.error("Delete friend request error:", error);
+        return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
 //api for getting user's friendship list
 router.get('/user/friends', checkSession,  async (req, res) => {
   try {
