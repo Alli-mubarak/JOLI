@@ -260,8 +260,9 @@ const response = await fetch("/api/friendship/accept", {
       const result = data.error || data.message;
 
       if(response.ok){
-            notify("request accepted!");
             pendingRequestsContainer.removeChild(myParent);
+            pendingAccepts.splice(rIndex, 1);
+            notify("request accepted!");
       }else{
       notify("request accept failed!", "error");
       currBtn.disabled = false;
@@ -302,8 +303,9 @@ const response = await fetch("/api/friendship/delete", {
       const result = data.error || data.message;
       alert(result);
       if(response.ok){
-            notify("request removed!");
             pendingRequestsContainer.removeChild(myParent);
+            pendingAccepts.splice(rIndex, 1);
+            notify("request removed!");
       }else{
       notify("request removal failed!", "error");
       currBtn.disabled = false;
