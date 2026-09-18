@@ -1,4 +1,3 @@
-
 const pendingRequestsContainer = document.getElementById("pending-requests")
 const fReqHeading = document.getElementById("f-req")
 const addFriendsHeading = document.getElementById("add-fr-h")
@@ -23,7 +22,7 @@ async function fetchUsers() {
            // alert(currentUserId)
        // lastUserFetched = 
         if(currentUserId){
-      const fResponse = await fetch("/user/friends");
+      const fResponse = await fetch("/api/friendship/user/friends");
       if(fResponse.ok){
       const friendshipsResult  = await fResponse.json();
       const friendships = friendshipsResult.friendships;
