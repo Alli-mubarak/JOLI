@@ -230,7 +230,7 @@ async function acceptRequest(e){
 try{
 const myParent = e.target.parentElement.parentElement.parentElement;
 myParent.style.background = "#eef9ee";
-alert(pendingRequestsContainer.indexOf(myParent));
+alert(Array.from(pendingRequestsContainer.children).indexOf(myParent));
 }catch(err){
       notify("friend request accept failed!", "error")
       console.error(err);
