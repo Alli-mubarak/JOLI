@@ -9,6 +9,8 @@ let pendingAccepts = [];
 let pendingAcceptsTime = [];
 let pendingAcceptsPic = [];
 let pendingAcceptsUsername = [];
+let accepted = [];
+let confirmed = [];
 
 async function fetchUsers() {
       try {
@@ -35,6 +37,12 @@ async function fetchUsers() {
             else{
                   pendingAccepts.push(f.sender_id);
                   pendingAcceptsTime.push(f.created_at);
+            }
+      }else if(f.status === "accepted"){
+            if(f.receiver_id === currentUserId){
+                  accepted.push(f.sender_id); 
+            }else{
+                  confirmed.push(f.receiver_id); 
             }
       }
       });
@@ -76,8 +84,8 @@ async function fetchUsers() {
             
       }
        }
-         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id)){
-                displayUser(user);
+         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id) && accepted.includes(user.id) && confirmed.includes(user.id)){
+            displayUser(user);
             addFriendsHeading.classList.remove("hidden")
         }
 
