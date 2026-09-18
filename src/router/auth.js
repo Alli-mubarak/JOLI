@@ -704,9 +704,9 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
             [user.id, tokenHash, expiresAt]
         );
         await pool.query('COMMIT');
-        const code = await generateCode(6);
+        
        // send mail containing reset code **
-      return res.status(200).json({ message: `Email found, reset code has been sent to your email! ${code}`});
+      return res.status(200).json({ message: `Email found, reset code has been sent to your email! ${resetCode}`});
       }
       return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
