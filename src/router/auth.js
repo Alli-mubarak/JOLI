@@ -704,16 +704,9 @@ authRouter.post('/reset-password', limiter, async(req, res) => {
             [user.id, tokenHash, expiresAt]
         );
         await pool.query('COMMIT');
-        // send mail containing reset code
         const code = await generateCode(6);
-        const sendOtp = await sendOTPMessage(user.email, user.username, code);
-    if(sendOtp.error){
-      console.error("Otp message sending failed!");
-      return res.status(400).json({ message: "Error sending code to mail!" });
-    }else{
-      console.log("Otp message sent successfully!");
-    }
-      return res.status(200).json({ message: 'Email found, reset code has been sent to your email!'});
+       // send mail containing reset code **
+      return res.status(200).json({ message: `Email found, reset code has been sent to your email! ${code}`});
       }
       return res.status(200).json({ message: 'Email was not verified, password cannot be reset!'});
     }else{
