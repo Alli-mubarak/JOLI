@@ -228,8 +228,9 @@ Array.from(removeBtns).forEach(fr => {
 
 async function acceptRequest(e){
 try{
-alert("accept request?");
-alert(e.target.parentElement);
+const myParent = e.target.parentElement.parentElement.parentElement;
+myParent.style.background = "#eef9ee";
+alert(pendingRequestsContainer.indexOf(myParent));
 }catch(err){
       notify("friend request accept failed!", "error")
       console.error(err);
