@@ -195,8 +195,7 @@ main{
         margin-bottom: 15px;
         }
         .user{
-          width:100%;
-        /* max-width: 50%;*/
+         max-width: 50%;
             height: fit-content;
             border-radius:12px ;
             overflow: hidden;
