@@ -210,7 +210,7 @@ fetchUsers();
 
 function prButtonsActivate(){
 try{
-if(pendingRequestsContainer.children > 1){
+if(pendingRequestsContainer.children.length > 1){
 const acceptBtns = document.querySelectorAll(".accept-btn");
 const removeBtns = document.querySelectorAll(".remove-btn");
  Array.from(acceptBtns).forEach(fr => {
