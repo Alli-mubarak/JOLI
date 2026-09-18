@@ -84,7 +84,7 @@ async function fetchUsers() {
             
       }
        }
-         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id) && accepted.includes(user.id) && confirmed.includes(user.id)){
+         else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id) && !accepted.includes(user.id) && !confirmed.includes(user.id)){
             displayUser(user);
             addFriendsHeading.classList.remove("hidden")
         }
