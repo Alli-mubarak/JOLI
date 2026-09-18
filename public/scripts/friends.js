@@ -248,6 +248,9 @@ const response = await fetch("/api/friendship/accept", {
       },
         body: JSON.stringify({senderId: fId})
       });
+      const data = await response.json();
+      const result = data.error || data.message;
+      alert(result);
       if(response.ok){
             notify("request accepted!");
             pendingRequestsContainer.removeChild(myParent);
