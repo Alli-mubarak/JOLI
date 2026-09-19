@@ -114,12 +114,12 @@ const postCard = `
         <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
-                     <a href="/user/${post.user_id}" id="author-image">
+                     <a href="/user/${post.author_username}" id="author-image" data-id=${post.user_id}>
                          <img src="${post.author_profile_picture || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
-                          <a href="/user/${post.user_id}" class="author-link">
+                          <a href="/user/${post.author_username}" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
                           <small>${getPostTime(post.created_at)}</small>
@@ -431,8 +431,9 @@ async function viewPostMenu(e){
   try{
   const postId = e.currentTarget.id;
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
-  const authorLink = e.currentTarget.querySelector("#author-image").href;
-  const authorId = authorLink.split("user/")[1];
+  const authorLinkTag = e.currentTarget.querySelector("#author-image");
+  const authorLink = authorLinkTag.href;
+  const authorId = authorLinkTag.getAttribute("data-id");
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
