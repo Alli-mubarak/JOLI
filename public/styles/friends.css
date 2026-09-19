@@ -108,6 +108,7 @@ main{
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 500px;
     border-radius:12px ;
     overflow: hidden;
     height: 120px;
