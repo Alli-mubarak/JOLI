@@ -136,29 +136,8 @@ next();
         api_secret: process.env.CLOUD_API_SECRET 
     });
 
-//**********Helper functions *****""""""
 
-//function for fetching post author details 
-async function fetchAuthorDetails(authorId){
-  try{
-      const user = await pool.query(
-    "SELECT * FROM users WHERE id = $1",
-    [authorId]
-  );
-    const author = user.rows[0];
-    const authorDetails = {
-      profile_pic: author.profile_picture,
-      username : author.username,
-      is_active: author.is_active,
-      is_verified: author.is_verified
-    }
-    return authorDetails;
-  }catch(e){
-    return console.error(e);
-  }
-}
-
-//***"""""""""""
+//***""""ROUTES CONFIGURATION"""""""
 app.use('/api/m', mailRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/post', postRoutes);
@@ -166,71 +145,6 @@ app.use('/user', userRoutes);
 app.use('/api/friendship', friendshipRoutes);
 //***********
 
-//user role change api
-app.get('/api/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
-  const {newRole, id} = req.params;
- try{
-   if(!newRole && !id){
-   return res.json({
-      error: 'role or id is missing'
-    });
-   }
-   const getUser = await pool.query(
-    "SELECT * FROM users WHERE id = $1",
-    [id]
-  );
-   const user = getUser.rows[0];
-  const roles = ["user","moderator","admin"];
-  if(!user){
-   return res.status(400).json({
-      error: 'user not found!'
-    });
-  }
-   if(!roles.includes(newRole)){
-    return res.json({
-      error: 'role does not exist!'
-    });
-   }
-   if(user.role === newRole){
-    return res.json({
-      error: 'user already has the role!'
-    });
-   }
-   if(!req.user){
-    return res.json({
-      error: 'You need to log in first!'
-    });
-   }
-   const initiatorRole = req.user.role
-   if(initiatorRole !== roles[2]){
-    return res.json({
-     error: 'You are not authorised to do this!'
-    });
-  }
-   
-       await pool.query(
-        `
-        UPDATE users
-        SET role = $1
-         WHERE id = $2
-        `,
-        [
-            newRole,
-            id
-        ]
-    );
-   res.json({
-     message: `user role changed to ${newRole}`,
-     userId: id
-   })
-  }
-  catch(error){
-    res.json({
-      error: error,
-      errorMessage: error.message
-    })
-  }
-});
 
 //***********///
 //default page  route
@@ -383,88 +297,6 @@ app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   }
 });
 
-//api for mailing
-app.get('/send-mail', checkSession, async(req, res) => {
-  try{
-if(!req.isAuthenticated() || !req.user) {
-    return res.status(401).send('Unauthorized. Please log in.');
-}
-    // Function to send mail
-  const mailOption1 = {
-    from: process.env.EMAIL_USER,
-    to: req.user.email,
-    subject: 'Welcome to JOLI',
-    text: `Hi ${req.user.username}, thanks for joining us on JOLI!`,
-  };
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: req.user.email,
-    subject: 'New notification on JOLI',
-    html: `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>New Notification on JOLI</title>
-      </head>
-      <body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
-          
-          <!-- Header Banner -->
-          <tr>
-            <td align="center" style="padding: 20px; background: linear-gradient(135deg, #555 0%, #333 100%);">
-              <img src="https://joli-indol.vercel.app/images/joli-dark.png" alt="joli logo" style="height: 150px; width: auto;"/>
-            </td>
-          </tr>
-
-          <!-- Main Body Content -->
-          <tr>
-            <td style="padding: 40px 30px; color: #333333; font-size: 16px; line-height: 1.6;">
-              <h2 style="margin-top: 0; color: #111111; font-size: 20px;">Hey ${req.user.username},</h2>
-              <p style="margin-bottom: 25px;">Someone just interacted with your profile! Log back in to see your new friend requests, comments, and messages.</p>
-              
-              <!-- Styled Button -->
-              <table align="center" border="0" cellpadding="0" cellspacing="0" style="margin: 30px auto;">
-                <tr>
-                  <td align="center" style="border-radius: 6px; background-color: #555;">
-                    <a href="https://joli-indol.vercel.app" target="_blank" style="display: inline-block; padding: 14px 30px; font-size: 16px; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 6px;">View Notifications</a>
-                  </td>
-                </tr>
-              </table>
-              
-              <p style="margin-bottom: 0; font-size: 14px; color: #666666;">If you didn't request this email, you can safely ignore it.</p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td align="center" style="padding: 20px 30px; background-color: #fafafa; border-top: 1px solid #eeeeee; font-size: 12px; color: #999999;">
-              <p style="margin: 0 0 10px 0;">&copy; 2026 JOLI. All rights reserved.</p>
-              <p style="margin: 0;"><a href="https://joli-indol.vercel.app" style="color: #667eea; text-decoration: underline;">Unsubscribe from these alerts</a></p>
-            </td>
-          </tr>
-
-        </table>
-      </body>
-      </html>
-    `,
-  };
-
-  
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent: ', info.response);
-res.status(200).json({
-      message : "mail sent successfully"
-    });
-    
-  }
-  catch(err){
-    console.error(err);
-    return res.status(500).json({ error: 'mail sending failed' });
-  }
-});
 
 //response to all wrong paths
 app.use((req, res)=>{
