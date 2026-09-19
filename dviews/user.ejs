@@ -44,7 +44,7 @@ return `${Math.floor(sDifference)}s`;
 <button id="return-btn">
   <i class="fa-solid fa-arrow-left"></i>
   </button>
-<h3>Post</h3>
+<h3>User</h3>
 </div>
   <a href="/" id="logo">
     <img src="/images/joli-light.png" loading="lazy" alt="logo" class="logo" />
@@ -64,7 +64,7 @@ return `${Math.floor(sDifference)}s`;
         <div class="user-info">
             <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
             <p class="username"><b><%= user.username %></b></p>
-            <p class="bio"><%= user.bio %></p>
+            <p class="bio"><%= user.bio || 'happy to be here on JOLI' %></p>
             <button id="add-friend">Add</button>
             <span class="f-count"><%= user.friends %></span>
             <p class="p-title">Posts</p>
