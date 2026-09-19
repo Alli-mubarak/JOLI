@@ -78,12 +78,12 @@ async function fetchUserFriends(userId){
 }
 
 //user view api
-router.get('/:id', async (req, res) => {
+router.get('/:username', async (req, res) => {
   console.log('user fetched \n');
   
 try{
-    const userId = req.params.id;
-    const userQuery= await pool.query('SELECT id, username, is_active, is_verified, profile_picture, bio, cover_photo FROM users WHERE id = $1', [userId]);
+    const username = req.params.username;
+    const userQuery= await pool.query('SELECT id, username, is_active, is_verified, profile_picture, bio, cover_photo FROM users WHERE username = $1', [username]);
   if (userQuery.rows.length === 0) {
     console.error('user not found!');
     return res.sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
@@ -110,7 +110,7 @@ let friends = await fetchUserFriends(userData.id);
  res.render('user', { user: userData }); 
 }catch(e){
   console.error('Error fetching user',e);
-  return res.status(500).sendFile(path.join(__dirname, "../../", "/views/post-error.html"));
+  return res.status(500).sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
 }
 }
 )
