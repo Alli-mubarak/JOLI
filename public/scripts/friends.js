@@ -258,7 +258,8 @@ const response = await fetch("/api/friendship/accept", {
       });
       const data = await response.json();
       const result = data.error || data.message;
-
+      console.log(result);
+      
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
@@ -302,7 +303,7 @@ const response = await fetch("/api/friendship/delete", {
       });
       const data = await response.json();
       const result = data.error || data.message;
-      alert(result);
+      console.log(result);
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
