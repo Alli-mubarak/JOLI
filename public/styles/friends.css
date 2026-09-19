@@ -272,7 +272,7 @@ main{
           white-space: nowrap;
           text-overflow: ellipsis;
           }
-.loader{
+.loader, .r-loader{
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -285,7 +285,11 @@ main{
   overflow: hidden;
   border-radius: 10px;
 }
-  .loader:before{
+  .r-loader{
+    width:100%;
+    max-width: 500px;
+  }
+  .loader:before, .r-loader:before{
     position: absolute;
     content: '';
     width: 150px;
