@@ -118,6 +118,9 @@ main{
     gap: 15px;
     overflow: hidden;
   }
+  .p-user a{
+    text-decoration: none;
+  }
   .p-user img{
     width: 150px;
     height:100%;
@@ -140,6 +143,9 @@ main{
     justify-content: space-between;
     width:100%;
     gap: 25px;
+  }
+  .up-link{
+    color:#111;
   }
   .p-username{
     font-size:1.1rem;
