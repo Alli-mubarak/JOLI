@@ -426,8 +426,8 @@ function viewPostImage(e){
       }
     }
 
-//function thatt shows post menu
-function viewPostMenu(e){
+//function that shows post menu
+async function viewPostMenu(e){
   try{
   const postId = e.currentTarget.id;
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
@@ -445,7 +445,48 @@ function viewPostMenu(e){
     currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
+    const addFriendBtn = postMenu.querySelector("#add-friend-btn");
+    const viewAuthorBtn = postMenu.querySelector("#view-user-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
+
+    if(addFriendBtn){
+      addFriendBtn.onclick = () =>{
+        try{
+       await addFriend(authorId);
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+        }
+        catch(err){
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+    }
+
+    if(viewAuthorBtn){
+      viewAuthorBtn.onclick = () =>{
+        try{
+       window.location.href = authorLink;
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+        }
+        catch(err){
+          notify("Author profile view failed!", "error");
+          return 
+        }
+      }
+    }
+
+    
     if(delBtn){
       delBtn.onclick = () =>{
       if(confirm("Are you sure you want to delete this post?")){
@@ -704,3 +745,7 @@ commentInput.oninput = () =>{
 
 //post fetcher function call
 fetchPosts()
+
+async function addFriend(id){
+  alert(id);
+}
