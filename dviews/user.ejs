@@ -65,7 +65,7 @@ return `${Math.floor(sDifference)}s`;
             <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
             <p class="username"><b><%= user.username %></b></p>
             <p class="bio"><%= user.bio || 'happy to be here on JOLI' %></p>
-            <button id="add-friend">Add</button>
+            <button id="add-friend"><i class="fa-solid fa-plus add-loader"> Add</button>
             <span class="f-count"><%= user.friends %></span>
             <p class="p-title">Posts</p>
         </div>
