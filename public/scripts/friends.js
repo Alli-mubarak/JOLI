@@ -64,10 +64,14 @@ async function fetchUsers() {
       fReqHeading.classList.remove("hidden");
       const htmlEl = `
       <div class="p-user">
+      <a href="/user/${user.username}" class="pp-link">
        <img src=${user.profile_picture || "/images/default-user.png"} alt="user picture" />
+      </a>
        <div class="req-options">
          <div class="req-details">
+         <a href="/user/${user.username}" class="up-link">
           <p class="p-username">${user.username}</p>
+          </a>
           <small>${getReqTime(pendingAcceptsTime[pendingAccepts.indexOf(user.id)])}</small>
          </div>
          <div class="req-btns">
