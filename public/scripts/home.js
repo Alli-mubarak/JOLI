@@ -453,14 +453,14 @@ async function viewPostMenu(e){
 if(addFriendBtn){
       addFriendBtn.onclick = async() =>{
         try{
-       await addFriend(authorId);
+       await addFriend(authorId, addFriendBtn);
       
         postMenuCloser.style.background = "transparent";
     
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   enableScrolling();
+  //   setTimeout(() =>{
+    //  postMenuContainer.style.bottom = "-100vh";
+ //     },200);
+//   enableScrolling();
         }
         catch(err){
           notify("failed to send request!", "error");
@@ -747,7 +747,8 @@ commentInput.oninput = () =>{
 //post fetcher function call
 fetchPosts()
 
-async function addFriend(id){
-  alert(id);
+async function addFriend(id, btn){
+  btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
+  
 }
 
