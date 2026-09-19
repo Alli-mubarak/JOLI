@@ -1,6 +1,4 @@
-const pendingRequestsContainer = document.getElementById("pending-requests")
-const fReqHeading = document.getElementById("f-req")
-const addFriendsHeading = document.getElementById("add-fr-h")
+const pendingRequestsContainer = document.getElementById("pending-requests");
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
 let pendingRequests = [];
@@ -61,7 +59,6 @@ async function fetchUsers() {
       
       if(pendingAccepts.includes(user.id)){
       try{
-      fReqHeading.classList.remove("hidden");
       const htmlEl = `
       <div class="p-user">
       <a href="/user/${user.username}" class="pp-link">
@@ -90,20 +87,27 @@ async function fetchUsers() {
        }
          else if(!pendingRequests.includes(user.id) && !pendingAccepts.includes(user.id) && !accepted.includes(user.id) && !confirmed.includes(user.id)){
             displayUser(user);
-            addFriendsHeading.classList.remove("hidden")
         }
 
        });
             
        allowUserView();
       prButtonsActivate();
+      setDefaultMessage();
         return;
       } catch (err) {
        notify("Error fetching users", "error");
         console.error("Error fetching users:", err);
       }
 }
-
+function setDefaultMessage(){
+ if(pendingRequestsContainer.children.length < 1){
+       pendingRequestsContainer.innerHTML = `<p class="def-msg">You currently have no friend requests.</p>`
+ }
+if(usersContainer.children.length < 1){
+usersContainer.innerHTML = `<p class="def-msg">There are no new users at the moment.</p>`
+}
+}
 async function displayUser(user){
 try{
  
@@ -200,9 +204,9 @@ async function addUser(btn, userCard, rId){
         body: JSON.stringify({receiverId: rId})
       });
       if(response.ok){
-            
             notify("request sent!");
             usersContainer.removeChild(userCard);
+            setDefaultMessage();
       }else{
             notify("request failed!", "error");
       addLoader.classList.remove("fa-circle-notch");
@@ -269,6 +273,7 @@ const response = await fetch("/api/friendship/accept", {
             pendingAccepts.splice(rIndex, 1);
             if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request accepted!");
+            setDefaultMessage();
       }else{
       notify("request accept failed!", "error");
       currBtn.disabled = false;
@@ -313,6 +318,7 @@ const response = await fetch("/api/friendship/delete", {
             pendingAccepts.splice(rIndex, 1);
             if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request removed!");
+            setDefaultMessage();
       }else{
       notify("request removal failed!", "error");
       currBtn.disabled = false;
