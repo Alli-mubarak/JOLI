@@ -1,5 +1,3 @@
-alert("hello");
-async function runScript(){
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
@@ -474,11 +472,12 @@ if(addFriendBtn){
     if(viewAuthorBtn){
       viewAuthorBtn.onclick = () =>{
         try{
-       window.location.href = authorLink;
         postMenuCloser.style.background = "transparent";
-    
+      currPost.style.background = "#fff";
+        
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
+       window.location.href = authorLink;
       },200);
    enableScrolling();
         }
