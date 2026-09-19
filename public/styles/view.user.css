@@ -161,11 +161,13 @@ header button:hover {
         }
         .username{
             font-size:1.3rem;
+          margin-left: 10px;
         }
         .bio{
             font-size: 1rem;
             max-width:100%;
             overflow:hidden;
+          margin-left: 10px;
         }
         #add-friend{
             position: absolute;
@@ -175,7 +177,8 @@ header button:hover {
             padding: 0 20px;
             height:40px;
             border-radius: 10px;
-            border:2px solid #ddd;
+            border:none;
+           background: var(--primary-color);
             display:flex;
             align-items: center; 
             justify-content: center;
