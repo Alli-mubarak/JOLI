@@ -62,7 +62,7 @@ const checkSession = (req, res, next) => {
 
 async function fetchUserFriends(id){
   try{
-    const frQuery = await pool.query('SELECT * FROM friendships where (sender_id = $1 OR receiver_id = $1) AND status = $2', [id, "accepted"]);
+    const frQuery = await pool.query('SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2', [id, "accepted"]);
     return {
       count: frQuery.rows.length,
       friends : frQuery.rows
@@ -90,7 +90,9 @@ let friends = await fetchUserFriends(userData.user_id);
   if(friends.error){
     return res.send("Could not fetch friends");
   }
-  userData.friends = friends.count + "friends"
+  if(friends.count < 2){ userData.friends = friends.count + " friend"}
+  else{userData.friends = friends.count + " friends"}
+  
   if(req.user && req.user.id){
   //  const likeStat = await getPostLikeStatus(postData.id, req.user.id);
   //  postData.likeStatus = likeStat
