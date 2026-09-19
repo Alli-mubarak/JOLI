@@ -1,3 +1,5 @@
+alert("hello");
+async function runScript(){
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
@@ -749,3 +751,8 @@ fetchPosts()
 async function addFriend(id){
   alert(id);
 }
+}
+setTimeout(()=>{
+  try{runScript()}
+  catch(err){console.error(err)}
+},5000)
