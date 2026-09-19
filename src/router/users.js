@@ -60,6 +60,52 @@ const checkSession = (req, res, next) => {
   }
 };
 
+async fetchUserFriends(id){
+  try{
+    const frQuery = await pool.query('SELECT * FROM friendships where (sender_id = $1 OR receiver_id = $1) AND status = $2', [id, "accepted"]);
+    return {
+      count: frQuery.rows.length,
+      friends : frQuery.rows
+    }
+              
+  }
+  catch(e){
+    console.error(e)
+    return {error: "failed to fetch friends"}
+  }
+}
+
+//user view api
+router.get('/:id', async (req, res) => {
+  console.log('user fetched \n');
+try{
+    const userId = req.params.id;
+    const userQuery= await pool.query('SELECT id, username, is_active, is_verified, profile_picture, bio, cover_photo FROM users WHERE id = $1', [userId]);
+  if (userQuery.rows.length === 0) {
+    console.error('user not found!');
+    return res.sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
+  }
+  const userData = postQuery.rows[0];
+let friends = await fetchUserFriends(userData.user_id);
+  if(friends.error){
+    return res.send("Could not fetch friends");
+  }
+  userData.friends = friends.count + "friends"
+  if(req.user && req.user.id){
+  //  const likeStat = await getPostLikeStatus(postData.id, req.user.id);
+  //  postData.likeStatus = likeStat
+  }
+  
+  
+ res.render('user', { user: userData }); 
+}catch(e){
+  console.error('Error fetching user',e);
+  return res.sendFile(path.join(__dirname, "../../", "/views/post-error.html"));
+}
+}
+)
+
+
 //user role change api
 router.get('/v1/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
   const {newRole, id} = req.params;
