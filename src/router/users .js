@@ -137,7 +137,7 @@ router.get('/download-txt', checkSession, async (req, res) => {
   
   const userId = req.user.id
   try {
-    // Fetch user data from AIVEN DV
+    // Fetch user data from AIVEN DB
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
     if (result.rows.length < 1) {
       return res.status(404).json({ error: 'User not found' });
