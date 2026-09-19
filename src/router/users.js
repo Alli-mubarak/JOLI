@@ -60,7 +60,7 @@ const checkSession = (req, res, next) => {
   }
 };
 
-async fetchUserFriends(id){
+async function fetchUserFriends(id){
   try{
     const frQuery = await pool.query('SELECT * FROM friendships where (sender_id = $1 OR receiver_id = $1) AND status = $2', [id, "accepted"]);
     return {
