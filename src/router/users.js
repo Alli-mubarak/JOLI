@@ -98,7 +98,10 @@ let friends = await fetchUserFriends(userData.id);
   else{userData.friends = friends.count + " friends"}
   
   if(req.user && req.user.id){
-    if(userId === req.user.id) userData.mine = true
+    if(userId === req.user.id){
+      userData.mine = true
+      userData.title = "My profile"
+    }
   //  const likeStat = await getPostLikeStatus(postData.id, req.user.id);
   //  postData.likeStatus = likeStat
   }
