@@ -101,7 +101,7 @@ async function fetchUsers() {
       }
 }
 function setDefaultMessage(){
- if(pendingRequestsContainer.children.length < 1){
+ if(pendingAccepts.length < 1){
        pendingRequestsContainer.innerHTML = `<p class="def-msg">You currently have no friend requests.</p>`
  }
 if(usersContainer.children.length < 1){
@@ -271,7 +271,6 @@ const response = await fetch("/api/friendship/accept", {
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
-            if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request accepted!");
             setDefaultMessage();
       }else{
@@ -316,7 +315,6 @@ const response = await fetch("/api/friendship/delete", {
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
-            if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request removed!");
             setDefaultMessage();
       }else{
