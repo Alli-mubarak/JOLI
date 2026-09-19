@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOLI - User</title>
+   <link rel="stylesheet" href="/styles/view.user.css" />
+  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" href="/images/joli3.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/images/joli3.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="/scripts/userview.js" defer ></script>
+</head>
+<body>
+  <% 
+function getPostTime(postTime){
+const targetDate = new Date(postTime);
+const currentDate = new Date();
+
+const msDifference = currentDate - targetDate;
+const sDifference = msDifference / 1000;
+const mDifference = msDifference / (1000 * 60);
+const hDifference = msDifference / (1000 * 60 * 60);
+const dDifference = msDifference / (1000 * 60 * 60 * 24);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
+
+if(mtDifference > 1){
+return `${Math.floor(mtDifference)}M`; 
+}else if (dDifference > 1){
+return `${Math.floor(dDifference)}d`;
+}else if (hDifference > 1){
+return `${Math.floor(hDifference)}h`;
+}else if (mDifference > 1){
+return `${Math.floor(mDifference)}m`;
+}else {
+return `${Math.floor(sDifference)}s`;
+}
+
+}
+
+%>
+<header id="header">
+<div class="title">
+<button id="return-btn">
+  <i class="fa-solid fa-arrow-left"></i>
+  </button>
+<h3>Post</h3>
+</div>
+  <a href="/" id="logo">
+    <img src="/images/joli-light.png" loading="lazy" alt="logo" class="logo" />
+  </a>
+  
+  </header>
+
+<section id="user-details">
+        <div class="banner">
+            <img src="<%= user.cover_photo || '/images/user-banner.png' %>" loading="lazy" alt="user-banner"/>
+            <div id="menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="user-info">
+            <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
+            <p class="username"><b><%= user.username %></b></p>
+            <p class="bio"><%= user.bio %></p>
+            <button id="add-friend">Add</button>
+            <span class="f-count"><%= user.friends %></span>
+            <p class="p-title">Posts</p>
+        </div>
+        <div class="other-info">
+            <p>Hi</p>
+        </div>
+    </section>
+
+<script>
+const backBtn = document.getElementById("return-btn");
+backBtn.onclick = () =>{
+history.back();
+}
+</script>
+
+</body>
+</html>
