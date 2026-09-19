@@ -262,6 +262,7 @@ const response = await fetch("/api/friendship/accept", {
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
+            if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request accepted!");
       }else{
       notify("request accept failed!", "error");
@@ -305,6 +306,7 @@ const response = await fetch("/api/friendship/delete", {
       if(response.ok){
             pendingRequestsContainer.removeChild(myParent);
             pendingAccepts.splice(rIndex, 1);
+            if(pendingAccepts.length < 1) fReqHeading.classList.add("hidden");
             notify("request removed!");
       }else{
       notify("request removal failed!", "error");
