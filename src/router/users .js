@@ -7,10 +7,20 @@ const __dirname = import.meta.dirname;
 import { v2 as cloudinary } from 'cloudinary';
 import 'dotenv/config'; // Automatically loads environment variables
 import 'ejs';
+import rateLimit  from 'express-rate-limit';
 import transporter from './mailer.js';
 
 app.set('views', path.join(process.cwd(), 'dviews'))
 app.set('view engine', 'ejs');
+
+//configure rate limiter
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: 'Too many requests from this IP, please try again later.'
+});
 
 // cloudinary configuration
 cloudinary.config({ 
@@ -52,6 +62,73 @@ const checkSession = (req, res, next) => {
   }
 };
 
+//user role change api
+router.get('/v1/change-role/user/:id/:newRole', checkSession, limiter, async(req,res) => {
+  const {newRole, id} = req.params;
+ try{
+   if(!newRole && !id){
+   return res.json({
+      error: 'role or id is missing'
+    });
+   }
+   const getUser = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [id]
+  );
+   const user = getUser.rows[0];
+  const roles = ["user","moderator","admin"];
+  if(!user){
+   return res.status(400).json({
+      error: 'user not found!'
+    });
+  }
+   if(!roles.includes(newRole)){
+    return res.json({
+      error: 'role does not exist!'
+    });
+   }
+   if(user.role === newRole){
+    return res.json({
+      error: 'user already has the role!'
+    });
+   }
+   if(!req.user){
+    return res.json({
+      error: 'You need to log in first!'
+    });
+   }
+   const initiatorRole = req.user.role
+   if(initiatorRole !== roles[2]){
+    return res.json({
+     error: 'You are not authorised to do this!'
+    });
+  }
+   
+       await pool.query(
+        `
+        UPDATE users
+        SET role = $1
+         WHERE id = $2
+        `,
+        [
+            newRole,
+            id
+        ]
+    );
+   res.json({
+     message: `user role changed to ${newRole}`,
+     userId: id
+   })
+  }
+  catch(error){
+    res.json({
+      error: error,
+      errorMessage: error.message
+    })
+  }
+});
+
+//download user details 
 router.get('/download-txt', checkSession, async (req, res) => {
   if(!req.isAuthenticated()) {
     return res.status(401).send('Unauthorized. Please log in.');
