@@ -452,7 +452,42 @@ async function viewPostMenu(e){
     const delBtn = postMenu.querySelector("#delete-post-btn");
 
     
+if(addFriendBtn){
+      addFriendBtn.onclick = async() =>{
+        try{
+       await addFriend(authorId);
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+        }
+        catch(err){
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+    }
 
+    if(viewAuthorBtn){
+      viewAuthorBtn.onclick = () =>{
+        try{
+       window.location.href = authorLink;
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+        }
+        catch(err){
+          notify("Author profile view failed!", "error");
+          return 
+        }
+      }
+    }
     
     if(delBtn){
       delBtn.onclick = () =>{
