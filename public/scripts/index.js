@@ -166,7 +166,7 @@ async function checkAuthStatus() {
           pPic.src = data.user.profile_picture || "images/default-user.png";
           sUsername.textContent = data.user.username;
           sEmail.textContent = data.user.email || "";
-          pLink.href = `/user/${currentUserId}`;
+          pLink.href = `/user/${data.user.username}`;
           sLink.href = '/';
         userPic.classList.remove("hidden");
 
