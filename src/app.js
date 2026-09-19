@@ -3,6 +3,7 @@ import {pool, initDb} from '../config/db.js';
 import mailRoutes from './router/mailer.js'; 
 import authRoutes from './router/auth.js'; 
 import postRoutes from './router/posts.js'; 
+import userRoutes from './router/users.js'; 
 import friendshipRoutes from './router/friendship.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
@@ -161,6 +162,7 @@ async function fetchAuthorDetails(authorId){
 app.use('/api/m', mailRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/post', postRoutes);
+app.use('/user', userRoutes);
 app.use('/api/friendship', friendshipRoutes);
 //***********
 
@@ -310,114 +312,6 @@ console.log('admin page  requested! \n');
 
 app.get('/login-failed', (req, res) => {
   res.send('Authentication failed. Please try again.');
-});
-
-//user details download route
-app.get('/user/download-txt', checkSession, async (req, res) => {
-  if(!req.isAuthenticated()) {
-    return res.status(401).send('Unauthorized. Please log in.');
-  }
-  if(!req.user) {
-    return res.status(401).send('Unauthorized. Please log in.');
-  }
-  
-  const userId = req.user.id
-  try {
-    // Fetch user data from AIVEN DV
-    const result = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
-    if (result.rows.length < 1) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-const user = result.rows[0];
-    //Format the user information nicely for the .txt file
-    
-    const country = user.country || 'unknown';
-    const fileContent = [
-      `User Profile Report`,
-      `===================`,
-      `ID:         ${user.id}`,
-      `Username:   ${user.username}`,
-      `Email:      ${user.email}`,
-      `Country:    ${country}`,
-      `Role:       ${user.role}`,
-      `Joined On:  ${new Date(user.created_at).toLocaleString()}`,
-      `===================`,
-      `Generated on: ${new Date().toLocaleString()}`
-    ].join('\n'); // Separates lines correctly for text files
-
-    //Set headers to force download and define the file extension
-    res.attachment(`${user.username.replace(/\s+/g, '_')}_profile.txt`);
-    res.type('text/plain');
-
-    // Send the text content out directly
-    return res.send(fileContent);
-
-  } catch (error) {
-    console.error('Error exporting user data:', error);
-    
-    // Pro Tip: Make sure headers weren't already sent before replying with an error
-    if (!res.headersSent) {
-      return res.status(500).json({ error: 'Failed to generate user file.' });
-    }
-  }
-});
-
-//fetch all users
-app.get('/api/get-all-users', checkSession, limiter, async(req, res) => {
-  try{
-    if(!req.user || req.user.role !== "admin"){
-      return res.json({
-        error: "You are not authorised to do this"
-    })
-    }
-   const users = await pool.query(
-        "SELECT * FROM users"
-   );
-      res.json({
-      totalUsers : users.rows.length,
-      users: users.rows 
-      });
-  }
-    
-  catch(e){
-    res.json({
-      error: e,
-      errorMessage: e.message
-    })
-  }
-
-});
-
-//fetch friends to add
-app.get('/api/get-users', checkSession, limiter, async(req, res) => {
-  try{
-    let users
-    if(req.user && req.isAuthenticated()){
-      users = await pool.query(
-        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE AND id != $1 ",
-        [req.user.id]
-   );
-      return res.status(200).json({
-        users: users.rows 
-    })
-    }
-   users = await pool.query(
-        "SELECT id, username, is_active, is_verified, profile_picture, bio FROM users where is_private IS FALSE LIMIT 10"
-   );
-    
-      res.json({
-      totalUsers : users.rows.length,
-      users: users.rows 
-      });
-  }
-    
-  catch(e){
-    res.json({
-      error: e,
-      errorMessage: e.message
-    })
-  }
-
 });
 
 //api for uploading pictures 
