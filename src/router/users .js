@@ -2,7 +2,6 @@ import express from 'express';
 import geoip from "geoip-lite";
 import {pool} from '../../config/db.js'; 
 import path from 'node:path';
-const router = express.Router();
 const __dirname = import.meta.dirname;
 import { v2 as cloudinary } from 'cloudinary';
 import 'dotenv/config'; // Automatically loads environment variables
@@ -10,8 +9,7 @@ import 'ejs';
 import rateLimit  from 'express-rate-limit';
 import transporter from './mailer.js';
 
-app.set('views', path.join(process.cwd(), 'dviews'))
-app.set('view engine', 'ejs');
+const router = express.Router();
 
 //configure rate limiter
 const limiter = rateLimit({
