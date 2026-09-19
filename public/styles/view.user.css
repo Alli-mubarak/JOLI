@@ -226,3 +226,11 @@ header button:hover {
     transition: all 0.3s ease;
     animation: load linear infinite 1.8s;
     }
+@keyframes load{
+    to{
+      left: 110%;
+    }
+  }
+  .hidden{
+    display: none !important;
+  }
