@@ -98,7 +98,7 @@ let friends = await fetchUserFriends(userData.id);
   else{userData.friends = friends.count + " friends"}
   
   if(req.user && req.user.id){
-    if(userId === req.user.id){
+    if(userData.username === req.user.username){
       userData.mine = true
       userData.title = "My profile"
     }
