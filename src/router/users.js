@@ -62,7 +62,7 @@ const checkSession = (req, res, next) => {
 
 async function fetchUserFriends(id){
   try{
-    const frQuery = await pool.query('SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2', [id, "accepted"]);
+    const frQuery = await pool.query(`SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = 'accepted'`, [id]);
     console.log(frQuery);
     return {
       count: frQuery.rows.length,
