@@ -85,7 +85,7 @@ try{
     console.error('user not found!');
     return res.sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
   }
-  const userData = postQuery.rows[0];
+  const userData = userQuery.rows[0];
 let friends = await fetchUserFriends(userData.user_id);
   if(friends.error){
     return res.send("Could not fetch friends");
