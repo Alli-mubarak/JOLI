@@ -62,9 +62,8 @@ const checkSession = (req, res, next) => {
 
 async function fetchUserFriends(userId){
   try{
-    const query = "SELECT sender_id, receiver_id, created_at FROM friendships WHERE (sender_id = $1 OR receiver_id = $1)"
-    const result = await pool.query(query, [userId]);
- //   const frQuery = await pool.query(`SELECT * FROM friendships WHERE ($1 IN (sender_id, receiver_id))`, [id]);
+    const query = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2"
+    const result = await pool.query(query, [userId, "accepted"]);
     console.log(result);
     return {
       count: result.rows.length,
@@ -89,7 +88,7 @@ try{
     return res.sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
   }
   const userData = userQuery.rows[0];
-let friends = await fetchUserFriends(userData.user_id);
+let friends = await fetchUserFriends(userData.id);
   if(friends.error){
     return res.send("Could not fetch friends");
   }
