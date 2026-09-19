@@ -14,7 +14,7 @@ let confirmed = [];
 
 async function fetchUsers() {
       try {
-        const response = await fetch("/api/get-users");
+        const response = await fetch("/user/v1/get-users");
         const data = await response.json();
  
         const users = data.users;
