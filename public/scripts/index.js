@@ -1,6 +1,8 @@
 let isAuthorised = false;
 let currentUserId = "";
 const menuBox = document.getElementById("menu-container");
+const pLink = document.getElementById("profile-link");
+const sLink = document.getElementById("settings-link");
 const menuCloser = document.getElementById("m-closer");
 const signInLink = document.getElementById("sign-in-link");
 const userPic = document.getElementById("user-pic");
@@ -164,7 +166,8 @@ async function checkAuthStatus() {
           pPic.src = data.user.profile_picture || "images/default-user.png";
           sUsername.textContent = data.user.username;
           sEmail.textContent = data.user.email || "";
-          
+          pLink.href = `/user/${currentUserId}`;
+          sLink.href = '/';
         userPic.classList.remove("hidden");
 
           setTimeout(()=>{loadDefaultImage()},1000);
