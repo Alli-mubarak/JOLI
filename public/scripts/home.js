@@ -750,8 +750,4 @@ fetchPosts()
 async function addFriend(id){
   alert(id);
 }
-}
-setTimeout(()=>{
-  try{runScript()}
-  catch(err){console.error(err)}
-},5000)
+
