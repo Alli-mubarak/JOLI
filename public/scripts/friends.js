@@ -52,6 +52,7 @@ async function fetchUsers() {
       
         }
       usersContainer.innerHTML = '';
+      pendingRequestsContainer.innerHTML = '';
       if(users.length < 1){
             return;
       }   
