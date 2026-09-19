@@ -62,11 +62,13 @@ const checkSession = (req, res, next) => {
 
 async function fetchUserFriends(id){
   try{
-    const frQuery = await pool.query(`SELECT * FROM friendships WHERE ($1 IN (sender_id, receiver_id))`, [id]);
-    console.log(frQuery);
+    const frQuery = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1)"
+    const result = await pool.query(query, [id]);
+ //   const frQuery = await pool.query(`SELECT * FROM friendships WHERE ($1 IN (sender_id, receiver_id))`, [id]);
+    console.log(result);
     return {
-      count: frQuery.rows.length,
-      friends : frQuery.rows
+      count: result.rows.length,
+      friends : result.rows
     }
               
   }
