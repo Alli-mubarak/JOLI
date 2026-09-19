@@ -13,7 +13,6 @@
 body{
   position:relative;
   width: 100%;
-  background: #ddd;
 }
 .hidden{
   display: none !important;
@@ -162,13 +161,11 @@ header button:hover {
         }
         .username{
             font-size:1.3rem;
-            padding-left: 30px;
         }
         .bio{
             font-size: 1rem;
             max-width:100%;
             overflow:hidden;
-            padding-left:30px;
         }
         #add-friend{
             position: absolute;
@@ -188,10 +185,10 @@ header button:hover {
             position: absolute;
             top: 120px; right:12px;
             font-size: 1rem;
-        
+          font-weight:500;
         }
         .p-title{
-            margin-left: 25px;
+            margin-left: 5px;
             font-size: 1rem;
             font-weight:500;
             margin-top: 20px;
