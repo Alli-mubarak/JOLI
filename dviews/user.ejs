@@ -87,7 +87,7 @@ function linkify(text) {
         </div>
         <div class="other-info">
             <div id="posts">
-            <% if (user.posts.length > 0) { %>
+            <% if (user.posts && user.posts.length > 0) { %>
    
    <% user.posts.forEach(function(post) { %>
      <div class="postCard" data-url="/post/<%= post.id %>" id="<%= post.id %>" >
