@@ -1,4 +1,6 @@
-const postCards = document.querySelectorAll(".postCard");
+async function run(){
+  try{
+  const postCards = document.querySelectorAll(".postCard");
 
 
 
@@ -23,3 +25,12 @@ if(postCards && postCards.children.length > 0){
   })
 }
 alert("script done");
+  }
+  catch(err){
+    console.error(err);
+  }
+}
+setTimeout(()=>{
+  run();
+},5000);
+alert("ok");
