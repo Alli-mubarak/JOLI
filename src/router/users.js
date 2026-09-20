@@ -118,7 +118,7 @@ let friends = await fetchUserFriends(userData.id);
   if(posts.error){
     return res.status(500).send("Could not fetch posts");
   }
-  if(posts.count > 0) userData.posts_count = `{${posts.count}}`;
+  if(posts.count > 0) userData.posts_count = `  (${posts.count})`;
   
   if(req.user && req.user.id){
     if(userData.username === req.user.username){
