@@ -77,7 +77,7 @@ return `${Math.floor(sDifference)}s`;
         </div>
         <div class="other-info">
             <div id="posts">
-            <% if (user.posts_count > 0) { %>
+            <% if (user.posts.length > 0) { %>
    
    <% user.posts.forEach(function(post) { %>
      <div class="post" id=<%= post.id %> >
