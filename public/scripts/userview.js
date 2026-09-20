@@ -17,14 +17,16 @@ function linkify(text) {
   });
 }
 
-if(postCards && postCards.children.length > 0){
-  alert("hey");
-  const pContents = document.querySelectorAll(".post-content");
-  Array.from(pContents.children).forEach(pc => {
-    pc.innerHTML = linkify(pc.textContent)
-  })
+function linkifyPosts(){
+  alert(postCards);
+  try{
+  pContents = document.querySelectorAll(".post-content");
+  Array.from(pContents).forEach(pc => {
+    pc.innerHTML = linkify(pc.textContent);
+  });
+  }catch(err){console.error(err)}
 }
-alert("script done");
+    linkifyPosts();
   }
   catch(err){
     console.error(err);
