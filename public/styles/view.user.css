@@ -233,7 +233,7 @@ header button:hover {
   }
 
 .postCard{
-            background:#fff;
+            background:#eee;
             display: flex; 
             align-items: center;
             justify-content:center;
@@ -243,6 +243,7 @@ header button:hover {
             overflow:hidden;
             margin-bottom: 10px;
             padding: 20px;
+           border-radius:5px;
         }
         .post-header{
             width:100%;
