@@ -137,7 +137,7 @@ function linkify(text) {
                 <i class="fa-regular fa-comment"></i>
                 </button>
                     <span class="comment-count">
-                    <%= post.comments.length > 0 ? post.comments.length : "" %>
+                    <%= post.comments && post.comments.length > 0 ? post.comments.length : "" %>
                     </span>
             </div>
               <div class="shares">
