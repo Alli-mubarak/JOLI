@@ -22,3 +22,4 @@ if(postCards && postCards.children.length > 0){
     pc.innerHTML = linkify(pc.textContent)
   })
 }
+alert("script done");
