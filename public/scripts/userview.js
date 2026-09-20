@@ -18,7 +18,6 @@ function linkify(text) {
 }
 
 function linkifyPosts(){
-  alert(postCards);
   try{
   pContents = document.querySelectorAll(".post-content");
   Array.from(pContents).forEach(pc => {
@@ -26,7 +25,8 @@ function linkifyPosts(){
   });
   }catch(err){console.error(err)}
 }
-    linkifyPosts();
+
+if(postCards.length > 0) linkifyPosts();
   }
   catch(err){
     console.error(err);
