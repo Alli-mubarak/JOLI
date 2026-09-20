@@ -85,9 +85,7 @@ return `${Math.floor(sDifference)}s`;
        <div class="post-details">
         <div class="post-header">
          <div class="post-time">
-          <a href="/user/<%= comment.user_id %>" class="commenter-link">
-             <p class="p-username"><%= user.username %></p>
-           
+           <p class="p-username"><%= user.username %></p>
            <small><%= getPostTime(post.created_at) %> </small>
           </div>
            <div class="post-menu">
