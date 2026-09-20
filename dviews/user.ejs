@@ -152,7 +152,9 @@ function linkify(text) {
        
     </div>
             <% }) %>
-        <% } %>
+        <% } else {%>
+         <p class="no-post"></b><%= user.ref || 'user' %></b> have no posts yet. </p>
+               <% } %>
         </div>
         </div>
     </section>
