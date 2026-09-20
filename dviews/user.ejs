@@ -37,7 +37,17 @@ return `${Math.floor(sDifference)}s`;
 }
 
 }
-
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
 %>
 <header id="header">
 <div class="title">
@@ -80,23 +90,67 @@ return `${Math.floor(sDifference)}s`;
             <% if (user.posts.length > 0) { %>
    
    <% user.posts.forEach(function(post) { %>
-     <div class="post" id=<%= post.id %> >
-       <img src="<%= user.profile_picture || '/images/default-user.png'  %>" alt="user picture" class="p-userpic" />
-       <div class="post-details">
+     <div class="postCard" data-url="/post/<%= post.id %>" id=<%= post.id %>>
         <div class="post-header">
-         <div class="post-time">
-           <p class="p-username"><%= user.username %></p>
-           <small><%= getPostTime(post.created_at) %> </small>
-          </div>
-           <div class="post-menu">
+            <div class="author-details">
+                <div class="author-image">
+                    <img src="<%= user.profile_picture || 'images/default-user.png' %>" loading="lazy" id="author-pic" alt="author profile picture" />
+                </div>
+                <div class="username-posttime">
+                   <p class="author-username"><%= user.username %></p>
+                   <small><%= getPostTime(post.created_at) %></small>
+                  </div>
+            </div> 
+            <div class="post-menu" data-type="post-menu">
                 <div></div>
                 <div></div>
                 <div></div>
             </div>
         </div>
-        <p class="p-content"><%= post.content %> </p>
-      </div>
-     </div>
+        <div class="post">
+            <p class="post-content"><%= linkify(post.content) %></p>
+            <% if (post.media_urls && post.media_urls.length > 0) { %>
+        <div class="post-images">
+            
+            <% post.media_urls.forEach(function(url) { %>
+                <img src="<%= url %>" alt="Post Media" class="post-img" />
+            <% }) %>
+        </div>
+    <% } %>
+            
+        </div>
+        <div class="interactions">
+            <div class="post-likes">
+                <button id="like-btn">
+                <% if (post.likeStatus) { %>
+                <i class="fa-solid fa-heart like-icon" style="color:#2bff43;"></i>
+              <% } else { %>
+                 <i class="fa-regular fa-heart like-icon" style="color:#222;"></i>
+               <% } %>
+                </button>
+                  <span class="like-count">
+                   <%= post.like_count ? post.like_count : '' %>
+                  </span>
+            </div>
+              <div class="comments">
+                <button id="comment-btn">
+                <i class="fa-regular fa-comment"></i>
+                </button>
+                    <span class="comment-count">
+                    <%= post.comments.length > 0 ? post.comments.length : "" %>
+                    </span>
+            </div>
+              <div class="shares">
+                <button id="share-btn">
+                <i class="fa-solid fa-share"></i>
+                </button>
+                    <span class="shares-count">
+                   
+                    </span>
+            </div>
+        </div>
+       
+    </div>
             <% }) %>
         <% } %>
         </div>
