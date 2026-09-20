@@ -79,7 +79,7 @@ async function fetchUserFriends(userId){
 
 async function fetchUserPosts(userId){
   try{
-    const query = "SELECT * FROM posts WHERE user_id = $1"
+    const query = "SELECT * FROM posts WHERE user_id = $1 ORDER BY created_at DESC"
     const result = await pool.query(query, [userId]);
     console.log("user posts fetched");
     return {
