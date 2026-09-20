@@ -14,9 +14,6 @@ body{
   position:relative;
   width: 100%;
 }
-.hidden{
-  display: none !important;
-}
 #notifier{
             position: fixed;
             bottom:110px;
