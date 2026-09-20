@@ -122,7 +122,7 @@ return `${Math.floor(sDifference)}s`;
    <div id="c-chain"></div>
    <% post.comments.forEach(function(comment) { %>
      <div class="comment" id=<%= comment.id %> >
-       <img src="<%= comment.commenter_pic %>" alt="Commenter picture" class="commenter-pic" />
+       <img src="<%= comment.commenter_pic || '/images/default-user.png' %>" alt="Commenter picture" class="commenter-pic" />
        <div class="comment-details">
         <div class="comment-header">
          <div class="commenter-time">
