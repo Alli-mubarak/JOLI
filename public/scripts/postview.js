@@ -299,8 +299,9 @@ function viewPostMenu(){
   try{
   const postId = postCard.id;
   const authorUsername = document.querySelector(".author-username").innerHTML;
-  const authorLink = document.querySelector("#author-image").href;
-  const authorId = authorLink.getAttribute("data-id");
+  const authorLinkTag = document.querySelector("#author-image");
+  const authorLink = authorLinkTag.href;
+  const authorId = authorLinkTag.getAttribute("data-id");
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
