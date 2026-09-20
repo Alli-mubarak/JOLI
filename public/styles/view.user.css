@@ -98,7 +98,7 @@ header button:hover {
             overflow: hidden;
             z-index: 1;
         }
-        img{
+       #user-details img{
             display: block;
             object-fit: cover;
             object-position: center;
