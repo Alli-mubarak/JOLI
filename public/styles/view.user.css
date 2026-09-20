@@ -169,7 +169,7 @@ header button:hover {
             overflow:hidden;
           margin-left: 10px;
         }
-        #add-friend{
+        #user-action{
             position: absolute;
             top: 51px; right:10px;
             font-size: 1rem;
