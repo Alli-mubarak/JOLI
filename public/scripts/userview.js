@@ -90,6 +90,17 @@ function notify(msg,mType = "success",linkText = null, link = null){
     },4000)
   }
 
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
 
 function linkifyPosts(){
   try{
@@ -101,4 +112,4 @@ function linkifyPosts(){
 }
 
 if(postCards.length > 0) linkifyPosts();
-notify("hello");
+
