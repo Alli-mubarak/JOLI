@@ -125,8 +125,9 @@ let friends = await fetchUserFriends(userData.id);
   
   if(req.user && req.user.id){
     if(userData.username === req.user.username){
-      userData.mine = true
-      userData.title = "My profile"
+      userData.mine = true;
+      userData.title = "My profile";
+      userData.ref = "You";
     }
   //  const likeStat = await getPostLikeStatus(postData.id, req.user.id);
   //  postData.likeStatus = likeStat
