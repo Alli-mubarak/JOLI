@@ -65,7 +65,7 @@ return `${Math.floor(sDifference)}s`;
             <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
             <p class="username"><b><%= user.username %></b></p>
             <p class="bio"><%= user.bio || 'happy to be here on JOLI' %></p>
-            <button id="add-friend">
+            <button id="user-action">
            <% if (user.mine) { %>
                 <i class="fa-solid fa-pencil action-btn" ></i>
               <% } else { %>
@@ -73,7 +73,7 @@ return `${Math.floor(sDifference)}s`;
                <% } %>
            </button>
             <span class="f-count"><%= user.friends %></span>
-            <p class="p-title">Posts</p>
+            <p class="p-title">Posts <%= user.posts_count || "" %></p>
         </div>
         <div class="other-info">
             <div id="posts">
@@ -86,7 +86,40 @@ return `${Math.floor(sDifference)}s`;
             </div>
         </div>
     </section>
+<div id="media-viewer" class="hidden">
+        <button id="mv-closer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <button id="mv-left" class="mover">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="mv-right" class="mover">
+          <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        <div id="viewer">
+            <img id="image-view" src="#" alt="image in view" />
+        </div>
+        <div id="media-counter"></div>
+   </div>
+<div id="notifier" class="hidden">
+        <p id="n-message">user message</p>
+        <a href="#" id="n-link">view action</a>
+        <span id="n-closer">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+  </div>
 
+  <div id="user-menu-container" class="hidden">
+        <div id="p-closer-space"></div>
+        <div id="post-menu">
+            <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+         <button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add Author as friend</button>
+         <button id="view-user-btn"><i class="fa-solid fa-user"></i>View Author's profile</button>
+        <button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>
+       
+        <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+        </div>
+  </div>
 <script>
 const backBtn = document.getElementById("return-btn");
 backBtn.onclick = () =>{
