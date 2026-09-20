@@ -98,12 +98,11 @@ header button:hover {
             overflow: hidden;
             z-index: 1;
         }
-       #user-details img{
-            display: block;
+       
+        .banner img{
+          display: block;
             object-fit: cover;
             object-position: center;
-        }
-        .banner img{
             height: 100%;
             width:100%;
             border-bottom: 1px solid #bbb;
@@ -150,6 +149,9 @@ header button:hover {
             position: relative;
         }
         .user-info img{
+          display: block;
+            object-fit: cover;
+            object-position: center;
             width: 150px;
             height:150px;
             border-radius: 20%;
