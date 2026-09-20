@@ -90,11 +90,11 @@ function linkify(text) {
             <% if (user.posts.length > 0) { %>
    
    <% user.posts.forEach(function(post) { %>
-     <div class="postCard" data-url="/post/<%= post.id %>" id=<%= post.id %>>
+     <div class="postCard" data-url="/post/<%= post.id %>" id="<%= post.id %>" >
         <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
-                    <img src="<%= user.profile_picture || 'images/default-user.png' %>" loading="lazy" id="author-pic" alt="author profile picture" />
+                    <img src=<%= user.profile_picture || 'images/default-user.png' %> loading="lazy" id="user-pic" alt="user profile picture" />
                 </div>
                 <div class="username-posttime">
                    <p class="author-username"><%= user.username %></p>
