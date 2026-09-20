@@ -60,7 +60,7 @@ return `${Math.floor(sDifference)}s`;
                      </a>
                      </div>
                      <div class="username-posttime">
-                          <a href="/user/<%= post.author_username %>" class="author-link">
+                          <a href="/user/<%= post.author_username %>" data-id=<%= post.user_id %> class="author-link">
                               <p class="author-username"><%= post.author_username || null %></p>
                           </a>
                           <small><%= getPostTime(post.created_at) %> </small>
