@@ -1,7 +1,23 @@
 const postCards = document.querySelectorAll(".postCard");
-alert("hello");
-if(postCards && poscCards.children.length > 0){
-  Array.from(postCards.children).forEach(p => {
-    alert("yeah");
+
+
+
+
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
+
+if(postCards && postCards.children.length > 0){
+  const pContents = document.querySelectorAll(".post-content");
+  Array.from(pContents.children).forEach(pc => {
+    pc.innerHTML = linkify(pc.textContent)
   })
 }
