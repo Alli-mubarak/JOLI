@@ -64,10 +64,27 @@ async function fetchUserFriends(userId){
   try{
     const query = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2"
     const result = await pool.query(query, [userId, "accepted"]);
-    console.log(result);
+    console.log("user friends fetched");
     return {
       count: result.rows.length,
       friends : result.rows
+    }
+              
+  }
+  catch(e){
+    console.error(e)
+    return {error: "failed to fetch friends"}
+  }
+}
+
+async function fetchUserPosts(userId){
+  try{
+    const query = "SELECT * FROM posts WHERE user_id = $1"
+    const result = await pool.query(query, [userId]);
+    console.log("user posts fetched");
+    return {
+      count: result.rows.length,
+      posts : result.rows
     }
               
   }
@@ -96,6 +113,12 @@ let friends = await fetchUserFriends(userData.id);
   
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
   else{userData.friends = friends.count + " friends"}
+  
+  let posts = await fetchUserPosts(userData.id);
+  if(posts.error){
+    return res.status(500).send("Could not fetch posts");
+  }
+  if(posts.count > 0) userData.posts_count = posts.count;
   
   if(req.user && req.user.id){
     if(userData.username === req.user.username){
