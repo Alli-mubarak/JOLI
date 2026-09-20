@@ -351,9 +351,8 @@ header button:hover {
           grid-template-columns: 1fr 1fr;
           gap:5px;
           border-radius: 10px;
-          background: grey;
         }
-    .post-images:has(.grid-item:last-child:nth-child(odd)) .grid-item:first-child {
+    .post-images:has(.post-img:last-child:nth-child(odd)) .post-img:first-child {
   grid-column: 1 / -1;
   text-align: center; 
     }
