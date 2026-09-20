@@ -16,6 +16,7 @@ function linkify(text) {
 }
 
 if(postCards && postCards.children.length > 0){
+  alert("hey");
   const pContents = document.querySelectorAll(".post-content");
   Array.from(pContents.children).forEach(pc => {
     pc.innerHTML = linkify(pc.textContent)
