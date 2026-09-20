@@ -77,13 +77,31 @@ return `${Math.floor(sDifference)}s`;
         </div>
         <div class="other-info">
             <div id="posts">
-            <div class="p-loader"></div>
-            <div class="p-loader"></div>
-            <div class="p-loader"></div>
-            <div class="p-loader"></div>
-            <div class="p-loader"></div>
-            <div class="p-loader"></div>
+            <% if (user.posts_count > 0) { %>
+   
+   <% user.posts.forEach(function(post) { %>
+     <div class="post" id=<%= post.id %> >
+       <img src="<%= user.profile_picture || '/images/default-user.png'  %>" alt="user picture" class="p-userpic" />
+       <div class="post-details">
+        <div class="post-header">
+         <div class="post-time">
+          <a href="/user/<%= comment.user_id %>" class="commenter-link">
+             <p class="p-username"><%= user.username %></p>
+           
+           <small><%= getPostTime(post.created_at) %> </small>
+          </div>
+           <div class="post-menu">
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
+        </div>
+        <p class="p-content"><%= post.content %> </p>
+      </div>
+     </div>
+            <% }) %>
+        <% } %>
+        </div>
         </div>
     </section>
 <div id="media-viewer" class="hidden">
