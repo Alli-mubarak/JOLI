@@ -77,6 +77,12 @@ header .side-bar{
   gap: 12px;
   padding: 10px;
 }
+.search-btn{
+  padding: 5px; 
+  cursor: pointer;
+  display:inline-block;
+  background:red;
+}
 .side-bar form img{
   height: 30px; 
   width: 30px;  
@@ -90,7 +96,8 @@ header .side-bar{
   outline: none;
   border:2px solid #fff;
   padding:5px;
-  max-width: calc(100% - 40px);
+  width: calc(100% - 50px);
+  display:inline-block;
 }
 .side-bar form input:focus{
   border-color: #ddd;
