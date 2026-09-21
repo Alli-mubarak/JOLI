@@ -1,3 +1,4 @@
+const userDetails = document.getElementById("user-details");
 const postCards = document.querySelectorAll(".postCard");
 const mutuals = document.querySelector(".m-count");
 let currentUserId;
@@ -46,6 +47,8 @@ async function checkAuthStatus() {
           userPic = "";
           userName = "";
         }
+       const uid = userDetails.getAttribute("data-user");
+        getMutuals(uid);
       } catch (err) {
         console.error("Error verifying authentication status:", err);
       }
