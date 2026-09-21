@@ -69,6 +69,7 @@ header .side-bar{
   padding:10px;
   background: pink;
   border-radius: 50%;
+  display:block;
 }
 .search-link img{
   height: 35px; 
