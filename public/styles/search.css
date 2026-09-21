@@ -92,10 +92,9 @@ header .side-bar{
   cursor: pointer;
 }
 .side-bar form input{
-  border-radius: inherit;
   background:#fff;
   font-size:1.12rem;
-  font-weight:500;
+  font-weight:400;
   outline: none;
   border:none;
   width: calc(100% - 50px);
