@@ -402,3 +402,16 @@ header button:hover {
   .interactions > div button i{
             font-size: 1.2rem;
           }
+.roll{
+        transition: all ease 0.3s;
+        animation: roll linear infinite 2s;
+        
+}
+ @keyframes roll{
+         from{
+        transform: rotate(0deg);
+         }
+         to{
+          transform: rotate(360deg)
+         }
+  }
