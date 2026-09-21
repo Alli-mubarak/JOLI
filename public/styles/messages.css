@@ -66,19 +66,20 @@ header .side-bar{
 }
 .side-bar .search-link{
   text-decoration: none;
-  padding:10px;
+  padding:5px;
+  height: 40px; 
+  width: 40px; 
   background: pink;
   border-radius: 50%;
   display:block;
+  transition: all ease 0.3s;
+  border: 2px solid #fff;
 }
 .search-link img{
-  height: 35px; 
-  width: auto;
-  border-radius: 5px;
-  border: 2px solid #fff;
-  transition: all ease 0.3s;
+  height: 100%; 
+  width: 100%;  
 }
-.search-link img:hover{
+.search-link hover{
   border-color: #ddd;
 }
 .side-bar #sign-in-link{
