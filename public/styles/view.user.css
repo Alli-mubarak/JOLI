@@ -107,7 +107,7 @@ header button:hover {
             width:100%;
             border-bottom: 1px solid #bbb;
         }
-        #menu{
+        #u-menu{
             position: absolute;
             width:40px; height:40px;
             background: #fff;
@@ -116,7 +116,7 @@ header button:hover {
             cursor: pointer;
             border:2px solid #ddd;
         }
-        #menu div{
+        #u-menu div{
             width:4px; height:4px;
             background:#222;
             position: absolute;
@@ -126,16 +126,16 @@ header button:hover {
             align-items: center;
             justify-content: center;
         }
-        #menu i{
+        #u-menu i{
             font-size: 1rem;
         }
-        #menu div:nth-child(1){
+        #u-menu div:nth-child(1){
             top:17px; 
         }
-         #menu div:nth-child(2){
+         #u-menu div:nth-child(2){
             top:8px; 
         }
-         #menu div:nth-child(3){
+         #u-menu div:nth-child(3){
             top:26px; 
         }
         .user-info{
