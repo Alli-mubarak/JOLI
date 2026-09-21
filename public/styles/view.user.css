@@ -183,6 +183,7 @@ header button:hover {
             align-items: center; 
             justify-content: center;
             gap: 12px;
+          font-weight:500;
         }
         .f-count{
             position: absolute;
