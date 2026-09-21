@@ -189,6 +189,12 @@ header button:hover {
             font-size: 1rem;
           font-weight:500;
         }
+      .m-count{
+            position: absolute;
+            top: 140px; right:12px;
+            font-size: 1rem;
+          font-weight:500;
+      }
         .p-title{
             margin-left: 5px;
             font-size: 1rem;
