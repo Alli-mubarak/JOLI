@@ -203,12 +203,11 @@ userMenu.onclick = () =>{
 
 //media viewer
 function viewImage(e){
-  alert("hey");
    try{
    inViewMode = true;
     const img = e.target;
-    const src = img.src
-    imgArray = Array.from(img.parentElement.children);
+    const src = img.src;
+    imgArray = Array.from(img.parentElement.querySelectorAll("img"));
    
    const index = imgArray.indexOf(img);
    currIndex = index;
