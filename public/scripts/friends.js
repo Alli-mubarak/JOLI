@@ -15,7 +15,7 @@ async function fetchUsers() {
             if(!isAuthorised){
       notify("please, log in first!", "error","click here", "/");
       const mainTag = document.querySelector("main");
-      mainTag.innerHTML = `<p class="def-msg">Create an account or sign in to view friends</p>
+      mainTag.innerHTML = `<p class="def-msg">Create an account or sign in to view friends</p>`;
       return;
             }
         const response = await fetch("/user/v1/get-users");
