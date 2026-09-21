@@ -253,7 +253,7 @@ router.get('/mutual/:targetUserId', checkSession, async (req, res) => {
                 SELECT CASE WHEN sender_id = $2 THEN receiver_id ELSE sender_id END AS friend_id
                 FROM friendships WHERE $2 IN (sender_id, receiver_id) AND status = 'accepted'
             )
-            SELECT u.id AS friend_id, u.username, u.avatar_url
+            SELECT u.id AS friend_id, u.username, u.profile_picture
             FROM user_a_friends a
             JOIN user_b_friends b ON a.friend_id = b.friend_id
             JOIN users u ON u.id = a.friend_id;
