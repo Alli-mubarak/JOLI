@@ -146,6 +146,7 @@ userMenu.onclick = () =>{
   try{
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
+    console.log(uid, username);
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-solid fa-user-plus"></i>Send ${username.trim()} a message</button>` : ""}
