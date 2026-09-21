@@ -97,6 +97,7 @@ header .side-bar{
   font-size:1.12rem;
   font-weight:500;
   outline: none;
+  border:none;
   width: calc(100% - 50px);
   display:inline-block;
 }
