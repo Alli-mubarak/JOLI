@@ -58,12 +58,13 @@ checkAuthStatus();
 async function getMutuals(uid){
   if(!isAuthorised)return;
   if(uid === currentUserId)return;
+  mutuals.innerHTML = "<i class='fa-solid fa-circle-notch roll'></i>";
   try {
         // 'credentials: include' forces the browser to send the session cookie
         const response = await fetch(`/api/friendship/mutual/${uid}`, { credentials: 'include' });
         data = await response.json();
  
-        
+        mutuals.innerHTML = '';
         if (data.count > 0) {
           mutuals.textContent = `${data.count} mutuals`;
           return 
