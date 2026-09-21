@@ -91,7 +91,13 @@ let friends = await fetchUserFriends(userData.id);
   if(friends.error){
     return res.status(500).send("Could not fetch friends");
   }
-  
+if(req.isAuthenticated() && req.user && userData.username !== req.user.username ) {  
+  const isFriend = friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
+  userData.is_friend = isFriend;
+}
+  const hasAdmin = friends.some(f => f.sender_id === "Admin");
+console.log(hasAdmin); // Output: true
+      
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
   else{userData.friends = friends.count + " friends"}
   
