@@ -66,7 +66,7 @@ header .side-bar{
 }
 .side-bar form{
   display: flex !important;
-  width: 60vw;
+  width: 50vw;
   max-width: 500px;
   max-height:100%;
   border:2px solid #ddd;
@@ -94,10 +94,9 @@ header .side-bar{
 .side-bar form input{
   border-radius: inherit;
   background:#fff;
-  font-size:1rem;
+  font-size:1.12rem;
+  font-weight:500;
   outline: none;
-  border:2px solid #fff;
-  padding:5px;
   width: calc(100% - 50px);
   display:inline-block;
 }
