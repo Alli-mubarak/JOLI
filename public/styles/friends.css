@@ -67,7 +67,18 @@ header .side-bar{
   padding: 10px 0;
   gap:15px;
 }
-.side-bar a{
+.side-bar .search-link{
+  text-decoration: none;
+}
+.search-link img{
+  height: 30px; 
+  width: 30px;  
+  transition: all ease 0.35s
+}
+.search-link img:hover{
+  transform: scale(1.07);
+}
+.side-bar #sign-in-link{
   display:block;
   border: 2px solid rgba(0,0,0,0.08);
   color: #eee;
@@ -78,10 +89,10 @@ header .side-bar{
   border-radius: 30px;
   background: #222;
 }
-.side-bar a:hover{
+.side-bar #sign-in-link:hover{
 background:#000;
-}
-.side-bar img{
+    }
+.side-bar #user-pic{
   height: 35px;
   width: 35px;
   border : 2px solid #555;
