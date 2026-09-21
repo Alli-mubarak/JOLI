@@ -71,7 +71,7 @@ header .side-bar{
   max-height:100%;
   border:2px solid #ddd;
   border-radius:12px;
-  flex-direction: column !important;
+  flex-direction: row !important;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
