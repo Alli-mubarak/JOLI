@@ -10,7 +10,6 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcrypt';
 import cors from 'cors';
-import geoip from "geoip-lite";
 import dotenv from 'dotenv';
 import passport from 'passport';
 import path from 'node:path';
@@ -35,26 +34,7 @@ app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
 const __filename = fileURLToPath(import.meta.url);
 
-// Initialize the built-in JavaScript internationalization display names utility
-const countryNamesInEnglish = new Intl.DisplayNames(['en'], { type: 'region' });
-//function for getting country from ip
-function getCountryNameFromReq(req) {
-  // Extract client IP address from request header
-  const clientIp = req.headers['x-forwarded-for']
-  // Lookup geolocation data using geoip-lite
-  const geo = geoip.lookup(clientIp);
-  let countryName = 'Unknown';
-  if (geo && geo.country) {
-    try {
-      // Convert the 2-letter code (e.g., 'US') to full name (e.g., 'United States')
-      countryName = countryNamesInEnglish.of(geo.country);
-    } catch (error) {
-      // Fallback to the country code if the lookup fails for any reason
-      countryName = geo.country;
-    }
-    return countryName;
-  }
-}
+
 
 //session checker
 const checkSession = (req, res, next) => {
@@ -116,7 +96,7 @@ app.use(passport.session());
 //middleware - logs the method, path, ip address and time to the console
 app.use(function middleware(req,res,next){
 let d = new Date();
-const countryName = getCountryNameFromReq(req);
+const countryName = req.headers['x-vercel-ip-country'];
 let currentTime = d.toLocaleString();
 console.log(req.method, req.path, req.hostname, req.ip, countryName, currentTime,);
   //fetch request location from vercel
