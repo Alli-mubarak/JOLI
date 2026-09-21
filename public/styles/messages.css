@@ -64,7 +64,7 @@ header .side-bar{
   padding: 10px 0;
   gap:15px;
 }
-.sidebar .search-link{
+.side-bar .search-link{
   text-decoration: none;
   padding:10px;
   background: pink;
