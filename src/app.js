@@ -316,8 +316,7 @@ async function startServer(){
     console.log('✅ Database connected successfully!');
     console.log(`🕒 Aiven Server Time: ${result.rows[0].now}`);
 
-    // 2. Start the server
-                 
+    // set listener
  const listener = app.listen(process.env.PORT,()=>{
   console.log("app is listening on port ", listener.address().port,'\n');
 });
