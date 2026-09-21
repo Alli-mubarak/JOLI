@@ -13,7 +13,6 @@ let confirmed = [];
 async function fetchUsers() {
       try {
             if(!isAuthorised){
-      notify("please, log in first!", "error","click here", "/");
       const mainTag = document.querySelector("main");
       mainTag.innerHTML = `<p class="def-msg" style="text-align:center; margin-top:50px;">Create an account or sign in to view friends</p>`;
       return;
