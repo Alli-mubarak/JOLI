@@ -230,5 +230,48 @@ router.get('/user/friends', checkSession,  async (req, res) => {
     }
 });
 
+//api for getting mutual friends 
+router.get('/mutual/:targetUserId', checkSession, async (req, res) => {
+    try {
+      if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized, please log in"});
+}
+      
+        const currentUserId = req.user.id; // User A (UUID string)
+        const targetUserId = req.params.targetUserId; // User B (UUID string)
+
+        if (currentUserId === targetUserId) {
+            return res.status(400).json({ error: "You cannot have mutual friends with yourself." });
+        }
+
+        const query = `
+            WITH user_a_friends AS (
+                SELECT CASE WHEN sender_id = $1 THEN receiver_id ELSE sender_id END AS friend_id
+                FROM friendships WHERE $1 IN (sender_id, receiver_id) AND status = 'accepted'
+            ),
+            user_b_friends AS (
+                SELECT CASE WHEN sender_id = $2 THEN receiver_id ELSE sender_id END AS friend_id
+                FROM friendships WHERE $2 IN (sender_id, receiver_id) AND status = 'accepted'
+            )
+            SELECT u.id AS friend_id, u.username, u.avatar_url
+            FROM user_a_friends a
+            JOIN user_b_friends b ON a.friend_id = b.friend_id
+            JOIN users u ON u.id = a.friend_id;
+        `;
+
+        const result = await pool.query(query, [currentUserId, targetUserId]);
+
+        return res.status(200).json({
+            success: true,
+            count: result.rowCount,
+            mutualFriends: result.rows
+        });
+
+    } catch (error) {
+        console.error("Error fetching mutual friends:", error);
+        return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
 export default router;
   
