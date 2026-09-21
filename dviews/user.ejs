@@ -62,7 +62,7 @@ return `${Math.floor(sDifference)}s`;
         </div>
         <div class="user-info">
             <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
-            <p class="username"><b><%= user.username %></b></p>
+            <p class="username"><b id="u-name"><%= user.username %></b></p>
             <p class="bio"><%= user.bio || 'happy to be here on JOLI' %></p>
             <button id="user-action">
            <% if (user.mine) { %>
