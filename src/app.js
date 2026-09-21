@@ -193,6 +193,15 @@ console.log('add post page  requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/search.html"));
 });
 
+//search page route
+app.get('/inbox',(req, res)=>{
+console.log('add post page  requested! \n');
+ // if (req.isAuthenticated()){
+ //  return  res.redirect('/');
+//  }
+  res.sendFile(path.join(__dirname, "../", "/views/inbox.html"));
+});
+
 //admin page route
 app.get('/admin/dashboard',(req, res)=>{
 console.log('admin page  requested! \n');
