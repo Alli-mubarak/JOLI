@@ -138,7 +138,7 @@ main{
         input:focus{
             border-color: #444;
         }
-        #email-btn{
+        #p-btn{
             background: #777;
             color: #ccc;
             cursor: pointer;
