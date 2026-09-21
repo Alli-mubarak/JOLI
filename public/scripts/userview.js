@@ -306,6 +306,7 @@ function viewImage(e){
 
 //allow images view
 const allImages = document.querySelectorAll("img");
+console.log(allImages);
 Array.from(allImages.children).forEach(i => {
   i.onclick = (e) => {viewImage(e)}
 })
