@@ -66,6 +66,7 @@ header .side-bar{
 }
 .sidebar .search-link{
   text-decoration: none;
+  border-radius: 10px;
 }
 .search-link img{
   height: 50px; 
@@ -88,7 +89,7 @@ header .side-bar{
 .side-bar #sign-in-link:hover{
 background:#000;
 }
-.side-bar img{
+.side-bar #user-pic{
   height: 35px;
   width: 35px;
   border : 2px solid #555;
