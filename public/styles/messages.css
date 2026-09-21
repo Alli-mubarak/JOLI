@@ -64,7 +64,17 @@ header .side-bar{
   padding: 10px 0;
   gap:15px;
 }
-.side-bar a{
+.sidebar .search-link{
+  text-decoration: none;
+}
+.search-link img{
+  height: 50px; 
+  width: auto;
+}
+.search-link:hover{
+  border: 1px solid #ddd;
+}
+.side-bar #sign-in-link{
   display:block;
   border: 2px solid rgba(0,0,0,0.08);
   color: #eee;
@@ -75,7 +85,7 @@ header .side-bar{
   border-radius: 30px;
   background: #222;
 }
-.side-bar a:hover{
+.side-bar #sign-in-link:hover{
 background:#000;
 }
 .side-bar img{
