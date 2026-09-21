@@ -203,6 +203,7 @@ userMenu.onclick = () =>{
 
 //media viewer
 function viewImage(e){
+  alert("hey");
    try{
    inViewMode = true;
     const img = e.target;
