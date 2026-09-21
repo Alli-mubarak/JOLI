@@ -65,13 +65,13 @@ header .side-bar{
   gap:15px;
 }
 .side-bar form{
-  display: flex;
+  display: flex !important;
   width: 60vw;
   max-width: 500px;
   max-height:100%;
   border:2px solid #ddd;
   border-radius:12px;
-  display:flex;
+  flex-direction: column !important;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
