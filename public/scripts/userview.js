@@ -1,3 +1,4 @@
+async function runScript(){
 const userDetails = document.getElementById("user-details");
 const userAction = document.getElementById("user-action");
 const userMenu = document.getElementById("u-menu");
@@ -140,6 +141,7 @@ function linkifyPosts(){
 
 if(postCards.length > 0) linkifyPosts();
 
+
 userMenu.onclick = () =>{
   try{
   const uid = userDetails.getAttribute("data-user");
@@ -191,3 +193,14 @@ userMenu.onclick = () =>{
         
     
 }
+}
+
+setTimeout(()=>{
+  alert("loading");
+  try{
+    runScript
+  }
+  catch(err){
+    console.error(err);
+  }
+},5000);
