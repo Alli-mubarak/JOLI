@@ -64,7 +64,39 @@ header .side-bar{
   padding: 10px 0;
   gap:15px;
 }
-.side-bar a{
+.side-bar form{
+  display: flex;
+  width: 60vw;
+  max-width: 500px;
+  background:#eee;
+  border-radius:12px;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 15px;
+}
+.side-bar form img{
+  height: 30px; 
+  width: 30px;  
+  transition: all ease 0.35s
+  cursor: pointer;
+}
+.side-bar form input{
+  border-radius: inherit;
+  background:#fff;
+  font-size:1rem;
+  outline: none;
+  border:2px solid #fff;
+  padding: 10px;
+}
+.side-bar form input:focus{
+  border-color: #ddd;
+}
+.side-bar form img:hover{
+  transform: scale(1.07);
+}
+.side-bar #sign-in-link{
   display:block;
   border: 2px solid rgba(0,0,0,0.08);
   color: #eee;
@@ -75,10 +107,10 @@ header .side-bar{
   border-radius: 30px;
   background: #222;
 }
-.side-bar a:hover{
+.side-bar #sign-in-link:hover{
 background:#000;
 }
-.side-bar img{
+.side-bar #user-pic{
   height: 35px;
   width: 35px;
   border : 2px solid #555;
