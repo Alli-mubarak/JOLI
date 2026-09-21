@@ -1,5 +1,5 @@
 const emailInput = document.getElementById("email-input");
-const emailBtn = document.getElementById("email-btn");
+const emailBtn = document.getElementById("p-btn");
 const prBtn = document.getElementById("pr-btn");
 const signInContainer = document.querySelector(".sign-in-container");
 const caption = document.querySelector(".caption");
@@ -53,12 +53,12 @@ function confirmEmailAndCheckUsername(){
 
     if (emailRegex.test(emailValue)) {
         emailBtn.disabled = false;
-        emailBtn.setAttribute("onclick", "proceedWithEmail()");
+        emailBtn.onclick = () =>{proceedWithEmail()}
         emailBtn.style.background = "#111";
         emailBtn.style.color = "#eee";
     }else if(usernameRegex.test(username) && username.length >= 5){
         emailBtn.disabled = false;
-        emailBtn.setAttribute("onclick", "proceedWithUsername()");
+        emailBtn.onclick = () =>{proceedWithUsername()}
         emailBtn.style.background = "#111";
         emailBtn.style.color = "#eee";
     }else{
@@ -67,6 +67,8 @@ function confirmEmailAndCheckUsername(){
         emailBtn.style.color = "#ccc";
     }
 }
+
+
 
 prBtn.onclick = () => {notify('This feature is not available yet!')}
 
