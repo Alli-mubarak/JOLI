@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOLI - Inbox</title>
+   <link rel="stylesheet" href="/styles/tabs.post.css" />
+ <link rel="stylesheet" href="/styles/inbox.css" />
+  <link rel="manifest" href="/manifest.json">
+  <link rel="shortcut icon" href="images/joli3.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="images/joli3.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header id="header">
+  <a href="/" id="logo">
+    <img src="images/joli-light.png" alt="logo" class="logo" />
+  </a>
+  <div class="side-bar">
+    <a href="/" id="sign-in-link" class="hidden" >Sign In</a>
+    <img src="/images/default-user.png" alt="profile picture" id="user-pic"  />
+  </div>
+    <marquee>All mails sent by <b>joli.app.connect@gmail.com</b> are from <b>JOLI</b> and that is the only trusted email. Beware of impersonators. </marquee>
+  </header>
+  <main>    
+  <h2>Inbox</h2>
+    <section class="posts">
+      <div class="post"></div>
+      <div class="post"></div>
+      <div class="post"></div>
+      <div class="post"></div>
+      <div class="post"></div>
+    </section>
+    <article></article>
+    </main>
+  
+    <div id="menu-container">
+        <div id="m-closer">
+            <div>
+            <i id="m-closer-btn" class="fa-solid fa-xmark"></i>
+            </div>
+        </div>
+        <div id="menu-options">
+            <div id="profile-info">
+                <div id="side-header">
+                    <img id="profile-pic" alt="profile-pic" src="pic.png">
+                    <h3 id="u-name">User</h3>
+                    <p id="user-email">Email</p>
+                </div>
+                  <a href="/api/auth/logout" id="logout-link">
+                    Log out
+                </a>
+            </div>
+            <div id="extras">
+                  <a href="#" id="profile-link">
+                    <i class="fa-regular fa-circle-user"></i>
+                    Profile
+                </a>
+            </div>
+            <div id="account-settings">
+                <a href="#" id="settings-link">
+                    <i class="fa-solid fa-gear"></i>
+                    Account Settings 
+                </a>
+            </div>
+        </div>
+  </div>
+  
+  <div id="notifier" class="hidden">
+        <p id="n-message">post created</p>
+        <a href="#" id="n-link">view post</a>
+        <span id="n-closer">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+  </div>
+  <div id="create-post-container" class="hidden">
+        <div class="header">
+            <div class="closer" id="p-closer">
+            <i id="post-container-closer" class="fa-solid fa-xmark"></i>
+            </div>
+            <h3>Create Post</h3>
+          <button disabled id="post-btn">
+              <span>Post</span>
+              <div id="p-loader" class="hidden"></div>
+          </button>
+        </div>
+        <div class="user-details">
+            <img src="/images/default-user.png" alt="user picture" id="p-user-picture" />
+            <p id="p-username">User</p>
+        </div>
+     <div id="media-adder">
+               <div id="cover"></div>
+            <label  id="add-media" for="media-upload">
+            <i class="fa-regular fa-images"></i>
+            </label>
+     </div>
+        <form>
+          
+        <div id="media-files-displayer"></div>
+            <textarea id="content" name="content" autofocus  placeholder="What's on your mind?"></textarea>
+           
+            <div id="add-media-files">
+                
+                
+                <input  type="file" accept="image/*" id="media-upload" multiple />
+            </div>
+        </form>
+  </div>
+  <div class="hidden" id="image-cropper">
+        <button id="crop-saver"><i class="fa-solid fa-check"></i></button>
+        <div id="image-box"></div>
+  </div>
+    <div class="tabs">
+        <div dataset="home" title="home">
+           <a href="/">
+            <img src="images/home.png" class="home tab" alt="home icon"/>
+             <span>Home</span>
+           </a>
+        </div>
+          <div dataset="friends" title="friends">
+            <a href="/friends">
+            <img src="images/friends.png" class="friends tab" alt="friends icon" />
+              <span>Friends</span>
+            </a>
+        </div>
+          <div dataset="add-post" class="add-post" title="add post">
+            <div></div>
+            <div></div>
+            <span>Post</span>
+        </div>
+          <div dataset="chat" title="chat" class="active">
+            <a href="/messages">
+            <img src="images/chat-active.png" class="chat tab" alt="chat icon"/>
+              <span>Messages</span>
+            </a>
+        </div>
+          <div dataset="inbox" title="inbox">
+            <a href="/inbox">
+            <img src="images/bell-active.png" class="inbox tab"  alt="bell icon"/>
+              <span>Inbox</span>
+            </a>
+        </div>
+    </div>
+  
+  <section class="notifier"></section>
+  <script src="scripts/index.js"></script>
+</body>
+  </html>
