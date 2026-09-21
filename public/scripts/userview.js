@@ -1,4 +1,6 @@
 const userDetails = document.getElementById("user-details");
+const userAction = document.getElementById("user-action");
+const userMenu = document.getElementById("u-menu");
 const postCards = document.querySelectorAll(".postCard");
 const mutuals = document.querySelector(".m-count");
 let currentUserId;
@@ -138,3 +140,55 @@ function linkifyPosts(){
 
 if(postCards.length > 0) linkifyPosts();
 
+userMenu.onclick = () =>{
+  function viewPostMenu(){
+  try{
+  const uid = userDetails.getAttribute("data-user");
+  const username = document.getElementById("u-name").textContent;
+  const htmlElements = `
+  <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+  ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-solid fa-user-plus"></i>Send ${username.trim()} a message</button>` : ""}
+   ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-user"></i>Block ${username.trim()} </button>` : ""}
+    ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
+     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+  `;
+    postMenu.innerHTML = htmlElements;
+    pmCloserBtn = document.getElementById("p-closer-btn");
+    const delBtn = postMenu.querySelector("#delete-acc-btn");
+    
+    if(delBtn){
+      delBtn.onclick = () =>{
+     if(confirm("Are you sure you want to delete your account?")){
+     //  deletePost(postId);
+       alert("feature coming soon!");
+      }
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+      }
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+   disableScrolling();
+  }catch(error){
+    console.error(error);
+  }
+        }
+    
+}
