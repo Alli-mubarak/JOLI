@@ -16,7 +16,7 @@ const notifier = document.getElementById("notifier");
 const nMessage = document.getElementById("n-message");
 const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
-const postMenuContainer = document.getElementById("post-menu-container");
+const userMenuContainer = document.getElementById("user-menu-container");
 const postMenuCloser = document.getElementById("p-closer-space");
 const commentsBox = document.getElementById("comments");
 const postMenu = document.getElementById("post-menu");
@@ -141,19 +141,18 @@ function linkifyPosts(){
 if(postCards.length > 0) linkifyPosts();
 
 userMenu.onclick = () =>{
-  function viewPostMenu(){
   try{
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
   const htmlElements = `
-  <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+  <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-solid fa-user-plus"></i>Send ${username.trim()} a message</button>` : ""}
    ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-user"></i>Block ${username.trim()} </button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
     postMenu.innerHTML = htmlElements;
-    pmCloserBtn = document.getElementById("p-closer-btn");
+    pmCloserBtn = document.getElementById("u-closer-btn");
     const delBtn = postMenu.querySelector("#delete-acc-btn");
     
     if(delBtn){
@@ -165,7 +164,7 @@ userMenu.onclick = () =>{
         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
+      userMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
       }
@@ -176,12 +175,12 @@ userMenu.onclick = () =>{
      document.body.classList.remove('no-scroll'); 
     
      setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
+      userMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
       }
     
-      postMenuContainer.style.bottom = 0;
+      userMenuContainer.style.bottom = 0;
       setTimeout(() =>{
       postMenuCloser.style.background = "rgba(0,0,0,0.2)";
       },300);
@@ -189,6 +188,6 @@ userMenu.onclick = () =>{
   }catch(error){
     console.error(error);
   }
-        }
+        
     
 }
