@@ -198,7 +198,7 @@ userMenu.onclick = () =>{
 setTimeout(()=>{
   alert("loading");
   try{
-    runScript
+    runScript();
   }
   catch(err){
     console.error(err);
