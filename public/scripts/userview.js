@@ -1,4 +1,5 @@
 const postCards = document.querySelectorAll(".postCard");
+const mutuals = document.querySelector(".m-count");
 let currentUserId;
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
@@ -31,7 +32,7 @@ async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
         const response = await fetch("/api/auth/user", { credentials: 'include' });
-        data = await response.json();
+        const data = await response.json();
  
         
         if (data.loggedIn) {
@@ -51,6 +52,26 @@ async function checkAuthStatus() {
 }
 checkAuthStatus();
 
+async function getMutuals(uid){
+  if(!isAuthorised)return;
+  if(uid === currentUserId)return;
+  try {
+        // 'credentials: include' forces the browser to send the session cookie
+        const response = await fetch(`/api/friendship/mutual/${uid}`, { credentials: 'include' });
+        data = await response.json();
+ 
+        
+        if (data.count > 0) {
+          mutuals.textContent = `${data.count} mutuals`;
+          return 
+        } else {
+          mutuals.textContent = 'No mutuals';
+          
+        }
+      } catch (err) {
+        console.error("Error verifying authentication status:", err);
+  }
+}
 function enableScrolling(){
   document.body.style.position = 'relative';
   document.body.style.top = '';
