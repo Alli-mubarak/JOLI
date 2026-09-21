@@ -68,7 +68,11 @@ return `${Math.floor(sDifference)}s`;
            <% if (user.mine) { %>
                 <i class="fa-solid fa-pencil action-btn" ></i>
               <% } else { %>
+               <% if (user.is_friend) { %>
+                  Unfriend
+               <% } else { %>
                  <i class="fa-solid fa-plus add-loader"></i>  Add
+                <% } %>
                <% } %>
            </button>
             <span class="f-count"><%= user.friends %></span>
