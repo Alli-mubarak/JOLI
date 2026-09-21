@@ -119,7 +119,8 @@ let d = new Date();
 const countryName = getCountryNameFromReq(req);
 let currentTime = d.toLocaleString();
 console.log(req.method, req.path, req.hostname, req.ip, countryName, currentTime,);
-  
+  //fetch request location from vercel
+console.log(req.headers['x-vercel-ip-country'], req.headers['x-vercel-ip-country-region'], req.headers['x-vercel-ip-city'])
 // console.log('--- Session Debug ---');
 //  console.log('Incoming Cookie:', req.headers.cookie);
 //   console.log('Session ID:', req.sessionID);
