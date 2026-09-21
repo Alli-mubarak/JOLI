@@ -195,10 +195,9 @@ userMenu.onclick = () =>{
 }
 
   postMenuCloser.onclick = () =>{
-      userMenuCloser.style.background = "transparent";
-     document.body.classList.remove('no-scroll'); 
+      postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
+      userMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
   }
