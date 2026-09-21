@@ -68,13 +68,14 @@ header .side-bar{
   display: flex;
   width: 60vw;
   max-width: 500px;
-  background:#eee;
+  max-height:100%;
+  border:2px solid #ddd;
   border-radius:12px;
   display:flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 15px;
+  padding: 10px;
 }
 .side-bar form img{
   height: 30px; 
@@ -88,7 +89,8 @@ header .side-bar{
   font-size:1rem;
   outline: none;
   border:2px solid #fff;
-  padding: 10px;
+  padding:5px;
+  max-width: calc(100% - 40px);
 }
 .side-bar form input:focus{
   border-color: #ddd;
@@ -100,8 +102,8 @@ header .side-bar{
   display:block;
   border: 2px solid rgba(0,0,0,0.08);
   color: #eee;
-  width:100%;
-  padding:10px;
+  width:fit-content;
+  padding:10px 20px;
   text-decoration:none;
  font-size: 1.1rem;
   border-radius: 30px;
