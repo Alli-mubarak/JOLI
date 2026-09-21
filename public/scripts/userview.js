@@ -1,4 +1,3 @@
-async function runScript(){
 const userDetails = document.getElementById("user-details");
 const userAction = document.getElementById("user-action");
 const userMenu = document.getElementById("u-menu");
@@ -194,14 +193,12 @@ userMenu.onclick = () =>{
         
     
 }
-}
 
-setTimeout(()=>{
-  alert("loading");
-  try{
-    runScript();
+  postMenuCloser.onclick = () =>{
+      userMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
   }
-  catch(err){
-    console.error(err);
-  }
-},5000);
