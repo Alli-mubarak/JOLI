@@ -67,17 +67,15 @@ header .side-bar{
 .side-bar .search-link{
   text-decoration: none;
   padding:5px;
-  height: 40px; 
-  width: 40px; 
   background: pink;
   border-radius: 50%;
   display:block;
   transition: all ease 0.3s;
-  border: 2px solid #fff;
+  border: 2px solid #ddd;
 }
 .search-link img{
-  height: 100%; 
-  width: 100%;  
+  height: 35px; 
+  width: 35px;  
 }
 .search-link hover{
   border-color: #ddd;
