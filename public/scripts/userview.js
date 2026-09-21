@@ -151,7 +151,7 @@ userMenu.onclick = () =>{
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-solid fa-user-plus"></i>Send ${username.trim()} a message</button>` : ""}
    ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-user"></i>Block ${username.trim()} </button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
-     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+    
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("u-closer-btn");
