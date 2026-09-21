@@ -30,7 +30,7 @@ let scrollPosition = 0;
   let inViewMode = false;
   let userPic;
   let userName;
-
+if(userAction.textContent.trim() === "Unfriend") userAction.style.background = "#ff2b43";
 async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
