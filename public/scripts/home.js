@@ -17,12 +17,13 @@ const postMenuContainer = document.getElementById("post-menu-container");
 let postOnFocus, lastPostCreationTime, friends, pendings;
 
 async function sortFriendship(){
-  if(isAuthorised){
+  alert("sorting friends!");
+  if(!isAuthorised) return;
   const friends = await friendships.filter(f => f.status === "accepted");
   const pendings  = await friendships.filter(f => f.status === "pending");
     alert(friends)
     alert(pendings);
-  }
+  
 }
 sortFriendship();
 
