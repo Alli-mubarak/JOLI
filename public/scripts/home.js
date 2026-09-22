@@ -14,9 +14,17 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
-let postOnFocus;
-let lastPostCreationTime;
+let postOnFocus, lastPostCreationTime, friends, pendings;
 
+async function sortFriendship(){
+  if(isAuthorised){
+  const friends = await friendships.filter(f => f.status === "accepted");
+  const pendings  = await friendships.filter(f => f.status === "pending");
+    alert(friends)
+    alert(pendings);
+  }
+}
+sortFriendship();
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -429,11 +437,13 @@ function viewPostImage(e){
 //function that shows post menu
 async function viewPostMenu(e){
   try{
+    
   const postId = e.currentTarget.id;
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
   const authorLinkTag = e.currentTarget.querySelector("#author-image");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
+  const authorStat = "nan";
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
