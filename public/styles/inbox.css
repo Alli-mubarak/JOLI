@@ -6,6 +6,9 @@
   box-sizing: border-box;
   font-family: 'Raleway', sans-serif;
 }
+:root{
+  --primary-color : #2bff43;
+}
 body{
   position:relative;
   width: 100%;
