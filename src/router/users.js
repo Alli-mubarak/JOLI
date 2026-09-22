@@ -95,11 +95,11 @@ let friends = await fetchUserFriends(userData.id);
     return res.status(500).send("Could not fetch friends");
   }
 if(req.isAuthenticated() && req.user && userData.username !== req.user.username && friends.count > 0 ) {  
-  const isFriend = friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
+  const isFriend = await  friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
   userData.is_friend = isFriend;
-  const pendings = friends.pendings
-  console.log(pendings);
-  userData.is_pending = pendings;
+  const isPending = await friends.pendings.some(f => f.sender_id === req.user.id);
+  console.log(isPending);
+  userData.is_pending = isPending;
 }     
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
   else{userData.friends = friends.count + " friends"}
