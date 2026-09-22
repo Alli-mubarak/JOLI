@@ -593,9 +593,10 @@ shareBtn.onclick = () => {sharePost()}
 //comment menu configuration 
 function viewCommentMenu(e){
   try{
-  const commentId = e.target.id;
-  const authorUsername = document.querySelector(".commenter").innerHTML;
-  const authorLinkTag = document.querySelector(".commenter-link");
+    const myParent = e.currentTarget.parentElement;
+  const commentId = myParent.id;
+  const authorUsername = myParent.querySelector(".commenter").innerHTML;
+  const authorLinkTag = myParent.querySelector(".commenter-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-user");
   const htmlElements = `
