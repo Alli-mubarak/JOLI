@@ -445,8 +445,8 @@ async function viewPostMenu(e){
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
     
-  const isFriend = await  friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
-  const isPending = await friends.pendings.some(f => f.sender_id === currentUserId);
+  const isFriend = friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
+  const isPending = friends.pendings.some(f => f.sender_id === currentUserId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
