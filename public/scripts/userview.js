@@ -316,3 +316,15 @@ const allImages = document.querySelectorAll("img");
 Array.from(allImages).forEach(i => {
   i.onclick = (e) => {viewImage(e)}
 })
+
+function viewPostMenu(e){
+  const uid = userDetails.getAttribute("data-user");
+  const username = document.getElementById("u-name").textContent;
+  const post = e.currentTarget.parentElement;
+  alert(post);
+}
+const postMenus = document.querySelectorAll(".post-menu");
+Array.from(postMenus).forEach(pm => {
+  pm.onclick = (e) => {viewPostMenu(e)}
+})
+
