@@ -603,12 +603,26 @@ function viewCommentMenu(e){
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
-    ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
-     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+    ${currentUserId === authorId? `<button id="delete-comment-btn"><i class="fa-solid fa-trash"></i> Delete comment</button>` : ""}
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-    const delBtn = postMenu.querySelector("#delete-post-btn");
+    const viewBtn = postMenu.querySelector("#view-user-btn");
+    const delBtn = postMenu.querySelector("#delete-comment-btn");
+
+    if(viewBtn){
+      viewBtn.onclick = () =>{
+      window.location.href = authorLink;
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    }
+    
     if(delBtn){
       delBtn.onclick = () =>{
       if(confirm("Are you sure you want to delete this comment?")){
