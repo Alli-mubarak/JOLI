@@ -126,9 +126,15 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
     return res.status(500).send("Could not fetch posts");
   }
   if(posts.count > 0) {
-    
+    userPosts = posts.posts
+    if(req.isAuthenticated() && req.user && req.user.id){
+      for(let i = 0; i < userPosts.length; i++){
+        const likeStat = await getPostLikeStatus(userPosts[i].id, req.user.id);
+        userPosts[i].likeStatus = likeStat
+      }
+    }
     userData.posts_count = `  (${posts.count})`;
-    userData.posts = posts.posts
+    userData.posts = userPosts
   }
   
   if(req.user && req.user.id){
@@ -137,11 +143,7 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
       userData.title = "My profile";
       userData.ref = "You";
     }
-  //  const likeStat = await getPostLikeStatus(postData.id, req.user.id);
-  //  postData.likeStatus = likeStat
   }
-  
-  
  res.render('user', { user: userData }); 
 }catch(e){
   console.error('Error fetching user',e);
