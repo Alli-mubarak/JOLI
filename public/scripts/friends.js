@@ -26,10 +26,6 @@ async function fetchUsers() {
            // alert(currentUserId)
        // lastUserFetched = 
         if(currentUserId){
-      const fResponse = await fetch("/api/friendship/user/friends");
-      if(fResponse.ok){
-      const friendshipsResult  = await fResponse.json();
-      const friendships = friendshipsResult.friendships;
       await friendships.forEach(f => {
       if(f.status === "pending"){
             if(f.sender_id === currentUserId){
@@ -49,11 +45,6 @@ async function fetchUsers() {
             }
       }
       });
-            
-      }else{
-            notify("Error fetching friendships", "error");
-      }
-      
       
         }
       usersContainer.innerHTML = '';
