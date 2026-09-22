@@ -158,6 +158,7 @@ userMenu.onclick = () =>{
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Send ${username.trim()} a message</button>` : ""}
    ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-user-slash"></i>Block ${username.trim()} </button>` : ""}
+   ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-envelope"></i> Contact <b>JOLI</b></button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
     
   `;
