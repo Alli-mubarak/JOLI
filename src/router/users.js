@@ -47,7 +47,7 @@ async function fetchUserFriends(userId){
     const result = await pool.query(query, [userId]);
     const friends = await result.rows.filter(f => f.status === "accepted");
     const pendings  = await result.rows.filter(f => f.status === "pending");
-    console.log("user friends fetched");
+    console.log("user friends fetched", pendings, friends);
     return {
       count: friends.length,
       friends : friends,
