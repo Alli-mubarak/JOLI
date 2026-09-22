@@ -19,6 +19,7 @@ let postOnFocus, lastPostCreationTime, friends, pendings;
 async function sortFriendship(){
   alert("sorting friends!");
   if(!isAuthorised) return;
+  alert(friendships);
   const friends = await friendships.filter(f => f.status === "accepted");
   const pendings  = await friendships.filter(f => f.status === "pending");
     alert(friends)
