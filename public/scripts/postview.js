@@ -88,21 +88,7 @@ function linkify(text) {
     return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
-
-function linkifyComments(){
-  try{
-  commentContents = document.querySelectorAll(".comment-content");
-  Array.from(commentContents).forEach(cc => {
-    cc.innerHTML = linkify(cc.textContent);
-  });
-  }catch(err){console.error(err)}
-}
   
-postContent.innerHTML = linkify(postContent.textContent);
-if(commentsBox.children.length > 1){
-  linkifyComments();
-}
-
 let closeNID;
         
 nCloser.onclick = () =>{
@@ -603,3 +589,86 @@ function sharePost(){
   }
       }
 shareBtn.onclick = () => {sharePost()}
+
+//comment menu configuration 
+function viewCommentMenu(e){
+  try{
+  const commentId = e.target.id;
+  const authorUsername = document.querySelector(".commenter").innerHTML;
+  const authorLinkTag = document.querySelector(".commenter-link");
+  const authorLink = authorLinkTag.href;
+  const authorId = authorLinkTag.getAttribute("data-user");
+  const htmlElements = `
+  <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
+   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+    ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
+     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
+  `;
+    postMenu.innerHTML = htmlElements;
+    pmCloserBtn = document.getElementById("p-closer-btn");
+    const delBtn = postMenu.querySelector("#delete-post-btn");
+    if(delBtn){
+      delBtn.onclick = () =>{
+      if(confirm("Are you sure you want to delete this comment?")){
+    //   deletePost(postId);
+        alert("not available now");
+      }
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    }
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    
+      postMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+   disableScrolling();
+  }catch(error){
+    console.error(error);
+  }
+}
+
+
+
+//comment linkifier
+function linkifyComments(){
+  try{
+  commentContents = document.querySelectorAll(".comment-content");
+  Array.from(commentContents).forEach(cc => {
+    cc.innerHTML = linkify(cc.textContent);
+  });
+  }catch(err){console.error(err)}
+}
+
+//comment menu enabler 
+function enableCommentsMenu(){
+  try{
+  commentMenu = document.querySelectorAll(".comment-menu");
+  Array.from(commentMenu).forEach(cm => {
+    cm.onclick = (e) => {viewCommentMenu(e)}
+  });
+  }catch(err){console.error(err)}
+}
+
+// post content linkifier
+postContent.innerHTML = linkify(postContent.textContent);
+if(commentsBox.children.length > 1){
+  linkifyComments();
+  enableCommentsMenu()
+}
+
+
