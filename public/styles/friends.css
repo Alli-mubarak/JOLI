@@ -69,11 +69,16 @@ header .side-bar{
 }
 .side-bar .search-link{
   text-decoration: none;
+  background: pink;
+  display: flex;
+  align-items: center ;
+  justify-content: center;
 }
 .search-link img{
   height: 25px; 
   width: 25px;  
-  transition: all ease 0.35s
+  transition: all ease 0.35s;
+  background:green;
 }
 .search-link img:hover{
   transform: scale(1.07);
