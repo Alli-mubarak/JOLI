@@ -469,7 +469,7 @@ commentInput.oninput = () =>{
        <div class="comment-details">
         <div class="comment-header">
          <div class="commenter-time">
-          <a href="/user/${result.user_id}" class="commenter-link">
+          <a href="/user/${userName || "user"}" class="commenter-link">
              <p class="commenter">${userName || "user" }</p>
            </a>
            <small>now </small>
