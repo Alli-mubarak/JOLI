@@ -323,14 +323,13 @@ function viewPostMenu(e){
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
   const post = e.currentTarget.parentElement.parentElement;
-  
-  alert(post.id);
+  postId = post.id
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   <button id="send-message-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i>View post</button>
    ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-plus"></i>Save post </button>` : ""}
-   ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-fa-thumbtack"></i>Pin post</button>` : ""}
+   ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-thumbtack"></i>Pin post</button>` : ""}
     ${currentUserId === uid? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete Post</button>` : ""}
     
   `;
@@ -340,9 +339,8 @@ function viewPostMenu(e){
     
     if(delBtn){
       delBtn.onclick = () =>{
-     if(confirm("Are you sure you want to delete your account?")){
-     //  deletePost(postId);
-       alert("feature coming soon!");
+     if(confirm("Are you sure you want to delete this post?")){
+      deletePost(postId);
       }
         postMenuCloser.style.background = "transparent";
     
@@ -397,11 +395,12 @@ async function deletePost(postId){
           console.log(response);
     postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
+      post
+    userMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
      //remove in the UI
-    postsContainer.removeChild(currPost);
+    currPost.parentElement.removeChild(currPost);
     notify("post deleted!");
   }
   catch(err){
