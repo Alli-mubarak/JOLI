@@ -16,17 +16,6 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const morePostsBtn = document.getElementById("more-posts-btn");
 let postOnFocus, lastPostCreationTime, friends, pendings;
 
-async function sortFriendship(){
-  alert("sorting friends!");
-  alert(friendships);
-  const friends = await friendships.filter(f => f.status === "accepted");
-  const pendings  = await friendships.filter(f => f.status === "pending");
-    alert(friends)
-    alert(pendings);
-  
-}
-
-
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
   
@@ -225,9 +214,17 @@ everyPosts.forEach((post, index) => {
 }
 }
 
+//friendship sorter
+async function sortFriendship(){
+  if(!isAuthorised) return;
+  const friends = await friendships.filter(f => f.status === "accepted");
+  const pendings  = await friendships.filter(f => f.status === "pending");
+}
+
 //function that makes the post card work
 function viewPost(e){
 try{
+  
   sortFriendship();
       
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
@@ -439,16 +436,22 @@ function viewPostImage(e){
 //function that shows post menu
 async function viewPostMenu(e){
   try{
-    
+    if(!isAuthorised){
+      notify("log in first", "error", "click here", "/");
+    }
   const postId = e.currentTarget.id;
   const authorUsername = e.currentTarget.querySelector(".author-username").innerHTML;
   const authorLinkTag = e.currentTarget.querySelector("#author-image");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
-  const authorStat = "nan";
+    
+  const isFriend = await  friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
+  const isPending = await friends.pendings.some(f => f.sender_id === currentUserId);
+  
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
+  ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
+  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-plus"></i>Unfriend ${authorUsername.trim()}</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
