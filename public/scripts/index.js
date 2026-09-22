@@ -175,7 +175,7 @@ async function checkAuthStatus() {
           const frResponse = await fetch("/api/friendship/user/friends");
           if(frResponse.ok){
           frData = await frResponse.json();
-          friendships = frData.friendships;
+          friendships = await frData.friendships;
         }else{
             notify("error fetching friends", "error");
             console.error("An error occurred while fetching friends");
