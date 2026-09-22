@@ -25,7 +25,7 @@ async function sortFriendship(){
     alert(pendings);
   
 }
-sortFriendship();
+
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -228,7 +228,7 @@ everyPosts.forEach((post, index) => {
 //function that makes the post card work
 function viewPost(e){
 try{
-  alert(friendships);
+  sortFriendship();
       
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
