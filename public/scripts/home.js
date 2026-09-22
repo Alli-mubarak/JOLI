@@ -222,10 +222,10 @@ async function sortFriendship(){
 }
 
 //function that makes the post card work
-function viewPost(e){
+async function viewPost(e){
 try{
   
-  sortFriendship();
+     
       
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
@@ -236,6 +236,7 @@ try{
           makeComment(e);
       }
         else if(e.target.getAttribute('data-type') === "post-menu" || e.target.parentElement.getAttribute('data-type') === "post-menu"){
+          await sortFriendship();
           viewPostMenu(e);
         }
         
@@ -445,8 +446,8 @@ async function viewPostMenu(e){
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
     
-  const isFriend = friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
-  const isPending = pendings.some(f => f.sender_id === currentUserId);
+  const isFriend = await friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
+  const isPending = await pendings.some(f => f.sender_id === currentUserId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
