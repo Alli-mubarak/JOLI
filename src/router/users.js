@@ -47,7 +47,7 @@ async function fetchUserFriends(userId){
     const result = await pool.query(query, [userId]);
     const friends = await result.rows.filter(f => f.status === "accepted");
     const pendings  = await result.rows.filter(f => f.status === "pending");
-    console.log("user friends fetched", pendings, friends);
+    console.log("user friends fetched");
     return {
       count: friends.length,
       friends : friends,
@@ -98,6 +98,7 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username 
   const isFriend = friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
   userData.is_friend = isFriend;
   const pendings = friends.pendings.some(f => f.sender_id === req.user.id);
+  console.log(pendings);
   userData.is_pending = pendings;
 }     
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
