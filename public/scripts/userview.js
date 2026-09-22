@@ -215,7 +215,7 @@ function viewImage(e){
     const img = e.target;
     const src = img.src;
     imgArray = Array.from(img.parentElement.querySelectorAll("img"));
-   
+   disableScrolling();
    const index = imgArray.indexOf(img);
    currIndex = index;
      if(imgArray.length > 1){
@@ -249,6 +249,7 @@ function viewImage(e){
         moveLeft.classList.remove("hidden");
         moveRight.classList.remove("hidden");
         imgArray = "";
+       enableScrolling();
        }catch(e){
            console.error(e);
        }
