@@ -691,7 +691,7 @@ try {
         <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
-                     <a href="/user/${post.user_id}" id="author-image">
+                     <a href="/user/${pUsername.textContent}" id="author-image">
                          <img src="${userPic.src || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
