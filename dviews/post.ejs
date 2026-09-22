@@ -126,7 +126,7 @@ return `${Math.floor(sDifference)}s`;
        <div class="comment-details">
         <div class="comment-header">
          <div class="commenter-time">
-          <a href="/user/<%= comment.commenter %>" class="commenter-link" data-user=<=% comment.user_id %>>
+          <a href="/user/<%= comment.commenter %>" class="commenter-link" data-user=<%= comment.user_id %>>
              <p class="commenter"><%= comment.commenter || user %></p>
            </a>
            <small><%= getPostTime(comment.created_at) %> </small>
