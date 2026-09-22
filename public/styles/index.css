@@ -48,11 +48,27 @@ header .side-bar{
 }
 .side-bar .search-link{
   text-decoration: none;
+  border: 2px solid var(--primary-color);
+  display: flex;
+  align-items: center ;
+  height: fit-content;
+  width: 200px;
+  justify-content: end;
+  position: relative;
+  padding:5px;
+  border-radius: 15px;
+  color:#333;
+}
+.search-link:before{
+  position: absolute;
+  left: 10px; top: 10px;
+  content:'Search';
 }
 .search-link img{
-  height: 30px; 
-  width: 30px;  
-  transition: all ease 0.35s
+  height: 25px; 
+  width: 25px;  
+  transition: all ease 0.35s;
+  background:#fff;
 }
 .search-link img:hover{
   transform: scale(1.07);
