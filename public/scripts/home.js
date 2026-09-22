@@ -453,8 +453,8 @@ async function viewPostMenu(e){
   ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
   ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend ${authorUsername.trim()}</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+   ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
-     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
     const currPost = document.getElementById(`${postId}`);
     postOnFocus = currPost;
