@@ -691,12 +691,12 @@ try {
         <div class="post-header">
             <div class="author-details">
                 <div class="author-image">
-                     <a href="/user/${pUsername.textContent}" id="author-image">
+                     <a href="/user/${pUsername.textContent}" id="author-image" data-id=${post.user_id}>
                          <img src="${userPic.src || 'images/default-user.png'}" loading="lazy" id="author-pic" alt="author profile picture" />
                      </a>
                      </div>
                      <div class="username-posttime">
-                          <a href="/user/${post.user_id}" class="author-link">
+                          <a href="/user/${pUsername}" class="author-link">
                               <p class="author-username">${pUsername.textContent || null}</p>
                           </a>
                           <small>now</small>
