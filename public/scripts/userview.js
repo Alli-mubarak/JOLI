@@ -32,7 +32,7 @@ let scrollPosition = 0;
   let userName;
 
 if(userAction.textContent.trim() === "Unfriend") {
-  userAction.style.background = "#ff95a9";
+  userAction.style.background = "pink";
 }else if(userAction.textContent.trim() === "Pending") {
   userAction.style.background = "yellow";
 }
