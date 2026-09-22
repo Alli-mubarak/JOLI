@@ -607,6 +607,7 @@ function viewCommentMenu(e){
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+   ${currentUserId === authorId? `<button id="edit-comment-btn"><i class="fa-solid fa-pencil"></i> Edit comment</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-comment-btn"><i class="fa-solid fa-trash"></i> Delete comment</button>` : ""}
   `;
     postMenu.innerHTML = htmlElements;
