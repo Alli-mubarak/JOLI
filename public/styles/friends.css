@@ -72,7 +72,16 @@ header .side-bar{
   background: pink;
   display: flex;
   align-items: center ;
-  justify-content: center;
+  height: fit-content;
+  width: 300px;
+  justify-content: end;
+  position: relative;
+  padding:5px;
+}
+.search-link:before{
+  position: absolute;
+  left: 10px; top: 5px;
+  content:'Search';
 }
 .search-link img{
   height: 25px; 
