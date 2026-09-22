@@ -319,13 +319,94 @@ Array.from(allImages).forEach(i => {
 })
 
 function viewPostMenu(e){
+  try{
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
-  const post = e.currentTarget.parentElement;
-  alert(post);
+  const post = e.currentTarget.parentElement.parentElement;
+  
+  alert(post.id);
+  
+  const htmlElements = `
+  <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
+  <button id="send-message-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i>View post</button>
+   ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-plus"></i>Save post </button>` : ""}
+   ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-fa-thumbtack"></i>Pin post</button>` : ""}
+    ${currentUserId === uid? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete Post</button>` : ""}
+    
+  `;
+    postMenu.innerHTML = htmlElements;
+    pmCloserBtn = document.getElementById("u-closer-btn");
+    const delBtn = postMenu.querySelector("#delete-post-btn");
+    
+    if(delBtn){
+      delBtn.onclick = () =>{
+     if(confirm("Are you sure you want to delete your account?")){
+     //  deletePost(postId);
+       alert("feature coming soon!");
+      }
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+      }
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+     document.body.classList.remove('no-scroll'); 
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    
+      userMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+   disableScrolling();
+  }catch(error){
+    console.error(error);
+  }  
 }
+
 const postMenus = document.querySelectorAll(".post-menu");
 Array.from(postMenus).forEach(pm => {
   pm.onclick = (e) => {viewPostMenu(e)}
 })
 
+async function deletePost(postId){
+  try{
+    const currPost = document.getElementById(`${postId}`);
+    currPost.style.background = "#ffeeee";
+    
+    const response = await fetch(`/post/${postId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+    
+        if (!response.ok) {
+          console.error(response);
+          notify("post deletion failed!", "error");
+          currPost.style.background = "#fff";
+          return 
+        }
+          console.log(response);
+    postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+     //remove in the UI
+    postsContainer.removeChild(currPost);
+    notify("post deleted!");
+  }
+  catch(err){
+    notify("Post delete failed!", "error");
+    currPost.style.background = "#fff";
+    console.error(err);
+  }
+            }
