@@ -226,7 +226,7 @@ main{
             width:100%;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           position: relative;
-        margin-bottom: 15px;
+        margin-bottom: 75px;
         }
         .user{
             max-width: 300px;
