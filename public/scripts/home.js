@@ -41,7 +41,6 @@ async function fetchPosts() {
             
       for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
-        console.log(posts[i].comments);
        }
         allowPostView();
         document.body.style.background = "#ddd";
@@ -217,8 +216,8 @@ everyPosts.forEach((post, index) => {
 //friendship sorter
 async function sortFriendship(){
   if(!isAuthorised) return;
-  const friends = await friendships.filter(f => f.status === "accepted");
-  const pendings  = await friendships.filter(f => f.status === "pending");
+  friends = await friendships.filter(f => f.status === "accepted");
+  pendings  = await friendships.filter(f => f.status === "pending");
 }
 
 //function that makes the post card work
