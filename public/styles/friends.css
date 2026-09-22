@@ -71,8 +71,8 @@ header .side-bar{
   text-decoration: none;
 }
 .search-link img{
-  height: 30px; 
-  width: 30px;  
+  height: 25px; 
+  width: 25px;  
   transition: all ease 0.35s
 }
 .search-link img:hover{
