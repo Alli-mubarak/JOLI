@@ -327,15 +327,54 @@ function viewPostMenu(e){
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
-  <button id="send-message-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i>View post</button>
-   ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-plus"></i>Save post </button>` : ""}
-   ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-thumbtack"></i>Pin post</button>` : ""}
+  <button id="view-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i>View post</button>
+   ${currentUserId !== uid? `<button id="save-btn"><i class="fa-solid fa-plus"></i>Save post </button>` : ""}
+   ${currentUserId === uid? `<button id="pin-btn"><i class="fa-solid fa-thumbtack"></i>Pin post</button>` : ""}
     ${currentUserId === uid? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete Post</button>` : ""}
     
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("u-closer-btn");
+    const viewBtn = postMenu.querySelector("#view-btn");
+    const saveBtn = postMenu.querySelector("#save-btn");
+    const pinBtn = postMenu.querySelector("#pin-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
+
+    if(viewBtn){
+      viewBtn.onclick = () =>{
+       window.location.href = `/post/${postId}`
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    }
+    
+    if(pinBtn){
+      pinBtn.onclick = () =>{
+       notify("post pinning is coming soon!");
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    }
+    
+    if(saveBtn){
+      saveBtn.onclick = () =>{
+       notify("post saving is coming soon!");
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    }
     
     if(delBtn){
       delBtn.onclick = () =>{
