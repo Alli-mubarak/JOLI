@@ -97,7 +97,7 @@ let friends = await fetchUserFriends(userData.id);
 if(req.isAuthenticated() && req.user && userData.username !== req.user.username && friends.count > 0 ) {  
   const isFriend = friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
   userData.is_friend = isFriend;
-  const pendings = friends.pendings.some(f => f.sender_id === req.user.id);
+  const pendings = friends.pendings
   console.log(pendings);
   userData.is_pending = pendings;
 }     
