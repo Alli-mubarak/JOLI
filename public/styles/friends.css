@@ -73,14 +73,16 @@ header .side-bar{
   display: flex;
   align-items: center ;
   height: fit-content;
-  width: 300px;
+  width: 200px;
   justify-content: end;
   position: relative;
   padding:5px;
+  border-radius: 10px;
+  color:#333;
 }
 .search-link:before{
   position: absolute;
-  left: 10px; top: 5px;
+  left: 10px; top: 10px;
   content:'Search';
 }
 .search-link img{
