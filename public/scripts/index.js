@@ -1,5 +1,6 @@
 let isAuthorised = false;
 let currentUserId = "";
+let friendships;
 const menuBox = document.getElementById("menu-container");
 const pLink = document.getElementById("profile-link");
 const sLink = document.getElementById("settings-link");
@@ -171,7 +172,11 @@ async function checkAuthStatus() {
         userPic.classList.remove("hidden");
 
           setTimeout(()=>{loadDefaultImage()},1000);
-          
+          const frResponse = await fetch("/api/friendship/user/friends", { credentials: 'include' });
+          frData = await frResponse.json();
+          friendships = frData.friendships;
+          alert(friendships);
+ 
         } else {
           canPost = false;
           isAuthorised = false;
