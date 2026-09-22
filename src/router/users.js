@@ -43,12 +43,15 @@ const checkSession = (req, res, next) => {
 
 async function fetchUserFriends(userId){
   try{
-    const query = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2"
-    const result = await pool.query(query, [userId, "accepted"]);
+    const query = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) "
+    const result = await pool.query(query, [userId]);
+    const friends = await result.rows.filter(f => f.status === "accepted");
+    const pendings  = await result.rows.filter(f => f.status === "pending");
     console.log("user friends fetched");
     return {
-      count: result.rows.length,
-      friends : result.rows
+      count: friends.length,
+      friends : friends,
+      pendings: pendings
     }
               
   }
@@ -94,6 +97,8 @@ let friends = await fetchUserFriends(userData.id);
 if(req.isAuthenticated() && req.user && userData.username !== req.user.username && friends.count > 0 ) {  
   const isFriend = friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
   userData.is_friend = isFriend;
+  const pendings = friends.pendings.some(f => f.sender_id === req.user.id);
+  userData.is_pending = pendings;
 }     
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
   else{userData.friends = friends.count + " friends"}
