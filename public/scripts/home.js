@@ -446,12 +446,12 @@ async function viewPostMenu(e){
   const authorId = authorLinkTag.getAttribute("data-id");
     
   const isFriend = friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
-  const isPending = friends.pendings.some(f => f.sender_id === currentUserId);
+  const isPending = pendings.some(f => f.sender_id === currentUserId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
-  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-plus"></i>Unfriend ${authorUsername.trim()}</button>` : ""}
+  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend ${authorUsername.trim()}</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
      <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
