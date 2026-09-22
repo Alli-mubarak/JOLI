@@ -126,12 +126,7 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
     return res.status(500).send("Could not fetch posts");
   }
   if(posts.count > 0) {
-    if(req.isAuthenticated() && req.user){
-      posts.posts.forEach(p => {
-        const likeStat = await getPostLikeStatus(p.id, req.user.id);
-        p.likeStatus = likeStat
-      })
-    }
+    
     userData.posts_count = `  (${posts.count})`;
     userData.posts = posts.posts
   }
