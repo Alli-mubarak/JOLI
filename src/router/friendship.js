@@ -230,6 +230,28 @@ router.get('/user/friends', checkSession,  async (req, res) => {
     }
 });
 
+//api for getting user's pending friendship list
+router.get('/user/pending/friends', checkSession,  async (req, res) => {
+  try {
+  if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized, please log in"});
+  }
+
+    const userId = req.user.id;
+    const query = "SELECT * FROM friendships WHERE sender_id = $1 AND status = $2";
+
+    const result = await pool.query(query, [userId, "pending"]);
+
+     return res.status(200).json({
+            pendings: result.rows
+        });
+
+    } catch (error) {
+        console.error("Fetch friendship list error:", error);
+        return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
 //api for getting mutual friends 
 router.get('/mutual/:targetUserId', checkSession, async (req, res) => {
     try {
