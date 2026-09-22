@@ -70,6 +70,8 @@ return `${Math.floor(sDifference)}s`;
               <% } else { %>
                <% if (user.is_friend) { %>
                   Unfriend
+               <% } else if (user.is_pending) { %>
+                  Pending
                <% } else { %>
                  <i class="fa-solid fa-plus add-loader"></i>  Add
                 <% } %>
