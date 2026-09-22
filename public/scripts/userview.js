@@ -33,34 +33,8 @@ let scrollPosition = 0;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "#ff95a9";
-}
-
-
-async function getFriendship(){
-if(userAction.textContent.includes("Add")){ 
-  try{
-  const uid = userDetails.getAttribute("data-user");
-  if(!isAuthorised)return;
-  if(uid === currentUserId)return;
-  const response = await fetch('/api/friendship/user/pending/friends');
-  
-  if(response.ok){
-    const data = await response.json();
-    const pendings = data.pendings;
-    const is_pending = pendings.some(p => p.receiver_id === uid);
-    if(is_pending) {
-      userAction.style.background = "yellow";
-      userAction.textContent = "pending";
-    }
-  }else{
-    console.error("error fetching pending requests");
-    notify("cannot confirm friendship", "error");
-  }
-  }catch(err){
-    console.error(err);
-    notify("server error occurred", "error");
-  }
-}
+}else if(userAction.textContent.trim() === "Pending") {
+  userAction.style.background = "yellow";
 }
 
 async function checkAuthStatus() {
@@ -83,7 +57,7 @@ async function checkAuthStatus() {
         }
        const uid = userDetails.getAttribute("data-user");
         getMutuals(uid);
-        getFriendship()
+      
       } catch (err) {
         console.error("Error verifying authentication status:", err);
       }
