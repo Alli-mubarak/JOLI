@@ -172,10 +172,15 @@ async function checkAuthStatus() {
         userPic.classList.remove("hidden");
 
           setTimeout(()=>{loadDefaultImage()},1000);
-          const frResponse = await fetch("/api/friendship/user/friends", { credentials: 'include' });
+          const frResponse = await fetch("/api/friendship/user/friends");
+          if(frResponse.ok){
           frData = await frResponse.json();
           friendships = frData.friendships;
           alert(friendships);
+        }else{
+            notify("error fetching friends", "error");
+            console.error("An error occurred while fetching friends");
+        }
  
         } else {
           canPost = false;
