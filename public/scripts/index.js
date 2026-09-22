@@ -1,6 +1,6 @@
 let isAuthorised = false;
 let currentUserId = "";
-let friendships;
+let friendships = [];
 const menuBox = document.getElementById("menu-container");
 const pLink = document.getElementById("profile-link");
 const sLink = document.getElementById("settings-link");
