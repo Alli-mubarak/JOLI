@@ -78,6 +78,23 @@ async function fetchUserPosts(userId){
   }
 }
 
+//function for fetching posts liked by a user
+async function getPostLikeStatus(postId, userId){
+  try{
+    const result = await pool.query(
+      "SELECT * FROM likes WHERE post_id = $1 AND user_id = $2", [postId, userId]
+    );
+    if(result.rows.length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+  catch(e){
+    return console.error(e);
+  }
+}
+
 //user view api
 router.get('/:username', async (req, res) => {
   console.log('user fetched \n');
@@ -109,6 +126,12 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
     return res.status(500).send("Could not fetch posts");
   }
   if(posts.count > 0) {
+    if(req.isAuthenticated() && req.user){
+      posts.posts.forEach(p => {
+        const likeStat = await getPostLikeStatus(p.id, req.user.id);
+        p.likeStatus = likeStat
+      })
+    }
     userData.posts_count = `  (${posts.count})`;
     userData.posts = posts.posts
   }
