@@ -15,7 +15,7 @@ const postMenuCtrl = document.querySelector(".post-menu");
   let currIndex;
   let inViewMode = false;
   
-
+const smBtn = document.getElementById("start-message-btn");
 
 
 async function getFriends(){
@@ -39,6 +39,12 @@ async function getFriends(){
         console.error("Error fetching friends :", err);
        notify("error occurred while fetching friends", "error");
   }
+}
+
+smBtn.onclick = (e) =>{
+  const btn = e.currentTarget;
+  btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
+  
 }
 
 //window.onload = function() {}
