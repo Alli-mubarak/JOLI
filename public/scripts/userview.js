@@ -465,8 +465,9 @@ async function likePost(e){
         notify("please, log in first!", "error", "click here", "/");
         return;
       }
-      const post = e.currentTarget.parentElement.parentElement.parentElement;
-      const postId = post.id
+      const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+      const postId = post.id;
+        alert(postId);
       
       const likeContainer = post.querySelector(".like-count");
       const likeIcon = post.querySelector(".like-icon");
@@ -531,7 +532,7 @@ async function makeComment(e){
         notify("please, log in first!", "error", "click here", "/");
         return;
     }
-const post = e.currentTarget.parentElement.parentElement.parentElement;
+const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
 const postId = post.id
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
