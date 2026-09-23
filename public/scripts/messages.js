@@ -1,5 +1,3 @@
-async function run(){
-  
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -46,7 +44,7 @@ async function getFriends(){
 //window.onload = function() {}
   
   
-   
+   async function run(){
 const socket = io("https://joli-indol.vercel.app");
   
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
@@ -166,14 +164,11 @@ function updateChatStatusUI(statusText) {
     
 setTimeout(()=>{
   try{
-    run();
+   // run();
+    console.log("loading");
   }
   catch(err){
     console.error(err)
   }
 },5000);
-
-
-
-alert("loading page!");
 
