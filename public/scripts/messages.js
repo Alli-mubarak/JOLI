@@ -116,98 +116,34 @@ function updateChatStatusUI(statusText) {
     }
     }
 
-        class ProWebSocket {
-            constructor(url) {
-                this.url = url;
-                this.socket = null;
-                this.reconnectAttempts = 0;
-                this.maxReconnects = 5;
-                this.reconnectInterval = 3000; // 3 seconds
-                
-                this.initUI();
-                this.connect();
-            }
 
-            initUI() {
-                this.statusEl = document.getElementById('status');
-                this.logEl = document.getElementById('log');
-                this.inputEl = document.getElementById('messageInput');
-                this.sendBtn = document.getElementById('sendButton');
 
-                this.sendBtn.addEventListener('click', () => {
-                    this.send({ type: 'chat', content: this.inputEl.value });
-                });
-            }
 
-            connect() {
-                this.log('Connecting to WebSocket server...');
-                this.socket = new WebSocket(this.url);
+    
+        // 2. Connect directly to your remote or local server
+        // Socket.io automatically handles reconnection, multiplexing, and handshakes!
+        const socket = io('wss://://joli-indol.vercel.app', {
+            transports: ['websocket'] // Optional: Skips long-polling and forces raw WS upgrade immediately
+        });
 
-                this.socket.onopen = (event) => this.onOpen(event);
-                this.socket.onmessage = (event) => this.onMessage(event);
-                this.socket.onclose = (event) => this.onClose(event);
-                this.socket.onerror = (error) => this.onError(error);
-            }
+        // 3. Listen for events like a pro
+        socket.on('connect', () => {
+            console.log(`Connected with ID: ${socket.id}`);
+        });
 
-            onOpen(event) {
-                this.log('Connected successfully!');
-                this.statusEl.textContent = 'Connected';
-                this.statusEl.className = 'status connected';
-                this.reconnectAttempts = 0; // Reset counter on success
-            }
+        socket.on('disconnect', (reason) => {
+            console.log(`Disconnected: ${reason}`);
+        });
 
-            onMessage(event) {
-                try {
-                    const data = JSON.parse(event.data);
-                    this.log(`Received JSON: ${JSON.stringify(data)}`);
-                } catch (e) {
-                    // Fallback for plain text
-                    this.log(`Received Text: ${event.data}`);
-                }
-            }
+        // Listen for your custom backend events
+        socket.on('chatMessage', (data) => {
+            console.log('Received payload:', data);
+        });
 
-            onClose(event) {
-                this.statusEl.textContent = 'Disconnected';
-                this.statusEl.className = 'status disconnected';
-                this.log(`Connection closed (Code: ${event.code}). Attempting reconnect...`);
-                this.reconnect();
-            }
-
-            onError(error) {
-                this.log('WebSocket error observed.');
-                console.error(error);
-            }
-
-            reconnect() {
-                if (this.reconnectAttempts < this.maxReconnects) {
-                    this.reconnectAttempts++;
-                    setTimeout(() => this.connect(), this.reconnectInterval);
-                } else {
-                    this.log('Max reconnect attempts reached. Refresh page.');
-                }
-            }
-
-            send(data) {
-                if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-                    // Professionally send structured JSON payload
-                    this.socket.send(JSON.stringify(data));
-                    this.inputEl.value = '';
-                } else {
-                    this.log('Cannot send: Socket is not open.');
-                }
-            }
-
-            log(text) {
-                const p = document.createElement('div');
-                p.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
-                this.logEl.appendChild(p);
-                this.logEl.scrollTop = this.logEl.scrollHeight;
-            }
+        // 4. Send messages
+        function sendMessage(text) {
+            socket.emit('sendMessageToServer', { content: text });
         }
-
-        // Initialize connection
-        // Replace localhost with your production server's URL
-const wsClient = new ProWebSocket('wss://joli-indol.vercel.app');
     
                  
 
