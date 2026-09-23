@@ -28,7 +28,8 @@ async function getFriendDetails(f, uid){
     }
     const query = "SELECT username, profile_picture, id, is_active, is_verified FROM users WHERE id = $1";
     const result = await pool.query(query, [friendId]);
-    const user = result.rows[0]
+    const user = result.rows[0];
+    console.log("friends details fetched!");
     return {
       id: user.id,
       username : user.username,
@@ -305,11 +306,15 @@ router.get('/friends/details', checkSession, async (req, res) => {
     const currentUserId = req.user.id;
     const frQuery = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2";
     const findFriends = await pool.query(frQuery, [currentUserId, "accepted"]);
+      
     if(findFriends.rows.length === 0){
       return res.status(404).json({ error: "No friend found!" });
     }
     const friendships = findFriends.rows;
-      
+
+      if(friendships.error){
+        return res.status(500).json({ error: "error fetching friends details." });
+      }
     for(let f=0; f < friendships.length; f++){
      const friend = getFriendDetails(friendships[f], currentUserId);
     friendships[f].friend_id = friend.id;
