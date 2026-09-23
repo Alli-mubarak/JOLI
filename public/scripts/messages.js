@@ -207,7 +207,7 @@ function updateChatStatusUI(statusText) {
 
         // Initialize connection
         // Replace localhost with your production server's URL
-const wsClient = new ProWebSocket('wss://://joli-indol.vercel.app');
+const wsClient = new ProWebSocket('wss://joli-indol.vercel.app');
     
                  
 
