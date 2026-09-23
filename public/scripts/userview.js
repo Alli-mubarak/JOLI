@@ -467,7 +467,6 @@ async function likePost(e){
       }
       const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
       const postId = post.id;
-        alert(postId);
       
       const likeContainer = post.querySelector(".like-count");
       const likeIcon = post.querySelector(".like-icon");
@@ -533,7 +532,8 @@ async function makeComment(e){
         return;
     }
 const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
-const postId = post.id
+const postId = post.id;
+const userPic = post.querySelector("#user-pic").src;
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
 <form id="comment-form">
