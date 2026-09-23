@@ -419,6 +419,11 @@ const likeIcons = document.querySelectorAll(".like-icon");
 Array.from(likeIcons).forEach(li => {
   li.onclick = (e) => {likePost(e)}
 });
+
+const commentIcons = document.querySelectorAll(".fa-comment");
+Array.from(commentIcons).forEach(ci => {
+  ci.onclick = (e) => {makeComment(e)}
+});
 }
 
 async function deletePost(postId){
@@ -460,7 +465,7 @@ async function likePost(e){
         notify("please, log in first!", "error", "click here", "/");
         return;
       }
-      const post = e.currentTarget.parentElement.parentElement;
+      const post = e.currentTarget.parentElement.parentElement.parentElement;
       const postId = post.id
       
       const likeContainer = post.querySelector(".like-count");
@@ -526,7 +531,7 @@ async function makeComment(e){
         notify("please, log in first!", "error", "click here", "/");
         return;
     }
-const post = e.currentTarget.parentElement.parentElement;
+const post = e.currentTarget.parentElement.parentElement.parentElement;
 const postId = post.id
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
