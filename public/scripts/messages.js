@@ -1,4 +1,4 @@
-// 1. Connect to your Node.js server
+async function run(){
 const BACKEND_URL = window.location.hostname === "localhost" 
   ? "http://localhost:5000" 
   : "https://joli-indol.vercel.app";
@@ -111,4 +111,14 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
-alert("page loaded");
+
+}
+setTimeout(()=>{
+  try{
+    alert("page loaded");
+    run();
+  }
+  catch(err){
+    console.error(err)
+  }
+},5000);
