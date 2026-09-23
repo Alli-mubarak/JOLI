@@ -1,15 +1,4 @@
 window.onload = function() {
-
-  import { Server } from "socket.io";
-
-const io = new Server(3000, {
-  pingInterval: 300,
-  pingTimeout: 200,
-  maxPayload: 1000000,
-  cors: {
-    origin: "https://joli-indol.vercel.app"
-  }
-});
   
   async function run(){
    async function go(){
