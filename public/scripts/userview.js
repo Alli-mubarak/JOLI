@@ -541,7 +541,7 @@ const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
 <form id="comment-form">
 <div class="pic-submit">
-<img src=${userPic || '/images/default-user'} alt="user picture" id="commenter-pic"/>
+<img src=${userPic || '/images/default-user.png'} alt="user picture" id="commenter-pic"/>
 <button type="submit" id="submit-comment-btn" disabled>
 <span>Post</span>
   <div id="c-loader" class="hidden"></div>
