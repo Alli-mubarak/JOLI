@@ -111,3 +111,4 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
+alert("page loaded");
