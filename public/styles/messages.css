@@ -172,7 +172,7 @@ main{
     cursor: pointer;
     padding: 10px;
     background: var(--primary-color);
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: #111;
     display: flex;
     align-items:  center ;
@@ -186,12 +186,15 @@ main{
   }
   .plus{
     position: absolute;
-    width:30px;
-    height: 4px;
+    width:20px;
+    height: 2px;
     border-radius: 20px;
     background: #111;
   }
-
+.plus:nth-child(2){
+  width:2px;
+  height: 20px;
+}
 @media screen and (min-width:762px){
   /* later styling */
   
