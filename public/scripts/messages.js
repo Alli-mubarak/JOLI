@@ -1,5 +1,9 @@
 // 1. Connect to your Node.js server
-    const socket = io("http://localhost:5000");
+const BACKEND_URL = window.location.hostname === "localhost" 
+  ? "http://localhost:5000" 
+  : "https://joli-indol.vercel.app";
+
+const socket = io(BACKEND_URL);
 
     // 2. Pretend this is your logged-in User ID (e.g., loaded from a login cookie or local storage)
     const currentUserId = 1; 
