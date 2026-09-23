@@ -323,7 +323,7 @@ function viewPostMenu(e){
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
   const post = e.currentTarget.parentElement.parentElement;
-  postId = post.id
+  const postId = post.id
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
@@ -411,9 +411,15 @@ function viewPostMenu(e){
 }
 
 const postMenus = document.querySelectorAll(".post-menu");
+if(postMenus.length > 0){
 Array.from(postMenus).forEach(pm => {
   pm.onclick = (e) => {viewPostMenu(e)}
-})
+});
+const likeIcons = document.querySelectorAll(".like-icon");
+Array.from(likeIcons).forEach(li => {
+  li.onclick = (e) => {likePost(e)}
+});
+}
 
 async function deletePost(postId){
   try{
@@ -448,3 +454,69 @@ async function deletePost(postId){
     console.error(err);
   }
             }
+async function likePost(e){
+      try{
+      if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+      }
+      const post = e.currentTarget.parentElement.parentElement;
+      const postId = post.id
+      
+      const likeContainer = post.querySelector(".like-count");
+      const likeIcon = post.querySelector(".like-icon");
+        try {
+        //make it show liked status
+          likeIcon.classList.remove("fa-regular");
+          likeIcon.style.color = "#2bff43";
+          likeIcon.classList.add("fa-solid");
+          
+        const response = await fetch(`/post/v1/${postId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+          console.error(response);
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+          notify("like failed!", "error");
+          return 
+        }
+          console.log(response);
+        
+        const data = await response.json();
+        const postLikes = data.likesCount
+
+        
+        if(postLikes > 0){
+        likeContainer.textContent = postLikes;
+        }else{
+          likeContainer.textContent = '';
+        }
+       // if (data.action === 'inserted') {}
+         if (data.action === 'deleted') {
+          likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        }
+
+    } catch (error) {
+        console.error('Like toggle failed:', error);
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        notify("like failed!", "error");
+        
+    } 
+
+      }catch(e){
+        notify("like failed!", "error");
+        likeIcon.classList.remove("fa-solid");
+          likeIcon.style.color = "#222";
+          likeIcon.classList.add("fa-regular");
+        console.error(e);
+      }
+            }
+            
