@@ -1,7 +1,7 @@
 window.onload = function() {
   
   
-   async function go(){
+   async function run(){
 const BACKEND_URL = window.location.hostname === "localhost" 
   ? "http://localhost:5000" 
   : "https://joli-indol.vercel.app";
@@ -120,7 +120,7 @@ function updateChatStatusUI(statusText) {
 
 
 
-    async function run(){
+    async function go(){
         // 2. Connect directly to your remote or local server
         // Socket.io automatically handles reconnection, multiplexing, and handshakes!
         const socket = io('wss://://joli-indol.vercel.app', {
