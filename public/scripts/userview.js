@@ -211,6 +211,7 @@ userMenu.onclick = () =>{
 //media viewer
 function viewImage(e){
    try{
+    if (e.target.parentElement?.tagName === 'A') return;
    inViewMode = true;
     const img = e.target;
     const src = img.src;
