@@ -1,10 +1,11 @@
 window.onload = function() {
   async function run(){
+    try {
 const BACKEND_URL = window.location.hostname === "localhost" 
   ? "http://localhost:5000" 
   : "https://joli-indol.vercel.app";
-
-const socket = io(BACKEND_URL);
+console.log(io)
+const socket = io("https://joli-indol.vercel.app");
   
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
 socket.on("connect_error", (error) => {
@@ -113,6 +114,7 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
+    }catch(e){console.error(e)}
 
 }
 setTimeout(()=>{
