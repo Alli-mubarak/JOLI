@@ -130,6 +130,7 @@ function updateChatStatusUI(statusText) {
         // 3. Listen for events like a pro
         socket.on('connect', () => {
             console.log(`Connected with ID: ${socket.id}`);
+          alert("hey");
         });
 
         socket.on('disconnect', (reason) => {
@@ -147,7 +148,7 @@ function updateChatStatusUI(statusText) {
         }
     
                  
-
+alert("successful");
 }
 setTimeout(()=>{
   try{
