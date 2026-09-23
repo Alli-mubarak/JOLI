@@ -67,6 +67,7 @@ function updateChatStatusUI(statusText) {
     socket.on("connect", () => {
       console.log("Connected to server! ID:", socket.id);
       alert("connected!");
+      updateChatStatusUI("Online");
       socket.emit("register_user", currentUserId);
     });
 
