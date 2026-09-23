@@ -320,9 +320,26 @@ const io = new Server(server, {
   } 
 });
 
+
 io.on('connection', (socket) => {
-  console.log('⚡ A client connected to Express via Socket.io!');
-});
+console.log('⚡ A client connected to Express via Socket.io!');
+  // This middleware triggers on every single incoming event packet from this client
+  socket.use((packet, next) => {
+    const eventName = packet[0]; // The name of the event (e.g., 'sendMessage')
+    const eventData = packet[1]; // The data payload sent with the event
+
+    // Trigger an action: Log or validate the specific incoming action
+    console.log(`[Action Triggered] Client ${socket.id} sent event: "${eventName}" with data:`, eventData);
+
+    // Example validation action: Block the event if it violates a rule
+    if (eventName === 'chatMessage' && eventData.includes('bad_word')) {
+      return next(new Error('Inappropriate content blocked'));
+    }
+
+    next(); // Allow the event to reach its regular socket.on() listener
+  } catch (error) {
+    
+  });
 
 //start server
 async function startServer(){
