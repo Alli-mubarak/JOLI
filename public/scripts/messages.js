@@ -1,4 +1,5 @@
-
+async function run(){
+  
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -6,11 +7,6 @@ const moveRight = document.getElementById("mv-right");
 const viewer = document.getElementById("viewer");
 const mediaCounter = document.getElementById("media-counter");
 const imageBox = document.getElementById("image-view");
-const postImagesContainer = document.querySelector(".post-images");
-const notifier = document.getElementById("notifier");
-const nMessage = document.getElementById("n-message");
-const nLink = document.getElementById("n-link");
-const nCloser = document.getElementById("n-closer");
 const userMenuContainer = document.getElementById("user-menu-container");
 const postMenuCloser = document.getElementById("p-closer-space");
 const postMenu = document.getElementById("post-menu");
@@ -50,7 +46,7 @@ async function getFriends(){
 //window.onload = function() {}
   
   
-   async function run(){
+   
 const socket = io("https://joli-indol.vercel.app");
   
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
@@ -161,6 +157,7 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
+  getFriends();
     }
 
 
@@ -177,6 +174,6 @@ setTimeout(()=>{
 },5000);
 
 
-getFriends();
+
 alert("loading page!");
 
