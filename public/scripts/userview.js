@@ -639,19 +639,19 @@ commentInput.oninput = () =>{
 function sharePost(e){
   try{
     const uid = userDetails.getAttribute("data-user");
-  const username = document.getElementById("u-name").textContent;
+  let username = document.getElementById("u-name").textContent;
   const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
   const postId = post.id
   const postUrl = `/post/${postId}`;
 
     if(currentUserId === uid){
-      authorUsername = "your";
+      username = "your";
     }else{
-      authorUsername = authorUsername+"'s";
+      username = username+"'s";
     }
      const htmlElements = `
      <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
-     <h3>Share ${authorUsername} post</h3>
+     <h3>Share ${username} post</h3>
      <p >Copy post link below to share</p>
      <div id="post-link-container">
      <input type="text" readonly value="https://joli-indol.vercel.app${postUrl}"/>
