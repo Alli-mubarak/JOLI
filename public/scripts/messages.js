@@ -5,7 +5,47 @@ const BACKEND_URL = window.location.hostname === "localhost"
 
 //const socket = io(BACKEND_URL);
 const socket = new WebSocket("ws://joli-indol.vercel.app:5000");
+let myID;
 
+        socket.onopen = () =>{
+          try{
+            console.log('Connected to Server');
+          alert("connected");
+          }
+          catch(err){
+            console.error(err)
+            alert("error connecting");
+          }
+        }
+        socket.onmessage = (event) => {
+
+            try {
+                const data = JSON.parse(event.data);
+                if (data.type === 'userId') {
+                    console.log('Received User ID:', data.id);
+                    // Store or use the user ID (e.g., in a variable or localStorage)
+                    // localStorage.setItem('userId', data.id);
+                    myID = data.id;
+                } else if (data.type === 'message') {
+                    console.log('Message:', event.data);
+        
+                    const time = data.time.split(',')[1];
+                    console.log(time);
+                    const p = document.createElement('p');
+                    p.innerHTML = data.text + ' '+ '<sub>'+time+'</sub>';
+                    
+                    messagesBox.appendChild(p);
+                }
+            }
+            catch (e) {
+                console.error('Could not parse message:', e);
+                alert('An error occured!', e);
+            }
+
+            
+        }
+
+async function connect(){
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
 socket.on("connect_error", (error) => {
   console.error("❌ Connection failed:", error.message);
@@ -40,7 +80,10 @@ socket.on("message_error", (errorData) => {
   console.error("🚫 Server-side error:", errorData.error);
   alert(`Message failed: ${errorData.error}`);
 });
+  
+}
 
+  ///////********************
 // Helper function to update a text element or status bar in your UI
 function updateChatStatusUI(statusText) {
   const statusEl = document.getElementById("chat-status");
@@ -60,6 +103,7 @@ function updateChatStatusUI(statusText) {
     const messageInput = document.getElementById('message-input');
     const sendBtn = document.getElementById('send-btn');
 
+async function reconnect(){
     // 3. Register your user session on connection
     socket.on("connect", () => {
       console.log("Connected to server! ID:", socket.id);
@@ -83,7 +127,8 @@ function updateChatStatusUI(statusText) {
     socket.on("message_error", (errorData) => {
       alert(errorData.error);
     });
-
+  }
+  //////////////////**************//////////
     // 7. Event Listener for clicking the Send button
     sendBtn.addEventListener('click', () => {
       const text = messageInput.value.trim();
