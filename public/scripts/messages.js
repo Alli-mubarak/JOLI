@@ -1,6 +1,6 @@
 window.onload = function() {
   async function run(){
-    try {
+   async function go(){
 const BACKEND_URL = window.location.hostname === "localhost" 
   ? "http://localhost:5000" 
   : "https://joli-indol.vercel.app";
@@ -114,7 +114,102 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
-    }catch(e){console.error(e)}
+    }
+
+        class ProWebSocket {
+            constructor(url) {
+                this.url = url;
+                this.socket = null;
+                this.reconnectAttempts = 0;
+                this.maxReconnects = 5;
+                this.reconnectInterval = 3000; // 3 seconds
+                
+                this.initUI();
+                this.connect();
+            }
+
+            initUI() {
+                this.statusEl = document.getElementById('status');
+                this.logEl = document.getElementById('log');
+                this.inputEl = document.getElementById('messageInput');
+                this.sendBtn = document.getElementById('sendButton');
+
+                this.sendBtn.addEventListener('click', () => {
+                    this.send({ type: 'chat', content: this.inputEl.value });
+                });
+            }
+
+            connect() {
+                this.log('Connecting to WebSocket server...');
+                this.socket = new WebSocket(this.url);
+
+                this.socket.onopen = (event) => this.onOpen(event);
+                this.socket.onmessage = (event) => this.onMessage(event);
+                this.socket.onclose = (event) => this.onClose(event);
+                this.socket.onerror = (error) => this.onError(error);
+            }
+
+            onOpen(event) {
+                this.log('Connected successfully!');
+                this.statusEl.textContent = 'Connected';
+                this.statusEl.className = 'status connected';
+                this.reconnectAttempts = 0; // Reset counter on success
+            }
+
+            onMessage(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    this.log(`Received JSON: ${JSON.stringify(data)}`);
+                } catch (e) {
+                    // Fallback for plain text
+                    this.log(`Received Text: ${event.data}`);
+                }
+            }
+
+            onClose(event) {
+                this.statusEl.textContent = 'Disconnected';
+                this.statusEl.className = 'status disconnected';
+                this.log(`Connection closed (Code: ${event.code}). Attempting reconnect...`);
+                this.reconnect();
+            }
+
+            onError(error) {
+                this.log('WebSocket error observed.');
+                console.error(error);
+            }
+
+            reconnect() {
+                if (this.reconnectAttempts < this.maxReconnects) {
+                    this.reconnectAttempts++;
+                    setTimeout(() => this.connect(), this.reconnectInterval);
+                } else {
+                    this.log('Max reconnect attempts reached. Refresh page.');
+                }
+            }
+
+            send(data) {
+                if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+                    // Professionally send structured JSON payload
+                    this.socket.send(JSON.stringify(data));
+                    this.inputEl.value = '';
+                } else {
+                    this.log('Cannot send: Socket is not open.');
+                }
+            }
+
+            log(text) {
+                const p = document.createElement('div');
+                p.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+                this.logEl.appendChild(p);
+                this.logEl.scrollTop = this.logEl.scrollHeight;
+            }
+        }
+
+        // Initialize connection
+        // Replace localhost with your production server's URL
+const wsClient = new ProWebSocket('wss://://joli-indol.vercel.app');
+    
+                 
 
 }
 setTimeout(()=>{
