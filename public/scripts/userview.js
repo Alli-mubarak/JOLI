@@ -533,7 +533,6 @@ async function makeComment(e){
     }
 const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
 const postId = post.id;
-alert(postId);
 const userPic = post.querySelector("#user-pic");
 const commentFormNCloser = `
 <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
