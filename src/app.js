@@ -20,9 +20,14 @@ import rateLimit  from 'express-rate-limit';
 import transporter from '../Utils/mailer.js';
 import { v2 as cloudinary } from 'cloudinary';
 import 'ejs';
+import http from 'http';
+import { Server } from 'socket.io';
+
+
 
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json({limit: '10mb'}))
 
@@ -307,6 +312,18 @@ async function pingAivenDatabase() {
 // ½ hour in milliseconds (30 mins * 60 secs * 1000 ms)
 const HALF_HOUR = 30 * 60 * 1000;
 
+const io = new Server(server, {
+  cors: {
+    origin: "https://joli-indol.vercel.app", 
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true
+  } 
+});
+
+io.on('connection', (socket) => {
+  console.log('⚡ A client connected to Express via Socket.io!');
+});
+
 //start server
 async function startServer(){
   try{
@@ -317,8 +334,15 @@ async function startServer(){
     console.log(`🕒 Aiven Server Time: ${result.rows[0].now}`);
 
     // set listener
- const listener = app.listen(process.env.PORT,()=>{
-  console.log("app is listening on port ", listener.address().port,'\n');
+// const listener = app.listen(process.env.PORT,()=>{
+//  console.log("app is listening on port ", listener.address().port,'\n');
+//});
+    
+
+// CRITICAL: Start the HTTP server, NOT 'app.listen'
+const PORT = 5000;
+server.listen(PORT, () => {
+  console.log(`🚀 Combined Express & Socket server running on port ${PORT}`);
 });
     await initDb(pool);
     pingAivenDatabase();
