@@ -164,16 +164,18 @@ main{
   }
   #start-message-btn{
     position: fixed;
-    bottom: 200px;
+    bottom: 100px;
     right: 20px;
     cursor: pointer;
     padding: 10px;
-    background: var(--primary-color);
+    color: var(--primary-color);
     font-size: 1.2rem;
-    color: #eee;
+    background: #111;
     display: flex;
     align-items:  center ;
     justify-content :center;
+    border-radius: 12px;
+    border: 2px solid #eee;
   }
 
 @media screen and (min-width:762px){
