@@ -607,7 +607,7 @@ commentInput.oninput = () =>{
       
       
       if (response.ok) {
-        const commentContainer = postOnFocus.querySelector(".comment-count");
+        const commentContainer = post.querySelector(".comment-count");
         if(commentContainer.textContent === ""){
           commentContainer.textContent = 1;
         }else{
