@@ -127,11 +127,22 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
   }
   if(posts.count > 0) {
    const userPosts = posts.posts
-    if(req.isAuthenticated() && req.user && req.user.id){
-      for(let i = 0; i < userPosts.length; i++){
+    for(let i = 0; i < userPosts.length; i++){
+      if(req.isAuthenticated() && req.user && req.user.id){
         const likeStat = await getPostLikeStatus(userPosts[i].id, req.user.id);
         userPosts[i].likeStatus = likeStat
       }
+      const commentsQuery = `
+      SELECT c.*, 
+      u.username AS commenter,
+      u.profile_picture AS commenter_pic
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1 
+      ORDER BY c.created_at DESC
+    `;
+    const commentsResult = await pool.query(commentsQuery, [userPosts[i].id]);
+    userPosts[i].comments = commentsResult.rows;
     }
     userData.posts_count = `  (${posts.count})`;
     userData.posts = userPosts
