@@ -321,10 +321,14 @@ const io = new Server(server, {
 });
 
 
+
+
+
 io.on('connection', (socket) => {
 console.log('⚡ A client connected to Express via Socket.io!');
   // This middleware triggers on every single incoming event packet from this client
   socket.use((packet, next) => {
+    try{
     const eventName = packet[0]; // The name of the event (e.g., 'sendMessage')
     const eventData = packet[1]; // The data payload sent with the event
 
@@ -338,8 +342,17 @@ console.log('⚡ A client connected to Express via Socket.io!');
 
     next(); // Allow the event to reach its regular socket.on() listener
   } catch (error) {
-    
+    console.error(error)
+  return;
+    }
   });
+
+  // Regular event listener that runs after packet middleware passes
+  socket.on('chatMessage', (msg) => {
+    io.emit('broadcastMessage', msg);
+  });
+});
+
 
 //start server
 async function startServer(){
