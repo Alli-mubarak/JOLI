@@ -533,9 +533,10 @@ async function makeComment(e){
     }
 const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
 const postId = post.id;
-const userPic = post.querySelector("#user-pic").src;
+alert(postId);
+const userPic = post.querySelector("#user-pic");
 const commentFormNCloser = `
-<i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+<i class="fa-solid fa-xmark" id="u-closer-btn"></i>
 <form id="comment-form">
 <div class="pic-submit">
 <img src=${userPic.src} alt="user picture" id="commenter-pic"/>
@@ -550,7 +551,7 @@ const commentFormNCloser = `
 </form>
 `
  postMenu.innerHTML = commentFormNCloser;
-  pmCloserBtn = document.getElementById("p-closer-btn");
+  pmCloserBtn = document.getElementById("u-closer-btn");
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
@@ -600,10 +601,10 @@ commentInput.oninput = () =>{
     postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
+      userMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
-      currPost.style.background = "#fff";
+      
       
       if (response.ok) {
         const commentContainer = postOnFocus.querySelector(".comment-count");
