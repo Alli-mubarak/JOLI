@@ -424,6 +424,11 @@ const commentIcons = document.querySelectorAll(".fa-comment");
 Array.from(commentIcons).forEach(ci => {
   ci.onclick = (e) => {makeComment(e)}
 });
+
+const shareIcons = document.querySelectorAll(".fa-share");
+Array.from(shareIcons).forEach(si => {
+  si.onclick = (e) => {sharePost(e)}
+});
 }
 
 async function deletePost(postId){
@@ -630,3 +635,69 @@ commentInput.oninput = () =>{
     
   }
       }
+
+function sharePost(e){
+  try{
+    const uid = userDetails.getAttribute("data-user");
+  const username = document.getElementById("u-name").textContent;
+  const post = e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+  const postId = post.id
+  const postUrl = `/post/${postId}`;
+
+    if(currentUserId === uid){
+      authorUsername = "your";
+    }else{
+      authorUsername = authorUsername+"'s";
+    }
+     const htmlElements = `
+     <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
+     <h3>Share ${authorUsername} post</h3>
+     <p >Copy post link below to share</p>
+     <div id="post-link-container">
+     <input type="text" readonly value="https://joli-indol.vercel.app${postUrl}"/>
+     <i class="fa-solid fa-copy" id="copy-link-btn"></i>
+     </div>
+     `
+      postMenu.innerHTML = htmlElements
+    pmCloserBtn = document.getElementById("u-closer-btn");
+    
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+    const copyLinkBtn = document.getElementById("copy-link-btn");
+    
+    copyLinkBtn.onclick = (e) => {
+     const currPostLink = e.target.previousElementSibling.value;
+      
+    navigator.clipboard
+      .writeText(currPostLink)
+      .then(() => {
+        copyLinkBtn.classList.remove("fa-copy");
+        copyLinkBtn.classList.add("fa-check");
+        setTimeout(() => {
+         copyLinkBtn.classList.remove("fa-check");
+          copyLinkBtn.classList.add("fa-copy");
+        }, 1500);
+      })
+      .catch((err) => {
+        notify("link copying failed!", "error");
+        console.error(err);
+      });
+  } 
+      userMenuContainer.style.bottom = 0;
+      setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+    disableScrolling();
+  }catch(err){
+    console.error(err)
+    notify("Post sharing failed!", "error");
+    return;
+  }
+}
