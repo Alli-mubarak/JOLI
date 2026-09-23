@@ -3,7 +3,8 @@ const BACKEND_URL = window.location.hostname === "localhost"
   ? "http://localhost:5000" 
   : "https://joli-indol.vercel.app";
 
-const socket = io(BACKEND_URL);
+//const socket = io(BACKEND_URL);
+const socket = new WebSocket("ws://joli-indol.vercel.app:5000");
 
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
 socket.on("connect_error", (error) => {
