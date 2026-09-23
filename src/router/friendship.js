@@ -316,7 +316,7 @@ router.get('/friends/details', checkSession, async (req, res) => {
         return res.status(500).json({ error: "error fetching friends details." });
       }
     for(let f=0; f < friendships.length; f++){
-     const friend = getFriendDetails(friendships[f], currentUserId);
+     const friend = await getFriendDetails(friendships[f], currentUserId);
     friendships[f].friend_id = friend.id;
     friendships[f].friend_username = friend.username;
     friendships[f].friend_profile_picture = friend.profile_picture;
