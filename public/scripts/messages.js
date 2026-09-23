@@ -34,7 +34,7 @@ let myID;
                     const p = document.createElement('p');
                     p.innerHTML = data.text + ' '+ '<sub>'+time+'</sub>';
                     
-                    messagesBox.appendChild(p);
+                  //  messagesBox.appendChild(p);
                 }
             }
             catch (e) {
@@ -44,7 +44,8 @@ let myID;
 
             
         }
-
+socket.send("hello");
+  
 async function connect(){
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
 socket.on("connect_error", (error) => {
