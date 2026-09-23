@@ -519,4 +519,108 @@ async function likePost(e){
         console.error(e);
       }
             }
-            
+
+async function makeComment(e){
+  try{
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+    }
+const post = e.currentTarget.parentElement.parentElement;
+const postId = post.id
+const commentFormNCloser = `
+<i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+<form id="comment-form">
+<div class="pic-submit">
+<img src=${userPic.src} alt="user picture" id="commenter-pic"/>
+<button type="submit" id="submit-comment-btn" disabled>
+<span>Post</span>
+  <div id="c-loader" class="hidden"></div>
+</button>
+</div>
+<div id="comment-media-container"></div>
+<textarea id="comment-input" name="content" placeholder="post your comment" id="comment-input"></textarea>
+
+</form>
+`
+ postMenu.innerHTML = commentFormNCloser;
+  pmCloserBtn = document.getElementById("p-closer-btn");
+    
+    pmCloserBtn.onclick = () =>{
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+    }
+    
+  userMenuContainer.style.bottom = 0;
+  setTimeout(() =>{
+      postMenuCloser.style.background = "rgba(0,0,0,0.2)";
+      },300);
+  disableScrolling();
+    
+  const SubmitCommentBtn = document.getElementById("submit-comment-btn");
+  const commentInput = document.getElementById("comment-input");
+  const commentForm = document.getElementById("comment-form");
+    
+commentInput.oninput = () =>{
+  if(commentInput.value.length < 1){
+    SubmitCommentBtn.disabled = true;
+    SubmitCommentBtn.style.background = "#c5ff95";
+  }else{
+    SubmitCommentBtn.disabled = false;
+    SubmitCommentBtn.style.background = "var(--primary-color)";
+  }
+}
+    
+  commentForm.onsubmit = async(e) => {
+    e.preventDefault();
+    const cLoader = document.getElementById("c-loader");
+    cLoader.classList.remove("hidden");
+    cLoader.classList.add("roll");
+  
+    try{
+      const response = await fetch(`/post/${postId}/comment`, {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({content: commentInput.value})
+      });
+   cLoader.classList.add("hidden");
+  cLoader.classList.remove("roll");
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      currPost.style.background = "#fff";
+      
+      if (response.ok) {
+        const commentContainer = postOnFocus.querySelector(".comment-count");
+        if(commentContainer.textContent === ""){
+          commentContainer.textContent = 1;
+        }else{
+          commentContainer.textContent = Number(commentContainer.textContent) + 1;
+        }
+        notify("comment added!");
+     window.location.href= `/post/${postId}` ;
+      } else {
+        notify("commenting failed!", "error");
+      }
+    }
+    catch(err){
+      console.error(err);
+      notify("commenting failed!", "error");
+    }
+  }
+    
+  }catch(error){
+    console.error(error);
+    notify("commenting failed!", "error");
+    
+  }
+      }
