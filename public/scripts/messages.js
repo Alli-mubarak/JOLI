@@ -1,11 +1,124 @@
-window.onload = function() {
+let currentUserId;
+const mediaViewer = document.getElementById("media-viewer");
+const mediaViewerCloser = document.getElementById("mv-closer");
+const moveLeft = document.getElementById("mv-left");
+const moveRight = document.getElementById("mv-right");
+const viewer = document.getElementById("viewer");
+const mediaCounter = document.getElementById("media-counter");
+const imageBox = document.getElementById("image-view");
+const postImagesContainer = document.querySelector(".post-images");
+const notifier = document.getElementById("notifier");
+const nMessage = document.getElementById("n-message");
+const nLink = document.getElementById("n-link");
+const nCloser = document.getElementById("n-closer");
+const userMenuContainer = document.getElementById("user-menu-container");
+const postMenuCloser = document.getElementById("p-closer-space");
+const commentsBox = document.getElementById("comments");
+const postMenu = document.getElementById("post-menu");
+let pmCloserBtn = document.getElementById("p-closer-btn");
+const postMenuCtrl = document.querySelector(".post-menu");
+let isAuthorised = false;
+let scrollPosition = 0;
+
+  let imgArray;
+  let currIndex;
+  let inViewMode = false;
+  let userPic, userName;
+
+async function checkAuthStatus() {
+      try {
+        // 'credentials: include' forces the browser to send the session cookie
+        const response = await fetch("/api/auth/user", { credentials: 'include' });
+        const data = await response.json();
+ 
+        
+        if (data.loggedIn) {
+          isAuthorised = true;
+          currentUserId = data.user.id;
+          userPic = data.user.profile_picture;
+          userName = data.user.username;
+        } else {
+          isAuthorised = false;
+          currentUserId = "";
+          userPic = "";
+          userName = "";
+        }
+      
+        getFriends();
+      
+      } catch (err) {
+        console.error("Error verifying authentication status:", err);
+      }
+}
+checkAuthStatus();
+
+async function getFriends(){
+  if(!isAuthorised)return;
+  
+  try {
+        // 'credentials: include' forces the browser to send the session cookie
+        const response = await fetch('/api/friendship/friends/details');
+  
+        if (response.ok) {
+          const data = await response.json();
+          const friendships = data.friendships
+          alert(friendships);
+          console.log(friendships);
+          return 
+        } else {
+          notify("error fetching friends", "error")
+          return 
+        }
+      } catch (err) {
+        console.error("Error fetching friends :", err);
+       notify("error occurred while fetching friends", "error");
+  }
+}
+
+function enableScrolling(){
+  document.body.style.position = 'relative';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollPosition);
+}
+
+function disableScrolling(){
+  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.width = '100%';
+}
+
+let closeNID;
+        
+nCloser.onclick = () =>{
+    notifier.classList.add("hidden");
+    clearTimeout(closeNID);
+ }
+
+function notify(msg,mType = "success",linkText = null, link = null){
+    nMessage.textContent = msg;
+    if(mType === "error"){
+        nMessage.style.color = 'red';
+    }else{
+      nMessage.style.color = '#111';
+     }
+            
+    nLink.textContent = linkText;
+     nLink.href = link;
+    
+    notifier.classList.remove("hidden");
+            
+    closeNID = setTimeout(()=>{
+     notifier.classList.add("hidden");
+    },4000)
+    }
+    
+
+//window.onload = function() {}
   
   
    async function run(){
-const BACKEND_URL = window.location.hostname === "localhost" 
-  ? "http://localhost:5000" 
-  : "https://joli-indol.vercel.app";
-console.log(io)
 const socket = io("https://joli-indol.vercel.app");
   
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
@@ -121,43 +234,17 @@ function updateChatStatusUI(statusText) {
 
 
 
-    async function go(){
-        // 2. Connect directly to your remote or local server
-        // Socket.io automatically handles reconnection, multiplexing, and handshakes!
-        const socket = io('wss://://joli-indol.vercel.app', {
-            transports: ['websocket'] // Optional: Skips long-polling and forces raw WS upgrade immediately
-        });
-
-        // 3. Listen for events like a pro
-        socket.on('connect', () => {
-            console.log(`Connected with ID: ${socket.id}`);
-          alert("hey");
-        });
-
-        socket.on('disconnect', (reason) => {
-            console.log(`Disconnected: ${reason}`);
-        });
-
-        // Listen for your custom backend events
-        socket.on('chatMessage', (data) => {
-            console.log('Received payload:', data);
-        });
-
-        // 4. Send messages
-        function sendMessage(text) {
-            socket.emit('sendMessageToServer', { content: text });
-        }
     
-                 
-alert("successful");
-}
 setTimeout(()=>{
   try{
-    alert("page loaded");
     run();
   }
   catch(err){
     console.error(err)
   }
 },5000);
-}
+
+
+
+alert("loading page!");
+
