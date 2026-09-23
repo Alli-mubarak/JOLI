@@ -1,4 +1,4 @@
-let currentUserId;
+
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -13,44 +13,16 @@ const nLink = document.getElementById("n-link");
 const nCloser = document.getElementById("n-closer");
 const userMenuContainer = document.getElementById("user-menu-container");
 const postMenuCloser = document.getElementById("p-closer-space");
-const commentsBox = document.getElementById("comments");
 const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
-let isAuthorised = false;
-let scrollPosition = 0;
 
   let imgArray;
   let currIndex;
   let inViewMode = false;
-  let userPic, userName;
+  
 
-async function checkAuthStatus() {
-      try {
-        // 'credentials: include' forces the browser to send the session cookie
-        const response = await fetch("/api/auth/user", { credentials: 'include' });
-        const data = await response.json();
- 
-        
-        if (data.loggedIn) {
-          isAuthorised = true;
-          currentUserId = data.user.id;
-          userPic = data.user.profile_picture;
-          userName = data.user.username;
-        } else {
-          isAuthorised = false;
-          currentUserId = "";
-          userPic = "";
-          userName = "";
-        }
-      
-        getFriends();
-      
-      } catch (err) {
-        console.error("Error verifying authentication status:", err);
-      }
-}
-checkAuthStatus();
+
 
 async function getFriends(){
   if(!isAuthorised)return;
@@ -61,7 +33,7 @@ async function getFriends(){
   
         if (response.ok) {
           const data = await response.json();
-          const friendships = data.friendships
+          friendships = data.friendships
           alert(friendships);
           console.log(friendships);
           return 
@@ -74,46 +46,6 @@ async function getFriends(){
        notify("error occurred while fetching friends", "error");
   }
 }
-
-function enableScrolling(){
-  document.body.style.position = 'relative';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  window.scrollTo(0, scrollPosition);
-}
-
-function disableScrolling(){
-  scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-  document.body.style.position = 'fixed';
-  document.body.style.top = `-${scrollPosition}px`;
-  document.body.style.width = '100%';
-}
-
-let closeNID;
-        
-nCloser.onclick = () =>{
-    notifier.classList.add("hidden");
-    clearTimeout(closeNID);
- }
-
-function notify(msg,mType = "success",linkText = null, link = null){
-    nMessage.textContent = msg;
-    if(mType === "error"){
-        nMessage.style.color = 'red';
-    }else{
-      nMessage.style.color = '#111';
-     }
-            
-    nLink.textContent = linkText;
-     nLink.href = link;
-    
-    notifier.classList.remove("hidden");
-            
-    closeNID = setTimeout(()=>{
-     notifier.classList.add("hidden");
-    },4000)
-    }
-    
 
 //window.onload = function() {}
   
@@ -245,6 +177,6 @@ setTimeout(()=>{
 },5000);
 
 
-
+getFriends();
 alert("loading page!");
 
