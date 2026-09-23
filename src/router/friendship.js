@@ -18,6 +18,30 @@ const checkSession = (req, res, next) => {
   }
 };
 
+async function getFriendDetails(f, uid){
+  try{
+    let friendId;
+    if(f.receiver_id === uid) {
+      friendId = f.sender_id;
+    }else{
+      friendId = f.receiver_id
+    }
+    const query = "SELECT username, profile_picture, id, is_active, is_verified FROM users WHERE id = $1";
+    const result = await pool.query(query, [friendId]);
+    const user = result.rows[0]
+    return {
+      id: user.id,
+      username : user.username,
+      profile_picture : user.profile_picture,
+      is_active : user.is_active,
+      is_verified : user.is_verified,
+    }
+  }
+  catch(err){
+    return {error: "error fetching user details"}
+  }
+}
+
 router.post('/request', checkSession, async (req, res) => {
   try{
     if (!req.isAuthenticated() && !req.user){
@@ -268,6 +292,39 @@ router.get('/mutual/:targetUserId', checkSession, async (req, res) => {
 
     } catch (error) {
         console.error("Error fetching mutual friends:", error);
+        return res.status(500).json({ error: "Internal server error." });
+    }
+});
+
+router.get('/friends/details', checkSession, async (req, res) => {
+    try {
+      if (!req.isAuthenticated() && !req.user){
+   return  res.status(400).json({error: "You are not authorized, please log in"});
+}
+      
+    const currentUserId = req.user.id;
+    const frQuery = "SELECT * FROM friendships WHERE (sender_id = $1 OR receiver_id = $1) AND status = $2";
+    const findFriends = await pool.query(frQuery, [currentUserId, "accepted"]);
+    if(findFriends.rows.length === 0){
+      return res.status(404).json({ error: "No friend found!" });
+    }
+    const friendships = findFriends.rows;
+      
+    for(let f=0; f < friendships.length; f++){
+     const friend = getFriendDetails(friendships[f], currentUserId);
+    friendships[f].friend_id = friend.id;
+    friendships[f].friend_username = friend.username;
+    friendships[f].friend_profile_picture = friend.profile_picture;
+    friendships[f].friend_is_active = friend.is_active;
+    friendships[f].friend_is_verified = friend.is_verified;
+    }
+      return res.status(200).json({
+            friendships: friendships
+        });
+      
+      
+    }catch(err){
+      console.error("Error fetching friends details:", err);
         return res.status(500).json({ error: "Internal server error." });
     }
 });
