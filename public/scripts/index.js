@@ -1,3 +1,4 @@
+async function runScript(){
 let isAuthorised = false;
 let currentUserId = "";
 let friendships = [];
@@ -773,6 +774,13 @@ try {
   }
 }
 
-
 checkAuthStatus();
+}
 
+setTimeout(()=>{
+  try{
+    runScript()
+  }catch(e){
+    console.error(e);
+  }
+  },5000);
