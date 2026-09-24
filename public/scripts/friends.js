@@ -141,7 +141,7 @@ const mDifference = msDifference / (1000 * 60);
 const hDifference = msDifference / (1000 * 60 * 60);
 const dDifference = msDifference / (1000 * 60 * 60 * 24);
 const wDifference = msDifference / (1000 * 60 * 60 * 24 * 7);
-const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 30 * 12);
 
 if(mtDifference > 1){
 return `${Math.floor(mtDifference)}M`; 
