@@ -33,19 +33,14 @@ async function getFriends(){
           }
           try{
           friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
-          alert("friendships sorted");
-          console.log(friendships)
-          alert(friendships);
           friendships.forEach(f =>{
             showFriend(f);
           });
           }catch(err){
             console.error(err);
-            alert(err);
           }
         } else {
           notify("error fetching friends", "error");
-          alert("api error");
           return 
         }
       } catch (err) {
@@ -211,4 +206,4 @@ function showFriend(f){
     notify("error displaying friends", "error");
   }
 }
-alert("loading");
+
