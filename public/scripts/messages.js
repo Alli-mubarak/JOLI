@@ -231,8 +231,6 @@ async function showSearchedFriend(keyword){
   const frens = await Array.from(friends)
   frens.forEach(f => {
     const fUsername = f.querySelector(".f-username").textContent.trim();
-    f.classList.add("hidden");
-    alert(fUsername);
+    if(!fUsername.includes(keyword) f.classList.add("hidden");
   });
-  
 }
