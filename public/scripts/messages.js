@@ -34,7 +34,6 @@ const originalTexts = Array.from(targets).map(el => el.textContent);
   if (!query) {
     targets.forEach((el, index) => {
       el.textContent = originalTexts[index];
-      el.initialText = originalTexts[index];
     });
     return;
   }
@@ -76,6 +75,9 @@ async function getFriends(){
           friendships.forEach(f =>{
             showFriend(f);
           });
+          const fusernames = document.querySelectorAll('.f-username');
+          Array.from(fusernames).forEach(el =>. {el.initialText = el.textContent;});
+          
           }catch(err){
             console.error(err);
           }
