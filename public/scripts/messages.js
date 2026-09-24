@@ -1,4 +1,3 @@
-
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
 const sfForm = document.getElementById("s-f-form");
@@ -82,7 +81,7 @@ async function getFriends(){
             console.error(err);
           }
         } else {
-          notify("You have no friends yet", "/friends", "add one now!");
+          notify("You have no friends yet", "success",  "add one now!", "/friends");
           fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
           return 
         }
