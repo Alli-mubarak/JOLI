@@ -228,7 +228,8 @@ async function showSearchedFriend(keyword){
   if(sfInput.value.length < 1) return;
   const friends = document.querySelectorAll(".friend");
   if(friends.length < 1) return;
-  const frens = await Array.from(friends)
+  const frens = await Array.from(friends);
+  await frens.forEach(f => {f.classList.remove("hidden")});
   frens.forEach(f => {
     const fUsername = f.querySelector(".f-username").textContent.trim();
     if(!fUsername.includes(keyword)) f.classList.add("hidden");
