@@ -256,7 +256,7 @@ sfInput.oninput = async() => {
   const frenss = await Array.from(frs);
   await frenss.forEach(f => {
     f.classList.remove("hidden");
-    f.innerHTML = f.initialText;
+    f.querySelector(".f-username").innerHTML = f.querySelector(".f-username").initialText;
   });
   
     return;
