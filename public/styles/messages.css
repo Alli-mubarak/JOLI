@@ -219,6 +219,41 @@ main{
   width:2px;
   height: 10px;
 }
+  .friend{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: rgba(0,0,0,0.04);
+    border-radius: 30px;
+  }
+  .name-pic{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .name-pic img{
+    width: 45px; height:45px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .name-pic p{
+    font-size:1.1rem;
+    font-weight:500;
+  }
+  .stat{
+    border-radius: 50%;
+    width: 6px; height:6px;
+    
+  }
+  .online{
+    background: var(--primary-color);
+  }
+  .offline{
+    background: #ccc;
+  }
 @media screen and (min-width:762px){
   /* later styling */
   
