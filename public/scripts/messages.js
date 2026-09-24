@@ -30,8 +30,6 @@ async function getFriends(){
         if (response.ok) {
           const data = await response.json();
           friendships = data.friendships
-          alert(friendships);
-          console.log(friendships);
           return 
         } else {
           notify("error fetching friends", "error")
