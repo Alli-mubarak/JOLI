@@ -1,4 +1,4 @@
-async function go(){
+
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
 const sfForm = document.getElementById("s-f-form");
@@ -241,10 +241,4 @@ async function showSearchedFriend(keyword){
     if(!fUsername.includes(keyword.toLowerCase())) f.classList.add("hidden");
   });
 }
-}
 
-setTimeout(()=>{
-  try{go()}
-  catch(e){console.error(e)}
-},5000);
-alert("loaded!");
