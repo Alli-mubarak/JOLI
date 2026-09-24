@@ -20,9 +20,7 @@ const smBtn = document.getElementById("start-message-btn");
 
 
 async function getFriends(){
-  if(!isAuthorised){
-    alert("not authorised");
-    return};
+  if(!isAuthorised) return;
   
   try {
         const response = await fetch('/api/friendship/friends/details');
@@ -30,9 +28,13 @@ async function getFriends(){
         if (response.ok) {
           const data = await response.json();
           friendships = data.friendships
+          if(friendships.length < 1){
+            fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
           
+          return 
+          }
           try{
-         // friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
           console.log(friendships)
           alert(friendships);
           friendships.forEach(f =>{
@@ -208,3 +210,4 @@ function showFriend(f){
     notify("error displaying friends", "error");
   }
 }
+alert("loading");
