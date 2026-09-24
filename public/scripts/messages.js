@@ -23,7 +23,7 @@ const postMenuCtrl = document.querySelector(".post-menu");
 const smBtn = document.getElementById("start-message-btn");
 
 function performHighlight(keyword) {
-  const query = keyword;
+  const query = keyword.trim();
   const targets = document.querySelectorAll('.f-username');
 
 // 2. Cache the pristine initial text of each parent so we can reset cleanly
