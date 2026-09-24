@@ -130,34 +130,7 @@ usersContainer.innerHTML += userCard;
 
 }
 
-//function that calculates the time the request was created compared to the current time
-function getReqTime(reqTime){
-const targetDate = new Date(reqTime);
-const currentDate = new Date();
 
-const msDifference = currentDate - targetDate;
-const sDifference = msDifference / 1000;
-const mDifference = msDifference / (1000 * 60);
-const hDifference = msDifference / (1000 * 60 * 60);
-const dDifference = msDifference / (1000 * 60 * 60 * 24);
-const wDifference = msDifference / (1000 * 60 * 60 * 24 * 7);
-const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 30 * 12);
-
-if(mtDifference > 1){
-return `${Math.floor(mtDifference)}M`; 
-}else if (wDifference > 1){
-return `${Math.floor(wDifference)}w`;
-}else if (dDifference > 1){
-return `${Math.floor(dDifference)}d`;
-}else if (hDifference > 1){
-return `${Math.floor(hDifference)}h`;
-}else if (mDifference > 1){
-return `${Math.floor(mDifference)}m`;
-}else {
-return `${Math.floor(sDifference)}s`;
-}
-
-}
 
 function allowUserView(){
  try{
