@@ -254,6 +254,7 @@ sfInput.oninput = async() => {
   if(frs.length < 1) return;
   const frenss = await Array.from(frs);
   await frenss.forEach(f => {f.classList.remove("hidden")});
+    showSearchedFriend("");
     return;
   }
   sfBtn.disabled = false;
