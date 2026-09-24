@@ -139,6 +139,19 @@ CREATE TABLE IF NOT exists messages (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_read BOOLEAN DEFAULT FALSE
 );
+CREATE TABLE IF NOT exists conversations (
+   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id) ON DELETE SET NULL ,
+    friend_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    last_message TEXT,
+    friend_pic TEXT,
+    friend_username CITEXT UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Prevents users from having conversations with themselves
+    CONSTRAINT check_not_self CHECK (user_id <> friend_id)
+);
   `;
   try {
     await pool.query(setupScript);
