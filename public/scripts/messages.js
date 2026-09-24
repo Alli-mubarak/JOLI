@@ -44,6 +44,8 @@ async function getFriends(){
 smBtn.onclick = (e) =>{
   const btn = e.currentTarget;
   btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
+  btn.style.scale = "2";
+  btn.style.transform = "rotate(45deg)";
   
 }
 
@@ -161,7 +163,7 @@ function updateChatStatusUI(statusText) {
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
     }
-  getFriends();
+  
     }
 
 
@@ -178,3 +180,4 @@ setTimeout(()=>{
   }
 },5000);
 
+getFriends();
