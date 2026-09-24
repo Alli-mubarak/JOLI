@@ -223,6 +223,7 @@ postAdder.onclick = () => {
 
 
 //post adder closer
+if(postCloser){
 postCloser.onclick = () => {
   try{
   enableScrolling();
@@ -237,6 +238,7 @@ postCloser.onclick = () => {
   }catch(e){
     console.error(e);
   }
+}
 }
 input.value = "";
 input.oninput = () => {
