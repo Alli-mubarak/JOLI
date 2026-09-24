@@ -143,6 +143,7 @@ main{
   top:0; left:0;
   overflow: hidden;
   background:red;
+  z-index: 10;
 }
 #s-c-container h3{
   text-align: center;
@@ -168,7 +169,6 @@ main{
   height:40px;
   border-radius: 5px;
   cursor: pointer;
-  z-index: 10;
 }
 #s-c-container form img{
   width: 100%;
