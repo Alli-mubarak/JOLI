@@ -178,7 +178,7 @@ async function checkAuthStatus() {
           frData = await frResponse.json();
           friendships = await frData.friendships;
         }else{
-            notify("error fetching friends", "error");
+            notify("You have no friends yet, add one now!");
             console.error("An error occurred while fetching friends");
           }
         }
