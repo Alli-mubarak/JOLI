@@ -39,6 +39,13 @@ let scrollPosition = 0;
 //function that calculates and reconfigures time/date 
 function getReqTime(reqTime){
 const targetDate = new Date(reqTime);
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: '2-digit',
+  day: '2-digit'
+}).format(targetDate);
+return formattedDate; 
+  
 const currentDate = new Date();
 
 const msDifference = currentDate - targetDate;
