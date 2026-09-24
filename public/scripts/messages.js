@@ -82,7 +82,8 @@ async function getFriends(){
             console.error(err);
           }
         } else {
-          notify("You currently have no friends to message", "add one now!", "/friends");
+          notify("You have no friends yet", "/friends", "add one now!");
+          fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
           return 
         }
       } catch (err) {
