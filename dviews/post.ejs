@@ -13,7 +13,7 @@
 </head>
 <body>
   <% 
-function getReqTime(reqTime){
+function getPostTime(reqTime){
 const targetDate = new Date(reqTime);
 const currentDate = new Date();
 
@@ -23,16 +23,14 @@ const mDifference = msDifference / (1000 * 60);
 const hDifference = msDifference / (1000 * 60 * 60);
 const dDifference = msDifference / (1000 * 60 * 60 * 24);
 const wDifference = msDifference / (1000 * 60 * 60 * 24 * 7);
-const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 30);
 
-if(mtDifference > 1){
+
+if(wDifference > 1){
 const formattedDate = new Intl.DateTimeFormat('en-US', {
   month: '2-digit',
   day: '2-digit'
 }).format(targetDate);
 return formattedDate; 
-}else if (wDifference > 1){
-return `${Math.floor(wDifference)}w`;
 }else if (dDifference > 1){
 return `${Math.floor(dDifference)}d`;
 }else if (hDifference > 1){
