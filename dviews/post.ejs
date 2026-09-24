@@ -13,8 +13,8 @@
 </head>
 <body>
   <% 
-function getPostTime(postTime){
-const targetDate = new Date(postTime);
+function getReqTime(reqTime){
+const targetDate = new Date(reqTime);
 const currentDate = new Date();
 
 const msDifference = currentDate - targetDate;
@@ -22,10 +22,17 @@ const sDifference = msDifference / 1000;
 const mDifference = msDifference / (1000 * 60);
 const hDifference = msDifference / (1000 * 60 * 60);
 const dDifference = msDifference / (1000 * 60 * 60 * 24);
-const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 12);
+const wDifference = msDifference / (1000 * 60 * 60 * 24 * 7);
+const mtDifference = msDifference / (1000 * 60 * 60 * 24 * 30 * 12);
 
 if(mtDifference > 1){
-return `${Math.floor(mtDifference)}M`; 
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: '2-digit',
+  day: '2-digit'
+}).format(targetDate);
+return formattedDate; 
+}else if (wDifference > 1){
+return `${Math.floor(wDifference)}w`;
 }else if (dDifference > 1){
 return `${Math.floor(dDifference)}d`;
 }else if (hDifference > 1){
