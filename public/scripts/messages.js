@@ -200,7 +200,7 @@ function showFriend(f){
   <div class="friend" id=${f.friend_id}>
   <div class="name-pic">
    <img src=${f.friend_profile_picture || '/images/default-user.png'} alt="friend picture" loading="lazy"/>
-   <p>${f.friend_username}</p>
+   <p class="f-username">${f.friend_username}</p>
    </div>
    ${f.friend_is_active? `<div class="online stat"></div>` : `<div class="online stat"></div>`}
   </div>
@@ -216,15 +216,23 @@ sfInput.oninput = () => {
     sfBtn.disabled = true;
     return;
   }
-  alert("find a friend?");
+  showSearchedFriend(sfInput.value)
 }
 
 sfForm.onsubmit = (e) => {
   e.preventDefault();
-  alert("submitted?");
+  showSearchedFriend(sfInput.value)
 }
 
-function showSearchedFriend(keyword){
+async function showSearchedFriend(keyword){
   if(sfInput.value.length < 1) return;
-  alert("yo!");
+  const friends = document.querySelectorAll(".friend");
+  if(friends.length < 1) return;
+  const frens = await Array.from(friends)
+  frens.forEach(f => {
+    const fUsername = f.querySelector(".f-username").textContent.trim();
+    f.classList.add("hidden");
+    alert(fUsername);
+  });
+  
 }
