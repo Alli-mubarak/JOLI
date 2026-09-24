@@ -34,6 +34,7 @@ const originalTexts = Array.from(targets).map(el => el.textContent);
   if (!query) {
     targets.forEach((el, index) => {
       el.textContent = originalTexts[index];
+      el.initialText = originalTexts[index];
     });
     return;
   }
@@ -253,8 +254,11 @@ sfInput.oninput = async() => {
     const frs = document.querySelectorAll(".friend");
   if(frs.length < 1) return;
   const frenss = await Array.from(frs);
-  await frenss.forEach(f => {f.classList.remove("hidden")});
-    showSearchedFriend("");
+  await frenss.forEach(f => {
+    f.classList.remove("hidden");
+    f.innerHTML = f.initialText;
+  });
+  
     return;
   }
   sfBtn.disabled = false;
