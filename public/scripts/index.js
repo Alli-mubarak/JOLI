@@ -153,7 +153,7 @@ async function checkAuthStatus() {
       try {
         // 'credentials: include' forces the browser to send the session cookie
         const response = await fetch("/api/auth/user", { credentials: 'include' });
-        data = await response.json();
+        const data = await response.json();
  
         
         if (data.loggedIn) {
