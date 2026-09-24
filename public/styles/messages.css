@@ -187,6 +187,7 @@ main{
     bottom: 90px;
     right: 20px;
     width: fit-content;
+    z-index:12;
   }
   #start-message-btn{
     cursor: pointer;
@@ -200,7 +201,7 @@ main{
     border-radius: 12px;
     border: none;
     transition: all 0.3s ease;
-    z-index:11;
+    
   }
   #start-message-btn:hover{
     transform: scale(1.07);
