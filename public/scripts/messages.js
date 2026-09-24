@@ -36,11 +36,11 @@ async function getFriends(){
           
           return 
           }
-          friendships = friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
           console.log(friendships)
           friendships.forEach(f =>{
             showFriend(f);
-          })
+          });
         } else {
           notify("error fetching friends", "error")
           return 
@@ -189,7 +189,9 @@ function updateChatStatusUI(statusText) {
     }
   
     }
-showFriend(f){
+
+function showFriend(f){
+  try{
   const htmlEl = `
   <div class="friend" id=${f.friend_id}>
   <div class="name-pic">
@@ -200,4 +202,8 @@ showFriend(f){
   </div>
   `;
   fContainer.innerHTML += htmlEl;
+  }catch(err){
+    console.error(err);
+    notify("error displaying friends", "error");
+  }
 }
