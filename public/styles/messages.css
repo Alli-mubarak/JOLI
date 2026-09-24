@@ -157,9 +157,11 @@ main{
   border-radius: 30px;
   border: 2px solid #ddd;
   display: flex;
+  padding: 10px;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  overflow: hidden;
 }
 #s-c-container form input{
   font-size: 1.3rem;
@@ -171,8 +173,8 @@ main{
 }
 #s-c-container form button{
   overflow: hidden;
-  width: 40px;
-  height:40px;
+  width: 30px;
+  height:30px;
   border-radius: 5px;
   cursor: pointer;
   border:none;
