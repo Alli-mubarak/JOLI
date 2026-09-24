@@ -215,7 +215,7 @@ everyPosts.forEach((post, index) => {
 
 //friendship sorter
 async function sortFriendship(){
-  if(!isAuthorised) return;
+  if(!isAuthorised || friendships.length < 0) return;
   friends = await friendships.filter(f => f.status === "accepted");
   pendings  = await friendships.filter(f => f.status === "pending");
 }
