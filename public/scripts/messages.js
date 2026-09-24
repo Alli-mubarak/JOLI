@@ -44,7 +44,6 @@ async function getFriends(){
 }
 
 smBtn.onclick = (e) =>{
-  alert(scContainer)
   const btn = e.currentTarget;
   if(!show_friends){
   btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
@@ -53,7 +52,7 @@ smBtn.onclick = (e) =>{
   show_friends = true;
   scContainer.classList.remove("hidden");
   }else{
-    
+  scContainer.classList.add("hidden");
   btn.style.transform = "rotate(0deg)";
   btn.style.scale = "1";
   setTimeout(()=>{
@@ -65,9 +64,7 @@ smBtn.onclick = (e) =>{
     },200);
     show_friends = false;
   }
-  scContainer.classList.add("hidden");
 }
-
 //window.onload = function() {}
   
   
