@@ -1,5 +1,8 @@
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
+const sfForm = document.getElementById("s-f-form");
+const sfInput = document.getElementById("s-f-input");
+const sfBtn = document.getElementById("s-f-btn");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -208,4 +211,20 @@ function showFriend(f){
     notify("error displaying friends", "error");
   }
 }
+sfInput.oninput = () => {
+  if(sfInput.value.length < 1) {
+    sfBtn.disabled = true;
+    return;
+  }
+  alert("find a friend?");
+}
 
+sfForm.onsubmit = (e) => {
+  e.preventDefault();
+  alert("submitted?");
+}
+
+function showSearchedFriend(keyword){
+  if(sfInput.value.length < 1) return;
+  alert("yo!");
+}
