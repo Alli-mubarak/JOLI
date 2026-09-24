@@ -164,7 +164,7 @@ main{
   overflow: hidden;
 }
 #s-c-container form input{
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: #222;
   width: calc(100% - 50px);
   border: none;
@@ -173,8 +173,8 @@ main{
 }
 #s-c-container form button{
   overflow: hidden;
-  width: 30px;
-  height:30px;
+  width: 25px;
+  height: 25px;
   border-radius: 5px;
   cursor: pointer;
   border:none;
