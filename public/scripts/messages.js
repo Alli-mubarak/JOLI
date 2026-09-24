@@ -44,6 +44,7 @@ async function getFriends(){
 }
 
 smBtn.onclick = (e) =>{
+  alert(scContainer)
   const btn = e.currentTarget;
   if(!show_friends){
   btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
