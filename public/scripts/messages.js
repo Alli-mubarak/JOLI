@@ -11,8 +11,7 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 
-  let imgArray;
-  let currIndex;
+  let imgArray, currIndex, show_friends;
   let inViewMode = false;
   
 const smBtn = document.getElementById("start-message-btn");
@@ -43,9 +42,21 @@ async function getFriends(){
 
 smBtn.onclick = (e) =>{
   const btn = e.currentTarget;
+  if(!show_friends){
   btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
   btn.style.scale = "2";
   btn.style.transform = "rotate(45deg)";
+  show_friends = true;
+  }else{
+    btn.style.scale = "1";
+  btn.style.transform = "rotate(0deg)";
+    btn.innerHTML = `
+    <div class="plus"></div>
+     <div class="plus"></div>
+    <i class="fa-regular fa-message"></i>
+    `;
+    show_friends = false;
+  }
   
 }
 
@@ -172,7 +183,7 @@ function updateChatStatusUI(statusText) {
     
 setTimeout(()=>{
   try{
-   // run();
+   getFriends();
     console.log("loading");
   }
   catch(err){
