@@ -1,3 +1,4 @@
+async function go(){
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
 const sfForm = document.getElementById("s-f-form");
@@ -79,8 +80,7 @@ smBtn.onclick = (e) =>{
 }
 //window.onload = function() {}
   
-  
-   async function run(){
+async function run(){
 const socket = io("https://joli-indol.vercel.app");
   
 // ❌ 1. Initial connection failed (e.g., Server is down or CORS blocked)
@@ -211,6 +211,7 @@ function showFriend(f){
     notify("error displaying friends", "error");
   }
 }
+
 sfInput.oninput = () => {
   if(sfInput.value.length < 1) {
     sfBtn.disabled = true;
@@ -240,3 +241,10 @@ async function showSearchedFriend(keyword){
     if(!fUsername.includes(keyword.toLowerCase())) f.classList.add("hidden");
   });
 }
+}
+
+setTimeout(()=>{
+  try{go()}
+  catch(e){console.error(e)}
+},5000);
+alert("loaded!");
