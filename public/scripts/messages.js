@@ -35,11 +35,17 @@ async function getFriends(){
           
           return 
           }
-          friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          try{
+         // friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
           console.log(friendships)
+          alert(friendships);
           friendships.forEach(f =>{
             showFriend(f);
           });
+          }catch(err){
+            console.error(err);
+            alert(err);
+          }
         } else {
           notify("error fetching friends", "error")
           return 
