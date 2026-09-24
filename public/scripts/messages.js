@@ -181,5 +181,3 @@ function updateChatStatusUI(statusText) {
     }
   
     }
-
-getFriends();
