@@ -25,7 +25,7 @@ async function fetchUsers() {
             //alert(isAuthorised)
            // alert(currentUserId)
        // lastUserFetched = 
-        if(currentUserId){
+        if(currentUserId && friendships.length > 0){
       await friendships.forEach(f => {
       if(f.status === "pending"){
             if(f.sender_id === currentUserId){
