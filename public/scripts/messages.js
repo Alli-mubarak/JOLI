@@ -58,6 +58,7 @@ smBtn.onclick = (e) =>{
   btn.style.transform = "rotate(45deg)";
   show_friends = true;
   scContainer.classList.remove("hidden");
+    disableScrolling();
   }else{
   scContainer.classList.add("hidden");
   btn.style.transform = "rotate(0deg)";
@@ -70,6 +71,7 @@ smBtn.onclick = (e) =>{
     `;
     },200);
     show_friends = false;
+    enableScrolling();
   }
 }
 //window.onload = function() {}
