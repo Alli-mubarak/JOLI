@@ -212,7 +212,7 @@ function showFriend(f){
   }
 }
 
-sfInput.oninput = () => {
+sfInput.oninput = async() => {
   if(sfInput.value.length < 1) {
     sfBtn.disabled = true;
     const frs = document.querySelectorAll(".friend");
@@ -225,7 +225,7 @@ sfInput.oninput = () => {
   showSearchedFriend(sfInput.value)
 }
 
-sfForm.onsubmit = (e) => {
+sfForm.onsubmit = async(e) => {
   e.preventDefault();
   showSearchedFriend(sfInput.value)
 }
