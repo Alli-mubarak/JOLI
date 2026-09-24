@@ -214,10 +214,10 @@ function showFriend(f){
 sfInput.oninput = () => {
   if(sfInput.value.length < 1) {
     sfBtn.disabled = true;
-    const friends = document.querySelectorAll(".friend");
-  if(friends.length < 1) return;
-  const frens = await Array.from(friends);
-  await frens.forEach(f => {f.classList.remove("hidden")});
+    const frs = document.querySelectorAll(".friend");
+  if(frs.length < 1) return;
+  const frenss = await Array.from(frs);
+  await frenss.forEach(f => {f.classList.remove("hidden")});
     return;
   }
   sfBtn.disabled = false;
@@ -237,6 +237,6 @@ async function showSearchedFriend(keyword){
   await frens.forEach(f => {f.classList.remove("hidden")});
   frens.forEach(f => {
     const fUsername = f.querySelector(".f-username").textContent.trim();
-    if(!fUsername.includes(keyword)) f.classList.add("hidden");
+    if(!fUsername.includes(keyword.toLowerCase())) f.classList.add("hidden");
   });
 }
