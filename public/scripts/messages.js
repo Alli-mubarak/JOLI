@@ -76,7 +76,7 @@ async function getFriends(){
             showFriend(f);
           });
           const fusernames = document.querySelectorAll('.f-username');
-          Array.from(fusernames).forEach(el =>. {el.initialText = el.textContent;});
+         await Array.from(fusernames).forEach(el => {el.initialText = el.textContent});
           
           }catch(err){
             console.error(err);
