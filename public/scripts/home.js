@@ -119,7 +119,7 @@ const postCard = `
                           <a href="/user/${post.author_username}" class="author-link">
                               <p class="author-username">${post.author_username || null}</p>
                           </a>
-                          <small>${getPostTime(post.created_at)}</small>
+                          <small>${getReqTime(post.created_at)}</small>
                      </div>
             </div> 
             <div class="post-menu" data-type="post-menu">
