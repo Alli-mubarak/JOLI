@@ -50,8 +50,8 @@ smBtn.onclick = (e) =>{
   }else{
     
   btn.style.transform = "rotate(0deg)";
-    setTimeout(()=>{
-    btn.style.scale = "1";
+  btn.style.scale = "1";
+  setTimeout(()=>{
     btn.innerHTML = `
     <div class="plus"></div>
      <div class="plus"></div>
@@ -179,19 +179,5 @@ function updateChatStatusUI(statusText) {
     }
   
     }
-
-
-
-
-    
-setTimeout(()=>{
-  try{
-   getFriends();
-    console.log("loading");
-  }
-  catch(err){
-    console.error(err)
-  }
-},5000);
 
 getFriends();
