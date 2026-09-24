@@ -1,4 +1,5 @@
 const scContainer = document.getElementById("s-c-container");
+const fContainer = document.getElementById("f-container");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -30,7 +31,16 @@ async function getFriends(){
         if (response.ok) {
           const data = await response.json();
           friendships = data.friendships
+          if(frienships.length < 1){
+            fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
+          
           return 
+          }
+          friendships = friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          console.log(friendships)
+          friendships.forEach(f =>{
+            showFriend(f);
+          })
         } else {
           notify("error fetching friends", "error")
           return 
@@ -179,3 +189,15 @@ function updateChatStatusUI(statusText) {
     }
   
     }
+showFriend(f){
+  const htmlEl = `
+  <div class="friend" id=${f.friend_id}>
+  <div class="name-pic">
+   <img src=${f.friend_profile_picture || '/images/default-user.png'} alt="friend picture" loading="lazy"/>
+   <p>${f.friend_username}</p>
+   </div>
+   ${f.friend_is_active? `<div class="online stat"></div>` : `<div class="online stat"></div>`}
+  </div>
+  `;
+  fContainer.innerHTML += htmlEl;
+}
