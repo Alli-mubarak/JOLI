@@ -25,13 +25,12 @@ async function getFriends(){
     return};
   
   try {
-        // 'credentials: include' forces the browser to send the session cookie
         const response = await fetch('/api/friendship/friends/details');
   
         if (response.ok) {
           const data = await response.json();
           friendships = data.friendships
-          if(frienships.length < 1){
+          if(friendships.length < 1){
             fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
           
           return 
