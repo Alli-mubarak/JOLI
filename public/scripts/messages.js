@@ -18,7 +18,9 @@ const smBtn = document.getElementById("start-message-btn");
 
 
 async function getFriends(){
-  if(!isAuthorised)return;
+  if(!isAuthorised){
+    alert("not authorised");
+    return};
   
   try {
         // 'credentials: include' forces the browser to send the session cookie
