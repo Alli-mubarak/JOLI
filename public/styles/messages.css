@@ -163,6 +163,9 @@ main{
   font-size: 1.3rem;
   color: #222;
   width: calc(100% - 50px);
+  border: none;
+  outline: nond;
+  background:transparent;
 }
 #s-c-container form button{
   overflow: hidden;
