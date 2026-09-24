@@ -1,3 +1,4 @@
+const scContainer = document.getElementById("s-c-container");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -49,6 +50,7 @@ smBtn.onclick = (e) =>{
   btn.style.scale = "2";
   btn.style.transform = "rotate(45deg)";
   show_friends = true;
+  scContainer.classList.remove("hidden");
   }else{
     
   btn.style.transform = "rotate(0deg)";
@@ -62,7 +64,7 @@ smBtn.onclick = (e) =>{
     },200);
     show_friends = false;
   }
-  
+  scContainer.classList.add("hidden");
 }
 
 //window.onload = function() {}
