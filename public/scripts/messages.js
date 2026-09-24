@@ -82,7 +82,7 @@ async function getFriends(){
             console.error(err);
           }
         } else {
-          notify("error fetching friends", "error");
+          notify("You currently have no friends", "error");
           return 
         }
       } catch (err) {
