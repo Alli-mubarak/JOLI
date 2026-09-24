@@ -170,7 +170,8 @@ async function checkAuthStatus() {
           pLink.href = `/user/${data.user.username}`;
           sLink.href = '/';
         userPic.classList.remove("hidden");
-
+          //fetch friends 
+        if (typeof getFriends === "function") getFriends()
           setTimeout(()=>{loadDefaultImage()},1000);
           const frResponse = await fetch("/api/friendship/user/friends");
           if(frResponse.ok){
