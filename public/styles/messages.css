@@ -157,6 +157,7 @@ main{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-direction: row;
 }
 #s-c-container form input{
   font-size: 1.3rem;
