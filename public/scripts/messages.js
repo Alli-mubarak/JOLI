@@ -48,13 +48,16 @@ smBtn.onclick = (e) =>{
   btn.style.transform = "rotate(45deg)";
   show_friends = true;
   }else{
-    btn.style.scale = "1";
+    
   btn.style.transform = "rotate(0deg)";
+    setTimeout(()=>{
+    btn.style.scale = "1";
     btn.innerHTML = `
     <div class="plus"></div>
      <div class="plus"></div>
     <i class="fa-regular fa-message"></i>
     `;
+    },200);
     show_friends = false;
   }
   
