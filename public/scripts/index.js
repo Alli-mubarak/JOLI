@@ -171,8 +171,8 @@ async function checkAuthStatus() {
           sLink.href = '/';
         userPic.classList.remove("hidden");
           //fetch friends 
-        if (typeof getFriends === "function") getFriends()
-          setTimeout(()=>{loadDefaultImage()},1000);
+        if (typeof getFriends === "function") {getFriends()}
+        else{
           const frResponse = await fetch("/api/friendship/user/friends");
           if(frResponse.ok){
           frData = await frResponse.json();
@@ -180,8 +180,9 @@ async function checkAuthStatus() {
         }else{
             notify("error fetching friends", "error");
             console.error("An error occurred while fetching friends");
+          }
         }
- 
+          
         } else {
           canPost = false;
           isAuthorised = false;
