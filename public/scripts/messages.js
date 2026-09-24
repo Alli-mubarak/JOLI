@@ -22,6 +22,41 @@ const postMenuCtrl = document.querySelector(".post-menu");
   
 const smBtn = document.getElementById("start-message-btn");
 
+function performHighlight(keyword) {
+  const query = keyword;
+  const targets = document.querySelectorAll('.f-username');
+
+// 2. Cache the pristine initial text of each parent so we can reset cleanly
+const originalTexts = Array.from(targets).map(el => el.textContent);
+
+// 3. Main highlight handler
+  // Reset all elements back to original clean text if query is empty
+  if (!query) {
+    targets.forEach((el, index) => {
+      el.textContent = originalTexts[index];
+    });
+    return;
+  }
+
+  // Escape special regex characters (like ?, *, +) to avoid syntax errors
+  const escapedQuery = query.replace(/[-\/\\^\$*+?.()|[\]{}]/g, '\\$&');
+  const regex = new RegExp(`(${escapedQuery})`, 'gi');
+
+  // Process each individual parent container separately
+  targets.forEach((el, index) => {
+    const rawText = originalTexts[index];
+
+    // Check if the query exists in this specific parent text
+    if (regex.test(rawText)) {
+      // Safely replace text matches with a structured <mark> element
+      // Using .innerHTML here is safe ONLY because we are pulling from pure text (.textContent cache)
+      el.innerHTML = rawText.replace(regex, '<mark class="f-match">\$1</mark>');
+    } else {
+      // If no match found, ensure it remains/resets to plain un-highlighted text
+      el.textContent = rawText;
+    }
+  });
+    }
 
 async function getFriends(){
   if(!isAuthorised) return;
@@ -223,6 +258,7 @@ sfInput.oninput = async() => {
   }
   sfBtn.disabled = false;
   showSearchedFriend(sfInput.value)
+  
 }
 
 sfForm.onsubmit = async(e) => {
@@ -240,5 +276,6 @@ async function showSearchedFriend(keyword){
     const fUsername = f.querySelector(".f-username").textContent.trim();
     if(!fUsername.includes(keyword.toLowerCase())) f.classList.add("hidden");
   });
+  performHighlight(keyword)
 }
 
