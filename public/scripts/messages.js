@@ -214,8 +214,13 @@ function showFriend(f){
 sfInput.oninput = () => {
   if(sfInput.value.length < 1) {
     sfBtn.disabled = true;
+    const friends = document.querySelectorAll(".friend");
+  if(friends.length < 1) return;
+  const frens = await Array.from(friends);
+  await frens.forEach(f => {f.classList.remove("hidden")});
     return;
   }
+  sfBtn.disabled = false;
   showSearchedFriend(sfInput.value)
 }
 
