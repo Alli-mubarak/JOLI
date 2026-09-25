@@ -25,7 +25,7 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 
-  let imgArray, currIndex, show_friends, conversations;
+  let imgArray, currIndex, show_friends, conversations, cFId, fPic, fUsername;
   let inViewMode = false;
 let cFriend = [];
   
@@ -321,9 +321,9 @@ async function showSearchedFriend(keyword){
 
 async function openConversation(f){
   try{
-  const fUsername = f.querySelector(".f-username").textContent;
-  const fPic = f.querySelector(".f-pic").src;
-  const fId = f.id
+  fUsername = f.querySelector(".f-username").textContent;
+  fPic = f.querySelector(".f-pic").src;
+  cFId = f.id
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
   cContainer.classList.remove("hidden");
@@ -347,7 +347,7 @@ cCloser.onclick = () => {
 cForm.onsubmit = (e) => {
   e.preventDefault();
   if(cFormInput.value.length < 1) return;
-  alert(cFormInput.value);
+  sendMessage(cFId);
 }
 
 cFormInput.oninput = () => {
@@ -362,4 +362,23 @@ cFormInput.oninput = () => {
   }
 }
 
-alert("loading");
+async function sendMessage(id){
+  const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
+  if(!hasConversation){
+    try{
+      const payload = {
+        friend_id: id,
+        friend_pic: fPic,
+        friend_username: fUsername,
+        last_message: cFormInput.value.trim()
+      }
+   //   const response  await
+      alert(payload);
+    }
+    catch(err){
+      console.error(err);
+      alert("error occured while sending message");
+    }
+  }
+}
+
