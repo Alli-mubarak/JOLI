@@ -81,7 +81,7 @@ async function getFriends(){
          await Array.from(fusernames).forEach(el => {el.initialText = el.textContent});
           const frens = document.querySelectorAll('.friend');
             //****
-         await Array.from(frens).forEach(el => {el.onclick = openConversation(el)});
+         await Array.from(frens).forEach(el => {el.onclick = () ={openConversation(el)}});
           }catch(err){
             console.error(err);
           }
