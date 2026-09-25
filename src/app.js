@@ -5,6 +5,8 @@ import authRoutes from './router/auth.js';
 import postRoutes from './router/posts.js'; 
 import userRoutes from './router/users.js'; 
 import friendshipRoutes from './router/friendship.js'; 
+import cRoutes from './router/conversations.js'; 
+import mRoutes from './router/messages.js'; 
 import connectPgSimple from 'connect-pg-simple';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -129,6 +131,8 @@ app.use('/api/auth', authRoutes);
 app.use('/post', postRoutes);
 app.use('/user', userRoutes);
 app.use('/api/friendship', friendshipRoutes);
+app.use('/api/conversation', cRoutes);
+app.use('/api/message', mRoutes);
 //***********
 
 
