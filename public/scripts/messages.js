@@ -317,6 +317,8 @@ cCloser.onclick = () => {
   cmContainer.innerHTML = "";
   cForm.reset();
   cFormBtn.disabled = true;
+  cFormBtn.style.color = "#888";
+  cFormBtn.style.background = "#bbffaa";
 }
 
 cForm.onsubmit = (e) => {
