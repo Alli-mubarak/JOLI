@@ -297,11 +297,11 @@ main{
   border-radius: 5px;
   cursor:pointer;
   color: #222;
-  background: #eee;
+  background: #fff;
   transition: background ease 0.4s;
 }
 #c-closer:hover{
-  background: var(--primary-color);
+  background: #eee;
 }
 #c-pic{
   cursor:pointer;
@@ -322,8 +322,11 @@ main{
   width: 32px; height:32px;
   border-radius: 50%;
   position: relative;
-  background: #ddd;
+  background: #fff;
   cursor: pointer;
+}
+#c-menu:focus{
+  background: #ddd;
 }
 #c-menu div{
   position: absolute;
@@ -351,14 +354,12 @@ main{
   gap: 10px;
   align-items: end;
   justify-content: center;
-  background: pink;
 }
 #c-form{
   height: 150px;
-  background:tan;
   padding: 10px;
   display: flex;
-  align-items:center;
+  align-items:end;
   justify-content: space-between;
   gap: 10px;
   flex-direction: row;
@@ -368,7 +369,7 @@ main{
   resize: none;
   outline: none;
   border: 2px solid #eee;
-  width: calc(100% - 100px);
+  width: 100%;
   height:100%;
   font-size: 1rem;
   color:#222;
