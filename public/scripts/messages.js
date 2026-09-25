@@ -7,6 +7,7 @@ const cContainer = document.getElementById("c-container");
 const cCloser = document.getElementById("c-closer");
 const cUsername = document.getElementById("c-username");
 const cPic = document.getElementById("c-pic");
+const cmContainer = document.getElementById("c-messages");
 const cForm = document.getElementById("c-form");
 const cFormInput =  document.getElementById("c-form-input");
 const cFormBtn =  document.getElementById("c-form-btn");
@@ -313,6 +314,8 @@ async function openConversation(f){
 
 cCloser.onclick = () => {
   cContainer.classList.add("hidden");
+  cmContainer.innerHTML = "";
+  cForm.reset();
 }
 
 cForm.onsubmit = (e) => {
