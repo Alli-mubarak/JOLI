@@ -262,6 +262,82 @@ main{
     padding: 0 2px;
     border-radius: 2px;
   }
+
+  #c-container{
+  width:100vw;
+  height:100vh;
+  position:fixed;
+  top:0; left:0;
+  overflow: hidden;
+  background:#fff;
+  z-index: 11;
+    }
+  #c-header{
+    border-bottom:#ddd;
+    padding: 15px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #l-side{
+    width: fit-content;
+    display:flex;
+    align-items: center;
+    justify-content: start;
+  }
+  #r-side{
+    width:fit:content;
+  }
+#c-closer{
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor:pointer;
+  color: #222;
+  background: #eee;
+  transition: background ease 0.4s;
+}
+#c-closer:hover{
+  background: var(--primary-color);
+}
+#c-pic{
+  cursor:pointer;
+  width: 30px;
+  height:30px;
+  border-radius: 50%;
+  border: 1px solid var(--primary-color);
+  object-fit: cover;
+  object-position: center;
+}
+#c-username{
+  cursor: pointer;
+  width: fit-content;
+  font-weight: 600;
+  font-size: 1.12rem;
+}
+#c-menu{
+  width: 32px; height:32px;
+  border-radius: 50%;
+  position: relative;
+  background: #ddd;
+  cursor: pointer;
+}
+#c-menu div{
+  position: absolute;
+  width: 4px; height:4px;
+  background: #222;
+  left: 14px;
+}
+#c-menu div:nth-child(1){
+  top: 5px;
+}
+#c-menu div:nth-child(2){
+  top: 14px;
+}
+#c-menu div:nth-child(3){
+  top: 23px;
+}
 @media screen and (min-width:762px){
   /* later styling */
   
