@@ -4,6 +4,7 @@ const sfForm = document.getElementById("s-f-form");
 const sfInput = document.getElementById("s-f-input");
 const sfBtn = document.getElementById("s-f-btn");
 const cContainer = document.getElementById("c-container");
+const cCloser = document.getElementById("c-closer");
 const cUsername = document.getElementById("c-username");
 const cPic = document.getElementById("c-pic");
 const mediaViewer = document.getElementById("media-viewer");
@@ -303,4 +304,8 @@ async function openConversation(f){
     console.error(err);
   }
   
+}
+
+cCloser.onclick = () => {
+  cContainer.classList.add("hidden");
 }
