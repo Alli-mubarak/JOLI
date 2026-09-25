@@ -1,3 +1,5 @@
+const cPreviewContainer = document.querySelector(".messages");
+const scContainer = document.getElementById("s-c-container");
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
 const sfForm = document.getElementById("s-f-form");
@@ -24,7 +26,7 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 
-  let imgArray, currIndex, show_friends;
+  let imgArray, currIndex, show_friends, conversations;
   let inViewMode = false;
 let cFriend = [];
   
@@ -66,15 +68,37 @@ const originalTexts = Array.from(targets).map(el => el.textContent);
   });
     }
 
+async function getConversations(){
+  try{
+  const response = await fetch('/api/conversation/user/conversations');
+        if (response.ok) {
+          const data = await response.json();
+          conversations = data.conversations
+          if(conversations.length < 1){
+            cPreviewContainer.innerHTML = `<p>You have not started a conversation yet, start one now</p>`;
+            return 
+          }
+          alert(conversations);
+        }else{
+          notify(response, "error");
+        }
+  }catch(err){
+    console.error(err);
+    notify("error fetching conversations");
+  }
+}
+
 async function getFriends(){
   if(!isAuthorised) return;
   
   try {
+      getConversations()
         const response = await fetch('/api/friendship/friends/details');
         if (response.ok) {
           const data = await response.json();
           friendships = data.friendships
           if(friendships.length < 1){
+            cPreviewContainer.innerHTML = `<p>You have not started a conversation yet, start one now</p>`;
             fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
            return 
           }
