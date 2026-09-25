@@ -382,9 +382,9 @@ main{
   border: none;
   cursor:pointer;
   font-size: 1rem;
-  background: var(--primary-color);
+  background: #bbffaa;
   border-radius: 20px;
-  color: #222;
+  color: #888;
 }
 @media screen and (min-width:762px){
   /* later styling */
