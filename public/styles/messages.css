@@ -366,8 +366,11 @@ main{
   resize: none;
   outline: none;
   border: 2px solid #eee;
-  height: calc(100% - 70px);
-  width:100%;
+  width: calc(100% - 70px);
+  height:100%;
+}
+#c-form textarea:focus{
+  border-color: #222;
 }
 #c-form button {
   padding: 10px;
