@@ -372,13 +372,30 @@ async function sendMessage(id){
         friend_username: fUsername,
         last_message: cFormInput.value.trim()
       }
-   //   const response  await
-      alert(payload);
-    }
+  
+  const response = await fetch('/api/conversation/v1/create-conversation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (response.ok) {
+    const result = await response.json();
+    
+      alert("conversation created");
+    getConversations();
+    
+      }else{
+    notify(response, "error")
+     }
     catch(err){
       console.error(err);
       alert("error occured while sending message");
     }
+  }else{
+    alert("conversation already exists");
   }
 }
 
