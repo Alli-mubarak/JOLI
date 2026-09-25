@@ -290,8 +290,8 @@ main{
     width:fit:content;
   }
 #c-closer{
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 8px 12px;
+  font-size: 0.9rem;
   border: none;
   border-radius: 5px;
   cursor:pointer;
@@ -304,8 +304,8 @@ main{
 }
 #c-pic{
   cursor:pointer;
-  width: 30px;
-  height:30px;
+  width: 35px;
+  height:35px;
   border-radius: 50%;
   border: 1px solid var(--primary-color);
   object-fit: cover;
