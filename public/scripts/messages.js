@@ -92,7 +92,7 @@ async function getFriends(){
   if(!isAuthorised) return;
   
   try {
-      getConversations()
+    //  getConversations()
         const response = await fetch('/api/friendship/friends/details');
         if (response.ok) {
           const data = await response.json();
@@ -362,3 +362,5 @@ cFormInput.oninput = () => {
     cFormBtn.style.background = "var(--primary-color)";
   }
 }
+
+alert("loading");
