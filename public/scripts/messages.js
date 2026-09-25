@@ -3,6 +3,9 @@ const fContainer = document.getElementById("f-container");
 const sfForm = document.getElementById("s-f-form");
 const sfInput = document.getElementById("s-f-input");
 const sfBtn = document.getElementById("s-f-btn");
+const cContainer = document.getElementById("c-container");
+const cUsername = document.getElementById("c-username");
+const cPic = document.getElementById("c-pic");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -76,7 +79,9 @@ async function getFriends(){
           });
           const fusernames = document.querySelectorAll('.f-username');
          await Array.from(fusernames).forEach(el => {el.initialText = el.textContent});
-          
+          const frens = document.querySelectorAll('.friend');
+            //****
+         await Array.from(frens).forEach(el => {el.onclick = openConversation(el)});
           }catch(err){
             console.error(err);
           }
@@ -237,7 +242,7 @@ function showFriend(f){
   const htmlEl = `
   <div class="friend" id=${f.friend_id}>
   <div class="name-pic">
-   <img src=${f.friend_profile_picture || '/images/default-user.png'} alt="friend picture" loading="lazy"/>
+   <img class="f-pic" src=${f.friend_profile_picture || '/images/default-user.png'} alt="friend picture" loading="lazy"/>
    <p class="f-username">${f.friend_username}</p>
    </div>
    ${f.friend_is_active? `<div class="online stat"></div>` : `<div class="online stat"></div>`}
@@ -286,3 +291,17 @@ async function showSearchedFriend(keyword){
   performHighlight(keyword)
 }
 
+async function openConversation(f){
+  try{
+  const fUsername = f.querySelector(".f-username").textContent;
+  const fPic = f.querySelector(".f-pic").src;
+  const fId = f.id
+  cPic.src = fPic;
+  cUsername.innerHTML = fUsername;
+  cContainer.classList.remove("hidden");
+  }catch(err){
+    notify("could not open conversation, try later", "error");
+    console.error(err);
+  }
+  
+}
