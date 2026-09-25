@@ -278,7 +278,7 @@ main{
     display:flex;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
+    height: 65px;
   }
   #l-side{
     width: fit-content;
@@ -305,8 +305,8 @@ main{
 }
 #c-pic{
   cursor:pointer;
-  width: 35px;
-  height:35px;
+  width: 40px;
+  height:40px;
   border-radius: 50%;
   border: 1px solid var(--primary-color);
   object-fit: cover;
@@ -327,19 +327,19 @@ main{
 }
 #c-menu div{
   position: absolute;
-  width: 3px; height:3px;
+  width: 4px; height:4px;
   background: #222;
   left: 14px;
   border-radius: 20px;
 }
 #c-menu div:nth-child(1){
-  top: 7px;
+  top: 6px;
 }
 #c-menu div:nth-child(2){
   top: 14px;
 }
 #c-menu div:nth-child(3){
-  top: 21px;
+  top: 22px;
 }
 #c-messages{
   height: calc(100% - 300px);
@@ -361,6 +361,7 @@ main{
   align-items:center;
   justify-content: space-between;
   gap: 10px;
+  flex-direction: row;
 }
 
 #c-form textarea{
@@ -371,7 +372,6 @@ main{
   height:100%;
   font-size: 1rem;
   color:#222;
-  display: inline-block;
 }
 #c-form textarea:focus{
   border-color: #222;
@@ -383,7 +383,6 @@ main{
   font-size: 1rem;
   background: var(--primary-color);
   border-radius: 20px;
-  display: inline-block;
   color: #222;
 }
 @media screen and (min-width:762px){
