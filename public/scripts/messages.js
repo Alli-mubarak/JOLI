@@ -320,14 +320,15 @@ cForm.onsubmit = (e) => {
   if(cFormInput.value.length < 1) return;
   alert(cFormInput.value);
 }
+
 cFormInput.oninput = () => {
   if(cFormInput.value.length < 1){
     cFormBtn.disabled = true;
-    cForm.style.color = #888;
-    cForm.style.background = "#bbffaa";
+    cFormBtn.style.color = "#888";
+    cFormBtn.style.background = "#bbffaa";
   }else{
     cFormBtn.disabled = false;
-    cForm.style.color = #222;
-    cForm.style.background = "var(--primary-color)";
+    cFormBtn.style.color = "#222";
+    cFormBtn.style.background = "var(--primary-color)";
   }
 }
