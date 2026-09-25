@@ -360,14 +360,18 @@ main{
   display: flex;
   align-items:center;
   justify-content: space-between;
-  gap: 15px;
+  gap: 10px;
 }
+
 #c-form textarea{
   resize: none;
   outline: none;
   border: 2px solid #eee;
-  width: calc(100% - 70px);
+  width: calc(100% - 100px);
   height:100%;
+  font-size: 1rem;
+  color:#222;
+  display: inline-block;
 }
 #c-form textarea:focus{
   border-color: #222;
@@ -379,6 +383,8 @@ main{
   font-size: 1rem;
   background: var(--primary-color);
   border-radius: 20px;
+  display: inline-block;
+  color: #222;
 }
 @media screen and (min-width:762px){
   /* later styling */
