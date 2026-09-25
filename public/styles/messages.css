@@ -270,11 +270,11 @@ main{
   top:0; left:0;
   overflow: hidden;
   background:#fff;
-  z-index: 11;
+  z-index: 13;
     }
   #c-header{
-    border-bottom:#ddd;
-    padding: 15px;
+    border-bottom:2px solid #ddd;
+    padding: 10px;
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -329,15 +329,16 @@ main{
   width: 4px; height:4px;
   background: #222;
   left: 14px;
+  border-radius: 20px;
 }
 #c-menu div:nth-child(1){
-  top: 5px;
+  top: 7px;
 }
 #c-menu div:nth-child(2){
   top: 14px;
 }
 #c-menu div:nth-child(3){
-  top: 23px;
+  top: 21px;
 }
 @media screen and (min-width:762px){
   /* later styling */
