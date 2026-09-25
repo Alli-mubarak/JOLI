@@ -25,9 +25,9 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 
-  let imgArray, currIndex, show_friends, conversations, cFId, fPic, fUsername;
+  let imgArray, currIndex, show_friends, cFId, fPic, fUsername;
   let inViewMode = false;
-let cFriend = [];
+let conversations = [];
   
 const smBtn = document.getElementById("start-message-btn");
 
@@ -364,7 +364,7 @@ cFormInput.oninput = () => {
 
 async function sendMessage(id){
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
-  if(!hasConversation){
+  if(conversations && !hasConversation){
     try{
       const payload = {
         friend_id: id,
