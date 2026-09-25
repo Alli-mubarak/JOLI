@@ -342,7 +342,7 @@ main{
   top: 21px;
 }
 #c-messages{
-  height: calc(100% - 200px);
+  height: calc(100% - 300px);
   padding: 10px;
   overflow-x: hidden;
   overflow-y: auto;
