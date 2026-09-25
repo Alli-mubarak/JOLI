@@ -284,6 +284,7 @@ main{
     display:flex;
     align-items: center;
     justify-content: start;
+    gap: 15px;
   }
   #r-side{
     width:fit:content;
