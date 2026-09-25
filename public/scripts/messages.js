@@ -1,4 +1,5 @@
 const cPreviewContainer = document.querySelector(".messages");
+alert(cPreviewContainer)
 const scContainer = document.getElementById("s-c-container");
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
@@ -98,7 +99,7 @@ async function getFriends(){
           const data = await response.json();
           friendships = data.friendships
           if(friendships.length < 1){
-            cPreviewContainer.innerHTML = `<p>You have not started a conversation yet, start one now</p>`;
+          //  cPreviewContainer.innerHTML = `<p>You have not started a conversation yet, start one now</p>`;
             fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
            return 
           }
