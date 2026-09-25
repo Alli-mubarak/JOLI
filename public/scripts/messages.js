@@ -7,6 +7,9 @@ const cContainer = document.getElementById("c-container");
 const cCloser = document.getElementById("c-closer");
 const cUsername = document.getElementById("c-username");
 const cPic = document.getElementById("c-pic");
+const cForm = document.getElementById("c-form");
+const cFormInput =  document.getElementById("c-form-input");
+const cFormBtn =  document.getElementById("c-form-btn");
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -22,6 +25,7 @@ const postMenuCtrl = document.querySelector(".post-menu");
 
   let imgArray, currIndex, show_friends;
   let inViewMode = false;
+let cFriend = [];
   
 const smBtn = document.getElementById("start-message-btn");
 
@@ -309,4 +313,21 @@ async function openConversation(f){
 
 cCloser.onclick = () => {
   cContainer.classList.add("hidden");
+}
+
+cForm.onsubmit = (e) => {
+  e.preventDefault();
+  if(cFormInput.value.length < 1) return;
+  alert(cFormInput.value);
+}
+cFormInput.oninput = () => {
+  if(cFormInput.value.length < 1){
+    cFormBtn.disabled = true;
+    cForm.style.color = #888;
+    cForm.style.background = "#bbffaa";
+  }else{
+    cFormBtn.disabled = false;
+    cForm.style.color = #222;
+    cForm.style.background = "var(--primary-color)";
+  }
 }
