@@ -316,6 +316,7 @@ cCloser.onclick = () => {
   cContainer.classList.add("hidden");
   cmContainer.innerHTML = "";
   cForm.reset();
+  cFormBtn.disabled = true;
 }
 
 cForm.onsubmit = (e) => {
