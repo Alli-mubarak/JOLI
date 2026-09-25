@@ -366,7 +366,7 @@ main{
   resize: none;
   outline: none;
   border: 2px solid #eee;
-  height: 100%;
+  height: calc(100% - 70px);
   width:100%;
 }
 #c-form button {
