@@ -78,7 +78,10 @@ async function getConversations(){
             return 
           }
           cPreviewContainer.innerHTML =  "";
-          conversations.forEach(c => {showExistingConversation(c)});
+         await conversations.forEach(c => {showExistingConversation(c)});
+          const existingConversations = document.querySelectorAll('.ec-card');
+         await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
+          }catch(err){
         }else{
           notify(response, "error");
         }
@@ -143,10 +146,10 @@ async function showExistingConversation(c){
   
     const htmlEl = `
     <div class="ec-card" data-user=${frId}>
-      <img src=${frPic} alt="friend picture" />
+      <img src=${frPic} alt="friend picture" class="ef-pic"/>
       <div class="ec-details">
         <div class="ec-f-details">
-          <p>${frUsername}</p>
+          <p class="ef-username">${frUsername}</p>
           <div class="online stat"></div>
         </div>
         <div class="ec-m-details">
@@ -161,6 +164,21 @@ async function showExistingConversation(c){
   catch(err){
     console.error(err)
     notify("error display existing conversations", "error");
+  }
+}
+
+async function openExistingConversation(el){
+  try{
+  fUsername = el.querySelector(".ef-username").textContent;
+  fPic = el.querySelector(".ef-pic").src;
+  cFId = el.getAttribute("data-user");
+  cPic.src = fPic;
+  cUsername.innerHTML = fUsername;
+  cContainer.classList.remove("hidden");
+  smBtn.click();
+  }catch(err){
+    notify("could not open conversation, try later", "error");
+    console.error(err);
   }
 }
 
