@@ -68,6 +68,7 @@ const initDb = async (pool) => {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
         last_login_at TIMESTAMP WITH TIME ZONE,
+        last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         CONSTRAINT username_length_check CHECK (char_length(username) >= 3),
         CONSTRAINT email_format_check CHECK (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')
     );
@@ -85,7 +86,6 @@ const initDb = async (pool) => {
     reply_count INTEGER DEFAULT 0 NOT NULL,
     view_count BIGINT DEFAULT 0 NOT NULL,
     is_pinned BOOLEAN DEFAULT false NOT NULL,
-    last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW();
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
