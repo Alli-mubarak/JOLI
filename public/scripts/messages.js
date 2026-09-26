@@ -135,9 +135,7 @@ async function showExistingConversation(c){
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
     }else{
-      const fr = await friendships.filter(f => f.friend_id === c.user_id)
-      alert(friendships);
-      alert(fr)
+      const fr = await friendships.filter(f => f.friend_id === c.user_id);
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
       frUsername = fr[0].friend_username
@@ -430,7 +428,8 @@ async function sendMessage(id){
     getConversations();
     
       }else{
-    notify(response, "error")
+    notify(response, "error");
+    console.error(response);
      }
     }
     catch(err){
