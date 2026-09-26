@@ -822,24 +822,34 @@ function startHeartbeat() {
 }
 
 async function stopHeartbeat() {
-  if(!isAuthorised) return;
+  try{
   clearInterval(heartbeatInterval);
+  if(!isAuthorised) return;
   // Tell the server immediately that the user left
-  fetch('/api/user/disconnect', {
+  fetch('/user/v1/disconnect', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     keepalive: true // Crucial: ensures the request finishes even if the page closes
   });
+  }catch(err){
+    console.error(err)
+    alert("error occurred while updating presence - offline");
+  }
 }
 
 async function sendPing() {
+  try{
   // Don't waste server resources if the tab is minimized or hidden
   if (document.visibilityState === 'hidden') return; 
 
-  fetch('/api/user/heartbeat', {
+  fetch('/user/v1/heartbeat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   }).catch(err => console.error("Heartbeat failed", err));
+  }catch(err){
+    console.error(err);
+    alert("error occurred while updating presence - online");
+  }
 }
 
 // Automatically handle page exit/close
@@ -847,12 +857,10 @@ window.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     // Optional: You can choose to stop pinging or instantly log out here
     stopHeartbeat();
-  clearInterval(heartbeatInterval);
   }
 });
 
 window.addEventListener('beforeunload', ()=>{
   stopHeartbeat();
-  clearInterval(heartbeatInterval);
 });
   
