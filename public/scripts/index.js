@@ -826,11 +826,12 @@ async function stopHeartbeat() {
   clearInterval(heartbeatInterval);
   if(!isAuthorised) return;
   // Tell the server immediately that the user left
-  fetch('/user/v1/disconnect', {
+ const response = await fetch('/user/v1/disconnect', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     keepalive: true // Crucial: ensures the request finishes even if the page closes
   });
+    if(response.ok) alert("user is now offline");
   }catch(err){
     console.error(err)
     alert("error occurred while updating presence - offline");
@@ -842,10 +843,14 @@ async function sendPing() {
   // Don't waste server resources if the tab is minimized or hidden
   if (document.visibilityState === 'hidden') return; 
 
-  fetch('/user/v1/heartbeat', {
+ const response = await fetch('/user/v1/heartbeat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
-  }).catch(err => console.error("Heartbeat failed", err));
+  }).catch(err => {
+   console.error("Heartbeat failed", err);
+   alert("error changing presence to - online");
+ });
+    if(response.ok) alert("user is now offline");
   }catch(err){
     console.error(err);
     alert("error occurred while updating presence - online");
