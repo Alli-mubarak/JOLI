@@ -338,4 +338,58 @@ router.get('/v1/get-users', checkSession, limiter, async(req, res) => {
 
 });
 
+//change user visibility to active
+router.post('/heartbeat', async (req, res) => {
+  if(!req.user || !req.isAuthenticated()){
+      return res.json({
+        error: "User not logged in"
+    })
+  }
+  const userId  = req.user.id;
+  if (!userId) return res.status(400).json({ error: 'User ID required' });
+
+  try {
+    // Optimization: Update the database AND check if they were previously offline
+    const query = `
+      UPDATE users 
+      SET last_seen = NOW(), 
+          is_active = true 
+      WHERE id = $1
+      RETURNING is_active;
+    `;
+    
+    await pool.query(query, [userId]);
+    return res.json({ success: true, status: 'online' });
+  } catch (err) {
+    console.error('Database heartbeat error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Explicit Disconnect Endpoint api that changes visibility 
+router.post('/disconnect', async (req, res) => {
+  if(!req.user || !req.isAuthenticated()){
+      return res.json({
+        error: "User not logged in"
+    })
+  }
+  const userId  = req.user.id;
+  if (!userId) return res.status(400).json({ error: 'User ID required' });
+
+  try {
+    const query = `
+      UPDATE users 
+      SET is_active = false 
+      WHERE id = $1;
+    `;
+    await pool.query(query, [userId]);
+    return res.json({ success: true, status: 'offline' });
+  } catch (err) {
+    console.error('Database disconnect error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 export default router;
