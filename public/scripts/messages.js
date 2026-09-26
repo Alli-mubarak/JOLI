@@ -103,9 +103,9 @@ async function getFriends(){
            return 
           }
           try{
-          friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          await friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
           getConversations()
-          friendships.forEach(f =>{
+          await friendships.forEach(f =>{
             showFriend(f);
           });
           const fusernames = document.querySelectorAll('.f-username');
@@ -136,6 +136,7 @@ async function showExistingConversation(c){
       frUsername = c.friend_username
     }else{
       const fr = await friendships.filter(f => {f.friend_id === c.user_id})
+      alert(friendships);
       alert(fr)
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
