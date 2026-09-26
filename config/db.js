@@ -85,6 +85,7 @@ const initDb = async (pool) => {
     reply_count INTEGER DEFAULT 0 NOT NULL,
     view_count BIGINT DEFAULT 0 NOT NULL,
     is_pinned BOOLEAN DEFAULT false NOT NULL,
+    last_seen TIMESTAMP WITH TIME ZONE DEFAULT NOW();
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP NOT NULL,
 
