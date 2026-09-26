@@ -388,12 +388,13 @@ main{
 }
 .ec-card{
   width:100%;
-  padding: 10px;
+  box-shadow: 0 0 2px rgbs(0,0,0,0.05);
   display: flex;
   align-items: center;
   justify-content: start;
   gap:20px;
   overflow:hidden;
+  cursor: pointer;
 }
 .ec-card > img{
   width:100px;
@@ -407,8 +408,11 @@ main{
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  height: 100%;
+  width:100%;
 }
 .ec-f-details, .ec-m-details{
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
