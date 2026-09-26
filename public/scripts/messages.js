@@ -92,7 +92,7 @@ async function getFriends(){
   if(!isAuthorised) return;
   
   try {
-       getConversations()
+       
         const response = await fetch('/api/friendship/friends/details');
         if (response.ok) {
           const data = await response.json();
@@ -104,6 +104,7 @@ async function getFriends(){
           }
           try{
           friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
+          getConversations()
           friendships.forEach(f =>{
             showFriend(f);
           });
@@ -134,7 +135,7 @@ async function showExistingConversation(c){
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
     }else{
-      const fr = await friendships.filter(f => {f.friend_id !== null})
+      const fr = await friendships.filter(f => {f.friend_id === c.user_id})
       alert(fr)
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
