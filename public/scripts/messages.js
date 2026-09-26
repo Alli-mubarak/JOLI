@@ -133,7 +133,7 @@ async function getFriends(){
 
 async function showExistingConversation(c){
   try{
-    let frPic, frId, frUsername
+    let frPic, frId, frUsername, fIsActive
     if(currentUserId === c.user_id){
       frId = c.friend_id
       frPic = c.friend_pic || "/images/default-user.png" 
@@ -142,7 +142,8 @@ async function showExistingConversation(c){
       const fr = await friendships.filter(f => f.friend_id === c.user_id);
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
-      frUsername = fr[0].friend_username
+      frUsername = fr[0].friend_username;
+      fIsActive = fr[0].friend_is_active;
     }
   
     const htmlEl = `
@@ -151,7 +152,7 @@ async function showExistingConversation(c){
       <div class="ec-details">
         <div class="ec-f-details">
           <p class="ef-username">${frUsername}</p>
-          <div class="online stat"></div>
+          ${fIsActive? `<div class="online stat"></div>` : `<div class="offline stat"></div>`}
         </div>
         <div class="ec-m-details">
           <p>${c.last_message}</p>
