@@ -823,8 +823,8 @@ function startHeartbeat() {
   if(!isAuthorised) return;
   sendPing();
 
-  // Send a heartbeat every 30 seconds
-  heartbeatInterval = setInterval(sendPing, 30000);
+  // Send a heartbeat every 60 seconds
+  heartbeatInterval = setInterval(sendPing, 60000);
 }
 
 async function stopHeartbeat() {
@@ -869,12 +869,19 @@ async function sendPing() {
     alert("error occurred while updating presence - online");
   }
 }
-
-// Automatically handle page exit/close
+   
+// Automatically handle page exit/close and returning
 window.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'hidden') {
     // Optional: You can choose to stop pinging or instantly log out here
     stopHeartbeat();
+  }else if(document.visibilityState === 'visible') {
+    console.log("User returned to the tab! Sending instant ping...");
+    sendPing(); // Fire a ping immediately so they look online instantly
+    
+    // Clear and reset the interval so it starts its 60-second countdown freshly
+    clearInterval(heartbeatInterval);
+    heartbeatInterval = setInterval(sendPing, 60000);
   }
 });
 
