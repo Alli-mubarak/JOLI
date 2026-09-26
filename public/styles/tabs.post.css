@@ -1,5 +1,6 @@
 :root{
 --crop-color: #ddd;
+--primary-color: #2bff43;
 }
 body{
 position: relative;
@@ -545,3 +546,14 @@ form textarea{
         .add-post div:nth-child(2){
             transform: rotate(90deg);
         }
+  .stat{
+    border-radius: 50%;
+    width: 6px; height:6px;
+    
+  }
+  .online{
+    background: var(--primary-color);
+  }
+  .offline{
+    background: #ccc;
+  }
