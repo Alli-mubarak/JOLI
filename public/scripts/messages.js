@@ -135,9 +135,10 @@ async function showExistingConversation(c){
       frUsername = c.friend_username
     }else{
       const fr = await friendships.filter(f => {f.friend_id === c.user_id})
+      alert(fr)
       frId = c.user_id
-      frPic = fr.friend_profile_picture || "/images/default-user.png"
-      frUsername = fr.friend_username
+      frPic = fr[0].friend_profile_picture || "/images/default-user.png"
+      frUsername = fr[0].friend_username
     }
   
     const htmlEl = `
