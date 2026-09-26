@@ -416,11 +416,11 @@ main{
   gap:10px;
 }
 .ec-f-details, .ec-m-details{
-  width: 100%;
+  width:calc(100% - 70px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: pink,;
+  background: pink;
 }
 .ec-f-details p{
   font-size:1.1rem;
