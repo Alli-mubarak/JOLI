@@ -21,9 +21,13 @@ import session from 'express-session';
 import rateLimit  from 'express-rate-limit';
 import transporter from '../Utils/mailer.js';
 import { v2 as cloudinary } from 'cloudinary';
-import 'ejs';
+import jwt from 'jsonwebtoken';
 import http from 'http';
 import { Server } from 'socket.io';
+import { createClient } from 'redis';
+import { createAdapter } from '@socket.io/redis-adapter';
+import 'ejs';
+
 
 
 
@@ -316,14 +320,155 @@ async function pingAivenDatabase() {
 // ½ hour in milliseconds (30 mins * 60 secs * 1000 ms)
 const HALF_HOUR = 30 * 60 * 1000;
 
+// socket io configuration 
 const io = new Server(server, {
   cors: {
     origin: "https://joli-indol.vercel.app", 
     methods: ["GET", "POST", "DELETE"],
     credentials: true
-  } 
+  },
+    // Pro Tip: Lower timeouts for quick dead-connection detection on mobile/web
+  pingTimeout: 5000, 
+  pingInterval: 10000
 });
 
+//Setup Redis Adapter for Horizontal Scaling (Crucial for Social Media apps)
+const pubClient = createClient({ url: process.env.REDIS_URL || 'redis://localhost:6379' });
+const subClient = pubClient.duplicate();
+
+Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
+  io.adapter(createAdapter(pubClient, subClient));
+  console.log("🚀 Socket.IO Redis Adapter connected successfully");
+});
+
+//Pro Middleware: Authenticate via JWT before connection is allowed
+io.use((socket, next) => {
+  const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization;
+  
+  if (!token) {
+    return next(new Error("Authentication error: Token missing"));
+  }
+
+  try {
+    // Expecting token format: "Bearer <JWT>" or just "<JWT>"
+    const parsedToken = token.startsWith("Bearer ") ? token.split(" ")[1] : token;
+    const decoded = jwt.verify(parsedToken, process.env.JWT_SECRET);
+    
+    // Attach user profile to the socket instance for easy access later
+    socket.user = decoded; 
+    next();
+  } catch (err) {
+    return next(new Error("Authentication error: Invalid token"));
+  }
+});
+
+//Connection & 1:1 Chat Architecture
+io.on("connection", (socket) => {
+  const currentUserId = socket.user.id.toString();
+  console.log(`👤 User connected: ${currentUserId} (Socket: ${socket.id})`);
+
+  // Pro Trick: Force user into a private room named after their own User ID.
+  // This allows you to message a user across all their open devices/tabs easily.
+  socket.join(currentUserId);
+
+  // Mark user as online in your database or Redis cache here...
+
+  // Handle 1:1 Messages
+  socket.on("send_private_message", async (data, acknowledge) => {
+    const { recipientId, messageText, temporaryId } = data;
+
+    if (!recipientId || !messageText) {
+      return acknowledge({ status: "error", error: "Missing payload details" });
+    }
+
+    try {
+      // Step A: Persist to your database (MongoDB, Postgres, etc.) FIRST
+      const savedMessage = await saveMessageToDatabase({
+        senderId: currentUserId,
+        recipientId,
+        text: messageText,
+      });
+
+      // Step B: Direct the message exclusively to the recipient's personal room
+      io.to(recipientId.toString()).emit("receive_private_message", {
+        message: savedMessage,
+        temporaryId // Pass back to help client match the UI state
+      });
+
+      // Step C: Trigger callback acknowledgment back to the sender
+      acknowledge({
+        status: "ok",
+        message: savedMessage
+      });
+
+    } catch (error) {
+      console.error("Failed to process message:", error);
+      acknowledge({ status: "error", error: "Failed to deliver message" });
+    }
+  });
+    socket.on("typing_status", ({ recipientId, isTyping }) => {
+    io.to(recipientId.toString()).emit("user_typing", {
+      senderId: currentUserId,
+      isTyping
+    });
+  });
+
+  // Disconnection cleanup
+  socket.on("disconnect", () => {
+    console.log(`🔌 User disconnected: ${currentUserId}`);
+    // Update online status in database or cache here...
+    
+    try {
+    const setOffline = await pool.query(`
+      UPDATE users 
+      SET is_active = false 
+      WHERE id = $1;
+    `,[currentUserId]);
+    acknowledge({
+        status: "ok",
+        message: "user is disconnected"
+      });
+  } catch (err) {
+    console.error('Database disconnect error:', err);
+    return acknowledge({ status: "error", error: "database error occurred" });
+    }
+  });
+});
+
+async function saveMessageToDatabase({ senderId, recipientId, text }) {
+  const newMsg = await pool.query(
+`
+INSERT INTO messages
+(
+    sender_id,
+    receiver_id,
+    content
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3
+)
+
+RETURNING *;
+`,
+[
+    senderId,
+    recipientId,
+    text.trim()
+]);
+  return { 
+    id: newMsg.id, 
+    senderId: newMsg.sender_id, 
+    recipientId: newMsg.receiver_id,
+    text: newMsg.content,
+    createdAt: newMsg.created_at
+  }
+  }
+
+//************
 //  Background Cleanup Loop (The Inactivity Sweeper)
 // Runs every 30 seconds to catch users who closed their browser/lost network connection
 const OFFLINE_TIMEOUT_INTERVAL = '2 minutes'; 
@@ -346,37 +491,6 @@ setInterval(async () => {
     console.error('Background status cleanup failed:', err);
   }
 }, 120000); // Check every 2 minutes
-
-
-
-io.on('connection', (socket) => {
-console.log('⚡ A client connected to Express via Socket.io!');
-  // This middleware triggers on every single incoming event packet from this client
-  socket.use((packet, next) => {
-    try{
-    const eventName = packet[0]; // The name of the event (e.g., 'sendMessage')
-    const eventData = packet[1]; // The data payload sent with the event
-
-    // Trigger an action: Log or validate the specific incoming action
-    console.log(`[Action Triggered] Client ${socket.id} sent event: "${eventName}" with data:`, eventData);
-
-    // Example validation action: Block the event if it violates a rule
-    if (eventName === 'chatMessage' && eventData.includes('bad_word')) {
-      return next(new Error('Inappropriate content blocked'));
-    }
-
-    next(); // Allow the event to reach its regular socket.on() listener
-  } catch (error) {
-    console.error(error)
-  return;
-    }
-  });
-
-  // Regular event listener that runs after packet middleware passes
-  socket.on('chatMessage', (msg) => {
-    io.emit('broadcastMessage', msg);
-  });
-});
 
 
 //start server
