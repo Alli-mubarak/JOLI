@@ -818,6 +818,7 @@ function startHeartbeat() {
   sendPing();
 
   // Send a heartbeat every 30 seconds
+  alert("about to ping");
   heartbeatInterval = setInterval(sendPing, 30000);
 }
 
@@ -865,7 +866,4 @@ window.addEventListener('visibilitychange', () => {
   }
 });
 
-window.addEventListener('beforeunload', ()=>{
-  stopHeartbeat();
-});
-  
+window.addEventListener('beforeunload', stopHeartbeat);
