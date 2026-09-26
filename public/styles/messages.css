@@ -420,6 +420,7 @@ main{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: pink,;
 }
 .ec-f-details p{
   font-size:1.1rem;
@@ -436,6 +437,10 @@ main{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: red;
+}
+.ec-m-details small{
+  background: green;
 }
 @media screen and (min-width:762px){
   /* later styling */
