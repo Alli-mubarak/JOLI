@@ -414,7 +414,7 @@ io.on("connection", (socket) => {
   });
 
   // Disconnection cleanup
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async() => {
     console.log(`🔌 User disconnected: ${currentUserId}`);
     // Update online status in database or cache here...
     
