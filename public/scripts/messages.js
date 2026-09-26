@@ -330,7 +330,7 @@ function showFriend(f){
    <img class="f-pic" src=${f.friend_profile_picture || '/images/default-user.png'} alt="friend picture" loading="lazy"/>
    <p class="f-username">${f.friend_username}</p>
    </div>
-   ${f.friend_is_active? `<div class="online stat"></div>` : `<div class="online stat"></div>`}
+   ${f.friend_is_active? `<div class="online stat"></div>` : `<div class="offline stat"></div>`}
   </div>
   `;
   fContainer.innerHTML += htmlEl;
