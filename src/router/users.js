@@ -339,7 +339,7 @@ router.get('/v1/get-users', checkSession, limiter, async(req, res) => {
 });
 
 //change user visibility to active
-router.post('/heartbeat', async (req, res) => {
+router.post('/v1/heartbeat', async (req, res) => {
   if(!req.user || !req.isAuthenticated()){
       return res.json({
         error: "User not logged in"
@@ -367,7 +367,7 @@ router.post('/heartbeat', async (req, res) => {
 });
 
 // Explicit Disconnect Endpoint api that changes visibility 
-router.post('/disconnect', async (req, res) => {
+router.post('/v1/disconnect', async (req, res) => {
   if(!req.user || !req.isAuthenticated()){
       return res.json({
         error: "User not logged in"
