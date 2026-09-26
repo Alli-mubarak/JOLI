@@ -818,7 +818,6 @@ function startHeartbeat() {
   sendPing();
 
   // Send a heartbeat every 30 seconds
-  alert("about to ping");
   heartbeatInterval = setInterval(sendPing, 30000);
 }
 
@@ -851,7 +850,7 @@ async function sendPing() {
    console.error("Heartbeat failed", err);
    alert("error changing presence to - online");
  });
-    if(response.ok) alert("user is now offline");
+    if(response.ok) alert("user is now online");
   }catch(err){
     console.error(err);
     alert("error occurred while updating presence - online");
