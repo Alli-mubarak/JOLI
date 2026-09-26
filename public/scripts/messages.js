@@ -153,7 +153,7 @@ async function showExistingConversation(c){
         </div>
         <div class="ec-m-details">
           <p>${c.last_message}</p>
-          <small>${c.updated_at}</small>
+          <small>${getReqTime(c.updated_at)}</small>
         </div>
       </div>
     </div>
