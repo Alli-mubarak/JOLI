@@ -134,9 +134,10 @@ async function showExistingConversation(c){
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
     }else{
-      frId = currentUserId
-      frPic = userPic.src || "/images/default-user.png"
-      frUsername = pUsername.textContent
+      const fr = await friendships.filter(f => {f.friend_id === c.user_id})
+      frId = c.user_id
+      frPic = fr.friend_profile_picture || "/images/default-user.png"
+      frUsername = fr.friend_username
     }
   
     const htmlEl = `
@@ -148,7 +149,7 @@ async function showExistingConversation(c){
           <div class="online stat"></div>
         </div>
         <div class="ec-m-details">
-          <p>${c.last_messqge}</p>
+          <p>${c.last_message}</p>
           <small>${c.updated_at}</small>
         </div>
       </div>
