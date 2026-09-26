@@ -81,9 +81,10 @@ async function getConversations(){
          await conversations.forEach(c => {showExistingConversation(c)});
         const existingConversations = document.querySelectorAll('.ec-card');
        await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
-          }catch(err){
+        
         }else{
-          notify(response, "error");
+          notify("error getting conversations", "error");
+          console.error(response);
         }
   }catch(err){
     console.error(err);
