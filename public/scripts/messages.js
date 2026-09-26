@@ -77,7 +77,8 @@ async function getConversations(){
             cPreviewContainer.innerHTML = `<p>You have not started a conversation yet, start one now</p>`;
             return 
           }
-          alert(conversations);
+          cPreviewContainer.innerHTML =  "";
+          conversations.forEach(c => {showExistingConversation(c)});
         }else{
           notify(response, "error");
         }
@@ -122,6 +123,42 @@ async function getFriends(){
         console.error("Error fetching friends :", err);
        notify("error occurred while fetching friends", "error");
     alert("server error");
+  }
+}
+
+async function showExistingConversation(c){
+  try{
+    let frPic, frId, frUsername
+    if(currentUserId === c.user_id){
+      frId = c.friend_id
+      frPic = c.friend_pic || "/images/default-user.png" 
+      frUsername = c.friend_username
+    }else{
+      frId = currentUserId
+      frPic = userPic.src || "/images/default-user.png"
+      frUsername = pUsername.textContent
+    }
+  
+    const htmlEl = `
+    <div class="ec-card" data-user=${frId}>
+      <img src=${frPic} alt="friend picture" />
+      <div class="ec-details">
+        <div class="ec-f-details">
+          <p>${frUsername}</p>
+          <div class="online stat"></div>
+        </div>
+        <div class="ec-m-details">
+          <p>${c.last_messqge}</p>
+          <small>${c.updated_at}</small>
+        </div>
+      </div>
+    </div>
+    `;
+    cPreviewContainer.innerHTML += htmlEl;
+  }
+  catch(err){
+    console.error(err)
+    notify("error display existing conversations", "error");
   }
 }
 
