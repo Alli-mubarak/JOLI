@@ -840,11 +840,9 @@ async function stopHeartbeat() {
     if(response.ok){ 
       userStat.classList.remove("online");
       userStat.classList.add("offline");
-      alert("user is now offline");
     }
   }catch(err){
     console.error(err)
-    alert("error occurred while updating presence - offline");
   }
 }
 
@@ -858,15 +856,13 @@ async function sendPing() {
     headers: { 'Content-Type': 'application/json' }
   }).catch(err => {
    console.error("Heartbeat failed", err);
-   alert("error changing presence to - online");
  });
     if(response.ok){ 
       userStat.classList.remove("offline");
       userStat.classList.add("online");
-      alert("user is now online")};
+    }
   }catch(err){
     console.error(err);
-    alert("error occurred while updating presence - online");
   }
 }
    
