@@ -425,14 +425,15 @@ main{
 .ec-f-details p{
   font-size:1.1rem;
   font-weight:600;
-  width: 100%;
+  width:calc(100% - 115px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  background: blue;
 }
 .ec-m-details p{
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 500;
   width:calc(100% - 115px);
   white-space: nowrap;
   overflow: hidden;
