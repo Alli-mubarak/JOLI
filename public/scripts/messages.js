@@ -403,6 +403,11 @@ cFormInput.oninput = () => {
 
 async function sendMessage(id){
   try{
+  if(currentUserId === id) {
+    alert("you cannot message yourself");
+    console.log(fPic, fUsername);
+    return;
+  }
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
   if(conversations && !hasConversation){
     try{
