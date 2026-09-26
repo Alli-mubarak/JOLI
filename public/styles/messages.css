@@ -386,6 +386,33 @@ main{
   border-radius: 20px;
   color: #888;
 }
+.ec-card{
+  width:100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:20px;
+  overflow:hidden;
+}
+.ec-card > img{
+  width:100px;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius:30px;
+}
+.ec-details{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.ec-f-details, .ec-m-details{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 @media screen and (min-width:762px){
   /* later styling */
   
