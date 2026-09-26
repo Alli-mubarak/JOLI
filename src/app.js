@@ -24,8 +24,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import jwt from 'jsonwebtoken';
 import http from 'http';
 import { Server } from 'socket.io';
-import { createClient } from 'redis';
-import { createAdapter } from '@socket.io/redis-adapter';
 import 'ejs';
 
 
@@ -332,14 +330,7 @@ const io = new Server(server, {
   pingInterval: 10000
 });
 
-//Setup Redis Adapter for Horizontal Scaling (Crucial for Social Media apps)
-const pubClient = createClient({ url: process.env.REDIS_URL || 'redis://localhost:6379' });
-const subClient = pubClient.duplicate();
 
-Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
-  io.adapter(createAdapter(pubClient, subClient));
-  console.log("🚀 Socket.IO Redis Adapter connected successfully");
-});
 
 //Pro Middleware: Authenticate via JWT before connection is allowed
 io.use((socket, next) => {
@@ -363,7 +354,7 @@ io.use((socket, next) => {
 });
 
 //Connection & 1:1 Chat Architecture
-io.on("connection", (socket) => {
+io.on("connection", async(socket) => {
   const currentUserId = socket.user.id.toString();
   console.log(`👤 User connected: ${currentUserId} (Socket: ${socket.id})`);
 
@@ -372,6 +363,17 @@ io.on("connection", (socket) => {
   socket.join(currentUserId);
 
   // Mark user as online in your database or Redis cache here...
+  try {
+    const setOnline = await pool.query(`
+      UPDATE users 
+      SET is_active = true 
+      WHERE id = $1;
+    `,[currentUserId]);
+    console.log(currentUserId, "is active");
+  } catch (err) {
+    console.error('Database disconnect error:', err);
+    return ;
+  }
 
   // Handle 1:1 Messages
   socket.on("send_private_message", async (data, acknowledge) => {
