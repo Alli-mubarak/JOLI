@@ -176,7 +176,6 @@ async function openExistingConversation(el){
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
   cContainer.classList.remove("hidden");
-  smBtn.click();
   }catch(err){
     notify("could not open conversation, try later", "error");
     console.error(err);
