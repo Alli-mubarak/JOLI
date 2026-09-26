@@ -32,6 +32,8 @@ const nCloser = document.getElementById("n-closer");
 const imagesOnPage = document.querySelectorAll('img');
 const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
+const statContainer = document.getElementById("user-stat");
+const userStat = document.getElementById("user-status");
 let postsContainer = document.getElementById("posts");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
@@ -83,6 +85,8 @@ function enableScrolling(){
   document.body.style.width = '';
   window.scrollTo(0, scrollPosition);
 }
+
+statContainer.classList.add("hidden");
 
 userPic.onclick = () =>{
       menuBox.style.left = "0";
@@ -192,6 +196,7 @@ async function checkAuthStatus() {
         if (data.loggedIn) {
           canPost = true;
           isAuthorised = true;
+          statContainer.classList.remove("hidden");
           await startHeartbeat();
           currentUserId = data.user.id;
         signInLink.classList.add("hidden");
@@ -223,6 +228,7 @@ async function checkAuthStatus() {
           signInLink.classList.remove("hidden");
           userPic.classList.add("hidden");
           currentUserId = "";
+          statContainer.classList.add("hidden");
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
@@ -831,7 +837,11 @@ async function stopHeartbeat() {
     headers: { 'Content-Type': 'application/json' },
     keepalive: true // Crucial: ensures the request finishes even if the page closes
   });
-    if(response.ok) alert("user is now offline");
+    if(response.ok){ 
+      userStat.classList.remove("online");
+      userStat.classList.add("offline");
+      alert("user is now offline");
+    }
   }catch(err){
     console.error(err)
     alert("error occurred while updating presence - offline");
@@ -850,7 +860,10 @@ async function sendPing() {
    console.error("Heartbeat failed", err);
    alert("error changing presence to - online");
  });
-    if(response.ok) alert("user is now online");
+    if(response.ok){ 
+      userStat.classList.remove("offline");
+      userStat.classList.add("online");
+      alert("user is now online")};
   }catch(err){
     console.error(err);
     alert("error occurred while updating presence - online");
