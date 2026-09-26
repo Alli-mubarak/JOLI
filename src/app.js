@@ -324,7 +324,28 @@ const io = new Server(server, {
   } 
 });
 
-
+//  Background Cleanup Loop (The Inactivity Sweeper)
+// Runs every 30 seconds to catch users who closed their browser/lost network connection
+const OFFLINE_TIMEOUT_INTERVAL = '45 seconds'; 
+setInterval(async () => {
+  try {
+    // Flip users to inactive if NOW minus last_seen is greater than our timeout
+    const query = `
+      UPDATE users 
+      SET is_active = false 
+      WHERE is_active = true 
+        AND last_seen < NOW() - INTERVAL '${OFFLINE_TIMEOUT_INTERVAL}';
+    `;
+    
+    const result = await pool.query(query);
+    
+    if (result.rowCount > 0) {
+      console.log(`Automatically marked ${result.rowCount} inactive users as offline.`);
+    }
+  } catch (err) {
+    console.error('Background status cleanup failed:', err);
+  }
+}, 30000); // Check every 30 seconds
 
 
 
