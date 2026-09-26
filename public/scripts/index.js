@@ -192,6 +192,7 @@ async function checkAuthStatus() {
         if (data.loggedIn) {
           canPost = true;
           isAuthorised = true;
+          await startHeartbeat();
           currentUserId = data.user.id;
         signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture || "images/default-user.png";
@@ -809,3 +810,49 @@ try {
 }
 
 checkAuthStatus();
+
+let heartbeatInterval = null;
+
+function startHeartbeat() {
+  if(!isAuthorised) return;
+  sendPing();
+
+  // Send a heartbeat every 30 seconds
+  heartbeatInterval = setInterval(sendPing, 30000);
+}
+
+async function stopHeartbeat() {
+  if(!isAuthorised) return;
+  clearInterval(heartbeatInterval);
+  // Tell the server immediately that the user left
+  fetch('/api/user/disconnect', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    keepalive: true // Crucial: ensures the request finishes even if the page closes
+  });
+}
+
+async function sendPing() {
+  // Don't waste server resources if the tab is minimized or hidden
+  if (document.visibilityState === 'hidden') return; 
+
+  fetch('/api/user/heartbeat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }).catch(err => console.error("Heartbeat failed", err));
+}
+
+// Automatically handle page exit/close
+window.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    // Optional: You can choose to stop pinging or instantly log out here
+    stopHeartbeat();
+  clearInterval(heartbeatInterval);
+  }
+});
+
+window.addEventListener('beforeunload', ()=>{
+  stopHeartbeat();
+  clearInterval(heartbeatInterval);
+});
+  
