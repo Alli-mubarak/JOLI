@@ -79,8 +79,8 @@ async function getConversations(){
           }
           cPreviewContainer.innerHTML =  "";
          await conversations.forEach(c => {showExistingConversation(c)});
-          const existingConversations = document.querySelectorAll('.ec-card');
-         await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
+   //       const existingConversations = document.querySelectorAll('.ec-card');
+    //     await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
           }catch(err){
         }else{
           notify(response, "error");
