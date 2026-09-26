@@ -79,8 +79,8 @@ async function getConversations(){
           }
           cPreviewContainer.innerHTML =  "";
          await conversations.forEach(c => {showExistingConversation(c)});
-   //       const existingConversations = document.querySelectorAll('.ec-card');
-    //     await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
+        const existingConversations = document.querySelectorAll('.ec-card');
+       await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
           }catch(err){
         }else{
           notify(response, "error");
@@ -167,7 +167,20 @@ async function showExistingConversation(c){
   }
 }
 
-
+async function openExistingConversation(el){
+  try{
+  fUsername = el.querySelector(".ef-username").textContent;
+  fPic = el.querySelector(".ef-pic").src;
+  cFId = el.getAttribute("data-user");
+  cPic.src = fPic;
+  cUsername.innerHTML = fUsername;
+  cContainer.classList.remove("hidden");
+  smBtn.click();
+  }catch(err){
+    notify("could not open conversation, try later", "error");
+    console.error(err);
+  }
+}
 
 smBtn.onclick = (e) =>{
   const btn = e.currentTarget;
