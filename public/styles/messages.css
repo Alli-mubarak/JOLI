@@ -417,7 +417,7 @@ main{
   gap:10px;
 }
 .ec-f-details, .ec-m-details{
-  width:calc(100% - 70px);
+  width:100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
