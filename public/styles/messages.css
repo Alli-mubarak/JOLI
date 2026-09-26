@@ -246,17 +246,7 @@ main{
     font-size:1.1rem;
     font-weight:500;
   }
-  .stat{
-    border-radius: 50%;
-    width: 6px; height:6px;
-    
-  }
-  .online{
-    background: var(--primary-color);
-  }
-  .offline{
-    background: #ccc;
-  }
+
   mark.f-match {
     background-color: var(--primary-color);
     color: #000;
