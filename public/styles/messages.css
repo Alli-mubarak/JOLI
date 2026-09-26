@@ -108,9 +108,10 @@ main{
   gap:10px;
   align-items:center;
   justify-content:center;
-  width:100%;
+  width:100vw;
   padding: 0 10px;
   position: relative;
+  overflow: hidden;
 }
 .c-loader{
   background: #fff;
@@ -394,7 +395,7 @@ main{
   align-items: center;
   justify-content: start;
   gap:15px;
-/*  overflow:hidden;*/
+ overflow:hidden;
   cursor: pointer;
   border-radius: 10px;
   padding: 10px;
@@ -420,7 +421,6 @@ main{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: pink;
 }
 .ec-f-details p{
   font-size:1.1rem;
@@ -429,7 +429,6 @@ main{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: blue;
 }
 .ec-m-details p{
   font-size: 0.9rem;
@@ -438,10 +437,10 @@ main{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: red;
 }
 .ec-m-details small{
-  background: green;
+  font-weight: 500;
+  font-size: 0.8rem;
 }
 @media screen and (min-width:762px){
   /* later styling */
