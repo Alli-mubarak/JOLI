@@ -50,7 +50,7 @@ router.get('/user/conversations', checkSession,  async (req, res) => {
   }
 
     const userId = req.user.id;
-    const query = "SELECT * FROM conversations WHERE (user_id = $1 OR friend_id = $1)"
+    const query = "SELECT * FROM conversations WHERE (user_id = $1 OR friend_id = $1) ORDER BY updated_at DESC"
 
     const result = await pool.query(query, [userId]);
 
