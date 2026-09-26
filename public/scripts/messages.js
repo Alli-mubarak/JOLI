@@ -363,6 +363,7 @@ cFormInput.oninput = () => {
 }
 
 async function sendMessage(id){
+  try{
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
   if(conversations && !hasConversation){
     try{
@@ -390,12 +391,19 @@ async function sendMessage(id){
       }else{
     notify(response, "error")
      }
+    }
     catch(err){
       console.error(err);
       alert("error occured while sending message");
     }
   }else{
     alert("conversation already exists");
+  }
+
+
+  }catch(err){
+    console.error(err)
+    notify("error sending message","error");
   }
 }
 
