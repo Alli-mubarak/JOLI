@@ -283,7 +283,17 @@ async function openConversation(f){
 async function showExistingMessage(m){
   try{
   console.log(m)
-  const msgEl = `<p class="c-message">${m.content} <small>${getReqTime(m.created_at)}</small></p>`;
+  let mClass;
+  if(m.sender_id === currentUserId){
+    mClass = "mine";
+  }else{
+    mClass = "friend"
+  }
+  const msgEl = `
+  <div class="c-message">
+  <p class=${mClass}>${m.content} <small>${getReqTime(m.created_at)}</small></p>
+  </div>
+  `;
   cmContainer.innerHTML += msgEl
   }
   catch(err){
@@ -450,12 +460,13 @@ function initChatSocket() {
   socket.on("connect", () => {
       console.log("Connected to chat server! ");
     canSendMessage = true;
+    typingIndicator.textContent = "connected";
       alert("socket connected!");
     });
 socket.on("reconnect", (attemptNumber) => {
   console.log(`✅ Reconnected successfully on attempt #${attemptNumber}`);
   canSendMessage = true;
-  alert("reconnected");
+  typingIndicator.textContent = "reconnecting";
 });
   // Handle incoming global messages
   socket.on("receive_private_message", (data) => {
@@ -481,7 +492,8 @@ socket.on("reconnect", (attemptNumber) => {
   socket.on("connect_error", (err) => {
     console.error("Socket Auth/Connection Error:", err.message);
     canSendMessage = false;
-    alert("could not connect");
+    alert("could not connect to socket");
+    typingIndicator.textContent = "reconnecting..";
   });
   }catch(err){
     notify("error starting chat socket", "error");
