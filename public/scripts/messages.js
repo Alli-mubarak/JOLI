@@ -280,6 +280,17 @@ async function openConversation(f){
   }
 }
 
+function getTime(t){
+const options = {
+  timeZone: "Africa/Lagos", // Target local time zone
+  dateStyle: "full",
+  timeStyle: "medium",
+};
+
+const localizedString = new Intl.DateTimeFormat("en-US", options).format(new Date(t));
+return localizedString  
+}
+
 async function showExistingMessage(m){
   try{
   console.log(m)
@@ -291,7 +302,7 @@ async function showExistingMessage(m){
   }
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class=${mClass}>${m.content}</p><small class="m-time ${mClass}">${getReqTime(m.created_at)}</small>
+  <p class=${mClass}>${m.content}</p><small class="m-time ${mClass}">${getTime(m.created_at)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
@@ -441,7 +452,9 @@ if(!sc){
 
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, (response) => {
-    console.log(response.message)
+    const data = await response.json();
+    const message = data.message
+    console.log(message);
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
       alert(dummyMsg);
@@ -476,13 +489,10 @@ function initChatSocket() {
   socket.on("connect", () => {
       console.log("Connected to chat server! ");
     canSendMessage = true;
-    typingIndicator.textContent = "connected";
+    typingIndicator.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+    typingIndicator.style.color = "green";
     });
-socket.on("reconnect", (attemptNumber) => {
-  console.log(`✅ Reconnected successfully on attempt #${attemptNumber}`);
-  canSendMessage = true;
-  typingIndicator.textContent = "reconnecting";
-});
+    
   // Handle incoming global messages
   socket.on("receive_private_message", (data) => {
     const { message } = data;
@@ -507,7 +517,8 @@ socket.on("reconnect", (attemptNumber) => {
   socket.on("connect_error", (err) => {
     console.error("Socket Auth/Connection Error:", err.message);
     canSendMessage = false;
-    typingIndicator.textContent = ".•.•.";
+    typingIndicator.innerHTML = `<i class="fa-solid fa-circle-notch"></i>`;
+    typingIndicator.style.color = "red";
   });
   }catch(err){
     notify("error starting chat socket", "error");
