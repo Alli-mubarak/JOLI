@@ -519,9 +519,19 @@ async function appendMessageToDOM(m){
 function initChatSocket() {
   try{
     if(!isAuthorised) return;
-  // Establish connection but don't configure multiple times
-//  socket = io("https://joli-indol.vercel.app");
-  socket = io();
+  // Establish connection 
+  socket = io({
+  autoConnect: false,
+  // CRITICAL: Forces direct WebSocket connection, skipping HTTP handshake entirely
+  transports: ["websocket"], 
+  
+  // Aggressive timeout tuning for shaky networks
+  reconnectionAttempts: 10,
+  reconnectionDelay: 500,     // Start trying again in 500ms if dropped
+  reconnectionDelayMax: 2000,  // Never wait more than 2 seconds to retry
+  timeout: 10000                // Give up on a broken try after 10 seconds
+});
+    
   socket.on("connect", () => {
       console.log("Connected to chat server! ");
     canSendMessage = true;
