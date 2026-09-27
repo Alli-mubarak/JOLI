@@ -450,6 +450,7 @@ RETURNING *;
     recipientId,
     text.trim()
 ]);
+  console.log(newMsg);
   return { 
     id: newMsg.id, 
     senderId: newMsg.sender_id, 
