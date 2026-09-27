@@ -281,14 +281,11 @@ async function openConversation(f){
 }
 
 function getTime(t){
-const options = {
-  timeZone: "Africa/Lagos", // Target local time zone
-  dateStyle: "full",
-  timeStyle: "medium",
-};
-
-const localizedString = new Intl.DateTimeFormat("en-US", options).format(new Date(t));
-return localizedString  
+const localDate = new Date(t);
+return localDate.toLocaleTimeString([], { 
+  hour: '2-digit', 
+  minute: '2-digit' 
+});
 }
 
 async function showExistingMessage(m){
