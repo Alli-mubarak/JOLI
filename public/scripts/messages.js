@@ -476,4 +476,4 @@ function initChatSocket() {
 }
 
 
-initChatSocket()
+//initChatSocket()
