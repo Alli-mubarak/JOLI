@@ -349,6 +349,7 @@ main{
   align-items: center;
   justify-content: end;
   width: 100%;
+  background: red;
 }
 .c-message{
   width: 100%;
