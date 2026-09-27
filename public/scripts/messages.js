@@ -24,8 +24,8 @@ const postMenuCloser = document.getElementById("p-closer-space");
 const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
-
-  let imgArray, currIndex, show_friends, cFId, fPic, fUsername;
+const typingIndicator = document.getElementById("typing-indicator");
+  let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout;
   let inViewMode = false;
 let conversations = [];
   
@@ -176,6 +176,7 @@ async function openExistingConversation(el){
   cFId = el.getAttribute("data-user");
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
+    await fetchMessages(cFid);
   cContainer.classList.remove("hidden");
   }catch(err){
     notify("could not open conversation, try later", "error");
@@ -270,6 +271,7 @@ async function openConversation(f){
   cFId = f.id
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
+  await fetchMessages(cFid);
   cContainer.classList.remove("hidden");
   smBtn.click();
   }catch(err){
@@ -277,6 +279,41 @@ async function openConversation(f){
     console.error(err);
   }
   
+}
+
+async function showExistingMessages(m){
+  alert("hey");
+}
+
+async function fetchMessages(id){
+  try{
+    const response = await fetch('/api/message/friend/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({friendId: id})
+  });
+    
+        if (response.ok) {
+          const data = await response.json();
+         const pMessages = data.messages
+          if(pMessages.length < 1){
+            cmContainer.innerHTML = `<p>You have not started a conversation yet, send a message now</p>`;
+            return ;
+          }
+          cmContainer.innerHTML =  "";
+         await pMessages.forEach(m => {showExistingMessages(m)});
+        
+        }else{
+          notify("error getting messages", "error");
+          console.error(response);
+        }
+  }
+  catch(err){
+    console.error(err);
+    alert("error fetching previous messages");
+  }
 }
 
 cCloser.onclick = () => {
@@ -294,6 +331,7 @@ cForm.onsubmit = (e) => {
   sendMessage(cFId);
 }
 
+
 cFormInput.oninput = () => {
   if(cFormInput.value.length < 1){
     cFormBtn.disabled = true;
@@ -306,13 +344,25 @@ cFormInput.oninput = () => {
   }
 }
 
-async function sendMessage(id){
-  try{
-  
-    console.log(fPic, fUsername, id);
-    
+ cFormInput.addEventListener("keydown", () => {
+  if (!cFId) return;
+
+  // Emit "typing" status as true
+  socket.emit("typing_status", { recipientId: cFId, isTyping: true });
+
+  // Clear timeout to extend the typing duration
+  clearTimeout(typingTimeout);
+
+  // Set timeout to automatically mark user as stopped after 2 seconds
+  typingTimeout = setTimeout(() => {
+    socket.emit("typing_status", { recipientId: cFId, isTyping: false });
+  }, 2000);
+});
+}
+
+async function sortConversation(id){
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
-  if(conversations && !hasConversation){
+  if(conversations && hasConversation) return true;
     try{
       const payload = {
         friend_id: id,
@@ -330,28 +380,98 @@ async function sendMessage(id){
   });
 
   if (response.ok) {
-    const result = await response.json();
-    
-      alert("conversation created");
     getConversations();
-    
+    return true;
       }else{
-    notify(response, "error");
     console.error(response);
+    return false
      }
     }
     catch(err){
       console.error(err);
-      alert("error occured while sending message");
+    return false
     }
-  }else{
-    alert("conversation already exists");
+}
+
+async function sendMessage(id){
+  try{
+  
+    console.log(fPic, fUsername, id);
+    
+const sc = await sortConversation(id);
+if(!sc){
+  console.error(err)
+    notify("error sorting conversation","error");
+  alert("error sorting conversation");
+  return;
+}
+    // Payload structure mapping directly to backend properties
+  const mPayload = {
+    recipientId: id,
+    messageText: cFormInput.value.trim()
+  };
+
+  // Dispatch via socket with callback acknowledgement function
+  socket.emit("send_private_message", mPayload, (response) => {
+    
+    if (response.status === "ok") {
+      alert("message sent");
+      
+    } else {
+      
+    alert("message not sent");
   }
-
-
+  
+  });
+  
   }catch(err){
     console.error(err)
     notify("error sending message","error");
+    alert("error sending message");
   }
 }
 
+async function appendMessageToDOM(message){
+  console.log(message);
+}
+
+
+function initChatSocket() {
+  // Establish connection but don't configure multiple times
+  socket = io("https://joli-indol.vercel.app");
+  
+  socket.on("connect", () => {
+      console.log("Connected to server! ");
+      alert("socket connected!");
+    });
+
+  // Handle incoming global messages
+  socket.on("receive_private_message", (data) => {
+    const { message } = data;
+
+    // append to the DOM 
+    if (message.senderId === currentUserId) {
+      appendMessageToDOM(message);
+    } else {
+      // Trigger a sidebar badge/notification for the other friend
+      appendMessageToDOM(message);
+      console.log(`Unread message from: ${message.senderId}`);
+    }
+  });
+
+  // Handle dynamic typing updates
+  socket.on("user_typing", ({ senderId, isTyping }) => {
+    if (senderId === cFId) {
+      typingIndicator.textContent = isTyping ? "is typing..." : "";
+    }
+  });
+
+  socket.on("connect_error", (err) => {
+    console.error("Socket Auth/Connection Error:", err.message);
+    alert("could not connect");
+  });
+}
+
+
+initChatSocket()
+alert("loaded");
