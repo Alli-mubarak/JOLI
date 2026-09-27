@@ -176,7 +176,7 @@ async function openExistingConversation(el){
   cFId = el.getAttribute("data-user");
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
-    await fetchMessages(cFid);
+    await fetchMessages(cFId);
   cContainer.classList.remove("hidden");
   }catch(err){
     notify("could not open conversation, try later", "error");
