@@ -374,7 +374,7 @@ main{
 .c-message p.mine{
   background: #bbffaa;
   margin-left:auto;
-  border-radius: 10px 0 10px 10px;
+  border-radius: 12px 12px 0 12px;
 }
   .c-message small.mine{
     margin-left:auto;
@@ -382,7 +382,7 @@ main{
 .c-message p.others{
   background: #eee;
   margin-right:auto;
-  border-radius: 0 10px 10px 10px;
+  border-radius: 0 12px 12px 12px;
 }
     .c-message small.others{
     margin-right:auto;
