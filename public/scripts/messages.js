@@ -285,10 +285,10 @@ async function openConversation(f){
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
   await fetchMessages(cFId);
-  cmContainer.scrollTo({
+  await cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
-});
+  });
   cContainer.classList.remove("hidden");
   smBtn.click();
   }catch(err){
@@ -360,7 +360,7 @@ async function fetchMessages(id){
 }
 
 cCloser.onclick = () => {
-  getConversations();
+  await getConversations();
   cContainer.classList.add("hidden");
   cmContainer.innerHTML = "";
   cForm.reset();
