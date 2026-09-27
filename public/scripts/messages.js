@@ -436,6 +436,7 @@ async function appendMessageToDOM(message){
 
 
 function initChatSocket() {
+  try{
   // Establish connection but don't configure multiple times
   socket = io("https://joli-indol.vercel.app");
   
@@ -469,15 +470,11 @@ function initChatSocket() {
     console.error("Socket Auth/Connection Error:", err.message);
     alert("could not connect");
   });
-}
-
-
-//initChatSocket()
-}
-setTimeout(()=>{
-  try{run()}
-  catch(err){
+  }catch(err){
+    notify("error starting chat socket", "error");
     console.error(err);
   }
-},5000);
-alert("loaded");
+}
+
+
+initChatSocket()
