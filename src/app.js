@@ -322,12 +322,7 @@ const HALF_HOUR = 30 * 60 * 1000;
 
 // socket io configuration 
 const io = new Server(server, {
-  cors: {
-    origin: "https://joli-indol.vercel.app", 
-    methods: ["GET", "POST", "DELETE"],
-    credentials: true
-  },
-    // Pro Tip: Lower timeouts for quick dead-connection detection on mobile/web
+   // Pro Tip: Lower timeouts for quick dead-connection detection on mobile/web
   pingTimeout: 5000, 
   pingInterval: 10000
 });
