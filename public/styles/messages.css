@@ -352,18 +352,22 @@ main{
 }
 .c-message{
   width: 100%;
-  background: #ddd;
-  padding: 5px;
 }
 .c-message p{
   width: fit-content;
   padding: 10px;
   font-size:1.15rem;
   font-weight:500;
+  max-width: 75%;
+  line-height: 25px;
+    white-space: pre-wrap;
+   display: -webkit-box;
+  -webkit-box-orient: vertical;
+  /* Better for mixed content: wraps normal words nicely, but breaks long URLs */
+  overflow-wrap: anywhere; 
 }
 .c-message small{
   font-size:0.7rem;
-  margin-top: 10px;
 }
 .c-message p.mine{
   background: lightgreen;
