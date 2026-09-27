@@ -1,3 +1,4 @@
+async function run(){
 const cPreviewContainer = document.querySelector(".messages");
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
@@ -474,4 +475,11 @@ function initChatSocket() {
 
 
 //initChatSocket()
+}
+setTimeout(()=>{
+  try{run()}
+  catch(err){
+    console.error(err);
+  }
+},5000);
 alert("loaded");
