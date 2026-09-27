@@ -449,12 +449,10 @@ if(!sc){
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, async(response) => {
      const message = await response.message
-    console.log(message);
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
-      alert(dummyMsg);
       dummyMsg.querySelector(".m-time").textContent = getTime(message.createdAt);
-      
+      dummyMsg.id = message.id;
     } else {
       const dummyMsg = document.getElementById(`${dummyId}`);
     dummyMsg.style.color = "red";
@@ -469,9 +467,19 @@ if(!sc){
   }
 }
 
-async function appendMessageToDOM(message){
-  console.log(message);
-  alert("message received");
+async function appendMessageToDOM(m){
+ try{
+  const msgEl = `
+  <div class="c-message" id=${m.id}>
+  <p class="others">${m.content}</p><small class="m-time others">${getTime(m.created_at)}</small>
+  </div>
+  `;
+  cmContainer.innerHTML += msgEl
+  }
+  catch(err){
+    console.error(err);
+    notify("could not display message", "error");
+  }
 }
 
 
