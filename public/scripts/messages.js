@@ -488,6 +488,7 @@ function initChatSocket() {
     canSendMessage = true;
     typingIndicator.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
     typingIndicator.style.color = "green";
+    cForm.classList.remove("hidden");
     });
     
   // Handle incoming global messages
@@ -516,6 +517,7 @@ function initChatSocket() {
     canSendMessage = false;
     typingIndicator.innerHTML = `<i class="fa-solid fa-circle-notch roll"></i>`;
     typingIndicator.style.color = "red";
+    cForm.classList.add("hidden");
   });
   }catch(err){
     notify("error starting chat socket", "error");
