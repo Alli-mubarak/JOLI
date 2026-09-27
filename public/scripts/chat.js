@@ -1,58 +1,4 @@
-// 1. Global Application State
-const state = {
-  socket: null,
-  currentUserId: currentUserId, // Populated by your auth system
-  activeFriendId: null,            // Tracks who is currently on screen
-  typingTimeout: null
-};
 
-// 2. DOM Elements
-const el = {
-  friendButtons: document.querySelectorAll('.friend-btn'),
-  chatWindow: document.getElementById('chat-window'),
-  chatHeader: document.getElementById('chat-header'),
-  messagesContainer: document.getElementById('messages-container'),
-  typingIndicator: document.getElementById('typing-indicator'),
-  chatForm: document.getElementById('chat-form'),
-  messageInput: document.getElementById('message-input')
-};
-
-// 3. Initialize Socket Connection (Once per session)
-function initChatSocket(jwtToken) {
-  // Establish connection but don't configure multiple times
-  state.socket = io({
-    autoConnect: false,
-    auth: {
-      token: `Bearer ${jwtToken}` // Handshake token for backend middleware
-    }
-  });
-
-  state.socket.connect();
-
-  // Handle incoming global messages
-  state.socket.on("receive_private_message", (data) => {
-    const { message } = data;
-
-    // Only append to the DOM if the message belongs to the current open window
-    if (message.senderId === state.activeFriendId) {
-      appendMessageToDOM(message);
-    } else {
-      // Trigger a sidebar badge/notification for the other friend
-      console.log(`Unread message from: ${message.senderId}`);
-    }
-  });
-
-  // Handle dynamic typing updates
-  state.socket.on("user_typing", ({ senderId, isTyping }) => {
-    if (senderId === state.activeFriendId) {
-      el.typingIndicator.textContent = isTyping ? "Friend is typing..." : "";
-    }
-  });
-
-  state.socket.on("connect_error", (err) => {
-    console.error("Socket Auth/Connection Error:", err.message);
-  });
-}
 
 // 4. Switch Between Friends Safely
 function openChatWithFriend(friendId, friendName) {
@@ -167,8 +113,7 @@ el.friendButtons.forEach(btn => {
 
 // --- Bootstrapping Execution ---
 // Initialize execution with user session token provided on login
-const userMockToken = "YOUR_JWT_TOKEN_HERE";
-initChatSocket(userMockToken);
+initChatSocket();
 
 
 async function run(){
