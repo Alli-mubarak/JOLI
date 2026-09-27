@@ -443,7 +443,11 @@ function initChatSocket() {
     canSendMessage = true;
       alert("socket connected!");
     });
-
+socket.on("reconnect", (attemptNumber) => {
+  console.log(`✅ Reconnected successfully on attempt #${attemptNumber}`);
+  canSendMessage = true;
+  alert("reconnected");
+});
   // Handle incoming global messages
   socket.on("receive_private_message", (data) => {
     const { message } = data;
