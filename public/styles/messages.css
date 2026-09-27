@@ -374,11 +374,17 @@ main{
   margin-left:auto;
   border-radius: 10px 0 10px 10px;
 }
+  .c-message small.mine{
+    margin-left:auto;
+  }
 .c-message p.others{
   background: #eee;
   margin-right:auto;
   border-radius: 0 10px 10px 10px;
 }
+    .c-message small.others{
+    margin-right:auto;
+    }
 #c-form{
   height: 150px;
   padding: 10px;
