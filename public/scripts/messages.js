@@ -436,8 +436,8 @@ function initChatSocket() {
   try{
     if(!isAuthorised) return;
   // Establish connection but don't configure multiple times
-  socket = io("https://joli-indol.vercel.app");
-  
+//  socket = io("https://joli-indol.vercel.app");
+  socket = io();
   socket.on("connect", () => {
       console.log("Connected to chat server! ");
     canSendMessage = true;
