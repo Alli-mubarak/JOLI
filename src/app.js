@@ -451,6 +451,9 @@ RETURNING *;
 ]);
   if(msgQuery.rows && msgQuery.rows.length > 0){
   const newMsg = msgQuery.rows[0];
+  await pool.query(`UPDATE conversations SET last_message = $3 WHERE (user_id = $1 AND friend_id = $2) OR (user_id = $2 AND friend_id = $1)`,
+                                 [senderId, recipientId, text.trim()]);
+  
   return { 
     id: newMsg.id, 
     senderId: newMsg.sender_id, 
