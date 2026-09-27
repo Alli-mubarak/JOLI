@@ -287,7 +287,7 @@ async function showExistingMessage(m){
   if(m.sender_id === currentUserId){
     mClass = "mine";
   }else{
-    mClass = "friend"
+    mClass = "others"
   }
   const msgEl = `
   <div class="c-message">
