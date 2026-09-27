@@ -451,7 +451,7 @@ if(!sc){
   };
 
   // Dispatch via socket with callback acknowledgement function
-  socket.emit("send_private_message", mPayload, (response) => {
+  socket.emit("send_private_message", mPayload, async(response) => {
     const data = await response.json();
     const message = data.message
     console.log(message);
