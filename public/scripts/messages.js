@@ -131,7 +131,7 @@ async function getFriends(){
           }catch(err){
             console.error(err);
           }
-          alert(io)
+          
           initChatSocket()
         } else {
           notify("You have no friends yet", "success",  "add one now!", "/friends");
@@ -286,7 +286,7 @@ async function openConversation(f){
   cUsername.innerHTML = fUsername;
   await fetchMessages(cFId);
   cmContainer.scrollTo({
-  top: messagesContainer.scrollHeight,
+  top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
   cContainer.classList.remove("hidden");
