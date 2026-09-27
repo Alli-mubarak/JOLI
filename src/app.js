@@ -379,6 +379,8 @@ io.on("connection", async(socket) => {
         text: messageText,
       });
 
+ console.log(savedMessage);
+      
       // Step B: Direct the message exclusively to the recipient's personal room
       io.to(recipientId.toString()).emit("receive_private_message", {
         message: savedMessage
