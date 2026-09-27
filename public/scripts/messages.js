@@ -290,7 +290,6 @@ return localDate.toLocaleTimeString([], {
 
 async function showExistingMessage(m){
   try{
-  console.log(m)
   let mClass;
   if(m.sender_id === currentUserId){
     mClass = "mine";
@@ -449,13 +448,12 @@ if(!sc){
 
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, async(response) => {
-    const data = await response.json();
-    const message = data.message
+     const message = response.message
     console.log(message);
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
       alert(dummyMsg);
-      dummyMsg.querySelector(".m-time").textContent = "1m";
+      dummyMsg.querySelector(".m-time").textContent = getTime(message.createdAt);
       
     } else {
       const dummyMsg = document.getElementById(`${dummyId}`);
