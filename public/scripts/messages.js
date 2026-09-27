@@ -448,7 +448,7 @@ if(!sc){
 
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, async(response) => {
-     const message = response.message
+     const message = await response.message
     console.log(message);
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
