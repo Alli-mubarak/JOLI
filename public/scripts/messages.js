@@ -467,6 +467,10 @@ if(!sc){
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
       dummyMsg.querySelector(".m-time").textContent = getTime(message.createdAt);
+      const elBefore = dummyMsg.previousElementSibling;
+        if(elBefore?.tagName === "P"){
+        cmContainer.removeChild(elBefore)
+      }
       dummyMsg.id = message.id;
     } else {
       const dummyMsg = document.getElementById(`${dummyId}`);
