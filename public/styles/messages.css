@@ -347,6 +347,24 @@ main{
   justify-content: end;
   width: 100%;
 }
+.c-message{
+  width: 100%;
+  background: #ddd;
+}
+.c-message p{
+  width: fit-content;
+  padding: 5px;
+}
+.c-message p.mine{
+  background: lightgreen;
+  margin-right:0;
+  border: 10px 0 10px 10px;
+}
+.c-message p.friend{
+  background: pink;
+  margin-left:0;
+  border: 0 10px 10px 10px;
+}
 #c-form{
   height: 150px;
   padding: 10px;
