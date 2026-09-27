@@ -368,6 +368,8 @@ main{
 }
 .c-message small{
   font-size:0.7rem;
+  width: fit-content;
+  display: block;
 }
 .c-message p.mine{
   background: #bbffaa;
