@@ -285,6 +285,7 @@ async function showExistingMessages(m){
 
 async function fetchMessages(id){
   try{
+    alert(id)
     const response = await fetch('/api/message/friend/messages', {
     method: 'POST',
     headers: {
