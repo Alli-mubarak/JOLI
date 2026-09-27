@@ -35,10 +35,10 @@ function performHighlight(keyword) {
   const query = keyword.trim();
   const targets = document.querySelectorAll('.f-username');
 
-// 2. Cache the pristine initial text of each parent so we can reset cleanly
+//  Cache the pristine initial text of each parent so we can reset cleanly
 const originalTexts = Array.from(targets).map(el => el.textContent);
 
-// 3. Main highlight handler
+//  Main highlight handler
   // Reset all elements back to original clean text if query is empty
   if (!query) {
     targets.forEach((el, index) => {
@@ -285,7 +285,6 @@ async function showExistingMessages(m){
 
 async function fetchMessages(id){
   try{
-    alert(id)
     const response = await fetch('/api/message/friend/messages', {
     method: 'POST',
     headers: {
@@ -294,7 +293,6 @@ async function fetchMessages(id){
     body: JSON.stringify({friendId: id})
   });
     const data = await response.json();
-    console.log(data);
         if (response.ok) {
          const pMessages = data.messages
           if(pMessages.length < 1){
@@ -306,8 +304,7 @@ async function fetchMessages(id){
         
         }else{
           notify("error getting messages", "error");
-          console.error(response);
-          alert(data.error)
+          console.error(data);
         }
   }
   catch(err){
@@ -438,6 +435,7 @@ async function appendMessageToDOM(message){
 
 function initChatSocket() {
   try{
+    if(!isAuthorised) return;
   // Establish connection but don't configure multiple times
   socket = io("https://joli-indol.vercel.app");
   
