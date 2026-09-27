@@ -357,21 +357,22 @@ main{
 }
 .c-message p{
   width: fit-content;
-  padding: 15px;
-  font-size:1rem;
+  padding: 10px;
+  font-size:1.15rem;
   font-weight:500;
 }
 .c-message small{
   font-size:0.7rem;
+  margin-top: 10px;
 }
 .c-message p.mine{
   background: lightgreen;
-  margin-right:auto;
+  margin-left:auto;
   border-radius: 10px 0 10px 10px;
 }
-.c-message p.friend{
+.c-message p.others{
   background: pink;
-  margin-left:auto;
+  margin-right:auto;
   border-radius: 0 10px 10px 10px;
 }
 #c-form{
