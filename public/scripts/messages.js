@@ -344,7 +344,7 @@ async function fetchMessages(id){
     cmContainer.innerHTML =  "";
     await pMessages.forEach(m => {showExistingMessage(m)});
     cmContainer.scrollTo({
-  top: messagesContainer.scrollHeight,
+  top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
         }else{
@@ -354,7 +354,7 @@ async function fetchMessages(id){
   }
   catch(err){
     console.error(err);
-    alert("error fetching previous messages");
+    notify("error fetching previous messages", "error");
   }
 }
 
