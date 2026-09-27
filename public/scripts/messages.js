@@ -295,6 +295,8 @@ async function fetchMessages(id){
     
         if (response.ok) {
           const data = await response.json();
+          alert(data.error)
+          console.log(data);
          const pMessages = data.messages
           if(pMessages.length < 1){
             cmContainer.innerHTML = `<p>You have not started a conversation yet, send a message now</p>`;
@@ -306,6 +308,7 @@ async function fetchMessages(id){
         }else{
           notify("error getting messages", "error");
           console.error(response);
+          
         }
   }
   catch(err){
