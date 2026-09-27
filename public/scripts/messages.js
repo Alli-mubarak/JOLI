@@ -413,17 +413,19 @@ async function sortConversation(id){
     },
     body: JSON.stringify(payload)
   });
-
+ const data = await response.json();
   if (response.ok) {
     getConversations();
     return true;
       }else{
-    console.error(response);
+    console.error(data.error);
+    notify(data.error, "error");
     return false
      }
     }
     catch(err){
       console.error(err);
+      notify("server error occured", "error");
     return false
     }
 }
@@ -444,7 +446,7 @@ async function sendMessage(id){
   <p class="mine">${linkify(txt)}</p><small class="m-time mine">now</small>
   </div>
   `;
-  cmContainer.innerHTML += msgEl;
+  cmContainer.innerHTML += msgEl; 
 const sc = await sortConversation(id);
 if(!sc){
   console.error("error sorting conversation");
