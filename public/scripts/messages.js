@@ -395,7 +395,7 @@ cFormInput.oninput = () => {
 });
 
 
-async function sortConversation(id){
+async function sortConversation(id, txt){
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
   if(conversations && hasConversation) return true;
     try{
@@ -403,7 +403,7 @@ async function sortConversation(id){
         friend_id: id,
         friend_pic: fPic,
         friend_username: fUsername,
-        last_message: cFormInput.value.trim()
+        last_message: txt
       }
   
   const response = await fetch('/api/conversation/v1/create-conversation', {
@@ -447,7 +447,7 @@ async function sendMessage(id){
   </div>
   `;
   cmContainer.innerHTML += msgEl; 
-const sc = await sortConversation(id);
+const sc = await sortConversation(id, txt);
 if(!sc){
   console.error("error sorting conversation");
     notify("error sorting conversation","error");
