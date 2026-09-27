@@ -291,7 +291,7 @@ async function showExistingMessage(m){
   }
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class=${mClass}>${m.content}</p><small class="m-time">${getReqTime(m.created_at)}</small>
+  <p class=${mClass}>${m.content}</p><small class="m-time ${mClass}">${getReqTime(m.created_at)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
@@ -409,18 +409,20 @@ async function sortConversation(id){
     }
 }
 
+let mn = 0;
 async function sendMessage(id){
   try{
   if(!canSendMessage || !isAuthorised) return;
   const txt = cFormInput.value.trim();
-  const dummyId = txt.toLowerCase().charAt(0) + "1" + txt.toLowerCase().charAt(txt.length - 1);
+  const dummyId = txt.charAt(0) + mn + txt.charAt(txt.length - 1);
+  mn++;
   cFormBtn.disabled = true;
   cFormBtn.style.color = "#888";
   cFormBtn.style.background = "#bbffaa";
   cForm.reset();
   const msgEl = `
   <div class="c-message" id=${dummyId}>
-  <p class="mine">${txt}</p><small class="m-time">now</small>
+  <p class="mine">${txt}</p><small class="m-time mine">now</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl;
@@ -442,6 +444,7 @@ if(!sc){
     
     if (response.status === "ok") {
       const dummyMsg = cPreviewContainer.querySelector(`#${dummyId}`);
+      alert(dummyMsg);
       dummyMsg.querySelector(".m-time").textContent = "1m";
       
     } else {
