@@ -343,7 +343,7 @@ async function fetchMessages(id){
           }
     cmContainer.innerHTML =  "";
     await pMessages.forEach(m => {showExistingMessage(m)});
-    cmContainer.scrollTo({
+    await cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
@@ -458,6 +458,10 @@ async function sendMessage(id){
   </div>
   `;
   cmContainer.innerHTML += msgEl; 
+  await cmContainer.scrollTo({
+  top: cmContainer.scrollHeight,
+  behavior: 'smooth'
+});
 const sc = await sortConversation(id, txt);
 if(!sc){
   console.error("error sorting conversation");
