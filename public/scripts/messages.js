@@ -473,5 +473,5 @@ function initChatSocket() {
 }
 
 
-initChatSocket()
+//initChatSocket()
 alert("loaded");
