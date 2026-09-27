@@ -50,7 +50,7 @@ router.post('/friend/messages', checkSession,  async (req, res) => {
 
     const userId = req.user.id;
     const {friendId} = req.body
-  if (friendId){
+  if (!friendId){
    return  res.status(400).json({error: "Friend id is missing"});
   }
     const query = "SELECT * FROM messages WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)"
