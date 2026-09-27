@@ -80,7 +80,8 @@ const limiter = rateLimit({
 const PostgresStore = connectPgSimple(session);
 
 // session middleware (Saves sessions directly to Aiven Postgres)
-app.use(session({
+
+const sessionMiddleware = session({
   store: new PostgresStore({ pool: pool, tableName: 'session',createTableIfMissing: true }),
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -91,8 +92,9 @@ app.use(session({
     maxAge: 30 * 24 * 60 * 60 * 1000, 
     secure: true
   }
-}));
+});
 
+app.use(sessionMiddleware);
 app.set('views', path.join(process.cwd(), 'dviews'))
 app.set('view engine', 'ejs');
   
@@ -331,31 +333,22 @@ const io = new Server(server, {
 });
 
 
+io.engine.use(sessionMiddleware);
+io.engine.use(passport.initialize());
+io.engine.use(passport.session());
 
-//Pro Middleware: Authenticate via JWT before connection is allowed
-io.use((socket, next) => {
-  const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization;
-  
-  if (!token) {
-    return next(new Error("Authentication error: Token missing"));
-  }
-
-  try {
-    // Expecting token format: "Bearer <JWT>" or just "<JWT>"
-    const parsedToken = token.startsWith("Bearer ") ? token.split(" ")[1] : token;
-    const decoded = jwt.verify(parsedToken, process.env.JWT_SECRET);
-    
-    // Attach user profile to the socket instance for easy access later
-    socket.user = decoded; 
-    next();
-  } catch (err) {
-    return next(new Error("Authentication error: Invalid token"));
-  }
-});
 
 //Connection & 1:1 Chat Architecture
 io.on("connection", async(socket) => {
-  const currentUserId = socket.user.id.toString();
+  const req = socket.request;
+
+  if (!req.user) {
+    console.log('Rejected unauthenticated socket connection.');
+    return socket.disconnect(true);
+  }
+
+  console.log(`User connected to socket: ${req.user.username}`);
+  const currentUserId = req.user.id;
   console.log(`👤 User connected: ${currentUserId} (Socket: ${socket.id})`);
 
   // Pro Trick: Force user into a private room named after their own User ID.
@@ -393,8 +386,7 @@ io.on("connection", async(socket) => {
 
       // Step B: Direct the message exclusively to the recipient's personal room
       io.to(recipientId.toString()).emit("receive_private_message", {
-        message: savedMessage,
-        temporaryId // Pass back to help client match the UI state
+        message: savedMessage
       });
 
       // Step C: Trigger callback acknowledgment back to the sender
