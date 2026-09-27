@@ -25,8 +25,8 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 const typingIndicator = document.getElementById("typing-indicator");
-  let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout;
-  let inViewMode = false;
+let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout, canSendMessage;
+let inViewMode = false;
 let conversations = [];
   
 const smBtn = document.getElementById("start-message-btn");
@@ -119,6 +119,7 @@ async function getFriends(){
           }catch(err){
             console.error(err);
           }
+          initChatSocket()
         } else {
           notify("You have no friends yet", "success",  "add one now!", "/friends");
           fContainer.innerHTML = `<p>You currently have no friends, add friends  or accept friends request if available</p>`;
@@ -392,9 +393,7 @@ async function sortConversation(id){
 
 async function sendMessage(id){
   try{
-  
-    console.log(fPic, fUsername, id);
-    
+  if(!canSendMessage || !isAuthorised) return;
 const sc = await sortConversation(id);
 if(!sc){
   console.error(err)
@@ -440,7 +439,8 @@ function initChatSocket() {
   socket = io("https://joli-indol.vercel.app");
   
   socket.on("connect", () => {
-      console.log("Connected to server! ");
+      console.log("Connected to chat server! ");
+    canSendMessage = true;
       alert("socket connected!");
     });
 
@@ -467,6 +467,7 @@ function initChatSocket() {
 
   socket.on("connect_error", (err) => {
     console.error("Socket Auth/Connection Error:", err.message);
+    canSendMessage = false;
     alert("could not connect");
   });
   }catch(err){
@@ -474,6 +475,3 @@ function initChatSocket() {
     console.error(err);
   }
 }
-
-
-//initChatSocket()
