@@ -523,12 +523,12 @@ function initChatSocket() {
   // Establish connection 
   //socket = io();
 socket = io({
- autoConnect: false,
+// autoConnect: false,
   transports: ["websocket"], 
   reconnectionAttempts: 10,
   reconnectionDelay: 500,     // Start trying again in 500ms if dropped
   reconnectionDelayMax: 2000,  // Never wait more than 2 seconds to retry
-  timeout: 500000           // Give up on a broken try after 10 seconds
+  timeout: 500000           // Give up on a broken try after 500 seconds
 });
     
   socket.on("connect", () => {
