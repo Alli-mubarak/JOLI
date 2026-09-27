@@ -523,7 +523,7 @@ function initChatSocket() {
   // Establish connection 
   //socket = io();
 socket = io({
- // autoConnect: false,
+ autoConnect: false,
   transports: ["websocket"], 
   reconnectionAttempts: 10,
   reconnectionDelay: 500,     // Start trying again in 500ms if dropped
