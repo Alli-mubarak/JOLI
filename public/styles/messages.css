@@ -343,8 +343,8 @@ main{
   display: flex;
   flex-direction :column ;
   gap: 10px;
-  align-items: end;
-  justify-content: center;
+  align-items: center;
+  justify-content: end;
   width: 100%;
 }
 #c-form{
