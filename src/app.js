@@ -377,7 +377,7 @@ io.on("connection", async(socket) => {
 
   // Handle 1:1 Messages
   socket.on("send_private_message", async (data, acknowledge) => {
-    const { recipientId, messageText, temporaryId } = data;
+    const { recipientId, messageText } = data;
 
     if (!recipientId || !messageText) {
       return acknowledge({ status: "error", error: "Missing payload details" });
