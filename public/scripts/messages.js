@@ -280,8 +280,16 @@ async function openConversation(f){
   }
 }
 
-async function showExistingMessages(m){
-  alert("hey");
+async function showExistingMessage(m){
+  try{
+  console.log(m)
+  const msgEl = `<p class="c-message">${m.content} <small>${getReqTime(m.created_at)}</small></p>`;
+  cmContainer.innerHTML += msgEl
+  }
+  catch(err){
+    console.error(err);
+    notify("could not display message", "error");
+  }
 }
 
 async function fetchMessages(id){
@@ -301,7 +309,7 @@ async function fetchMessages(id){
             return ;
           }
           cmContainer.innerHTML =  "";
-         await pMessages.forEach(m => {showExistingMessages(m)});
+         await pMessages.forEach(m => {showExistingMessage(m)});
         
         }else{
           notify("error getting messages", "error");
@@ -429,6 +437,7 @@ if(!sc){
 
 async function appendMessageToDOM(message){
   console.log(message);
+  alert("message received");
 }
 
 
