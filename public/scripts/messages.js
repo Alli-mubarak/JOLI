@@ -1,4 +1,3 @@
-async function run(){
 const cPreviewContainer = document.querySelector(".messages");
 const scContainer = document.getElementById("s-c-container");
 const fContainer = document.getElementById("f-container");
