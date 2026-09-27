@@ -447,7 +447,7 @@ async function sendMessage(id){
   cmContainer.innerHTML += msgEl;
 const sc = await sortConversation(id);
 if(!sc){
-  console.error(err)
+  console.error("error sorting conversation");
     notify("error sorting conversation","error");
   alert("error sorting conversation");
   return;
