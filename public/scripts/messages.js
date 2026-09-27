@@ -67,6 +67,18 @@ const originalTexts = Array.from(targets).map(el => el.textContent);
   });
     }
 
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
+
 async function getConversations(){
   try{
   const response = await fetch('/api/conversation/user/conversations');
@@ -298,7 +310,7 @@ async function showExistingMessage(m){
   }
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class=${mClass}>${m.content}</p><small class="m-time ${mClass}">${getTime(m.created_at)}</small>
+  <p class=${mClass}>${linkify(m.content)}</p><small class="m-time ${mClass}">${getTime(m.created_at)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
@@ -429,7 +441,7 @@ async function sendMessage(id){
   cForm.reset();
   const msgEl = `
   <div class="c-message" id=${dummyId}>
-  <p class="mine">${txt}</p><small class="m-time mine">now</small>
+  <p class="mine">${linkify(txt)}</p><small class="m-time mine">now</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl;
@@ -471,7 +483,7 @@ async function appendMessageToDOM(m){
  try{
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class="others">${m.content}</p><small class="m-time others">${getTime(m.created_at)}</small>
+  <p class="others">${linkify(m.content)}</p><small class="m-time others">${getTime(m.created_at)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
