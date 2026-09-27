@@ -441,9 +441,9 @@ if(!sc){
 
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, (response) => {
-    console.log(response)
+    console.log(response.message)
     if (response.status === "ok") {
-      const dummyMsg = document.getElementBy(`${dummyId}`);
+      const dummyMsg = document.getElementById(`${dummyId}`);
       alert(dummyMsg);
       dummyMsg.querySelector(".m-time").textContent = "1m";
       
