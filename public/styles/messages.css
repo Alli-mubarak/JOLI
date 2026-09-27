@@ -347,9 +347,12 @@ main{
   flex-direction :column ;
   gap: 12px;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-start;
   width: 100%;
 }
+  #c-messages > :first-child {
+  margin-top: auto;
+  }
 .c-message{
   width: 100%;
 }
