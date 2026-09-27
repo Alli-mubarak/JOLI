@@ -243,8 +243,7 @@ sfInput.oninput = async() => {
     return;
   }
   sfBtn.disabled = false;
-  showSearchedFriend(sfInput.value)
-  
+  showSearchedFriend(sfInput.value);
 }
 
 sfForm.onsubmit = async(e) => {
@@ -272,14 +271,13 @@ async function openConversation(f){
   cFId = f.id
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
-  await fetchMessages(cFid);
+  await fetchMessages(cFId);
   cContainer.classList.remove("hidden");
   smBtn.click();
   }catch(err){
     notify("could not open conversation, try later", "error");
     console.error(err);
   }
-  
 }
 
 async function showExistingMessages(m){
@@ -359,7 +357,7 @@ cFormInput.oninput = () => {
     socket.emit("typing_status", { recipientId: cFId, isTyping: false });
   }, 2000);
 });
-}
+
 
 async function sortConversation(id){
   const hasConversation = conversations.find(c => c.user_id === id || c.friend_id === id);
