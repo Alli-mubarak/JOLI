@@ -107,7 +107,7 @@ main{
   gap:1.2rem;
   align-items:center;
   justify-content:center;
-  width:100vw;
+  width:100%;
   padding: 10px;
   position: relative;
   overflow: hidden;
@@ -336,7 +336,7 @@ main{
   top: 22px;
 }
 #c-messages{
-  height: calc(100% - 300px);
+  height: calc(100% - 310px);
   padding: 10px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -345,6 +345,7 @@ main{
   gap: 10px;
   align-items: end;
   justify-content: center;
+  width: 100%;
 }
 #c-form{
   height: 150px;
