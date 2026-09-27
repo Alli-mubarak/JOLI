@@ -284,6 +284,10 @@ async function openConversation(f){
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
   await fetchMessages(cFId);
+  cmContainer.scrollTo({
+  top: messagesContainer.scrollHeight,
+  behavior: 'smooth'
+});
   cContainer.classList.remove("hidden");
   smBtn.click();
   }catch(err){
@@ -337,9 +341,12 @@ async function fetchMessages(id){
             cmContainer.innerHTML = `<p>You have not started a conversation yet, send a message now</p>`;
             return ;
           }
-          cmContainer.innerHTML =  "";
-         await pMessages.forEach(m => {showExistingMessage(m)});
-        
+    cmContainer.innerHTML =  "";
+    await pMessages.forEach(m => {showExistingMessage(m)});
+    cmContainer.scrollTo({
+  top: messagesContainer.scrollHeight,
+  behavior: 'smooth'
+});
         }else{
           notify("error getting messages", "error");
           console.error(data);
@@ -359,6 +366,9 @@ cCloser.onclick = () => {
   cFormBtn.disabled = true;
   cFormBtn.style.color = "#888";
   cFormBtn.style.background = "#bbffaa";
+  fUsername = '';
+  fPic = '';
+  cFId = '';
 }
 
 cForm.onsubmit = (e) => {
@@ -514,6 +524,7 @@ function initChatSocket() {
     typingIndicator.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
     typingIndicator.style.color = "green";
     cForm.classList.remove("hidden");
+    if(cFId) fetchMessages(cFId);
     });
     
   // Handle incoming global messages
