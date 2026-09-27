@@ -341,8 +341,8 @@ main{
 #c-messages{
   height: calc(100dvh - 230px);
   padding: 10px;
-  /*overflow-x: hidden;
-  overflow-y: auto;*/
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction :column ;
   gap: 10px;
