@@ -359,7 +359,7 @@ async function fetchMessages(id){
   }
 }
 
-cCloser.onclick = () => {
+cCloser.onclick = async() => {
   await getConversations();
   cContainer.classList.add("hidden");
   cmContainer.innerHTML = "";
