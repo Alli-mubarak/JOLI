@@ -378,8 +378,6 @@ io.on("connection", async(socket) => {
         recipientId,
         text: messageText,
       });
-
- console.log(savedMessage);
       
       // Step B: Direct the message exclusively to the recipient's personal room
       io.to(recipientId.toString()).emit("receive_private_message", {
@@ -427,7 +425,8 @@ io.on("connection", async(socket) => {
 });
 
 async function saveMessageToDatabase({ senderId, recipientId, text }) {
-  const newMsg = await pool.query(
+  try{
+  const msgQuery = await pool.query(
 `
 INSERT INTO messages
 (
@@ -450,13 +449,21 @@ RETURNING *;
     recipientId,
     text.trim()
 ]);
-  console.log(newMsg);
+  if(msgQuery.rows && msgQuery.rows.length > 0){
+  const newMsg = msgQuery.rows[0];
   return { 
     id: newMsg.id, 
     senderId: newMsg.sender_id, 
     recipientId: newMsg.receiver_id,
     text: newMsg.content,
     createdAt: newMsg.created_at
+  }
+  }else{
+    return {error: "could not save message"}
+  }
+  }catch(err){
+    console.error(err);
+    return {error: err}
   }
   }
 
