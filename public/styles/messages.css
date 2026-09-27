@@ -345,11 +345,10 @@ main{
   overflow-y: auto;
   display: flex;
   flex-direction :column ;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   justify-content: end;
   width: 100%;
-  background: red;
 }
 .c-message{
   width: 100%;
