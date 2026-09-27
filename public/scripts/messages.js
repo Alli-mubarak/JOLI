@@ -290,8 +290,8 @@ async function showExistingMessage(m){
     mClass = "others"
   }
   const msgEl = `
-  <div class="c-message">
-  <p class=${mClass}>${m.content} <small>${getReqTime(m.created_at)}</small></p>
+  <div class="c-message" id=${m.id}>
+  <p class=${mClass}>${m.content}</p><small class="m-time">${getReqTime(m.created_at)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
@@ -412,6 +412,18 @@ async function sortConversation(id){
 async function sendMessage(id){
   try{
   if(!canSendMessage || !isAuthorised) return;
+  const txt = cFormInput.value.trim();
+  const dummyId = txt.toLowerCase().charAt(0) + "1" + txt.toLowerCase().charAt(txt.length - 1);
+  cFormBtn.disabled = true;
+  cFormBtn.style.color = "#888";
+  cFormBtn.style.background = "#bbffaa";
+  cForm.reset();
+  const msgEl = `
+  <div class="c-message" id=${dummyId}>
+  <p class="mine">${txt}</p><small class="m-time">now</small>
+  </div>
+  `;
+  cmContainer.innerHTML += msgEl;
 const sc = await sortConversation(id);
 if(!sc){
   console.error(err)
@@ -422,18 +434,19 @@ if(!sc){
     // Payload structure mapping directly to backend properties
   const mPayload = {
     recipientId: id,
-    messageText: cFormInput.value.trim()
+    messageText: txt
   };
 
   // Dispatch via socket with callback acknowledgement function
   socket.emit("send_private_message", mPayload, (response) => {
     
     if (response.status === "ok") {
-      alert("message sent");
+      const dummyMsg = cPreviewContainer.querySelector(`#${dummyId}`);
+      dummyMsg.querySelector(".m-time").textContent = "1m";
       
     } else {
-      
-    alert("message not sent");
+      const dummyMsg = cPreviewContainer.querySelector(`#${dummyId}`);
+    dummyMsg.style.color = "red";
   }
   
   });
@@ -461,7 +474,6 @@ function initChatSocket() {
       console.log("Connected to chat server! ");
     canSendMessage = true;
     typingIndicator.textContent = "connected";
-      alert("socket connected!");
     });
 socket.on("reconnect", (attemptNumber) => {
   console.log(`✅ Reconnected successfully on attempt #${attemptNumber}`);
@@ -492,8 +504,7 @@ socket.on("reconnect", (attemptNumber) => {
   socket.on("connect_error", (err) => {
     console.error("Socket Auth/Connection Error:", err.message);
     canSendMessage = false;
-    alert("could not connect to socket");
-    typingIndicator.textContent = "reconnecting..";
+    typingIndicator.textContent = ".•.•.";
   });
   }catch(err){
     notify("error starting chat socket", "error");
