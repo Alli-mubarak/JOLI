@@ -339,7 +339,7 @@ main{
   top: 22px;
 }
 #c-messages{
-  height: calc(100dvh - 310px);
+  height: calc(100dvh - 230px);
   padding: 10px;
   /*overflow-x: hidden;
   overflow-y: auto;*/
@@ -410,6 +410,14 @@ main{
 #c-form textarea:focus{
   border-color: #222;
 }
+  .btns{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+  }
 #c-form button {
   padding: 10px;
   border: none;
