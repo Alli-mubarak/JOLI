@@ -352,6 +352,7 @@ async function fetchMessages(id){
 }
 
 cCloser.onclick = () => {
+  getConversations();
   cContainer.classList.add("hidden");
   cmContainer.innerHTML = "";
   cForm.reset();
