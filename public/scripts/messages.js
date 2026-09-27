@@ -443,12 +443,12 @@ if(!sc){
   socket.emit("send_private_message", mPayload, (response) => {
     
     if (response.status === "ok") {
-      const dummyMsg = cPreviewContainer.querySelector(`#${dummyId}`);
+      const dummyMsg = document.getElementBy(`${dummyId}`);
       alert(dummyMsg);
       dummyMsg.querySelector(".m-time").textContent = "1m";
       
     } else {
-      const dummyMsg = cPreviewContainer.querySelector(`#${dummyId}`);
+      const dummyMsg = document.getElementById(`${dummyId}`);
     dummyMsg.style.color = "red";
   }
   
