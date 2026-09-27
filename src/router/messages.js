@@ -42,7 +42,7 @@ async function getFriendDetails(f, uid){
   }
 }
 
-router.post('/user/messages', checkSession,  async (req, res) => {
+router.post('/friend/messages', checkSession,  async (req, res) => {
   try {
   if (!req.isAuthenticated() && !req.user){
    return  res.status(400).json({error: "You are not authorized, please log in"});
