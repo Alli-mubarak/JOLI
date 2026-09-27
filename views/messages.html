@@ -10,15 +10,7 @@
   <link rel="shortcut icon" href="images/joli3.png" type="image/x-icon">
   <link rel="apple-touch-icon" href="images/joli3.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <!--   <style>
-        body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 0 20px; }
-        .status { padding: 8px 12px; margin-bottom: 16px; border-radius: 4px; font-weight: bold; }
-        .connected { background-color: #d1e7dd; color: #0f5132; }
-        .disconnected { background-color: #f8d7da; color: #842029; }
-        #log { border: 1px solid #ccc; height: 200px; overflow-y: scroll; padding: 10px; margin-bottom: 10px; background: #f9f9f9; }
-      </style>
-  -->
-     <script src="https://cdn.socket.io/4.8.3/socket.io.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/4.8.3/socket.io.min.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -37,19 +29,6 @@
     <marquee>All mails sent by <b>joli.app.connect@gmail.com</b> are from <b>JOLI</b> and that is the only trusted email. Beware of impersonators. </marquee>
   </header>
   <main>    
-     <!--   <h1>WebSocket Client</h1>
-    <div id="status" class="status disconnected">Disconnected</div>
-    
-    <div id="log"></div>
-    
-<h3>Chat with Friend (<span id="chat-status" style="color: gray;">Connecting...</span>)</h3>
-    
- 
-  <div id="chat-box"> </div>
-  
-  <input type="text" id="message-input" placeholder="Type your message here...">
-  <button id="send-btn">Send</button>
-    -->
     <section class="messages">
       <div class="c-loader"></div>
       <div class="c-loader"></div>
@@ -86,7 +65,7 @@
         </div>
       </div>
       <div id="c-messages"></div>
-      <form id="c-form">
+      <form id="c-form" class="hidden">
         <textarea placeholder="Type your message" id="c-form-input"></textarea>
         <button type="submit" id="c-form-btn" disabled><i class="fa-solid fa-paper-plane"></i></button>
       </form>
