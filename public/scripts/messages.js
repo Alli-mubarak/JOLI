@@ -517,7 +517,7 @@ function initChatSocket() {
   socket.on("connect_error", (err) => {
     console.error("Socket Auth/Connection Error:", err.message);
     canSendMessage = false;
-    typingIndicator.innerHTML = `<i class="fa-solid fa-circle-notch"></i>`;
+    typingIndicator.innerHTML = `<i class="fa-solid fa-circle-notch roll"></i>`;
     typingIndicator.style.color = "red";
   });
   }catch(err){
