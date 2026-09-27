@@ -355,7 +355,7 @@ main{
 }
 .c-message p{
   width: fit-content;
-  padding: 5px;
+  padding: 5px 10px;
   font-size:1.15rem;
   font-weight:500;
   max-width: 75%;
@@ -370,7 +370,7 @@ main{
   font-size:0.7rem;
 }
 .c-message p.mine{
-  background: linear-gradient(to right, #eee 30%, #ddd 60%,#fff);
+  background: #bbffaa;
   margin-left:auto;
   border-radius: 10px 0 10px 10px;
 }
