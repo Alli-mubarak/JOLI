@@ -177,7 +177,7 @@ async function showExistingConversation(c){
       </div>
     </div>
     `;
-   await cPreviewContainer.innerHTML += htmlEl;
+  cPreviewContainer.innerHTML += htmlEl;
   }
   catch(err){
     console.error(err)
