@@ -140,8 +140,7 @@ async function getFriends(){
         }
       } catch (err) {
         console.error("Error fetching friends :", err);
-       notify("error occurred while fetching friends", "error");
-    alert("server error");
+       notify("error fetching friends", "error");
   }
 }
 
@@ -467,7 +466,6 @@ const sc = await sortConversation(id, txt);
 if(!sc){
   console.error("error sorting conversation");
     notify("error sorting conversation","error");
-  alert("error sorting conversation");
   return;
 }
     // Payload structure mapping directly to backend properties
@@ -497,7 +495,6 @@ if(!sc){
   }catch(err){
     console.error(err)
     notify("error sending message","error");
-    alert("error sending message");
   }
 }
 
