@@ -96,7 +96,7 @@ const height = rect.height;
   alert(width)
   alert(height);
 }
-showAlert("chat");
+showAlert("header");
 
 statContainer.classList.add("hidden");
 
