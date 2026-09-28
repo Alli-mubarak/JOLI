@@ -166,7 +166,7 @@ CREATE TABLE IF NOT exists notifications (
     CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES users(id) ON DELETE CASCADE,
     
     -- Prevent users from getting notifications for actions they performed themselves
-    CONSTRAINT chk_not_self NOTIFY CHECK (recipient_id <> actor_id)
+    CONSTRAINT chk_not_self CHECK (recipient_id <> actor_id)
 );
 
   `;
