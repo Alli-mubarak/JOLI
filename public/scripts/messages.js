@@ -90,12 +90,7 @@ async function getConversations(){
             return 
           }
           cPreviewContainer.innerHTML =  "";
-    //    await conversations.forEach(c => {
-      //    alert(c.last_message);
-    //      showExistingConversation(c)
-   //     });
-        for(let i=0; i<conversations.length;i++){
-          alert(conversations[i].last_message);
+        for(let i=0; i<conversations.length; i++){
           await showExistingConversation(conversations[i]);
         }
         const existingConversations = document.querySelectorAll('.ec-card');
@@ -181,8 +176,7 @@ async function showExistingConversation(c){
       </div>
     </div>
     `;
-    await insertConversation(htmlEl);
-  
+    cPreviewContainer.innerHTML += htmlEl;
   }
   catch(err){
     console.error(err)
@@ -190,9 +184,6 @@ async function showExistingConversation(c){
   }
 }
 
-function insertConversation(el){
-  cPreviewContainer.innerHTML += el;
-}
 async function openExistingConversation(el){
   try{
   fUsername = el.querySelector(".ef-username").textContent;
