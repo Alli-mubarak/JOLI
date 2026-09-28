@@ -307,6 +307,15 @@ async function openConversation(f){
 
 function getTime(t){
 const localDate = new Date(t);
+const currentDate = new Date();
+const msDifference = currentDate - localDate;
+const dDifference = msDifference / (1000 * 60 * 60 * 24);
+  
+if(dDifference > 1){
+const formattedLocalTime = localDate.toLocaleString();
+return formattedLocalTime;
+}  
+  
 return localDate.toLocaleTimeString([], { 
   hour: '2-digit', 
   minute: '2-digit' 
