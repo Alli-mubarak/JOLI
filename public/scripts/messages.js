@@ -96,7 +96,7 @@ async function getConversations(){
    //     });
         for(let i=0; i<conversations.length;i++){
           alert(conversations[i].last_message);
-          showExistingConversation(conversations[i]);
+          await showExistingConversation(conversations[i]);
         }
         const existingConversations = document.querySelectorAll('.ec-card');
        await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
