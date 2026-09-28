@@ -87,7 +87,7 @@ function enableScrolling(){
 }
 
 function showAlert(el){
-  const element = document.querySelector(`${el}`);
+  const element = document.getElementById(`${el}`);
 const rect = element.getBoundingClientRect();
 
 const width = rect.width;
@@ -96,7 +96,7 @@ const height = rect.height;
   alert(width)
   alert(height);
 }
-showAlert("header");
+showAlert("chat-tab");
 
 statContainer.classList.add("hidden");
 
