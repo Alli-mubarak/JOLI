@@ -75,7 +75,7 @@ function linkify(text) {
     if (url.length > 50){
       url = url.slice(0,50)+"...";
     }
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    return `<a class="c-link" href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
 
@@ -194,6 +194,7 @@ async function openExistingConversation(el){
   cUsername.innerHTML = fUsername;
   cContainer.classList.remove("hidden");
   await fetchMessages(cFId);  
+  interceptLinks()
   }catch(err){
     notify("could not open conversation, try later", "error");
     console.error(err);
@@ -292,6 +293,7 @@ async function openConversation(f){
   cUsername.innerHTML = fUsername;
   cContainer.classList.remove("hidden");
   await fetchMessages(cFId);
+  interceptLinks()
   await cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
@@ -487,6 +489,7 @@ if(!sc){
      const message = await response.message
     if (response.status === "ok") {
       const dummyMsg = document.getElementById(`${dummyId}`);
+      interceptLinks();
       dummyMsg.querySelector(".m-time").textContent = getTime(message.createdAt);
       const elBefore = dummyMsg.previousElementSibling;
         if(elBefore?.tagName === "P"){
