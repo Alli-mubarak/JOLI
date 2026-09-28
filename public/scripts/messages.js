@@ -465,6 +465,7 @@ async function sendMessage(id){
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
+    alert(cmContainer.scrollHeight);
 const sc = await sortConversation(id, txt);
 if(!sc){
   console.error("error sorting conversation");
