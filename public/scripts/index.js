@@ -92,7 +92,7 @@ const rect = element.getBoundingClientRect();
 
 const width = rect.width;
 const height = rect.height;
-const bubble = <div class="alert-bubble"></div>
+const bubble = `<div class="alert-bubble"></div>`
 element.style.position = "relative";
 element.innerHTML += bubble;
   alert(width)
