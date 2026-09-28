@@ -90,10 +90,14 @@ async function getConversations(){
             return 
           }
           cPreviewContainer.innerHTML =  "";
-        await conversations.forEach(c => {
-          alert(c.last_message);
-          showExistingConversation(c)
-        });
+    //    await conversations.forEach(c => {
+      //    alert(c.last_message);
+    //      showExistingConversation(c)
+   //     });
+        for(let i=0; i<conversations.length;i++){
+          alert(conversations[i].last_message);
+          showExistingConversation(conversations[i]);
+        }
         const existingConversations = document.querySelectorAll('.ec-card');
        await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
         
