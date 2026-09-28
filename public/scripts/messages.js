@@ -199,6 +199,9 @@ async function openExistingConversation(el){
   }
 }
 
+cPic.onclick = () => {window.location.href = `/user/${fUsername}`}
+cUsername.onclick = () => {window.location.href = `/user/${fUsername}`}
+
 smBtn.onclick = (e) =>{
   const btn = e.currentTarget;
   if(!show_friends){
