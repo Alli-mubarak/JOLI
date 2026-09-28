@@ -1,4 +1,3 @@
-
 import pg from 'pg';
 import fs from 'fs';
 import path from 'path';
@@ -153,6 +152,23 @@ CREATE TABLE IF NOT exists conversations (
     -- Prevents users from having conversations with themselves
     CONSTRAINT check_not_self CHECK (user_id <> friend_id)
 );
+CREATE TABLE IF NOT exists notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    recipient_id UUID REFERENCES users(id) ON DELETE SET NULL ,
+    actor_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    type VARCHAR(15) NOT NULL,
+    resource_id VARCHAR(255), -- ID of the target post, comment, etc. (Can be INT depending on your system)
+    is_read BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    
+    -- Foreign key constraints (assumes your users table is named 'users')
+    CONSTRAINT fk_recipient FOREIGN KEY (recipient_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_actor FOREIGN KEY (actor_id) REFERENCES users(id) ON DELETE CASCADE,
+    
+    -- Prevent users from getting notifications for actions they performed themselves
+    CONSTRAINT chk_not_self NOTIFY CHECK (recipient_id <> actor_id)
+);
+
   `;
   try {
     await pool.query(setupScript);
