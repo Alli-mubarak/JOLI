@@ -90,8 +90,7 @@ async function getConversations(){
             return 
           }
           cPreviewContainer.innerHTML =  "";
-         for(let i=0; i<conversations.length; i++) showExistingConversation(conversations[i])
-       //  await conversations.forEach(c => {showExistingConversation(c)});
+        await conversations.forEach(c => {showExistingConversation(c)});
         const existingConversations = document.querySelectorAll('.ec-card');
        await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
         
@@ -286,11 +285,12 @@ async function openConversation(f){
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
   await fetchMessages(cFId);
+  cContainer.classList.remove("hidden");
   await cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
   });
-  cContainer.classList.remove("hidden");
+    alert(cmContainer.scrollHeight);
   smBtn.click();
   }catch(err){
     notify("could not open conversation, try later", "error");
@@ -349,6 +349,7 @@ async function fetchMessages(id){
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
+      alert(cmContainer.scrollHeight);
         }else{
           notify("error getting messages", "error");
           console.error(data);
