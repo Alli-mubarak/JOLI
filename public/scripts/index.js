@@ -894,3 +894,17 @@ window.addEventListener('visibilitychange', () => {
 });
 
 window.addEventListener('beforeunload', stopHeartbeat);
+// Select all links that require confirmation
+        const links = document.querySelectorAll('a');
+
+        links.forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Display a native confirmation dialog box
+                const confirmLeave = confirm("Are you sure you want to leave this page?");
+                
+                // If the user clicks "Cancel", stop the link from opening
+                if (!confirmLeave) {
+                    event.preventDefault();
+                }
+            });
+        });
