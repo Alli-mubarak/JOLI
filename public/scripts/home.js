@@ -25,7 +25,7 @@ function linkify(text) {
     if (url.length > 50){
       url = url.slice(0,50)+"...";
     }
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    return `<a class="c-link" href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
 }
     
@@ -44,6 +44,7 @@ async function fetchPosts() {
              await displayPost(posts[i]);
        }
         allowPostView();
+        interceptLinks()
         document.body.style.background = "#ddd";
         return;
       } catch (err) {
