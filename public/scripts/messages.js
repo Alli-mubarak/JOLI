@@ -290,7 +290,6 @@ async function openConversation(f){
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
   });
-    alert(cmContainer.scrollHeight);
   smBtn.click();
   }catch(err){
     notify("could not open conversation, try later", "error");
@@ -349,8 +348,7 @@ async function fetchMessages(id){
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
 });
-      alert(cmContainer.scrollHeight);
-        }else{
+    }else{
           notify("error getting messages", "error");
           console.error(data);
         }
