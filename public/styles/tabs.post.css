@@ -560,10 +560,10 @@ form textarea{
   }
 .alert-bubble{
   position: absolute;
-  background: red;
+  background: #3c000c;
   width: 8px;
   height:8px;
   border-radius: 50%;
-  top: 5px;
-  right: 5px;
+  top: 8px;
+  right: 8px;
 }
