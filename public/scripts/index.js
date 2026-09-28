@@ -86,6 +86,17 @@ function enableScrolling(){
   window.scrollTo(0, scrollPosition);
 }
 
+function showAlert(el){
+  const element = document.querySelector(`${el}`);
+const rect = element.getBoundingClientRect();
+
+const width = rect.width;
+const height = rect.height;
+
+  alert(width)
+  alert(height);
+}
+
 statContainer.classList.add("hidden");
 
 userPic.onclick = () =>{
