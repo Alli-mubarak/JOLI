@@ -190,8 +190,8 @@ async function openExistingConversation(el){
   cFId = el.getAttribute("data-user");
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
-    await fetchMessages(cFId);
   cContainer.classList.remove("hidden");
+  await fetchMessages(cFId);  
   }catch(err){
     notify("could not open conversation, try later", "error");
     console.error(err);
@@ -284,8 +284,8 @@ async function openConversation(f){
   cFId = f.id
   cPic.src = fPic;
   cUsername.innerHTML = fUsername;
-  await fetchMessages(cFId);
   cContainer.classList.remove("hidden");
+  await fetchMessages(cFId);
   await cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
