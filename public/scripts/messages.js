@@ -186,6 +186,7 @@ async function showExistingConversation(c){
 
 async function openExistingConversation(el){
   try{
+  disableScrolling();
   fUsername = el.querySelector(".ef-username").textContent;
   fPic = el.querySelector(".ef-pic").src;
   cFId = el.getAttribute("data-user");
@@ -283,6 +284,7 @@ async function showSearchedFriend(keyword){
 
 async function openConversation(f){
   try{
+    disableScrolling();
   fUsername = f.querySelector(".f-username").textContent;
   fPic = f.querySelector(".f-pic").src;
   cFId = f.id
@@ -374,6 +376,7 @@ cCloser.onclick = async() => {
   fUsername = '';
   fPic = '';
   cFId = '';
+  enableScrolling();
 }
 
 cForm.onsubmit = (e) => {
