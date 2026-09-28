@@ -90,7 +90,10 @@ async function getConversations(){
             return 
           }
           cPreviewContainer.innerHTML =  "";
-        await conversations.forEach(c => {showExistingConversation(c)});
+        await conversations.forEach(c => {
+          alert(c.last_message);
+          showExistingConversation(c)
+        });
         const existingConversations = document.querySelectorAll('.ec-card');
        await Array.from(existingConversations).forEach(el => {el.onclick = () => {openExistingConversation(el)}});
         
