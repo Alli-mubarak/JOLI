@@ -177,7 +177,8 @@ async function showExistingConversation(c){
       </div>
     </div>
     `;
-  cPreviewContainer.innerHTML += htmlEl;
+    await insertConversation(htmlEl);
+  
   }
   catch(err){
     console.error(err)
@@ -185,6 +186,9 @@ async function showExistingConversation(c){
   }
 }
 
+function insertConversation(el){
+  cPreviewContainer.innerHTML += el;
+}
 async function openExistingConversation(el){
   try{
   fUsername = el.querySelector(".ef-username").textContent;
