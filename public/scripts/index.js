@@ -96,6 +96,7 @@ const height = rect.height;
   alert(width)
   alert(height);
 }
+showAlert("header");
 
 statContainer.classList.add("hidden");
 
