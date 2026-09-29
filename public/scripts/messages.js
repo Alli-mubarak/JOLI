@@ -529,7 +529,11 @@ async function appendMessageToDOM(m){
   <p class="others">${linkify(m.text)}</p><small class="m-time others">${getTime(m.createdAt)}</small>
   </div>
   `;
-  cmContainer.innerHTML += msgEl
+  cmContainer.innerHTML += msgEl;
+  await cmContainer.scrollTo({
+  top: cmContainer.scrollHeight,
+  behavior: 'smooth'
+  });
   }
   catch(err){
     console.error(err);
