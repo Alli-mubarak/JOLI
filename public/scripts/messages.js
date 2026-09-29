@@ -532,10 +532,12 @@ async function appendMessageToDOM(m){
   </div>
   `;
   cmContainer.innerHTML += msgEl;
-  await cmContainer.scrollTo({
+  setTimeout(()=>{
+  cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
   });
+   },300);
   }
   catch(err){
     console.error(err);
