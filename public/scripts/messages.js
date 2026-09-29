@@ -520,7 +520,7 @@ if(!sc){
 
 async function appendMessageToDOM(m){
  try{
-   if(cFId !=== m.senderId) {
+   if(cFId !== m.senderId) {
      getConversations();
      return;
    }
