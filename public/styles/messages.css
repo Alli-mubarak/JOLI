@@ -355,6 +355,7 @@ main{
   }
 .c-message{
   width: 100%;
+  background: rgba(0,0,0,0.1);
 }
 .c-message p{
   width: fit-content;
