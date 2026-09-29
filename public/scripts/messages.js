@@ -531,7 +531,7 @@ async function appendMessageToDOM(m){
   <p class="others">${mTxt}</p><small class="m-time others">${mTime}</small>
   </div>
   `;
-  await cmContainer.innerHTML += msgEl;
+  cmContainer.innerHTML += msgEl;
   cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
