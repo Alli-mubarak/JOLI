@@ -524,11 +524,9 @@ async function appendMessageToDOM(m){
      getConversations();
      return;
    }
-  const mTxt = await linkify(m.text);
-  const mTime = await getTime(m.createdAt);
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class="others">${mTxt}</p><small class="m-time others">${mTime}</small>
+  <p class="others">${linkify(m.text)}</p><small class="m-time others">${getTime(m.createdAt)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl;
