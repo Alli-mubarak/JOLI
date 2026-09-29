@@ -531,13 +531,11 @@ async function appendMessageToDOM(m){
   <p class="others">${mTxt}</p><small class="m-time others">${mTime}</small>
   </div>
   `;
-  cmContainer.innerHTML += msgEl;
-  setTimeout(()=>{
+  await cmContainer.innerHTML += msgEl;
   cmContainer.scrollTo({
   top: cmContainer.scrollHeight,
   behavior: 'smooth'
   });
-   },300);
   }
   catch(err){
     console.error(err);
@@ -581,8 +579,7 @@ socket = io({
     } else {
       // Trigger a sidebar badge/notification for the other friend
       appendMessageToDOM(message);
-      
-      console.log(`Unread message from: ${message.senderId}`);
+     // console.log(`Unread message from: ${message.senderId}`);
     }
   });
 
