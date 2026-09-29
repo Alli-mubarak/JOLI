@@ -530,6 +530,8 @@ async function appendMessageToDOM(m){
   catch(err){
     console.error(err);
     notify("could not display message", "error");
+    alert("could not display message");
+    alert(err.message);
   }
 }
 
@@ -563,10 +565,12 @@ socket = io({
 
     // append to the DOM 
     if (message.senderId === currentUserId) {
-      appendMessageToDOM(message);
+      //appendMessageToDOM(message);
     } else {
       // Trigger a sidebar badge/notification for the other friend
+     alert(message);
       appendMessageToDOM(message);
+      
       console.log(`Unread message from: ${message.senderId}`);
     }
   });
