@@ -520,9 +520,13 @@ if(!sc){
 
 async function appendMessageToDOM(m){
  try{
+   if(cFId !=== m.senderId) {
+     getConversations();
+     return;
+   }
   const msgEl = `
   <div class="c-message" id=${m.id}>
-  <p class="others">${linkify(m.content)}</p><small class="m-time others">${getTime(m.created_at)}</small>
+  <p class="others">${linkify(m.text)}</p><small class="m-time others">${getTime(m.createdAt)}</small>
   </div>
   `;
   cmContainer.innerHTML += msgEl
@@ -568,7 +572,6 @@ socket = io({
       //appendMessageToDOM(message);
     } else {
       // Trigger a sidebar badge/notification for the other friend
-     alert(message);
       appendMessageToDOM(message);
       
       console.log(`Unread message from: ${message.senderId}`);
