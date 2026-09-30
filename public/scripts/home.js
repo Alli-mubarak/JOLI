@@ -76,6 +76,7 @@ async function fetchMorePosts() {
        }
          
         allowPostView();
+       interceptLinks();
        }
         if(data.message){
           morePostsBtn.disabled = false;
