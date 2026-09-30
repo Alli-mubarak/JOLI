@@ -290,7 +290,7 @@ router.post('/v1/:postId/like', checkSession,  async (req, res) => {
     }
 });
 
-    
+//fetch posts
 router.route('/v1/getPosts')
   .get(async(req, res)=>{
 console.log('posts fetched initially \n');
@@ -327,7 +327,7 @@ res.status(200).json({posts: posts});
   res.status(500).json({error: 'Internal Server Error'});
 }
 })
-  .post(async(req, res)=>{
+.post(async(req, res)=>{
 console.log('more posts fetched \n');
 const {time} = req.body;
   console.log(time);
@@ -335,7 +335,7 @@ if(!time){
   return res.status(400).json({ error: 'a specific time is required' });
 }
 try{
-const result = await pool.query(`SELECT * FROM posts WHERE created_at < '${time}'::timestamptz LIMIT 30`);
+const result = await pool.query(`SELECT * FROM posts WHERE created_at < '${time}'::timestamptz ORDER BY created_at DESC LIMIT 30`);
 const posts = result.rows
 if(posts.length < 1){
   return res.status(404).json({ message: 'No more posts to fetch' });
