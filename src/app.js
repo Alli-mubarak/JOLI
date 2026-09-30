@@ -26,9 +26,6 @@ import http from 'http';
 import { Server } from 'socket.io';
 import 'ejs';
 
-
-
-
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
@@ -43,8 +40,6 @@ app.use(express.static('icon'));
 const __dirname = import.meta.dirname;
 const __filename = fileURLToPath(import.meta.url);
 
-
-
 //session checker
 const checkSession = (req, res, next) => {
   try{
@@ -53,13 +48,11 @@ const checkSession = (req, res, next) => {
     } else {
         console.error("Unauthorized usage");
         res.status(401).json({ error: 'You must be logged in to do this' });
-       
     }
   }catch(e){
     console.error(e);
   }
 };
-
 
 app.use(cors({
   origin: 'https://joli-indol.vercel.app/', 
@@ -74,7 +67,6 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message: 'Too many requests from this IP, please try again later.'
 });
-
 
 // Configure and use the session middleware
 const PostgresStore = connectPgSimple(session);
@@ -128,7 +120,6 @@ next();
         api_secret: process.env.CLOUD_API_SECRET 
     });
 
-
 //***""""ROUTES CONFIGURATION"""""""
 app.use('/api/m', mailRoutes);
 app.use('/api/auth', authRoutes);
@@ -138,7 +129,6 @@ app.use('/api/friendship', friendshipRoutes);
 app.use('/api/conversation', cRoutes);
 app.use('/api/message', mRoutes);
 //***********
-
 
 //***********///
 //default page  route
@@ -299,7 +289,6 @@ app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
   
   }
 });
-
 
 //response to all wrong paths
 app.use((req, res)=>{
@@ -513,7 +502,6 @@ async function startServer(){
 // const listener = app.listen(process.env.PORT,()=>{
 //  console.log("app is listening on port ", listener.address().port,'\n');
 //});
-    
 
 // CRITICAL: Start the HTTP server, NOT 'app.listen'
 const PORT = 5000;
