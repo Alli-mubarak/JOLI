@@ -160,48 +160,33 @@ console.log('home page  requested! \n');
   res.sendFile(path.join(__dirname, "../", "/views/feeds.html"));
 });
 
-//followers page route
+//friends page route
 app.get('/friends',(req, res)=>{
 console.log('followers page requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
   res.sendFile(path.join(__dirname, "../", "/views/friends.html"));
 });
 
 //cropper test page
 app.get('/test-cropper',(req, res)=>{
 console.log('image cropper page  requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
   res.sendFile(path.join(__dirname, "../", "/views/cropper.html"));
 });
 
 //messages page route
 app.get('/messages',(req, res)=>{
 console.log('messages page  requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
   res.sendFile(path.join(__dirname, "../", "/views/messages.html"));
 });
 
 //search page route
 app.get('/search',(req, res)=>{
 console.log('add post page  requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
   res.sendFile(path.join(__dirname, "../", "/views/search.html"));
 });
 
 //search page route
 app.get('/inbox',(req, res)=>{
 console.log('add post page  requested! \n');
- // if (req.isAuthenticated()){
- //  return  res.redirect('/');
-//  }
   res.sendFile(path.join(__dirname, "../", "/views/inbox.html"));
 });
 
@@ -326,7 +311,7 @@ io.engine.use(passport.session());
 io.on("connection", async(socket) => {
   const req = socket.request;
 
-  if (!req.user) {
+  if (!req.user || !req.isAuthenticated()) {
     console.log('Rejected unauthenticated socket connection.');
     return socket.disconnect(true);
   }
