@@ -102,7 +102,7 @@ async function getConversations(){
         }
   }catch(err){
     console.error(err);
-    notify("error fetching conversations");
+    notify("Network error, please refresh page", "error");
   }
   }
 
@@ -142,7 +142,7 @@ async function getFriends(){
         }
       } catch (err) {
         console.error("Error fetching friends :", err);
-       notify("error fetching friends", "error");
+       notify("Network error, please refresh page", "error");
   }
 }
 
@@ -372,7 +372,7 @@ async function fetchMessages(id){
   }
   catch(err){
     console.error(err);
-    notify("error fetching previous messages", "error");
+    notify("Network error, please refresh page", "error");
   }
 }
 
@@ -455,7 +455,7 @@ async function sortConversation(id, txt){
     }
     catch(err){
       console.error(err);
-      notify("server error occured", "error");
+      notify("Network error, please refresh page", "error");
     return false
     }
 }
@@ -559,7 +559,7 @@ socket = io({
 });
     
   socket.on("connect", () => {
-      console.log("Connected to chat server! ");
+  console.log("Connected to chat server! ");
     canSendMessage = true;
     typingIndicator.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
     typingIndicator.style.color = "green";
@@ -584,7 +584,7 @@ socket = io({
   // Handle dynamic typing updates
   socket.on("user_typing", ({ senderId, isTyping }) => {
     if (senderId === cFId) {
-      typingIndicator.textContent = isTyping ? "is typing..." : "";
+      typingIndicator.innerHTML  = isTyping ? `<span>..typing...</span>` : `<i class="fa-solid fa-circle-check"></i>`;
     }
   });
 
