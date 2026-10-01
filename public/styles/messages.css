@@ -155,10 +155,10 @@ main{
 }
 #s-c-container h3{
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 #s-c-container form{
-  margin: 10px auto;
+  margin: 5px auto;
   border-radius: 30px;
   border: 2px solid #ddd;
   display: flex;
