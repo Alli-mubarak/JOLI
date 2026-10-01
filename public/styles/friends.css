@@ -261,6 +261,7 @@ main{
         .user-details{
             padding: 25px 15px 15px 10px;
             position: relative;
+          overflow : hidden;
           width: 100%;
         }
         .add-friend-btn{
