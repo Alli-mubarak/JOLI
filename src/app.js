@@ -146,7 +146,7 @@ app.get('/api/search', async (req, res) => {
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      WHERE to_tsvector('english', username || ' ' || username) @@ to_tsquery('english', $1)
+      WHERE to_tsvector('english', username) @@ to_tsquery('english', $1)
       LIMIT 5;
     `;
     
