@@ -287,14 +287,14 @@ main{
             font-size:1.1rem;
             font-weight:600;
           margin-bottom: 5px;
-          max-width: 100%;
+          width: 100%;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
         .bio{
             font-size: 0.8rem;
-          max-width: 100%;
+          width: 100%;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
