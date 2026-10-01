@@ -130,6 +130,52 @@ app.use('/api/conversation', cRoutes);
 app.use('/api/message', mRoutes);
 //***********
 
+//endpoint for a unified search
+app.get('/api/search', async (req, res) => {
+  const { q } = req.query; // URL example: /api/search?q=basketball
+  console.log("searching for :", q);
+  if(req.user) console.log("by: ", req.user);
+  
+  if (!q) return res.json({ users: [], posts: [] });
+
+  try {
+    // Format query for full-text search (e.g., 'basketball' -> 'basketball:*')
+    const formattedQuery = `${q.trim().split(/\s+/).join(' | ')}:*`;
+
+    // 1. Search Users
+    const userQuery = `
+      SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
+      FROM users 
+      WHERE to_tsvector('english', username || ' ' || username) @@ to_tsquery('english', $1)
+      LIMIT 5;
+    `;
+    
+    // 2. Search Posts (ordered by relevancy ranking)
+    const postQuery = `
+      SELECT id, content, created_at, user_id, media_urls, ts_rank(to_tsvector('english', content), to_tsquery('english', $1)) as rank
+      FROM posts 
+      WHERE to_tsvector('english', content) @@ to_tsquery('english', $1)
+      ORDER BY rank DESC
+      LIMIT 15;
+    `;
+
+    const [usersResult, postsResult] = await Promise.all([
+      pool.query(userQuery, [formattedQuery]),
+      pool.query(postQuery, [formattedQuery])
+    ]);
+
+    res.json({
+      users: usersResult.rows,
+      posts: postsResult.rows
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+
 //***********///
 //default page  route
 app.get('/',(req, res)=>{
