@@ -149,6 +149,8 @@ main{
   background:#fff;
   z-index: 10;
   padding: 20px 10px;
+  overflow-x: hidden;
+  overflow-y:auto;
 }
 #s-c-container h3{
   text-align: center;
@@ -163,6 +165,7 @@ main{
   justify-content: space-between;
   flex-direction: row;
   overflow: hidden;
+  position: sticky;
 }
 #s-c-container form input{
   font-size: 1rem;
@@ -229,6 +232,7 @@ main{
     border-radius: 30px;
     margin-bottom: 15px;
     cursor:pointer;
+    height: 300px;
   }
   .name-pic{
     display: flex;
