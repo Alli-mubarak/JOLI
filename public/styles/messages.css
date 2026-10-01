@@ -168,6 +168,7 @@ main{
   overflow: hidden;
   position: sticky;
   top:0;
+  background:#fff;
   box-shadow : -10px  0 10px #fff;
 }
 #s-c-container form input{
