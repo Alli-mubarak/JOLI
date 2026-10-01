@@ -236,7 +236,6 @@ main{
     border-radius: 30px;
     margin-bottom: 15px;
     cursor:pointer;
-    height: 300px;
   }
   .name-pic{
     display: flex;
