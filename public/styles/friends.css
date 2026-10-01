@@ -229,7 +229,7 @@ main{
         margin-bottom: 75px;
         }
         .user{
-            max-width: 50%;
+          max-width: 220px;
             height: fit-content;
             border-radius:12px ;
             overflow: hidden;
