@@ -261,7 +261,6 @@ main{
         .user-details{
             padding: 25px 15px 15px 10px;
             position: relative;
-          overflow : hidden;
           width: 100%;
         }
         .add-friend-btn{
@@ -289,14 +288,14 @@ main{
             font-size:1.1rem;
             font-weight:600;
           margin-bottom: 5px;
-          width: 100%;
+          width: calc(100% - 35px);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
         }
         .bio{
             font-size: 0.8rem;
-          width: 100%;
+          width: calc(100% - 35px);
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
