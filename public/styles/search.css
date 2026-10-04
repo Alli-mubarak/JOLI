@@ -367,21 +367,43 @@ main{
   padding: 10px;
   }
   #u-loader > div{
-    height: 250px;
-    background:red;
+    height: 220px;
+    background:#fff;
     position: relative;
     border-radius:12px;
   }
+    #u-loader > div:before{
+    position: absolute;
+    content: '';
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
+    left: -52%;
+    transition: all 0.3s ease;
+    animation: load linear infinite 1.8s;
+      }
+  
   #p-loader{
     padding:10px:
     width:100%;
   }
   #p-loader > div{
-    background: yellow;
+    background: #fff;
     height: 100px;
     border-radius: 12px;
     margin-bottom: 15px;
   }
+    #p-loader > div:before{
+    position: absolute;
+    content: '';
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, #fff, rgba(0,0,0,0.06), #fff);
+    left: -52%;
+    transition: all 0.3s ease;
+    animation: load linear infinite 1.8s;
+      }
+  
   
   @keyframes load{
     to{
