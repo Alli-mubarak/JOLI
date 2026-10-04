@@ -25,7 +25,7 @@ searchForm.onsubmit = async(e) => {
   e.preventDefault();
   usersContainer.innerHTML = "";
   postsContainer.innerHTML = "";
-  searchHeader.innerHTML = "";
+  searchHeader.innerHTML = "fetching search results..";
   slContainer.innerHTML = `
   <div id="u-loader">
           <div></div>
