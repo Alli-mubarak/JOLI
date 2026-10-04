@@ -1,4 +1,4 @@
-async function run(){
+
 const searchForm = document.getElementById("search-form");
 const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
@@ -22,6 +22,8 @@ function linkify(text) {
 searchForm.onsubmit = async(e) => {
   try{
   e.preventDefault();
+  usersContainer.innerHTML = "";
+  postsContainer.innerHTML = "";
   const query = searchInput.value.trim();
   if(query.length < 1) return;
   const response = await fetch(`/api/search?q=${query}`);
@@ -29,12 +31,12 @@ searchForm.onsubmit = async(e) => {
   if(response.ok){
     if(data.users.length > 1) {
       searchHeader.textContent = "Here are your search results";
-      usersContainer.innerHTML = "";
+ //     usersContainer.innerHTML = "";
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 1) {
       searchHeader.textContent = "Here are your search results";
-      postsContainer.innerHTML = "";
+ //     postsContainer.innerHTML = "";
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
@@ -152,6 +154,3 @@ function sortImages(images){
        });
 return result;
 }
-}
-setTimeout(()=>{run()},5000);
-alert("loaded");
