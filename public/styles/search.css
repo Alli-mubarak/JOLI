@@ -395,6 +395,7 @@ main{
     border-radius: 12px;
     margin-bottom: 15px;
     overflow: hidden;
+    position: relative;
   }
     #p-loader > div:before{
     position: absolute;
