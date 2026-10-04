@@ -170,7 +170,7 @@ app.use('/api/message', mRoutes);
 app.get('/api/search', async (req, res) => {
   const { q } = req.query; // URL example: /api/search?q=basketball
   console.log("searching for :", q);
-  if(req.user) console.log("by: ", req.user);
+  if(req.user) console.log("by: ", req.user.username);
   
   if (!q) return res.json({ users: [], posts: [] });
 
@@ -184,12 +184,13 @@ app.get('/api/search', async (req, res) => {
   .map(word => `${word}:*`) // Appends wildcard to EACH word
   .join(' | ');             // Joins safely into 'john:* | doe:*'
 
+    console.log("formatted query :", formattedQuery);
 
     // 1. Search Users
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      WHERE to_tsvector('simple', username) @@ websearch_to_tsquery('simple', $1)
+      WHERE to_tsvector('simple', username) @@ to_tsquery('simple', $1)
       LIMIT 5;
     `;
     
