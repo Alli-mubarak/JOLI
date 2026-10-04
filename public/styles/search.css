@@ -366,14 +366,14 @@ main{
     background:#fff;
     position: relative;
     margin-left: 20px;
-    background: #444;
+    color: #555;
   }
   .s-title:before{
     position: absolute;
     content: '';
     width: 100vw;
     height: 2px;
-    background: #444;
+    background: #555;
     left: -20px; top: 50%;
   }
   #u-loader{
@@ -384,6 +384,10 @@ main{
   position: relative;
   margin-bottom: 25px;
   padding: 10px;
+  }
+  #u-loader > p{
+    width:100%;
+    height: 2px;
   }
   #u-loader > div{
     height: 200px;
