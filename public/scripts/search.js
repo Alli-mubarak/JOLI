@@ -159,11 +159,8 @@ return result;
 setTimeout(()=>{
   try{
     run()
-    alert('loaded');
   }
   catch(err){
     console.error(err)
   }
 },1000);
-
-alert('loading');
