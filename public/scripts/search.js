@@ -40,7 +40,7 @@ searchForm.onsubmit = async(e) => {
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
-      searchHeader.textContent = "Nothing matches your search, try searching for another thing";
+      searchHeader.textContent = "Nothing matches your search, try searching for something else";
       return;
     }
   }else{
