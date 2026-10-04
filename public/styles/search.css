@@ -367,7 +367,7 @@ main{
   padding: 10px;
   }
   #u-loader > div{
-    height: 220px;
+    height: 200px;
     background:#fff;
     position: relative;
     border-radius:12px;
@@ -390,10 +390,11 @@ main{
   }
   #p-loader > div{
     background: #fff;
-    height: 100px;
+    height: 160px;
+    width: 100%;
     border-radius: 12px;
     margin-bottom: 15px;
-    overflow:hidden;
+    overflow: hidden;
   }
     #p-loader > div:before{
     position: absolute;
