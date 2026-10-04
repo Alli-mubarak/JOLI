@@ -195,7 +195,6 @@ main{
           }
 #p-container{
   background:#eee;
-  padding: 10px 0;
 }
   .postCard{
             background:#fff;
@@ -208,6 +207,7 @@ main{
             overflow:hidden;
             margin-bottom: 10px;
             padding: 20px;
+            box-shadow: 2px 2px 13px #ddd;
         }
         .post-header{
             width:100%;
