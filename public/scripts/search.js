@@ -164,6 +164,6 @@ setTimeout(()=>{
   catch(err){
     console.error(err)
   }
-},5000);
+},1000);
 
 alert('loading');
