@@ -185,9 +185,9 @@ app.get('/api/search', async (req, res) => {
 //  .join(' | ');             // Joins safely into 'john:* | doe:*'
 
     const formattedQuery = `${q.trim().split(/\s+/).join(' | ')}:*`;
-
-    console.log("formatted query :", formattedQuery);
     const uq = `%${q}%`; 
+    console.log("formatted query :", formattedQuery, uq);
+    
     // 1. Search Users
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
