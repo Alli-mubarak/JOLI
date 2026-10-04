@@ -187,12 +187,12 @@ app.get('/api/search', async (req, res) => {
     const formattedQuery = `${q.trim().split(/\s+/).join(' | ')}:*`;
 
     console.log("formatted query :", formattedQuery);
-
+    const uq = `%${q}%`; 
     // 1. Search Users
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      WHERE username ILIKE CONCAT('%', $1::text, '%')
+      WHERE username ILIKE $1
       LIMIT 5;
     `;
     
@@ -206,7 +206,7 @@ app.get('/api/search', async (req, res) => {
     `;
 
     const [usersResult, postsResult] = await Promise.all([
-      pool.query(userQuery, [q]),
+      pool.query(userQuery, [uq]),
       pool.query(postQuery, [formattedQuery])
     ]);
 const posts = postsResult.rows
