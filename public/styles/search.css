@@ -357,7 +357,29 @@ main{
   .interactions > div button i{
             font-size: 1.2rem;
   }
-        
+  #u-loader{
+    display: grid;
+   gap:20px;
+   width:100%;
+   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  position: relative;
+  margin-bottom: 75px;
+  padding: 10px;
+  }
+  #u-loader > div{
+    height: 250px;
+    background:red;
+    position: relative;
+  }
+  #p-loader{
+    padding:10px:
+  }
+  #p-loader > div{
+    background: yellow;
+    height: 100px;
+    border-radius: 12px;
+    
+  }
   
   @keyframes load{
     to{
