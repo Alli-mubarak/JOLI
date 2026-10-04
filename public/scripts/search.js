@@ -1,4 +1,4 @@
-
+async function run(){
 const searchForm = document.getElementById("search-form");
 const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
@@ -154,3 +154,13 @@ function sortImages(images){
        });
 return result;
 }
+        }
+
+setTimeout(()=>{
+  try{
+    run()
+  }
+  catch(err){
+    console.error(err)
+  }
+},5000);
