@@ -201,7 +201,7 @@ app.get('/api/search', async (req, res) => {
     ]);
 const posts = postsResult.rows
     
-if(posts.length > 1){
+if(posts.length > 0){
 for(let i = 0; i < posts.length; i++){
   let author = await fetchAuthorDetails(posts[i].user_id);
   posts[i].author_username = author.username;
