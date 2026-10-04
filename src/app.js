@@ -176,13 +176,15 @@ app.get('/api/search', async (req, res) => {
 
   try {
     // Format query for full-text search (e.g., 'basketball' -> 'basketball:*')
-    const formattedQuery = q
-  .trim()
-  .replace(/[^\w\s]/g, '') // Crucial: Removes punctuation like @ or - that crash tsquery
-  .split(/\s+/)
-  .filter(word => word.length > 0)
-  .map(word => `${word}:*`) // Appends wildcard to EACH word
-  .join(' | ');             // Joins safely into 'john:* | doe:*'
+ //   const formattedQuery = q
+//  .trim()
+//  .replace(/[^\w\s]/g, '') // Crucial: Removes punctuation like @ or - that crash tsquery
+//  .split(/\s+/)
+//  .filter(word => word.length > 0)
+//  .map(word => `${word}:*`) // Appends wildcard to EACH word
+//  .join(' | ');             // Joins safely into 'john:* | doe:*'
+
+    const formattedQuery = `${q.trim().split(/\s+/).join(' | ')}:*`;
 
     console.log("formatted query :", formattedQuery);
 
