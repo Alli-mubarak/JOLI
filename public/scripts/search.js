@@ -28,6 +28,7 @@ searchForm.onsubmit = async(e) => {
   usersContainer.innerHTML = "";
   postsContainer.innerHTML = "";
   searchHeader.innerHTML = "fetching search results..";
+  searchHeader.style.color = "#333";
     postsTitle.classList.add("hidden");
       usersTitle.classList.add("hidden");
   slContainer.innerHTML = `
@@ -50,14 +51,12 @@ searchForm.onsubmit = async(e) => {
     if(data.users.length > 0) {
       slContainer.innerHTML = '';
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
-      searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
       usersTitle.classList.remove("hidden");
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 0) {
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
-      searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
      slContainer.innerHTML = '';
       postsTitle.classList.remove("hidden");
