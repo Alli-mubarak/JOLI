@@ -192,8 +192,8 @@ app.get('/api/search', async (req, res) => {
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      
-      LIMIT 5;
+      WHERE username ILIKE $1
+      LIMIT 5
     `;
     
     // 2. Search Posts (ordered by relevancy ranking)
@@ -202,7 +202,7 @@ app.get('/api/search', async (req, res) => {
       FROM posts 
       WHERE to_tsvector('english', content) @@ to_tsquery('english', $1)
       ORDER BY rank DESC
-      LIMIT 15;
+      LIMIT 15
     `;
 
     const [usersResult, postsResult] = await Promise.all([
