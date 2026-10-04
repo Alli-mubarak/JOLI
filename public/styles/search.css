@@ -367,6 +367,7 @@ main{
     position: relative;
     margin-left: 20px;
     color: #555;
+    z-index:2;
   }
   .s-title:before{
     position: absolute;
@@ -375,6 +376,7 @@ main{
     height: 2px;
     background: #555;
     left: -20px; top: 50%;
+    z-index:1;
   }
   #u-loader{
     display: grid;
