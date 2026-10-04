@@ -114,11 +114,12 @@ main{
 
 #u-container{
     display: grid;
-            gap:20px;
-            width:100%;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          position: relative;
-        margin-bottom: 75px;
+   gap:20px;
+   width:100%;
+   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  position: relative;
+  margin-bottom: 75px;
+  padding: 10px;
         }
         .user{
           max-width: 220px;
@@ -192,6 +193,9 @@ main{
           white-space: nowrap;
           text-overflow: ellipsis;
           }
+.p-container{
+  background:#eee;
+}
   .postCard{
             background:#fff;
             display: flex; 
