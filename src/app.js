@@ -54,6 +54,42 @@ const checkSession = (req, res, next) => {
   }
 };
 
+async function fetchAuthorDetails(authorId){
+  try{
+      const user = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [authorId]
+  );
+    const author = user.rows[0];
+    const authorDetails = {
+      profile_pic: author.profile_picture,
+      username : author.username,
+      is_active: author.is_active,
+      is_verified: author.is_verified
+    }
+    return authorDetails;
+  }catch(e){
+    return console.error(e);
+  }
+}
+
+//get post like status
+async function getPostLikeStatus(postId, userId){
+  try{
+    const result = await pool.query(
+      "SELECT * FROM likes WHERE post_id = $1 AND user_id = $2", [postId, userId]
+    );
+    if(result.rows.length > 0){
+      return true
+    }else{
+      return false
+    }
+  }
+  catch(e){
+    return console.error(e);
+  }
+}
+
 app.use(cors({
   origin: 'https://joli-indol.vercel.app/', 
   credentials: true // Crucial: Allows the browser to send cookies back and forth
@@ -163,10 +199,38 @@ app.get('/api/search', async (req, res) => {
       pool.query(userQuery, [formattedQuery]),
       pool.query(postQuery, [formattedQuery])
     ]);
-
+const posts = postsResult.rows
+    
+if(posts.length > 1){
+for(let i = 0; i < posts.length; i++){
+  let author = await fetchAuthorDetails(posts[i].user_id);
+  posts[i].author_username = author.username;
+  posts[i].author_is_verified = author.is_verified;
+  posts[i].author_is_active = author.is_active;
+  posts[i].author_profile_picture = author.profile_pic;
+  author = [];
+  if(req.user && req.user.id){
+    const likeStat = await getPostLikeStatus(posts[i].id, req.user.id);
+    posts[i].likeStatus = likeStat
+  }
+  const commentsQuery = `
+      SELECT c.*, 
+      u.username AS commenter,
+      u.profile_picture AS commenter_pic
+      FROM comments c 
+      JOIN users u ON c.user_id = u.id 
+      WHERE c.post_id = $1 
+      ORDER BY c.created_at DESC
+    `;
+    const commentsResult = await pool.query(commentsQuery, [posts[i].id]);
+    posts[i].comments = commentsResult.rows;
+  
+}
+}
+    
     res.json({
       users: usersResult.rows,
-      posts: postsResult.rows
+      posts: posts
     });
 
   } catch (err) {
