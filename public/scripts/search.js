@@ -159,8 +159,11 @@ return result;
 setTimeout(()=>{
   try{
     run()
+    alert('loaded');
   }
   catch(err){
     console.error(err)
   }
 },5000);
+
+alert('loading');
