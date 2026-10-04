@@ -7,6 +7,17 @@ const searchHeader = document.getElementById("s-header");
 const usersContainer = document.getElementById("u-container");
 const postsContainer = document.getElementById("p-container");
 
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  
+  return text.replace(urlRegex, (url) => {
+    const href = url.startsWith('http') ? url : `https://${url}`;
+    if (url.length > 50){
+      url = url.slice(0,50)+"...";
+    }
+    return `<a class="c-link" href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+}
 
 searchForm.onsubmit = async(e) => {
   try{
