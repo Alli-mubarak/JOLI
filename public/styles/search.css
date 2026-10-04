@@ -108,10 +108,7 @@ main{
     padding:20px 0;
     width:100%;
 }
-  main h2{
-    text-align:center;
-  }
-
+  
 #u-container{
     display: grid;
    gap:20px;
@@ -360,7 +357,7 @@ main{
   }
   .s-title{
     font-weight:500;
-    font-size:1.3rem;
+    font-size:1.1rem;
     width: fit-content;
     padding:5px;
     background:#fff;
