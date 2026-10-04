@@ -195,6 +195,7 @@ main{
           }
 #p-container{
   background:#eee;
+  padding: 10px 0;
 }
   .postCard{
             background:#fff;
