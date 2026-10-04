@@ -112,7 +112,7 @@ main{
     text-align:center;
   }
 
-.users{
+#u-container{
     display: grid;
             gap:20px;
             width:100%;
