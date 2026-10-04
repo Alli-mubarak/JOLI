@@ -25,6 +25,7 @@ searchForm.onsubmit = async(e) => {
   e.preventDefault();
   usersContainer.innerHTML = "";
   postsContainer.innerHTML = "";
+  searchHeader.innerHTML = "";
   slContainer.innerHTML = `
   <div id="u-loader">
           <div></div>
@@ -44,20 +45,20 @@ searchForm.onsubmit = async(e) => {
   if(response.ok){
     if(data.users.length > 0) {
       slContainer.innerHTML = '';
-      searchHeader.textContent = `search results for <b>${query}</b>`;
+      searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 0) {
-      searchHeader.textContent = `search results for <b>${query}</b>`;
+      searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
      slContainer.innerHTML = '';
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
-      searchHeader.textContent = "Nothing matches your search, try searching for something else";
+      searchHeader.innerHTML = "Nothing matches your search, try searching for something else";
       searchHeader.style.color = "pink";
       searchHeader.style.marginTop = "50px";
       return;
