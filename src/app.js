@@ -192,7 +192,7 @@ app.get('/api/search', async (req, res) => {
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      WHERE username ILIKE CONCAT('%', $1::text, '%');
+      WHERE username ILIKE CONCAT('%', $1::text, '%')
       LIMIT 5;
     `;
     
