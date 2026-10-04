@@ -6,7 +6,9 @@ const searchResult= document.getElementById("s-result");
 const searchHeader = document.getElementById("s-header");
 const slContainer = document.getElementById("s-loader");
 const usersContainer = document.getElementById("u-container");
+const usersTitle = document.getElementById("u-title");
 const postsContainer = document.getElementById("p-container");
+const postsTitle = document.getElementById("p-title");
 
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -26,6 +28,8 @@ searchForm.onsubmit = async(e) => {
   usersContainer.innerHTML = "";
   postsContainer.innerHTML = "";
   searchHeader.innerHTML = "fetching search results..";
+    postsTitle.classList.add("hidden");
+      usersTitle.classList.add("hidden");
   slContainer.innerHTML = `
   <div id="u-loader">
           <div></div>
@@ -48,7 +52,7 @@ searchForm.onsubmit = async(e) => {
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
-      usersContainer.innerHTML += `<p class="s-title">Users</p>`
+      usersTitle.classList.remove("hidden");
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 0) {
@@ -56,7 +60,7 @@ searchForm.onsubmit = async(e) => {
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
      slContainer.innerHTML = '';
-      postsContainer.innerHTML += `<p class="s-title">Posts</p>`
+      postsTitle.classList.remove("hidden");
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
@@ -64,11 +68,15 @@ searchForm.onsubmit = async(e) => {
       searchHeader.style.color = "red";
       searchHeader.style.marginTop = "50px";
       slContainer.innerHTML = '';
+      postsTitle.classList.add("hidden");
+      usersTitle.classList.add("hidden");
       return;
     }
   }else{
     notify("error fetching search", "error");
     slContainer.innerHTML = '';
+    postsTitle.classList.add("hidden");
+      usersTitle.classList.add("hidden");
   }
     
 
@@ -76,6 +84,8 @@ searchForm.onsubmit = async(e) => {
     notify("network error occurred!", "error");
     slContainer.innerHTML = '';
     console.error(err);
+    postsTitle.classList.add("hidden");
+      usersTitle.classList.add("hidden");
     }
 }
 
