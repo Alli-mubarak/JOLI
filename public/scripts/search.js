@@ -31,12 +31,12 @@ searchForm.onsubmit = async(e) => {
   if(response.ok){
     if(data.users.length > 1) {
       searchHeader.textContent = "Here are your search results";
- //     usersContainer.innerHTML = "";
+     alert(data.users)
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 1) {
       searchHeader.textContent = "Here are your search results";
- //     postsContainer.innerHTML = "";
+     
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
