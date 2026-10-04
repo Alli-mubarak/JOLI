@@ -206,7 +206,7 @@ app.get('/api/search', async (req, res) => {
     `;
 
     const [usersResult, postsResult] = await Promise.all([
-      pool.query(userQuery, [formattedQuery]),
+      pool.query(userQuery, [q.trim()]),
       pool.query(postQuery, [formattedQuery])
     ]);
 const posts = postsResult.rows
