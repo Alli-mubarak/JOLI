@@ -176,13 +176,20 @@ app.get('/api/search', async (req, res) => {
 
   try {
     // Format query for full-text search (e.g., 'basketball' -> 'basketball:*')
-    const formattedQuery = `${q.trim().split(/\s+/).join(' | ')}:*`;
+    const formattedQuery = q
+  .trim()
+  .replace(/[^\w\s]/g, '') // Crucial: Removes punctuation like @ or - that crash tsquery
+  .split(/\s+/)
+  .filter(word => word.length > 0)
+  .map(word => `${word}:*`) // Appends wildcard to EACH word
+  .join(' | ');             // Joins safely into 'john:* | doe:*'
+
 
     // 1. Search Users
     const userQuery = `
       SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
       FROM users 
-      WHERE username ILIKE '%' || $1 || '%'
+      WHERE to_tsvector('simple', username) @@ websearch_to_tsquery('simple', $1)
       LIMIT 5;
     `;
     
