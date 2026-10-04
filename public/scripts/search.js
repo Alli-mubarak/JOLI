@@ -1,3 +1,4 @@
+async function run(){
 const searchForm = document.getElementById("search-form");
 const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
@@ -63,8 +64,6 @@ usersContainer.innerHTML += userCard;
       console.error(e);
   notify("error display users", "error");
 }
-
-
 }
 
 async function displayPost(post){
@@ -142,3 +141,6 @@ function sortImages(images){
        });
 return result;
 }
+}
+setTimeout(()=>{run()},5000);
+alert("loaded");
