@@ -4,6 +4,7 @@ const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
 const searchResult= document.getElementById("s-result");
 const searchHeader = document.getElementById("s-header");
+const slContainer = document.getElementById("s-loader");
 const usersContainer = document.getElementById("u-container");
 const postsContainer = document.getElementById("p-container");
 
@@ -24,32 +25,52 @@ searchForm.onsubmit = async(e) => {
   e.preventDefault();
   usersContainer.innerHTML = "";
   postsContainer.innerHTML = "";
+  slContainer.innerHTML = `
+  <div id="u-loader">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+    </div>
+    <div id="p-loader">
+          <div></div>
+          <div></div>
+     </div>
+  `;
   const query = searchInput.value.trim();
   if(query.length < 1) return;
   const response = await fetch(`/api/search?q=${query}`);
   const data = await response.json();
   if(response.ok){
     if(data.users.length > 0) {
-      searchHeader.textContent = "Here are your search results";
-     alert(data.users)
+      slContainer.innerHTML = '';
+      searchHeader.textContent = `search results for <b>${query}</b>`;
+      searchHeader.style.color = "#333";
+      searchHeader.style.marginTop = "0";
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 0) {
-      searchHeader.textContent = "Here are your search results";
-     
+      searchHeader.textContent = `search results for <b>${query}</b>`;
+      searchHeader.style.color = "#333";
+      searchHeader.style.marginTop = "0";
+     slContainer.innerHTML = '';
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
       searchHeader.textContent = "Nothing matches your search, try searching for something else";
+      searchHeader.style.color = "pink";
+      searchHeader.style.marginTop = "50px";
       return;
     }
   }else{
     notify("error fetching search", "error");
+    slContainer.innerHTML = '';
   }
     
 
     }catch(err){
     notify("network error occurred!", "error");
+    slContainer.innerHTML = '';
     console.error(err);
     }
 }
