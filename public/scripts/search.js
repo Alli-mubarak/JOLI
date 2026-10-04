@@ -48,6 +48,7 @@ searchForm.onsubmit = async(e) => {
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
+      usersContainer.innerHTML += `<p class="s-title">Users</p>`
       data.users.forEach(u => {displayUser(u)});
     }
     if(data.posts.length > 0) {
@@ -55,12 +56,14 @@ searchForm.onsubmit = async(e) => {
       searchHeader.style.color = "#333";
       searchHeader.style.marginTop = "0";
      slContainer.innerHTML = '';
+      postsContainer.innerHTML += `<p class="s-title">Posts</p>`
       data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
       searchHeader.innerHTML = "Nothing matches your search, try searching for something else";
-      searchHeader.style.color = "pink";
+      searchHeader.style.color = "red";
       searchHeader.style.marginTop = "50px";
+      slContainer.innerHTML = '';
       return;
     }
   }else{
