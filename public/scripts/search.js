@@ -29,12 +29,12 @@ searchForm.onsubmit = async(e) => {
   const response = await fetch(`/api/search?q=${query}`);
   const data = await response.json();
   if(response.ok){
-    if(data.users.length > 1) {
+    if(data.users.length > 0) {
       searchHeader.textContent = "Here are your search results";
      alert(data.users)
       data.users.forEach(u => {displayUser(u)});
     }
-    if(data.posts.length > 1) {
+    if(data.posts.length > 0) {
       searchHeader.textContent = "Here are your search results";
      
       data.posts.forEach(p => {displayPost(p)});
