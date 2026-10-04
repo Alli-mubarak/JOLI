@@ -193,7 +193,7 @@ main{
           white-space: nowrap;
           text-overflow: ellipsis;
           }
-.p-container{
+#p-container{
   background:#eee;
 }
   .postCard{
