@@ -1,6 +1,14 @@
 let isAuthorised = false;
 let currentUserId = "";
 let friendships = [];
+let pendingRequests = [];
+let pendingRequestsTime = [];
+let pendingAccepts = [];
+let pendingAcceptsTime = [];
+let pendingAcceptsPic = [];
+let pendingAcceptsUsername = [];
+let accepted = [];
+let confirmed = [];
 const menuBox = document.getElementById("menu-container");
 const pLink = document.getElementById("profile-link");
 const sLink = document.getElementById("settings-link");
@@ -221,8 +229,31 @@ async function checkAuthStatus() {
           pLink.href = `/user/${data.user.username}`;
           sLink.href = '/';
         userPic.classList.remove("hidden");
-          //fetch friends 
-        if (typeof getFriends === "function") {getFriends()}
+         //get friendships and sort accordingly
+        if(currentUserId && friendships.length > 0){
+      await friendships.forEach(f => {
+      if(f.status === "pending"){
+            if(f.sender_id === currentUserId){
+                  pendingRequests.push(f.receiver_id);
+                  pendingRequestsTime.push(f.created_at);
+                  
+            }
+            else{
+                  pendingAccepts.push(f.sender_id);
+                  pendingAcceptsTime.push(f.created_at);
+            }
+      }else if(f.status === "accepted"){
+            if(f.receiver_id === currentUserId){
+                  accepted.push(f.sender_id); 
+            }else{
+                  confirmed.push(f.receiver_id); 
+            }
+      }
+      });
+      
+        }
+          //fetch all users
+        if (typeof getFriends === "function") {getUsers()}
         else{
           const frResponse = await fetch("/api/friendship/user/friends");
           if(frResponse.ok){
