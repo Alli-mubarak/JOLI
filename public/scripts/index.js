@@ -229,7 +229,16 @@ async function checkAuthStatus() {
           pLink.href = `/user/${data.user.username}`;
           sLink.href = '/';
         userPic.classList.remove("hidden");
-         //get friendships and sort accordingly
+    
+          //fetch all users
+        if (typeof getFriends === "function") {getFriends()}
+        else{
+          const frResponse = await fetch("/api/friendship/user/friends");
+          if(frResponse.ok){
+            //get friendships and sort accordingly
+            frData = await frResponse.json();
+            friendships = await frData.friendships;
+         
         if(currentUserId && friendships.length > 0){
       await friendships.forEach(f => {
       if(f.status === "pending"){
@@ -252,14 +261,16 @@ async function checkAuthStatus() {
       });
       
         }
-          //fetch all users
-        if (typeof getFriends === "function") {getUsers()}
-        else{
-          const frResponse = await fetch("/api/friendship/user/friends");
-          if(frResponse.ok){
-          frData = await frResponse.json();
-          friendships = await frData.friendships;
-        }else{
+          console.log("f:", friendships);
+      console.log("pr:", pendingRequests);
+  console.log("prt:", pendingRequestsTime);
+console.log("pa:", pendingAccepts);
+console.log("pat:", pendingAcceptsTime);
+console.log("pap:", pendingAcceptsPic);
+console.log("pau:", pendingAcceptsUsername);
+console.log("acc:", accepted);
+console.log("conf:", confirmed)
+          }else{
             notify("You have no friends yet, add one now!");
             console.error("An error occurred while fetching friends");
           }
