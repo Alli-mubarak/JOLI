@@ -15,7 +15,7 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
-let postOnFocus, lastPostCreationTime, 
+let postOnFocus, lastPostCreationTime;
   
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
