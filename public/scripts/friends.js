@@ -2,14 +2,7 @@ showAlert("chat-tab");
 const pendingRequestsContainer = document.getElementById("pending-requests");
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
-let pendingRequests = [];
-let pendingRequestsTime = [];
-let pendingAccepts = [];
-let pendingAcceptsTime = [];
-let pendingAcceptsPic = [];
-let pendingAcceptsUsername = [];
-let accepted = [];
-let confirmed = [];
+
 
 async function fetchUsers() {
       try {
@@ -22,32 +15,7 @@ async function fetchUsers() {
         const data = await response.json();
  
         const users = data.users;
-           // alert(scrollPosition)
-            //alert(isAuthorised)
-           // alert(currentUserId)
-       // lastUserFetched = 
-        if(currentUserId && friendships.length > 0){
-      await friendships.forEach(f => {
-      if(f.status === "pending"){
-            if(f.sender_id === currentUserId){
-                  pendingRequests.push(f.receiver_id);
-                  pendingRequestsTime.push(f.created_at);
-                  
-            }
-            else{
-                  pendingAccepts.push(f.sender_id);
-                  pendingAcceptsTime.push(f.created_at);
-            }
-      }else if(f.status === "accepted"){
-            if(f.receiver_id === currentUserId){
-                  accepted.push(f.sender_id); 
-            }else{
-                  confirmed.push(f.receiver_id); 
-            }
-      }
-      });
-      
-        }
+        
       usersContainer.innerHTML = '';
       pendingRequestsContainer.innerHTML = '';
       if(users.length < 1){
