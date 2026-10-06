@@ -439,6 +439,9 @@ main{
   #post-menu button:not(#submit-comment-btn) i{
     margin-right: 15px;
   }
+  #post-menu button:not(#submit-comment-btn) b{
+    margin-left: 5px;
+  }
          #post-menu button:not(#submit-comment-btn):hover{
             background:#eee;
           }
