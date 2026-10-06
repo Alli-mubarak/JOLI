@@ -1,6 +1,8 @@
 let isAuthorised = false;
 let currentUserId = "";
 let friendships = [];
+let pendingFriendships = [];
+let confirmedFriendships = [];
 let pendingRequests = [];
 let pendingRequestsTime = [];
 let pendingAccepts = [];
@@ -245,17 +247,20 @@ async function checkAuthStatus() {
             if(f.sender_id === currentUserId){
                   pendingRequests.push(f.receiver_id);
                   pendingRequestsTime.push(f.created_at);
-                  
+                  pendingFriendships.push(f.receiver_id);
             }
             else{
                   pendingAccepts.push(f.sender_id);
                   pendingAcceptsTime.push(f.created_at);
+                pendingFriendships.push(f.sender_id);
             }
       }else if(f.status === "accepted"){
             if(f.receiver_id === currentUserId){
                   accepted.push(f.sender_id); 
+              confirmedFriendships.push(f.sender_id);
             }else{
                   confirmed.push(f.receiver_id); 
+              confirmedFriendships.push(f.receiver_id);
             }
       }
       });
@@ -269,7 +274,9 @@ console.log("pat:", pendingAcceptsTime);
 console.log("pap:", pendingAcceptsPic);
 console.log("pau:", pendingAcceptsUsername);
 console.log("acc:", accepted);
-console.log("conf:", confirmed)
+console.log("conf:", confirmed);
+console.log("frens:", confirmedFriendships);
+console.log("p-frens:", pendingFriendships);
           }else{
             notify("You have no friends yet, add one now!");
             console.error("An error occurred while fetching friends");
