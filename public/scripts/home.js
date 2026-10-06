@@ -15,8 +15,8 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
-let postOnFocus, lastPostCreationTime, friends, pendings;
-
+let postOnFocus, lastPostCreationTime, 
+  
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
   
@@ -422,8 +422,8 @@ async function viewPostMenu(e){
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
     
-  const isFriend = await friends.some(f => f.sender_id === authorId || f.receiver_id === authorId);
-  const isPending = await pendings.some(f => f.sender_id === currentUserId);
+  const isFriend = await confirmedFriendships.includes(authorId);
+  const isPending = await pendingFriendships.includes(authorId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
