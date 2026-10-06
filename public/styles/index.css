@@ -432,11 +432,13 @@ main{
             justify-content: start;
             border-radius:10px;
             width:100%;
-            gap:15px;
             border: none;
             cursor: pointer;
             background: transparent;
          }
+  #post-menu button:not(#submit-comment-btn) i{
+    margin-right: 15px;
+  }
          #post-menu button:not(#submit-comment-btn):hover{
             background:#eee;
           }
