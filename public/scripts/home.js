@@ -207,7 +207,6 @@ noConfirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
         cbContainer.action = "";
       enableScrolling();
-        alert("cancelled");
       }
   confirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
@@ -502,12 +501,7 @@ if(addFriendBtn){
     if(delBtn){
       delBtn.onclick = () =>{
        deletePost(postId);
-        postMenuCloser.style.background = "transparent";
-    
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   enableScrolling();
+        
       }
     }
     
