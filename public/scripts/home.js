@@ -20,7 +20,7 @@ const cbContainer = document.getElementById("confirm-box-container");
  const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
       
-let currPost, lastPostCreationTime;
+let currPost, postOnFocus, lastPostCreationTime;
   
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -457,7 +457,7 @@ async function viewPostMenu(e){
    ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
   `;
-    const currPost = document.getElementById(`${postId}`);
+    currPost = document.getElementById(`${postId}`);
     postOnFocus = currPost;
     currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
@@ -783,9 +783,9 @@ async function unfriend(id, username, btn){
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-    confirmAction("unfriend " + username, async() => {
+   confirmAction("unfriend " + username, async() => {
     notify("unfriending.....");
- // alert(id);
+   currPost.style.background = "#fff";
     });
   }
   catch(err){
