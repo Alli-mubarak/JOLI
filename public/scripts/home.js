@@ -16,9 +16,9 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
-//const cbContainer = document.getElementById("confirm-box-container");
- //     const noConfirmBtn = document.getElementById("no-btn");
-  //    const confirmBtn = document.getElementById("yes-btn");
+const cbContainer = document.getElementById("confirm-box-container");
+ const noConfirmBtn = document.getElementById("no-btn");
+const confirmBtn = document.getElementById("yes-btn");
       
 let postOnFocus, lastPostCreationTime;
   
@@ -554,7 +554,7 @@ async function deletePost(postId){
       postMenuContainer.style.bottom = "-100vh";
       },200);
     
-    confirmAction("delete this post", () => {
+    confirmAction("delete this post", async() => {
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
