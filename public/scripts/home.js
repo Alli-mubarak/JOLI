@@ -15,6 +15,10 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
+const cbContainer = document.getElementById("confirm-box-container");
+      const noConfirmBtn = document.getElementById("no-btn");
+      const confirmBtn = document.getElementById("yes-btn");
+      
 let postOnFocus, lastPostCreationTime;
   
 function linkify(text) {
@@ -197,6 +201,25 @@ async function sortFriendship(){
   pendings  = await friendships.filter(f => f.status === "pending");
 }
 
+// confirm box function 
+noConfirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action = "";
+        alert("cancelled");
+      }
+      confirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action()
+      }
+      
+   function confirmAction(a, action){
+    cbContainer.action = action
+    const cAction = document.getElementById("action");
+    cAction.textContent = a;
+    cbContainer.classList.remove("hidden");
+       }
+       
+       
 //function that makes the post card work
 async function viewPost(e){
 try{
@@ -529,6 +552,8 @@ if(addFriendBtn){
 //post deleter
 async function deletePost(postId){
   try{
+    confirmAction("delete this post", () => {
+      
     const currPost = document.getElementById(`${postId}`);
     currPost.style.background = "#ffeeee";
     
@@ -552,6 +577,7 @@ async function deletePost(postId){
      //remove in the UI
     postsContainer.removeChild(currPost);
     notify("post deleted!");
+    });
   }
   catch(err){
     notify("Post delete failed!", "error");
