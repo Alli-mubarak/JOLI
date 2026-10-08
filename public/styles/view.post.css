@@ -370,7 +370,6 @@ header button:hover {
             justify-content: start;
             border-radius:10px;
             width:100%;
-            gap:15px;
             border: none;
             cursor: pointer;
             background: transparent;
@@ -378,6 +377,12 @@ header button:hover {
          #post-menu button:not(#submit-comment-btn):hover{
             background:#eee;
           }
+#post-menu button:not(#submit-comment-btn) i{
+  margin-right: 15px;
+}
+#post-menu button:not(#submit-comment-btn) b{
+  margin-left: 5px;
+}
   #post-menu h3, #post-menu p{
            font-size: 1.2rem;
             margin-bottom: 10px;
