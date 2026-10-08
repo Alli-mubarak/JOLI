@@ -377,6 +377,55 @@ async function viewPostMenu(){
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
+   const addFriendBtn = postMenu.querySelector("#add-friend-btn");
+    const unfriendBtn = postMenu.querySelector("#unfriend-btn");
+    const viewAuthorBtn = postMenu.querySelector("#view-user-btn");
+
+  if(addFriendBtn){
+      addFriendBtn.onclick = async() =>{
+        try{
+       await addFriend(authorId, addFriendBtn);
+        postMenuCloser.style.background = "transparent";
+        }
+        catch(err){
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+    }
+
+    if(unfriendBtn){
+      unfriendBtn.onclick = async() =>{
+        try{
+       await unfriend(authorId, authorUsername, unfriendBtn);
+        postMenuCloser.style.background = "transparent";
+        }
+        catch(err){
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+    }
+
+    if(viewAuthorBtn){
+      viewAuthorBtn.onclick = () =>{
+        try{
+        postMenuCloser.style.background = "transparent";
+      currPost.style.background = "#fff";
+        
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+       window.location.href = authorLink;
+      },200);
+   enableScrolling();
+        }
+        catch(err){
+          notify("Author profile view failed!", "error");
+          return 
+        }
+      }
+    }
+   
     if(delBtn){
       delBtn.onclick = () =>{
        deletePost(postId);
@@ -389,6 +438,7 @@ async function viewPostMenu(){
      
       }
     }
+   
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
      document.body.classList.remove('no-scroll'); 
@@ -771,4 +821,31 @@ if(commentsBox.children.length > 1){
   enableCommentsMenu(); 
 }
 
+async function addFriend(id, btn){
+  try{
+  btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+  notify("adding friend");
+  alert(id);
+  }catch(err){
+    notify("error occurred ", "error");
+    console.error(err)
+  }
+}
 
+async function unfriend(id, username, btn){
+  try{
+    postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   confirmAction("unfriend " + username, async() => {
+    notify("unfriending.....");
+   currPost.style.background = "#fff";
+    });
+  }
+  catch(err){
+    notify("error occurred ", "error");
+    console.error(err)
+  }
+
+}
