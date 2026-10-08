@@ -484,7 +484,7 @@ if(addFriendBtn){
     if(unfriendBtn){
       unfriendBtn.onclick = async() =>{
         try{
-       await unfriend(authorId, unfriendBtn);
+       await unfriend(authorId, authorUsername, unfriendBtn);
         postMenuCloser.style.background = "transparent";
         }
         catch(err){
@@ -767,13 +767,30 @@ commentInput.oninput = () =>{
 fetchPosts()
 
 async function addFriend(id, btn){
-  btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
+  try{
+  btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
   notify("adding friend");
   alert(id);
+  }catch(err){
+    notify("error occurred ", "error");
+    console.error(err)
+  }
 }
 
-async function unfriend(id, btn){
-  btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
-  notify("adding friend");
-  alert(id);
+async function unfriend(id, username, btn){
+  try{
+    postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+    confirmAction("unfriend " + username, async() => {
+    notify("unfriending.....");
+ // alert(id);
+    });
+  }
+  catch(err){
+    notify("error occurred ", "error");
+    console.error(err)
+  }
+
 }
