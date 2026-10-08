@@ -1,4 +1,4 @@
-async function run(){
+
 showAlert("chat-tab");
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
@@ -501,9 +501,7 @@ if(addFriendBtn){
     
     if(delBtn){
       delBtn.onclick = () =>{
-      if(confirm("Are you sure you want to delete this post?")){
        deletePost(postId);
-      }
         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
@@ -763,12 +761,3 @@ async function addFriend(id, btn){
   btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
   
 }
-}
-setTimeout(()=>{
-  try{run()}
-  catch(e){
-    alert("error loading script");
-    console.error(e);
-  }
-},5000);
-alert("loading");
