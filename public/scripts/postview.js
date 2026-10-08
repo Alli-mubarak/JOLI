@@ -25,15 +25,13 @@ const postMenuCtrl = document.querySelector(".post-menu");
 const cbContainer = document.getElementById("confirm-box-container");
  const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
+let pendingFriendships = [];
+let confirmedFriendships = [];
 let isAuthorised = false;
 let scrollPosition = 0;
-let commentContents
-
-  let imgArray;
-  let currIndex;
+let commentContents, imgArray, currIndex, userPic, userName
   let inViewMode = false;
-  let userPic;
-  let userName;
+  
 
 async function checkAuthStatus() {
       try {
@@ -47,13 +45,50 @@ async function checkAuthStatus() {
           currentUserId = data.user.id;
           userPic = data.user.profile_picture;
           userName = data.user.username;
-        } else {
+         if(isAuthorised){
+          try{
+           const frResponse = await fetch("/api/friendship/user/friends");
+          if(frResponse.ok){
+            //get friendships and sort accordingly
+            frData = await frResponse.json();
+            friendships = await frData.friendships;
+         
+        if(currentUserId && friendships.length > 0){
+      await friendships.forEach(f => {
+      if(f.status === "pending"){
+            if(f.sender_id === currentUserId){
+                  pendingFriendships.push(f.receiver_id);
+            }
+            else{
+                pendingFriendships.push(f.sender_id);
+            }
+      }else if(f.status === "accepted"){
+            if(f.receiver_id === currentUserId){
+              confirmedFriendships.push(f.sender_id);
+            }else{
+              confirmedFriendships.push(f.receiver_id);
+         }
+          }
+      });
+        }
+         console.log("frens:", confirmedFriendships);
+         console.log("p-frens:", pendingFriendships);
+          }else{
+           notify("server error occurred", "error");
+          }
+        }
+        catch(err){
+           console.error(err);
+           notify("error fetching friends", "error");
+          }
+         }
+        }else {
           isAuthorised = false;
           currentUserId = "";
           userPic = "";
           userName = "";
         }
-      } catch (err) {
+          }catch (err) {
         console.error("Error verifying authentication status:", err);
       }
 }
