@@ -1,3 +1,4 @@
+async function run(){
 showAlert("chat-tab");
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
@@ -762,4 +763,12 @@ async function addFriend(id, btn){
   btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
   
 }
-
+}
+setTimeout(()=>{
+  try{run()}
+  catch(e){
+    alert("error loading script");
+    console.error(e);
+  }
+},5000);
+alert("loading");
