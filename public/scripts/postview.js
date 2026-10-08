@@ -411,7 +411,7 @@ async function viewPostMenu(){
       viewAuthorBtn.onclick = () =>{
         try{
         postMenuCloser.style.background = "transparent";
-      currPost.style.background = "#fff";
+      postCard.style.background = "#fff";
         
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
