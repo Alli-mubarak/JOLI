@@ -362,10 +362,16 @@ function viewPostMenu(){
   const authorLinkTag = document.querySelector(".author-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
+
+   const isFriend = await confirmedFriendships.includes(authorId);
+  const isPending = await pendingFriendships.includes(authorId);
+   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
-   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+    ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
+   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View  <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
+   ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
   `;
     postMenu.innerHTML = htmlElements;
