@@ -206,6 +206,7 @@ async function sortFriendship(){
 noConfirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
         cbContainer.action = "";
+    currPost.style.background = "#fff";
       enableScrolling();
       }
   confirmBtn.onclick = () =>{
