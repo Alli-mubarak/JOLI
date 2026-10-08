@@ -337,15 +337,14 @@ function viewPostMenu(){
     const delBtn = postMenu.querySelector("#delete-post-btn");
     if(delBtn){
       delBtn.onclick = () =>{
-      if(confirm("Are you sure you want to delete this post?")){
        deletePost(postId);
-      }
+      
         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-     enableScrolling();
+     
       }
     }
     pmCloserBtn.onclick = () =>{
