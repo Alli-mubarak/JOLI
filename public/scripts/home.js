@@ -205,14 +205,17 @@ async function sortFriendship(){
 noConfirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
         cbContainer.action = "";
+      enableScrolling();
         alert("cancelled");
       }
-      confirmBtn.onclick = () =>{
+  confirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
-        cbContainer.action()
+        cbContainer.action();
+       enableScrolling();
       }
       
    function confirmAction(a, action){
+     disableScrolling();
     cbContainer.action = action
     const cAction = document.getElementById("action");
     cAction.textContent = a;
@@ -223,9 +226,6 @@ noConfirmBtn.onclick = () =>{
 //function that makes the post card work
 async function viewPost(e){
 try{
-  
-     
-      
       if(e.target.getAttribute('data-type') !== null || e.target.parentElement.getAttribute('data-type') !== null){
         if(e.target.getAttribute('data-type') === "like" || e.target.parentElement.getAttribute('data-type') === "like"){
           likePost(e);
@@ -470,13 +470,7 @@ if(addFriendBtn){
       addFriendBtn.onclick = async() =>{
         try{
        await addFriend(authorId, addFriendBtn);
-      
         postMenuCloser.style.background = "transparent";
-    
-  //   setTimeout(() =>{
-    //  postMenuContainer.style.bottom = "-100vh";
- //     },200);
-//   enableScrolling();
         }
         catch(err){
           notify("failed to send request!", "error");
@@ -552,11 +546,14 @@ if(addFriendBtn){
 //post deleter
 async function deletePost(postId){
   try{
-    confirmAction("delete this post", () => {
-      
     const currPost = document.getElementById(`${postId}`);
     currPost.style.background = "#ffeeee";
+    postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
     
+    confirmAction("delete this post", () => {
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
@@ -568,12 +565,7 @@ async function deletePost(postId){
           currPost.style.background = "#fff";
           return 
         }
-          console.log(response);
-    postMenuCloser.style.background = "transparent";
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-   enableScrolling();
+      
      //remove in the UI
     postsContainer.removeChild(currPost);
     notify("post deleted!");
