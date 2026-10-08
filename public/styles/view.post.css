@@ -567,3 +567,56 @@ form textarea{
           transform: rotate(360deg);
          }
  }
+
+#confirm-box-container{
+           position: fixed;
+           background: rgba(0,0,0,0.7);
+           width: 100%;
+           height:100%;
+           left:0;
+           top:0;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           z-index:100;
+       }
+       #confirm-box{
+          min-width: 300px;
+           max-width: 80vw;
+           background: #fff;
+           border-radius: 12px;
+           padding: 10px;
+           box-shadow: 0 0 20px rgba(0,0,0,0.04);
+           width: fit-content;
+           border: inset 2px #2bff43;
+       }
+       #confirm-box p{
+           width: 100%;
+           font-size: 1.1rem;
+           margin-bottom: 15px;
+           background: rgba(0,0,0,0.02);
+           padding: 8px;
+           border-radius: 8px 8px 0 0;
+           color:#222;
+       }
+       #c-action-btns{
+           display: flex;
+           align-items: center;
+           justify-content: end;
+           gap: 12px;
+       }
+       #c-action-btns button{
+           cursor: pointer;
+           padding: 7px 15px;
+           border-radius: 10px;
+           font-size: 1.1rem;
+           border: none;
+           
+       }
+       #no-btn{
+           color : #fff;
+           background: #333;
+       }
+       #yes-btn{
+           background: #2bff43;
+       }
