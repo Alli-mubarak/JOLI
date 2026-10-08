@@ -20,7 +20,7 @@ const cbContainer = document.getElementById("confirm-box-container");
  const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
       
-let postOnFocus, lastPostCreationTime;
+let currPost, lastPostCreationTime;
   
 function linkify(text) {
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
@@ -540,7 +540,7 @@ if(addFriendBtn){
 //post deleter
 async function deletePost(postId){
   try{
-    const currPost = document.getElementById(`${postId}`);
+   currPost = document.getElementById(`${postId}`);
     currPost.style.background = "#ffeeee";
     postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
