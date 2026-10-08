@@ -182,6 +182,17 @@ return `${Math.floor(sDifference)}s`;
         <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
         </div>
   </div>
+
+<section id="confirm-box-container" class="hidden">
+       <div id="confirm-box">
+           <p>Are you sure you want to <b id="action">take this action</b>?</p>
+           <div id="c-action-btns">
+               <button id="no-btn">No</button>
+               <button id="yes-btn">Yes</button>
+           </div>
+       </div>
+  </section>
+
 <script>
 const backBtn = document.getElementById("return-btn");
 backBtn.onclick = () =>{
