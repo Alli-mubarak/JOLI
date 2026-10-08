@@ -22,6 +22,9 @@ const commentsBox = document.getElementById("comments");
 const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
+const cbContainer = document.getElementById("confirm-box-container");
+ const noConfirmBtn = document.getElementById("no-btn");
+const confirmBtn = document.getElementById("yes-btn");
 let isAuthorised = false;
 let scrollPosition = 0;
 let commentContents
@@ -102,7 +105,27 @@ function interceptLinks(){
             });
         });
 }
-  
+
+// confirm box function 
+noConfirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action = "";
+      enableScrolling();
+      }
+  confirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action();
+       enableScrolling();
+      }
+      
+   function confirmAction(a, action){
+     disableScrolling();
+    cbContainer.action = action
+    const cAction = document.getElementById("action");
+    cAction.textContent = a;
+    cbContainer.classList.remove("hidden");
+   }
+
 let closeNID;
         
 nCloser.onclick = () =>{
@@ -308,7 +331,6 @@ function viewPostMenu(){
   ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
-     <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
@@ -364,7 +386,8 @@ async function deletePost(postId){
   try{
     const currPost = document.getElementById(`${postId}`);
     currPost.style.background = "#ffeeee";
-    
+  
+  confirmAction("delete this post", async() => {
     const response = await fetch(`/post/${postId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
@@ -387,6 +410,7 @@ async function deletePost(postId){
     setTimeout(()=>{
       window.location.href = '/'; 
     },1200)
+  });
   }
   catch(err){
     notify("Post delete failed!", "error");
