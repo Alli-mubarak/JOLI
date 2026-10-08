@@ -359,7 +359,7 @@ async function viewPostMenu(){
   try{
   const postId = postCard.id;
   const authorUsername = document.querySelector(".author-username").innerHTML;
-  const authorLinkTag = document.querySelector("#author-image");
+  const authorLinkTag = document.querySelector(".author-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-id");
 
