@@ -951,10 +951,7 @@ function interceptLinks(){
   links.forEach(link => {
     link.addEventListener('click', function(event) {
                 // Display a native confirmation dialog box
-             confirmAction("leave JOLI" , async() => {
              const  confirmLeave = confirm("You are about to leave JOLI, press 'ok' to proceed");
-             });
-                
                 
                 // If the user clicks "Cancel", stop the link from opening
                 if (!confirmLeave) {
