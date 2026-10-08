@@ -355,7 +355,7 @@ function viewPostImage(e){
        }
       }
 
-function viewPostMenu(){
+async function viewPostMenu(){
   try{
   const postId = postCard.id;
   const authorUsername = document.querySelector(".author-username").innerHTML;
