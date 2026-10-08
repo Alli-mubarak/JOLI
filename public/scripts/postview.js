@@ -421,6 +421,7 @@ async function viewPostMenu(){
         }
         catch(err){
           notify("Author profile view failed!", "error");
+         console.error(err);
           return 
         }
       }
