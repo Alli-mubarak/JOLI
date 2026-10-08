@@ -699,10 +699,12 @@ function enableCommentsMenu(){
 
 // post content linkifier
 postContent.innerHTML = linkify(postContent.textContent);
+
+interceptLinks();
+
 if(commentsBox.children.length > 1){
   linkifyComments();
-  enableCommentsMenu();
-  interceptLinks();
+  enableCommentsMenu(); 
 }
 
 
