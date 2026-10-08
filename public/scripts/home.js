@@ -462,8 +462,8 @@ async function viewPostMenu(e){
     currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-    const addFriendBtn = postMenu.querySelector("#unfriend-btn");
-    const unfriendBtn = postMenu.querySelector("#add-friend-btn");
+    const addFriendBtn = postMenu.querySelector("#add-friend-btn");
+    const unfriendBtn = postMenu.querySelector("#unfriend-btn");
     const viewAuthorBtn = postMenu.querySelector("#view-user-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
 
