@@ -90,7 +90,7 @@ function linkify(text) {
 }
 function interceptLinks(){
  const links = document.querySelectorAll('.c-link');
-
+alert("intercepted");
   links.forEach(link => {
     link.addEventListener('click', function(event) {
                 // Display a native confirmation dialog box
