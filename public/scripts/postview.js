@@ -85,8 +85,23 @@ function linkify(text) {
     if (url.length > 50){
       url = url.slice(0,50)+"...";
     }
-    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    return `<a href="${href}" class="c-link" target="_blank" rel="noopener noreferrer">${url}</a>`;
   });
+}
+function interceptLinks(){
+ const links = document.querySelectorAll('.c-link');
+
+  links.forEach(link => {
+    link.addEventListener('click', function(event) {
+                // Display a native confirmation dialog box
+             const  confirmLeave = confirm("You are about to leave JOLI, press 'ok' to proceed");
+                
+                // If the user clicks "Cancel", stop the link from opening
+                if (!confirmLeave) {
+                    event.preventDefault();
+                }
+            });
+        });
 }
   
 let closeNID;
@@ -668,6 +683,7 @@ function linkifyComments(){
   Array.from(commentContents).forEach(cc => {
     cc.innerHTML = linkify(cc.textContent);
   });
+    interceptLinks();
   }catch(err){console.error(err)}
 }
 
@@ -685,7 +701,8 @@ function enableCommentsMenu(){
 postContent.innerHTML = linkify(postContent.textContent);
 if(commentsBox.children.length > 1){
   linkifyComments();
-  enableCommentsMenu()
+  enableCommentsMenu();
+  interceptLinks();
 }
 
 
