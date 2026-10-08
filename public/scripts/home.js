@@ -16,9 +16,9 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
   const morePostsBtn = document.getElementById("more-posts-btn");
-const cbContainer = document.getElementById("confirm-box-container");
-      const noConfirmBtn = document.getElementById("no-btn");
-      const confirmBtn = document.getElementById("yes-btn");
+//const cbContainer = document.getElementById("confirm-box-container");
+ //     const noConfirmBtn = document.getElementById("no-btn");
+  //    const confirmBtn = document.getElementById("yes-btn");
       
 let postOnFocus, lastPostCreationTime;
   
