@@ -462,7 +462,8 @@ async function viewPostMenu(e){
     currPost.style.background = "var(--touch-color)";
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-    const addFriendBtn = postMenu.querySelector("#add-friend-btn");
+    const addFriendBtn = postMenu.querySelector("#unfriend-btn");
+    const unfriendBtn = postMenu.querySelector("#add-friend-btn");
     const viewAuthorBtn = postMenu.querySelector("#view-user-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
 
@@ -471,6 +472,19 @@ if(addFriendBtn){
       addFriendBtn.onclick = async() =>{
         try{
        await addFriend(authorId, addFriendBtn);
+        postMenuCloser.style.background = "transparent";
+        }
+        catch(err){
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+    }
+
+    if(unfriendBtn){
+      unfriendBtn.onclick = async() =>{
+        try{
+       await unfriend(authorId, unfriendBtn);
         postMenuCloser.style.background = "transparent";
         }
         catch(err){
@@ -754,5 +768,12 @@ fetchPosts()
 
 async function addFriend(id, btn){
   btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
-  
+  notify("adding friend");
+  alert(id);
+}
+
+async function unfriend(id, btn){
+  btn.innerHTML += '<i class="fa-solid fa-circle-notch roll">'
+  notify("adding friend");
+  alert(id);
 }
