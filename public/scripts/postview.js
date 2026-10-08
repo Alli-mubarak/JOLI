@@ -111,6 +111,7 @@ noConfirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
         cbContainer.action = "";
       enableScrolling();
+   postCard.style.background = "#fff";
       }
   confirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
