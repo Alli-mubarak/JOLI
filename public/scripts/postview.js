@@ -376,6 +376,7 @@ async function viewPostMenu(){
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
+   const editBtn = postMenu.querySelector("#edit-post-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
    const addFriendBtn = postMenu.querySelector("#add-friend-btn");
     const unfriendBtn = postMenu.querySelector("#unfriend-btn");
@@ -425,6 +426,19 @@ async function viewPostMenu(){
         }
       }
     }
+
+   if(editBtn){
+      editBtn.onclick = () =>{
+       notify("feature coming soon");
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     
+      }
+   }
    
     if(delBtn){
       delBtn.onclick = () =>{
