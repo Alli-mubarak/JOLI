@@ -28,6 +28,15 @@ const typingIndicator = document.getElementById("typing-indicator");
 let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout, canSendMessage;
 let inViewMode = false;
 let conversations = [];
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const friendToMessage = urlParams.get('friend');
+if (friendToMessage) {
+   alert(friendToMessage);
+} else {
+      alert("no friend to message ");   
+}
   
 const smBtn = document.getElementById("start-message-btn");
 
