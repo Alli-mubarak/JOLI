@@ -385,8 +385,7 @@ async function viewPostMenu(){
   if(addFriendBtn){
       addFriendBtn.onclick = async() =>{
         try{
-       await addFriend(authorId, authorUsername, addFriendBtn);
-        postMenuCloser.style.background = "transparent";
+       await addFriend(authorId, addFriendBtn);
         }
         catch(err){
           notify("failed to send request!", "error");
