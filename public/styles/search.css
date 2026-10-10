@@ -115,7 +115,7 @@ main{
    width:100%;
    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   position: relative;
-  margin-bottom: 75px;
+  margin-bottom: 15px;
   padding: 10px;
         }
         .user{
