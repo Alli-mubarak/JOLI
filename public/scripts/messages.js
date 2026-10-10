@@ -406,6 +406,9 @@ async function fetchMessages(id){
 }
 
 cCloser.onclick = async() => {
+  if(friendToMessage){
+    window.location.href = "/messages";
+  }
   await getConversations();
   cContainer.classList.add("hidden");
   cmContainer.innerHTML = "";
