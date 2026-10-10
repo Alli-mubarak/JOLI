@@ -129,14 +129,13 @@ main{
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     width:100%;
     gap:15px;
-    background: pink;
   }
   .p-user{
     display:flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 500px;
+    /*max-width: 500px;*/
     border-radius:12px ;
     overflow: hidden;
     height: 120px;
@@ -230,7 +229,7 @@ main{
         margin-bottom: 75px;
         }
         .user{
-          max-width: 220px;
+          width: 100%;
             height: fit-content;
             border-radius:12px ;
             overflow: hidden;
