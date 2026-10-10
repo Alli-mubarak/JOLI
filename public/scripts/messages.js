@@ -205,6 +205,7 @@ async function openConversationWithFriend(f){
   cUsername.innerHTML = f.friend_username;
   cContainer.classList.remove("hidden");
   await fetchMessages(f.friend_id);  
+  cFId = f.friend_id;
   interceptLinks()
   }catch(err){
     notify("could not open conversation, try later", "error");
