@@ -130,12 +130,16 @@ main{
     width:100%;
     gap:15px;
   }
+  #pending-requests > *:only-child {
+    max-width: 550px;
+    width: 100%;       
+    justify-self: start; 
+  }
   .p-user{
     display:flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    /*max-width: 500px;*/
     border-radius:12px ;
     overflow: hidden;
     height: 120px;
@@ -228,6 +232,11 @@ main{
           position: relative;
         margin-bottom: 75px;
         }
+  .users > *:only-child {
+    max-width: 250px;
+    width: 100%;       
+    justify-self: start; 
+  }
         .user{
           width: 100%;
             height: fit-content;
@@ -315,7 +324,6 @@ main{
 }
   .r-loader{
     width:100%;
-    max-width: 500px;
   }
   .loader:before, .r-loader:before{
     position: absolute;
