@@ -239,8 +239,8 @@ router.delete('/unfriend', checkSession, async (req, res) => {
     if (!req.isAuthenticated() || !req.user){
    return  res.status(400).json({error: "You are not authorized"});
   }
-    const userId = req.user.id; // The authenticated user accepting the request
-    const { friendId } = req.body;  // The user who originally sent the request
+    const userId = req.user.id; // The authenticated user 
+    const { friendId } = req.body;  // The user to unfriend
     
     if (!friendId) {
       console.log('Missing sender id');
