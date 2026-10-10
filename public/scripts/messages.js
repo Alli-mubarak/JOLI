@@ -168,7 +168,7 @@ async function showExistingConversation(c){
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
     }else{
-      const fr = await friendships.find(f => f.friend_id === c.user_id);
+      const fr = await friendships.filter(f => f.friend_id === c.user_id);
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
       frUsername = fr[0].friend_username;
@@ -194,7 +194,7 @@ async function showExistingConversation(c){
   }
   catch(err){
     console.error(err)
-    notify("error display existing conversations", "error");
+    notify("error displaying existing conversations", "error");
   }
 }
 
