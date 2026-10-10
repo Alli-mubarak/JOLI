@@ -429,7 +429,7 @@ async function viewPostMenu(){
 
    if(editBtn){
       editBtn.onclick = () =>{
-       notify("feature coming soon");
+       notify("feature is coming soon...");
       
         postMenuCloser.style.background = "transparent";
     
@@ -837,11 +837,42 @@ if(commentsBox.children.length > 1){
 
 async function addFriend(id, btn){
   try{
-  btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
-  notify("adding friend");
-  alert(id);
+   if(!isAuthorised){
+            notify("please, log in first!", "error","click here", "/");
+            return;
+      }
+      btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+      const response = await fetch("/api/friendship/request", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({receiverId: id})
+      });
+       const data = await response.json();
+      const result = data.error || data.message;
+   
+      if(response.ok){
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+            notify("friend request sent!");
+            location.reload();
+      }else{
+       postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+        notify("request failed!", "error");
+       console.error(result);    
+      }
+  }
+  
   }catch(err){
-    notify("error occurred ", "error");
+    notify("server error occurred ", "error");
     console.error(err)
   }
 }
@@ -873,6 +904,11 @@ const response = await fetch("/api/friendship/unfriend", {
             notify("unfriending successful!");
             location.reload();
       }else{
+       postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
       notify("unfriending failed!", "error");
        console.error(result);
       }
