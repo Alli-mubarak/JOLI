@@ -127,7 +127,7 @@ async function getFriends(){
           try{
              
             if (friendToMessage) {
-               const myFriend = await friendships.find(f => f.username === friendToMessage);
+               const myFriend = await friendships.find(f => f.friend_username === friendToMessage);
               if(myFriend){
                  openConversationWithFriend(myFriend);
               }else{
