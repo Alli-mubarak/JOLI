@@ -129,6 +129,7 @@ main{
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     width:100%;
     gap:15px;
+    background: pink;
   }
   .p-user{
     display:flex;
