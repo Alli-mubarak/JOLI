@@ -32,11 +32,6 @@ let conversations = [];
 
 const urlParams = new URLSearchParams(window.location.search);
 const friendToMessage = urlParams.get('friend');
-if (friendToMessage) {
-   alert(friendToMessage);
-} else {
-      alert("no friend to message ");   
-}
   
 const smBtn = document.getElementById("start-message-btn");
 
@@ -130,6 +125,16 @@ async function getFriends(){
            return 
           }
           try{
+             
+            if (friendToMessage) {
+               const myFriend = await friends.find(f => f.username === friendToMessage);
+              if(myFriend){
+                 openConversationWithFriend(myFriend);
+              }else{
+                 notify("user is not a friend yet", "error");   
+              }
+        }
+      
           await friendships.sort((a, b) => a.friend_username.localeCompare(b.friend_username));
           getConversations()
           await friendships.forEach(f =>{
@@ -190,6 +195,20 @@ async function showExistingConversation(c){
   catch(err){
     console.error(err)
     notify("error display existing conversations", "error");
+  }
+}
+
+async function openConversationWithFriend(f){
+  try{
+  disableScrolling();
+  cPic.src = f.profile_picture;
+  cUsername.innerHTML = f.username;
+  cContainer.classList.remove("hidden");
+  await fetchMessages(f.id);  
+  interceptLinks()
+  }catch(err){
+    notify("could not open conversation, try later", "error");
+    console.error(err);
   }
 }
 
