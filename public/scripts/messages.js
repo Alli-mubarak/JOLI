@@ -201,10 +201,10 @@ async function showExistingConversation(c){
 async function openConversationWithFriend(f){
   try{
   disableScrolling();
-  cPic.src = f.profile_picture;
-  cUsername.innerHTML = f.username;
+  cPic.src = f.friend_profile_picture;
+  cUsername.innerHTML = f.friend_username;
   cContainer.classList.remove("hidden");
-  await fetchMessages(f.id);  
+  await fetchMessages(f.friend_id);  
   interceptLinks()
   }catch(err){
     notify("could not open conversation, try later", "error");
