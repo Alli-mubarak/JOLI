@@ -865,6 +865,11 @@ const response = await fetch("/api/friendship/unfriend", {
       const result = data.error || data.message;
  
       if(response.ok){
+      postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
             notify("unfriending successful!");
             location.reload();
       }else{
