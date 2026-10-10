@@ -397,12 +397,7 @@ async function viewPostMenu(){
     if(unfriendBtn){
       unfriendBtn.onclick = async() =>{
         try{
-       await unfriend(authorId, authorUsername, unfriendBtn);
-        postMenuCloser.style.background = "transparent";
-    
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
+       unfriend(authorId, authorUsername, unfriendBtn);
         }
         catch(err){
           notify("failed to send request!", "error");
@@ -844,7 +839,6 @@ if(!isAuthorised){
       return;
 }
 confirmAction(`unfriend ${username}`, async() => {
- currPost.style.background = "#fff";
 btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
 const response = await fetch("/api/friendship/delete", {
         method: "DELETE",
@@ -862,11 +856,6 @@ const response = await fetch("/api/friendship/delete", {
       }else{
       notify("unfriending failed!", "error");
       }
-
-    postMenuCloser.style.background = "transparent";
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
    
     });
   }
