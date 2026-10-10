@@ -870,8 +870,7 @@ async function addFriend(id, btn){
        console.error(result);    
       }
   }
-  
-  }catch(err){
+   catch(err){
     notify("server error occurred ", "error");
     console.error(err)
   }
