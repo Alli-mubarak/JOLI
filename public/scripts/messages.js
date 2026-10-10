@@ -169,10 +169,6 @@ async function showExistingConversation(c){
       frUsername = c.friend_username
     }else{
       const fr = await friendships.find(f => f.friend_id === c.user_id);
-      if(!fr){
-        notify("A user is no more a friend", "error");   
-        return;
-      }
       frId = c.user_id
       frPic = fr[0].friend_profile_picture || "/images/default-user.png"
       frUsername = fr[0].friend_username;
