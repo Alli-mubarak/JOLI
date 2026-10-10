@@ -384,7 +384,7 @@ async function viewPostMenu(){
   if(addFriendBtn){
       addFriendBtn.onclick = async() =>{
         try{
-       await addFriend(authorId, addFriendBtn);
+       await addFriend(authorId, authorUsername, addFriendBtn);
         postMenuCloser.style.background = "transparent";
         }
         catch(err){
@@ -399,6 +399,10 @@ async function viewPostMenu(){
         try{
        await unfriend(authorId, authorUsername, unfriendBtn);
         postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
         }
         catch(err){
           notify("failed to send request!", "error");
@@ -835,13 +839,35 @@ async function addFriend(id, btn){
 
 async function unfriend(id, username, btn){
   try{
+if(!isAuthorised){
+      notify("please, log in first!", "error","click here", "/");
+      return;
+}
+confirmAction(`unfriend ${username}`, async() => {
+ currPost.style.background = "#fff";
+btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+const response = await fetch("/api/friendship/delete", {
+        method: "DELETE",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({senderId: id})
+      });
+      const data = await response.json();
+      const result = data.error || data.message;
+ 
+      if(response.ok){
+            notify("unfriending successful!");
+            location.reload();
+      }else{
+      notify("unfriending failed!", "error");
+      }
+
     postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   confirmAction("unfriend " + username, async() => {
-    notify("unfriending.....");
-   currPost.style.background = "#fff";
+   
     });
   }
   catch(err){
