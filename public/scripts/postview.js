@@ -869,6 +869,7 @@ const response = await fetch("/api/friendship/delete", {
             location.reload();
       }else{
       notify("unfriending failed!", "error");
+       console.error(result);
       }
    
     });
