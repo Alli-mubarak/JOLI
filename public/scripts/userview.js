@@ -156,14 +156,26 @@ userMenu.onclick = () =>{
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Send ${username.trim()} a message</button>` : ""}
-   ${currentUserId !== uid? `<button id="block-btn"><i class="fa-solid fa-user-slash"></i>Block ${username.trim()} </button>` : ""}
+   ${currentUserId !== uid? `<button id="report-btn"><i class="fa-solid fa-user-slash"></i>Report ${username.trim()} </button>` : ""}
    ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-envelope"></i> Contact <b>JOLI</b></button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
     
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("u-closer-btn");
+    const smBtn = postMenu.querySelector("#send-message-btn");
     const delBtn = postMenu.querySelector("#delete-acc-btn");
+
+  if(smBtn){
+    smBtn.onclick = () =>{
+      try{
+      window.location.href = `/messages?friend=${username.trim()}`
+      }catch(err){
+        notify("error messaging friend", "error");
+        console.error(err);
+      }
+    }
+  }
     
     if(delBtn){
       delBtn.onclick = () =>{
