@@ -854,12 +854,12 @@ if(!isAuthorised){
 }
 confirmAction(`unfriend ${username}`, async() => {
 btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
-const response = await fetch("/api/friendship/delete", {
+const response = await fetch("/api/friendship/unfriend", {
         method: "DELETE",
         headers: {
       'Content-Type': 'application/json'
       },
-        body: JSON.stringify({senderId: id})
+        body: JSON.stringify({friendId: id})
       });
       const data = await response.json();
       const result = data.error || data.message;
