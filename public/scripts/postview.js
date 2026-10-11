@@ -742,7 +742,7 @@ async function viewCommentMenu(e){
   const authorLinkTag = myParent.querySelector(".commenter-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-user");
-const commentContent = myParent.querySelector(".comment-content").innerHTML;
+const commentContent = myParent.querySelector(".comment-content").textContent;
    const isFriend = await confirmedFriendships.includes(authorId);
   const isPending = await pendingFriendships.includes(authorId);
    
@@ -849,6 +849,7 @@ if(addBtn){
    disableScrolling();
   }catch(error){
     console.error(error);
+   notify("error opening comment menu");
   }
 }
 
