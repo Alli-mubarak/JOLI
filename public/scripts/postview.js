@@ -763,7 +763,7 @@ const commentContent = myParent.querySelector(".comment-content").innerHTML;
     const delBtn = postMenu.querySelector("#delete-comment-btn");
 
 if(addBtn){
-      addBtn.onclick = () =>{
+      addBtn.onclick = async() =>{
       try{
        await addFriend(authorId, addBtn);
         }
@@ -831,6 +831,7 @@ if(addBtn){
      
       }
     }
+   
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
      document.body.classList.remove('no-scroll'); 
