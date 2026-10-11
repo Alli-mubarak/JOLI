@@ -164,8 +164,8 @@ async function showExistingConversation(c){
   try{
     let frPic, frId, frUsername, fIsActive
     if(currentUserId === c.user_id){
-      const myFriend = await friendships.find(f => f.friend_username === c.friend_id);
-      if(!myFriend) return;
+      const isFriend = await friendships.some(f => f.friend_id === c.friend_id);
+      if(!isFriend) return;
       frId = c.friend_id
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
