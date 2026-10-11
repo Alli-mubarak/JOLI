@@ -734,7 +734,7 @@ function sharePost(){
 shareBtn.onclick = () => {sharePost()}
 
 //comment menu configuration 
-function viewCommentMenu(e){
+async function viewCommentMenu(e){
   try{
     const myParent = e.currentTarget.parentElement;
   const commentId = myParent.id;
