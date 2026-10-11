@@ -1000,6 +1000,7 @@ async function deleteComment(id){
     notify("comment deleted!");
     currComment.parentElement.removeChild(currComment);
    currComment = "";
+   location.reload();
   });
   }
   catch(err){
