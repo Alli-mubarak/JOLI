@@ -164,6 +164,8 @@ async function showExistingConversation(c){
   try{
     let frPic, frId, frUsername, fIsActive
     if(currentUserId === c.user_id){
+      const myFriend = await friendships.find(f => f.friend_username === c.friend_id);
+      if(!myFriend) return;
       frId = c.friend_id
       frPic = c.friend_pic || "/images/default-user.png" 
       frUsername = c.friend_username
@@ -171,7 +173,6 @@ async function showExistingConversation(c){
       const fr = await friendships.filter(f => f.friend_id === c.user_id);
       
       if(fr.length < 1){
-        notify("A user is no more a friend", "error");
         return;
     }
       frId = c.user_id
