@@ -148,6 +148,10 @@ noConfirmBtn.onclick = () =>{
         cbContainer.action = "";
       enableScrolling();
    postCard.style.background = "#fff";
+ postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
  if(currComment) currComment.style.background = "#fff";
       }
   confirmBtn.onclick = () =>{
