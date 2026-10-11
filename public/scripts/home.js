@@ -208,8 +208,14 @@ noConfirmBtn.onclick = () =>{
         cbContainer.action = "";
     currPost.style.background = "#fff";
       enableScrolling();
-      }
-  confirmBtn.onclick = () =>{
+  postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+}
+
+confirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
         cbContainer.action();
        enableScrolling();
