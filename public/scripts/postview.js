@@ -29,7 +29,7 @@ let pendingFriendships = [];
 let confirmedFriendships = [];
 let isAuthorised = false;
 let scrollPosition = 0;
-let commentContents, imgArray, currIndex, userPic, userName
+let commentContents, imgArray, currIndex, userPic, userName, currComment
   let inViewMode = false;
   
 
@@ -147,6 +147,7 @@ noConfirmBtn.onclick = () =>{
         cbContainer.action = "";
       enableScrolling();
    postCard.style.background = "#fff";
+ if(currComment) currComment.style.background = "#fff";
       }
   confirmBtn.onclick = () =>{
          cbContainer.classList.add("hidden");
@@ -738,12 +739,11 @@ async function viewCommentMenu(e){
   try{
     const myParent = e.currentTarget.parentElement.parentElement.parentElement;
   const commentId = myParent.id;
-   alert(commentId);
   const authorUsername = myParent.querySelector(".commenter").innerHTML;
   const authorLinkTag = myParent.querySelector(".commenter-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-user");
-const commentContent = myParent.querySelector(".comment-content")
+const commentContent = myParent.querySelector(".comment-content").textContent
    const isFriend = await confirmedFriendships.includes(authorId);
   const isPending = await pendingFriendships.includes(authorId);
    
@@ -782,8 +782,7 @@ if(addBtn){
    
    if(replyBtn){
       replyBtn.onclick = () =>{
- //     window.location.href = `/messages?friend=${authorUsername}&c=${commentContent}`;
-       alert(commentContent)
+      window.location.href = `/messages?friend=${authorUsername}&c=${commentContent}`;
       
         postMenuCloser.style.background = "transparent";
     
@@ -976,7 +975,7 @@ const response = await fetch("/api/friendship/unfriend", {
 
 async function deleteComment(id){
   try{
-    const currComment = document.getElementById(`${id}`);
+    currComment = document.getElementById(`${id}`);
     currComment.style.background = "#ffeeee";
   
   confirmAction("delete this comment", async() => {
@@ -988,10 +987,10 @@ async function deleteComment(id){
         if (!response.ok) {
           console.error(response);
           notify("comment deletion failed!", "error");
-          currPost.style.background = "#fff";
+          currComment.style.background = "#fff";
           return;
         }
-          console.log(response);
+          
     postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
@@ -1000,6 +999,7 @@ async function deleteComment(id){
    enableScrolling();
     notify("comment deleted!");
     currComment.parentElement.removeChild(currComment);
+   currComment = "";
   });
   }
   catch(err){
