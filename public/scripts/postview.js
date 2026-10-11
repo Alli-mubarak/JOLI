@@ -742,7 +742,7 @@ async function viewCommentMenu(e){
   const authorLinkTag = myParent.querySelector(".commenter-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-user");
-const commentContent = myParent.querySelector(".comment-content").textContent;
+const commentContent = myParent.querySelector(".comment-content")
    const isFriend = await confirmedFriendships.includes(authorId);
   const isPending = await pendingFriendships.includes(authorId);
    
@@ -781,7 +781,8 @@ if(addBtn){
    
    if(replyBtn){
       replyBtn.onclick = () =>{
-      window.location.href = `/messages?friend=${authorUsername}&c=${commentContent}`;
+ //     window.location.href = `/messages?friend=${authorUsername}&c=${commentContent}`;
+       alert(commentContent)
       
         postMenuCloser.style.background = "transparent";
     
