@@ -170,7 +170,7 @@ async function showExistingConversation(c){
     }else{
       const fr = await friendships.filter(f => f.friend_id === c.user_id);
       
-      if(!fr) {
+      if(fr.length < 1){
         notify("A user is no more a friend", "error");
         return;
     }
@@ -206,11 +206,13 @@ async function showExistingConversation(c){
 async function openConversationWithFriend(f){
   try{
   disableScrolling();
-  cPic.src = f.friend_profile_picture;
+  cPic.src = f.friend_profile_picture || '/images/default-user.png';
   cUsername.innerHTML = f.friend_username;
   cContainer.classList.remove("hidden");
   await fetchMessages(f.friend_id);  
   cFId = f.friend_id;
+  fUsername = f.friend_username;
+  fPic = f.friend_profile_picture;
   interceptLinks()
   }catch(err){
     notify("could not open conversation, try later", "error");
