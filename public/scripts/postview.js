@@ -31,6 +31,7 @@ let isAuthorised = false;
 let scrollPosition = 0;
 let commentContents, imgArray, currIndex, userPic, userName, currComment
   let inViewMode = false;
+let isMenuReady = false;
   
 
 async function checkAuthStatus() {
@@ -52,7 +53,7 @@ async function checkAuthStatus() {
             //get friendships and sort accordingly
             frData = await frResponse.json();
             friendships = await frData.friendships;
-         
+         isMenuReady = true;
         if(currentUserId && friendships.length > 0){
       await friendships.forEach(f => {
       if(f.status === "pending"){
@@ -369,8 +370,8 @@ async function viewPostMenu(){
    
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-    ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
-  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
+    ${currentUserId !== authorId && !isFriend && !isPending && isMenuReady? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && isFriend && isMenuReady? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View  <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
@@ -749,7 +750,7 @@ const commentContent = myParent.querySelector(".comment-content").textContent
    
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId  && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <b>${authorUsername.trim()}</b> as friend</button>` : ""}
+  ${currentUserId !== authorId  && !isFriend && !isPending && isMenuReady? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <b>${authorUsername.trim()}</b></button>` : ""}
     ${currentUserId !== authorId  && isFriend? `<button id="reply-btn"><i class="fa-solid fa-reply"></i>Reply in Message</button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-comment-btn"><i class="fa-solid fa-pencil"></i> Edit comment</button>` : ""}
