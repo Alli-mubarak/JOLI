@@ -742,17 +742,68 @@ function viewCommentMenu(e){
   const authorLinkTag = myParent.querySelector(".commenter-link");
   const authorLink = authorLinkTag.href;
   const authorId = authorLinkTag.getAttribute("data-user");
+const commentContent = myParent.querySelector(".comment-content").innerHTML;
+   const isFriend = await confirmedFriendships.includes(authorId);
+  const isPending = await pendingFriendships.includes(authorId);
+   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add ${authorUsername.trim()} as friend</button>` : ""}
-   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View ${authorUsername.trim()}'s profile</button>` : ""}
+  ${currentUserId !== authorId  && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Add <b>${authorUsername.trim()}</b> as friend</button>` : ""}
+    ${currentUserId !== authorId  && isFriend? `<button id="reply-btn"><i class="fa-solid fa-reply"></i>Reply in Message</button>` : ""}
+   ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-comment-btn"><i class="fa-solid fa-pencil"></i> Edit comment</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-comment-btn"><i class="fa-solid fa-trash"></i> Delete comment</button>` : ""}
   `;
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("p-closer-btn");
-    const viewBtn = postMenu.querySelector("#view-user-btn");
+   const addBtn = postMenu.querySelector("#add-friend-btn");
+    const replyBtn = postMenu.querySelector("#reply-btn");
+   const viewBtn = postMenu.querySelector("#view-user-btn");
+    const editBtn = postMenu.querySelector("#edit-btn");
     const delBtn = postMenu.querySelector("#delete-comment-btn");
+
+if(addBtn){
+      addBtn.onclick = () =>{
+      try{
+       await addFriend(authorId, addBtn);
+        }
+        catch(err){
+         postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+          notify("failed to send request!", "error");
+          return 
+        }
+      }
+}
+   
+   if(replyBtn){
+      replyBtn.onclick = () =>{
+      window.location.href = `/messages?friend=${authorUsername}&c=${commentContent}`;
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+   }
+   
+   if(editBtn){
+      editBtn.onclick = () =>{
+      notify("feature is coming soon");
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }
+   }
 
     if(viewBtn){
       viewBtn.onclick = () =>{
@@ -769,16 +820,15 @@ function viewCommentMenu(e){
     
     if(delBtn){
       delBtn.onclick = () =>{
-      if(confirm("Are you sure you want to delete this comment?")){
-    //   deletePost(postId);
-        alert("not available now");
-      }
+
+       deleteComment(commentId);
+      
         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-     enableScrolling();
+     
       }
     }
     pmCloserBtn.onclick = () =>{
@@ -918,4 +968,39 @@ const response = await fetch("/api/friendship/unfriend", {
     console.error(err)
   }
 
+}
+
+async function deleteComment(id){
+  try{
+    const currComment = document.getElementById(`${id}`);
+    currComment.style.background = "#ffeeee";
+  
+  confirmAction("delete this comment", async() => {
+    const response = await fetch(`/comment/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+    
+        if (!response.ok) {
+          console.error(response);
+          notify("comment deletion failed!", "error");
+          currPost.style.background = "#fff";
+          return;
+        }
+          console.log(response);
+    postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+    notify("comment deleted!");
+    currComment.parentElement.removeChild(currComment);
+  });
+  }
+  catch(err){
+    notify("Comment delete failed!", "error");
+    currComment.style.background = "#fff";
+    console.error(err);
+  }
 }
