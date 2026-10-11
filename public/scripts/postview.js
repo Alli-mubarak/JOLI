@@ -979,7 +979,7 @@ async function deleteComment(id){
     currComment.style.background = "#ffeeee";
   
   confirmAction("delete this comment", async() => {
-    const response = await fetch(`/comment/${id}`, {
+    const response = await fetch(`/post/comment/${id}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         });
