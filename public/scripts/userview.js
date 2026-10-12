@@ -227,7 +227,9 @@ async function editInfo(el, i){
       if(prevEl.tagName === "B") prevEl.maxLength = 30
       prevEl.setAttribute("contenteditable", true);
       prevEl.focus();
+        
       prevEl.addEventListener('input', (e) => {
+        const text = prevEl.innerText;
   // Allow system keys (Backspace, Delete, Arrows, Select All, etc.)
   const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp'];
   if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
@@ -236,8 +238,7 @@ async function editInfo(el, i){
 
   // Block further typing if the current length meets or exceeds the max limit
   if (prevEl.innerText.length >= prevEl.maxLength) {
-    e.preventDefault();
-    console.log(prevEl.innerText.length);
+    prevEl.innerText = text.slice(0, prevEl.maxLength);
   }
 });
 
