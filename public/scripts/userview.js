@@ -159,7 +159,7 @@ async function editProfile(btn){
   const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
    const userppEl = document.getElementById("user-pp")
-   const userNameEl = document.getElementById("u-name");
+   const userNameEl = document.querySelector(".username");
    const bioEl = document.querySelector(".bio");
   const pTitle = document.querySelector(".p-title");
    const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
@@ -184,13 +184,13 @@ async function editProfile(btn){
 
 async function saveEdit(btn){
  try{
+   userMenu.classList.remove("hidden");
   btn.style.background = "#2bff43";
-  await userMenu.classList.remove("hidden");
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
    const userppEl = document.getElementById("user-pp")
-   const userNameEl = document.getElementById("u-name")
+   const userNameEl = document.querySelector(".username");
    const bioEl = document.querySelector(".bio");
 const pTitle = document.querySelector(".p-title");
    bannerEl.lastElementChild.remove();
