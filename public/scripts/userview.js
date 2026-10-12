@@ -74,7 +74,7 @@ if(userAction.textContent.trim() === "Unfriend") {
  userAction.onclick = () =>{
  try{
    if(!isAuthorised) return 
-  if(!userAction.innerHTML.includes("fa-pencil")) return;
+  if(!userAction.classList.contains('fa-pencil')) return;
   editProfile(userAction);
  }
  catch(err){
@@ -220,7 +220,7 @@ async function editInfo(el, i){
     const parent = el.currentTarget.parentElement;
     const prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
-      if(i.innerHTML.includes("fa-pencil")){
+      if(i.classList.contains('fa-pencil')){
       i.classList.remove("fa-pencil");
       i.classList.add("fa-check");
       prevEl.maxLength = 50
@@ -258,7 +258,6 @@ prevEl.addEventListener('paste', (e) => {
   }
 });
     }else{
-        console.log(i.innerHTML);
         prevEl.removeAttribute("contenteditable", true);
         i.classList.remove("fa-check");
       i.classList.add("fa-pencil");
