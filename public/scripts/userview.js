@@ -149,12 +149,14 @@ async function editProfile(btn){
   btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
+   const userppEl = document.getElementById("user-pp")
    const userNameEl = document.getElementById("u-name")
    const bioEl = document.querySelector(".bio");
   const pTitle = document.querySelector(".p-title");
    const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
    bannerEl.innerHTML += editIcon
    userNameEl.innerHTML += editIcon
+   userppEl.innerHTML += editIcon;
    bioEl.innerHTML +=  editIcon
    pTitle.classList.add("hidden");
   userInfo.classList.add("user-info-in-edit");
@@ -175,11 +177,13 @@ async function saveEdit(btn){
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
+   const userppEl = document.getElementById("user-pp")
    const userNameEl = document.getElementById("u-name")
    const bioEl = document.querySelector(".bio");
 const pTitle = document.querySelector(".p-title");
   const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
    bannerEl.removeChild(editIcon)
+   userppEl.removeChild(editIcon);
    userNameEl.removeChild(editIcon)
    bioEl.removeChild(editIcon)
    pTitle.classList.remove("hidden");
