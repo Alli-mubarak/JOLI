@@ -35,7 +35,7 @@ if(userAction.textContent.trim() === "Unfriend") {
  userAction.onclick = () =>{
   try{
    const uid = userDetails.getAttribute("data-user");
-    unfriend(id, uName, userAction)
+    unfriend(uid, uName, userAction)
   }
   catch(err){
    console.error(err);
