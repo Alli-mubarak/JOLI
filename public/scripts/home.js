@@ -1,4 +1,5 @@
-let sentRequests = [];
+const sentRequests = [];
+const unfriended = [];
 showAlert("chat-tab");
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
@@ -455,11 +456,12 @@ async function viewPostMenu(e){
   const isFriend = await confirmedFriendships.includes(authorId);
   const isPending = await pendingFriendships.includes(authorId);
   const isSent = await sentRequests.includes(authorId);
+  const isUnfriended = await unfriended.includes(authorId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
   ${currentUserId !== authorId && !isFriend && !isPending && isReady && !isSent? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
-  ${currentUserId !== authorId && isFriend && isReady ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && isFriend && isReady && !isUnfriended? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View  <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
@@ -805,6 +807,7 @@ async function addFriend(id, btn){
       const result = data.error || data.message;
    
       if(response.ok){
+        currPost.style.background = "#fff";
         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
@@ -813,6 +816,7 @@ async function addFriend(id, btn){
             notify("friend request sent!");
             sentRequests.push(id)
       }else{
+        currPost.style.background = "#fff";
        postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
@@ -823,6 +827,7 @@ async function addFriend(id, btn){
       }
   }
    catch(err){
+     currPost.style.background = "#fff";
     notify("server error occurred ", "error");
     console.error(err)
   }
@@ -830,18 +835,47 @@ async function addFriend(id, btn){
 
 async function unfriend(id, username, btn){
   try{
-    postMenuCloser.style.background = "transparent";
+if(!isAuthorised){
+      notify("please, log in first!", "error","click here", "/");
+      return;
+}
+confirmAction(`unfriend ${username}`, async() => {
+btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+const response = await fetch("/api/friendship/unfriend", {
+        method: "DELETE",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({friendId: id})
+      });
+      const data = await response.json();
+      const result = data.error || data.message;
+ 
+      if(response.ok){
+      currPost.style.background = "#fff";
+      postMenuCloser.style.background = "transparent";
+    
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
-   confirmAction("unfriend " + username, async() => {
-    notify("unfriending.....");
-   currPost.style.background = "#fff";
+            notify(username + " is no more a friend!");
+            unfriended.push(id);
+      }else{
+        currPost.style.background = "#fff";
+       postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+      notify("unfriending failed!", "error");
+       console.error(result);
+      }
+   
     });
   }
   catch(err){
+    currPost.style.background = "#fff";
     notify("error occurred ", "error");
     console.error(err)
   }
-
 }
