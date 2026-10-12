@@ -227,7 +227,7 @@ async function editInfo(el, i){
       if(prevEl.tagName === "B") prevEl.maxLength = 30
       prevEl.setAttribute("contenteditable", true);
       prevEl.focus();
-      prevEl.addEventListener('keydown', (e) => {
+      prevEl.addEventListener('input', (e) => {
   // Allow system keys (Backspace, Delete, Arrows, Select All, etc.)
   const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp'];
   if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
