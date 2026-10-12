@@ -1,4 +1,4 @@
-
+let sentRequests = [];
 showAlert("chat-tab");
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
@@ -454,10 +454,11 @@ async function viewPostMenu(e){
     
   const isFriend = await confirmedFriendships.includes(authorId);
   const isPending = await pendingFriendships.includes(authorId);
+  const isSent = await sentRequests.includes(authorId);
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId && !isFriend && !isPending && isReady? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && !isFriend && !isPending && isReady && !isSent? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
   ${currentUserId !== authorId && isFriend && isReady ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View  <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
@@ -788,14 +789,44 @@ fetchPosts()
 
 async function addFriend(id, btn){
   try{
-  btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
-  notify("adding friend");
-  alert(id);
-  }catch(err){
-    notify("error occurred ", "error");
+   if(!isAuthorised){
+            notify("please, log in first!", "error","click here", "/");
+            return;
+      }
+      btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+      const response = await fetch("/api/friendship/request", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({receiverId: id})
+      });
+       const data = await response.json();
+      const result = data.error || data.message;
+   
+      if(response.ok){
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+            notify("friend request sent!");
+            sentRequests.push(id)
+      }else{
+       postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+        notify("request failed!", "error");
+       console.error(result);    
+      }
+  }
+   catch(err){
+    notify("server error occurred ", "error");
     console.error(err)
   }
-}
+  }
 
 async function unfriend(id, username, btn){
   try{
