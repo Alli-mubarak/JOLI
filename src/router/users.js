@@ -115,8 +115,9 @@ if(req.isAuthenticated() && req.user && userData.username !== req.user.username)
   const isFriend = await  friends.friends.some(f => f.sender_id === req.user.id || f.receiver_id === req.user.id);
   userData.is_friend = isFriend;
   const isPending = await friends.pendings.some(f => f.sender_id === req.user.id);
-  console.log(isPending);
   userData.is_pending = isPending;
+  const isWaiting = await friends.pendings.some(f => f.receiver_id === req.user.id);
+  userData.is_waiting = isWaiting;
 }     
   if(friends.count < 2){ userData.friends = friends.count + " friend"}
   else{userData.friends = friends.count + " friends"}
