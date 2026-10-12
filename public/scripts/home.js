@@ -60,7 +60,8 @@ async function fetchPosts() {
 async function fetchMorePosts() {
       try {
         morePostsBtn.disabled = true;
-        morePostsBtn.textContent  = "fetching posts...";
+        morePostsBtn.textContent  = "fetching posts..";
+        morePostsBtn.innerHTML += "<i class='fa-solid fa-circle-notch roll'></i>"
         const response = await fetch("/post/v1/getPosts", {
         method: "POST",
         headers: {
@@ -73,9 +74,9 @@ async function fetchMorePosts() {
          morePostsBtn.disabled = false;
          morePostsBtn.textContent  = "fetch more posts";
         const posts = data.posts;
-        lastPostCreationTime = posts[0].created_at;
+        lastPostCreationTime = posts[posts.length - 1].created_at;
         
-      for (let i = posts.length - 1; i >= 0; i--){
+      for (let i=0; i < posts.length; i++){
              await displayPost(posts[i]);
        }
          
