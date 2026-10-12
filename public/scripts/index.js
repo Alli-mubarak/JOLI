@@ -11,6 +11,7 @@ let pendingAcceptsPic = [];
 let pendingAcceptsUsername = [];
 let accepted = [];
 let confirmed = [];
+let isReady = false;
 const menuBox = document.getElementById("menu-container");
 const pLink = document.getElementById("profile-link");
 const sLink = document.getElementById("settings-link");
@@ -266,17 +267,18 @@ async function checkAuthStatus() {
       });
       
         }
-          console.log("f:", friendships);
-      console.log("pr:", pendingRequests);
-  console.log("prt:", pendingRequestsTime);
-console.log("pa:", pendingAccepts);
-console.log("pat:", pendingAcceptsTime);
-console.log("pap:", pendingAcceptsPic);
-console.log("pau:", pendingAcceptsUsername);
-console.log("acc:", accepted);
-console.log("conf:", confirmed);
-console.log("frens:", confirmedFriendships);
-console.log("p-frens:", pendingFriendships);
+  //        console.log("f:", friendships);
+ //     console.log("pr:", pendingRequests);
+//  console.log("prt:", pendingRequestsTime);
+//console.log("pa:", pendingAccepts);
+//console.log("pat:", pendingAcceptsTime);
+//console.log("pap:", pendingAcceptsPic);
+//console.log("pau:", pendingAcceptsUsername);
+//console.log("acc:", accepted);
+//console.log("conf:", confirmed);
+//console.log("frens:", confirmedFriendships);
+//console.log("p-frens:", pendingFriendships);
+            isReady = true;
           }else{
             notify("You have no friends yet, add one now!");
             console.error("An error occurred while fetching friends");
