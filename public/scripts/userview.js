@@ -30,12 +30,14 @@ let isAuthorised = false;
 let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
 let inViewMode = false;
+let isFriend = false;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
+  isFriend = true;
  userAction.onclick = () =>{
   try{
-       if(!isAuthorised) return 
+   if(!isAuthorised) return 
    if(userAction.textContent.trim() !== "Unfriend") return;
    const uid = userDetails.getAttribute("data-user");
     unfriend(uid, uName, userAction)
@@ -52,6 +54,7 @@ if(userAction.textContent.trim() === "Unfriend") {
   try{
     if(!isAuthorised) return 
    if(!userAction.textContent.includes("Add")) return;
+    isFriend = false;
    const uid = userDetails.getAttribute("data-user");
    if(currentUserId === uid) return;
    addFriend(uid, userAction);
@@ -187,6 +190,7 @@ async function saveEdit(btn){
  try{
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
+   uMenu.onclick = () =>{showMenu()}
   btn.style.background = "#2bff43";
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
@@ -215,7 +219,40 @@ async function editInfo(el){
     const parent = el.target.parentElement;
     const prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
+      prevEl.maxLength = 30
+      if(prevEl.tagName === "B") prevEl.maxLength = 20
       prevEl.setAttribute("contenteditable", true);
+      prevEl.focus();
+      prevEl.addEventListener('keydown', (e) => {
+  // Allow system keys (Backspace, Delete, Arrows, Select All, etc.)
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp'];
+  if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
+    return;
+  }
+
+  // Block further typing if the current length meets or exceeds the max limit
+  if (prevEl.innerText.length >= prevEl.maxLength) {
+    e.preventDefault();
+  }
+});
+
+// HANDLE PASTED TEXT ---
+prevEl.addEventListener('paste', (e) => {
+  e.preventDefault(); // Stop the default browser paste behavior
+
+  // Grab the text from user's clipboard
+  const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+  
+  // Calculate how much space is left
+  const currentLength = prevEl.innerText.length;
+  const spaceLeft = prevEl.maxLength - currentLength;
+
+  if (spaceLeft > 0) {
+    // Only insert up to what is left over
+    const truncatedText = pastedText.slice(0, spaceLeft);
+    document.execCommand('insertText', false, truncatedText);
+  }
+});
       return 
     }
     
@@ -373,15 +410,17 @@ function linkifyPosts(){
 // post content linkifier
 if(postCards.length > 0) linkifyPosts();
 
+
 // user menu 
-userMenu.onclick = () =>{
+userMenu.onclick = () =>{showMenu()}
+async function showMenu(){
   try{
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
     console.log(uid, username);
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
-  ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Message <b>${username.trim()}</b></button>` : ""}
+  ${currentUserId !== uid && isFriend? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Message <b>${username.trim()}</b></button>` : ""}
    ${currentUserId !== uid? `<button id="report-btn"><i class="fa-solid fa-user-slash"></i>Report <b>${username.trim()}</b> </button>` : ""}
    ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-envelope"></i> Contact <b>JOLI</b></button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
@@ -466,6 +505,7 @@ userMenu.onclick = () =>{
       userMenuContainer.style.bottom = "-100vh";
       },200);
      enableScrolling();
+  
       }
     
       userMenuContainer.style.bottom = 0;
