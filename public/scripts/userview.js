@@ -25,7 +25,7 @@ const postMenuCtrl = document.querySelector(".post-menu");
 const cbContainer = document.getElementById("confirm-box-container");
 const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
-const postsContainer = document.getElementById("posts");
+const postsContainer = document.querySelector(".other-info");
 let isAuthorised = false;
 let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
@@ -146,7 +146,7 @@ async function editProfile(btn){
       return;
  }
   btn.style.background = "yellow";
-  btn.innerHTML = ` <i "fa-solid fa-check"></i>`;
+  btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
   userInfo.classList.add("user-info-in-edit");
   userMenu.classList.add("hidden");
@@ -163,7 +163,7 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
   btn.style.background = "#2bff43";
-btn.innerHTML = ` <i "fa-solid fa-pencil action-btn"></i>`;
+btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
   userInfo.classList.remove("user-info-in-edit");
   userMenu.classList.remove("hidden");
