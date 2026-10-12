@@ -237,8 +237,25 @@ async function editInfo(el, i){
   }
 
   // Block further typing if the current length meets or exceeds the max limit
-  if (prevEl.innerText.length >= prevEl.maxLength) {
+  if (text.length > prevEl.maxLength) {
+    const selection = window.getSelection();
+    const offset = selection.focusOffset;
+
+    //Chop the text down to the absolute maximum limit
     prevEl.innerText = text.slice(0, prevEl.maxLength);
+
+    // 3. Force the cursor back to the correct position so it doesn't jump to the start
+    const range = document.createRange();
+    
+    // Fallback safely if child nodes were wiped by innerText reset
+    if (prevEl.firstChild) {
+      const newOffset = Math.min(offset, prevEl.maxLength);
+      range.setStart(prevEl.firstChild, newOffset);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    
   }
 });
 
