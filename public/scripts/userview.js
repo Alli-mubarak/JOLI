@@ -237,6 +237,7 @@ async function editInfo(el, i){
   // Block further typing if the current length meets or exceeds the max limit
   if (prevEl.innerText.length >= prevEl.maxLength) {
     e.preventDefault();
+    console.log(prevEl.innerText.length);
   }
 });
 
