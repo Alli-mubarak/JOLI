@@ -166,6 +166,10 @@ header button:hover {
 .user-info-in-edit .m-count{ 
   display: none !important;
 }
+#user-pp{
+  width: fit-content;
+  height: fit-content;
+}
         .user-info img{
           display: block;
             object-fit: cover;
