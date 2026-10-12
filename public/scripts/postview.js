@@ -765,7 +765,7 @@ const commentContent = myParent.querySelector(".comment-content").textContent
    const addBtn = postMenu.querySelector("#add-friend-btn");
     const replyBtn = postMenu.querySelector("#reply-btn");
    const viewBtn = postMenu.querySelector("#view-user-btn");
-    const editBtn = postMenu.querySelector("#edit-btn");
+    const editBtn = postMenu.querySelector("#edit-comment-btn");
     const delBtn = postMenu.querySelector("#delete-comment-btn");
 
 if(addBtn){
