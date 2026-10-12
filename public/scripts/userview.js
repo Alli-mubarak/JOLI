@@ -156,7 +156,7 @@ userMenu.onclick = () =>{
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Message <b>${username.trim()}</b></button>` : ""}
-   ${currentUserId !== uid? `<button id="report-btn"><i class="fa-solid fa-user-slash"></i>Report ${username.trim()} </button>` : ""}
+   ${currentUserId !== uid? `<button id="report-btn"><i class="fa-solid fa-user-slash"></i>Report <b>${username.trim()}</b> </button>` : ""}
    ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-envelope"></i> Contact <b>JOLI</b></button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
     
