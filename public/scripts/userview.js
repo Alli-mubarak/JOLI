@@ -22,6 +22,9 @@ const commentsBox = document.getElementById("comments");
 const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
+const cbContainer = document.getElementById("confirm-box-container");
+ const noConfirmBtn = document.getElementById("no-btn");
+const confirmBtn = document.getElementById("yes-btn");
 let isAuthorised = false;
 let scrollPosition = 0;
 
@@ -35,6 +38,34 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else if(userAction.textContent.trim() === "Pending") {
   userAction.style.background = "yellow";
 }
+
+
+// confirm box function 
+noConfirmBtn.onclick = () =>{
+     cbContainer.classList.add("hidden");
+        cbContainer.action = "";
+      enableScrolling();
+   postCard.style.background = "#fff";
+ postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+ if(currComment) currComment.style.background = "#fff";
+  }
+
+  confirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action();
+       enableScrolling();
+      }
+      
+   function confirmAction(a, action){
+     disableScrolling();
+    cbContainer.action = action
+    const cAction = document.getElementById("action");
+    cAction.textContent = a;
+    cbContainer.classList.remove("hidden");
+      }
 
 async function checkAuthStatus() {
       try {
@@ -61,6 +92,7 @@ async function checkAuthStatus() {
         console.error("Error verifying authentication status:", err);
       }
 }
+
 checkAuthStatus();
 
 async function getMutuals(uid){
@@ -181,11 +213,9 @@ userMenu.onclick = () =>{
     if(rBtn){
     rBtn.onclick = () =>{
       try{
+        confirmAction("report this account", ()=>{
         notify("feature is coming soon", "error");
-        postMenuCloser.style.background = "transparent";
-    
-     setTimeout(() =>{
-      userMenuContainer.style.bottom = "-100vh";
+        });
       },200);
      enableScrolling();
       }catch(err){
