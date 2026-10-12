@@ -177,7 +177,7 @@ async function editProfile(btn){
   btn.onclick = () => {saveEdit(btn)}
   const editIcons = document.querySelectorAll(".edit");
   Array.from(editIcons).forEach(i => {
-    i.onclick = (e) =>{editInfo(e)}
+    i.onclick = (e) =>{editInfo(e, i)}
   })
  }
  catch(err){
@@ -206,6 +206,8 @@ const pTitle = document.querySelector(".p-title");
    pTitle.classList.remove("hidden");
   userInfo.classList.remove("user-info-in-edit");
   postsContainer.classList.remove("hidden");
+  userNameEl.firstElementChild.removeAttribute("contenteditable", true);
+  bioEl.firstElementChild.removeAttribute("contenteditable", true);
   btn.onclick = () => {editProfile(btn)}
  }
  catch(err){
@@ -214,13 +216,17 @@ const pTitle = document.querySelector(".p-title");
  }
 }
 
-async function editInfo(el){
+async function editInfo(el, i){
   try{
+    
     const parent = el.target.parentElement;
     const prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
-      prevEl.maxLength = 30
-      if(prevEl.tagName === "B") prevEl.maxLength = 20
+      if(i.innerHTML.includes("fa-pencil")){
+      i.classList.remove("fa-pencil");
+      i.classList.add("fa-check");
+      prevEl.maxLength = 50
+      if(prevEl.tagName === "B") prevEl.maxLength = 30
       prevEl.setAttribute("contenteditable", true);
       prevEl.focus();
       prevEl.addEventListener('keydown', (e) => {
@@ -253,6 +259,11 @@ prevEl.addEventListener('paste', (e) => {
     document.execCommand('insertText', false, truncatedText);
   }
 });
+    }else{
+        prevEl.removeAttribute("contenteditable", true);
+        i.classList.remove("fa-check");
+      i.classList.add("fa-pencil");
+    }
       return 
     }
     
