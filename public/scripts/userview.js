@@ -73,7 +73,6 @@ if(userAction.textContent.trim() === "Unfriend") {
    if(!isAuthorised) return 
   if(!userAction.innerHTML.includes("fa-pencil")) return;
   editProfile(userAction);
-  console.log(userAction.innerHTML);
  }
  catch(err){
   console.error(err);
@@ -171,7 +170,6 @@ async function editProfile(btn){
    pTitle.classList.add("hidden");
   userInfo.classList.add("user-info-in-edit");
   postsContainer.classList.add("hidden");
-  console.log("editing...");
   btn.onclick = () => {saveEdit(btn)}
   const editIcons = document.querySelectorAll(".edit");
   Array.from(editIcons).forEach(i => {
@@ -187,7 +185,7 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
   btn.style.background = "#2bff43";
-   userMenu.classList.remove("hidden");
+  await userMenu.classList.remove("hidden");
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
@@ -213,7 +211,7 @@ const pTitle = document.querySelector(".p-title");
 async function editInfo(el){
   try{
     const parent = el.target.parentElement;
-    if(parent.tagName === "P"){
+    if(parent.tagName === "P" || parent.tagName === "B"){
       parent.setAttribute("contenteditable", true);
       return 
     }
