@@ -156,7 +156,6 @@ async function editProfile(btn){
       notify("please, log in first!", "error","click here", "/");
       return;
  }
-  btn.style.background = "yellow";
    const uMenu = document.getElementById("u-menu");
   uMenu.classList.add("hidden");
   btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
@@ -191,7 +190,6 @@ async function saveEdit(btn){
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
    uMenu.onclick = () =>{showMenu()}
-  btn.style.background = "#2bff43";
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
@@ -219,7 +217,7 @@ const pTitle = document.querySelector(".p-title");
 async function editInfo(el, i){
   try{
     
-    const parent = el.target.parentElement;
+    const parent = el.currentTarget.parentElement;
     const prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
       if(i.innerHTML.includes("fa-pencil")){
@@ -260,6 +258,7 @@ prevEl.addEventListener('paste', (e) => {
   }
 });
     }else{
+        console.log(i.innerHTML);
         prevEl.removeAttribute("contenteditable", true);
         i.classList.remove("fa-check");
       i.classList.add("fa-pencil");
@@ -428,7 +427,6 @@ async function showMenu(){
   try{
   const uid = userDetails.getAttribute("data-user");
   const username = document.getElementById("u-name").textContent;
-    console.log(uid, username);
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
   ${currentUserId !== uid && isFriend? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Message <b>${username.trim()}</b></button>` : ""}
