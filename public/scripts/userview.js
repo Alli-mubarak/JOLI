@@ -154,7 +154,8 @@ async function editProfile(btn){
       return;
  }
   btn.style.background = "yellow";
-  userMenu.classList.add("hidden");
+   const uMenu = document.getElementById("u-menu");
+  uMenu.classList.add("hidden");
   btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
@@ -184,7 +185,8 @@ async function editProfile(btn){
 
 async function saveEdit(btn){
  try{
-   userMenu.classList.remove("hidden");
+   const uMenu = document.getElementById("u-menu");
+   uMenu.classList.remove("hidden");
   btn.style.background = "#2bff43";
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
@@ -211,11 +213,12 @@ const pTitle = document.querySelector(".p-title");
 async function editInfo(el){
   try{
     const parent = el.target.parentElement;
-    if(parent.tagName === "P" || parent.tagName === "B"){
-      parent.setAttribute("contenteditable", true);
+    const prevEl = el.currentTarget.previousElementSibling;
+    if(parent.tagName === "P"){
+      prevEl.setAttribute("contenteditable", true);
       return 
     }
-    const prevEl = el.currentTarget.previousElementSibling;
+    
     if(prevEl.tagName === "IMG"){
       alert(prevEl);
       return 
