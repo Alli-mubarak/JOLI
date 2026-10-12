@@ -155,7 +155,7 @@ userMenu.onclick = () =>{
     console.log(uid, username);
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="u-closer-btn"></i>
-  ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Send ${username.trim()} a message</button>` : ""}
+  ${currentUserId !== uid? `<button id="send-message-btn"><i class="fa-regular fa-message"></i>Message <b>${username.trim()}</b></button>` : ""}
    ${currentUserId !== uid? `<button id="report-btn"><i class="fa-solid fa-user-slash"></i>Report ${username.trim()} </button>` : ""}
    ${currentUserId === uid? `<button id="contact-btn"><i class="fa-solid fa-envelope"></i> Contact <b>JOLI</b></button>` : ""}
     ${currentUserId === uid? `<button id="delete-acc-btn"><i class="fa-solid fa-trash"></i> Delete My Account</button>` : ""}
@@ -164,6 +164,8 @@ userMenu.onclick = () =>{
     postMenu.innerHTML = htmlElements;
     pmCloserBtn = document.getElementById("u-closer-btn");
     const smBtn = postMenu.querySelector("#send-message-btn");
+    const rBtn = postMenu.querySelector("#report-btn");
+    const cBtn = postMenu.querySelector("#contact-btn");
     const delBtn = postMenu.querySelector("#delete-acc-btn");
 
   if(smBtn){
@@ -176,6 +178,39 @@ userMenu.onclick = () =>{
       }
     }
   }
+    if(rBtn){
+    rBtn.onclick = () =>{
+      try{
+        notify("feature is coming soon", "error");
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }catch(err){
+        notify("error messaging friend", "error");
+        console.error(err);
+      }
+    }
+    }
+
+    if(cBtn){
+    cBtn.onclick = () =>{
+      try{
+        notify("feature is coming soon");
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
+     enableScrolling();
+      }catch(err){
+        notify("error messaging friend", "error");
+        console.error(err);
+      }
+    }
+    }
     
     if(delBtn){
       delBtn.onclick = () =>{
