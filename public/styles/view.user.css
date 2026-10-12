@@ -253,8 +253,9 @@ header button:hover {
   right: 3px;
   font-size: 1.1rem;
   background: #fff;
-  width: 30px;
-  height: 30px;
+  width: fit-content;
+  height: fit-content;
+  padding: 3px;
   border-radius: 5px;
   color: #222;
   cursor: pointer;
