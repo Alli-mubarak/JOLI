@@ -179,9 +179,9 @@ const userInfo = document.querySelector(".user-info");
    const bioEl = document.querySelector(".bio");
 const pTitle = document.querySelector(".p-title");
   const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
-   bannerEl.innerHTML.removeChild(editIcon)
-   userNameEl.innerHTML.removeChild(editIcon)
-   bioEl.innerHTML.removeChild(editIcon)
+   bannerEl.removeChild(editIcon)
+   userNameEl.removeChild(editIcon)
+   bioEl.removeChild(editIcon)
    pTitle.classList.remove("hidden");
   userInfo.classList.remove("user-info-in-edit");
   userMenu.classList.remove("hidden");
