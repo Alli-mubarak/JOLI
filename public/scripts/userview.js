@@ -1,6 +1,7 @@
 const userDetails = document.getElementById("user-details");
 const userAction = document.getElementById("user-action");
 const userMenu = document.getElementById("u-menu");
+const uName = document.getElementById("u-name").textContent.trim();
 const postCards = document.querySelectorAll(".postCard");
 const mutuals = document.querySelector(".m-count");
 const mediaViewer = document.getElementById("media-viewer");
@@ -26,14 +27,14 @@ const cbContainer = document.getElementById("confirm-box-container");
 const confirmBtn = document.getElementById("yes-btn");
 let isAuthorised = false;
 let scrollPosition = 0;
-let currentUserId, imgArray, currIndex, userPic, userName;
+let currentUserId, imgArray, currIndex, userPic, userName, postCard;
 let inViewMode = false;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
  userAction.onclick = () =>{
   try{
-   confirmAction("unfriend "+ username, ()=>{
+   confirmAction("unfriend "+ uName, ()=>{
     notify("feature is coming soon")
    })
   }
@@ -44,7 +45,7 @@ if(userAction.textContent.trim() === "Unfriend") {
  }
 }else if(userAction.textContent.trim() === "Pending") {
   userAction.style.background = "yellow";
-}else{
+}else if(userAction.textContent.includes("Add")) {
  userAction.onclick = () =>{
   try{
     notify("feature is coming soon")
@@ -54,6 +55,14 @@ if(userAction.textContent.trim() === "Unfriend") {
    notify("friending failed!", "error");
   }
  }
+}else{
+ try{
+  notify("Editing coming soon")
+ }
+ catch(err){
+  console.error(err);
+   notify("editing failed!", "error");
+ }
 }
 
 
@@ -62,18 +71,17 @@ noConfirmBtn.onclick = () =>{
      cbContainer.classList.add("hidden");
         cbContainer.action = "";
       enableScrolling();
-   postCard.style.background = "#fff";
+ if(postCard) postCard.style.background = "#fff";
  postMenuCloser.style.background = "transparent";
-     setTimeout(() =>{
-      userMenuContainer.style.bottom = "-100vh";
-      },200);
- if(currComment) currComment.style.background = "#fff";
+  setTimeout(() =>{
+    userMenuContainer.style.bottom = "-100vh";
+   },200);
   }
 
   confirmBtn.onclick = () =>{
-         cbContainer.classList.add("hidden");
-        cbContainer.action();
-       enableScrolling();
+    cbContainer.classList.add("hidden");
+    cbContainer.action();
+    enableScrolling();
       }
       
    function confirmAction(a, action){
