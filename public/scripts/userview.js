@@ -23,8 +23,9 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 const cbContainer = document.getElementById("confirm-box-container");
- const noConfirmBtn = document.getElementById("no-btn");
+const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
+const postsContainer = document.getElementById("posts");
 let isAuthorised = false;
 let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
@@ -145,10 +146,12 @@ async function editProfile(btn){
       return;
  }
   btn.style.background = "yellow";
+  btn.innerHTML = ` <i "fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
   userInfo.classList.add("user-info-in-edit");
   userMenu.classList.add("hidden");
-  alert("editing...");
+  postsContainer.classList.add("hidden");
+  console.log("editing...");
   btn.onclick = () => {saveEdit(btn)}
  }
  catch(err){
@@ -160,9 +163,11 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
   btn.style.background = "#2bff43";
+btn.innerHTML = ` <i "fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
   userInfo.classList.remove("user-info-in-edit");
   userMenu.classList.remove("hidden");
+  postsContainer.classList.remove("hidden");
   btn.onclick = () => {editProfile(btn)}
  }
  catch(err){
