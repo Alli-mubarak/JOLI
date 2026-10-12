@@ -3,7 +3,6 @@ const userAction = document.getElementById("user-action");
 const userMenu = document.getElementById("u-menu");
 const postCards = document.querySelectorAll(".postCard");
 const mutuals = document.querySelector(".m-count");
-let currentUserId;
 const mediaViewer = document.getElementById("media-viewer");
 const mediaViewerCloser = document.getElementById("mv-closer");
 const moveLeft = document.getElementById("mv-left");
@@ -27,16 +26,34 @@ const cbContainer = document.getElementById("confirm-box-container");
 const confirmBtn = document.getElementById("yes-btn");
 let isAuthorised = false;
 let scrollPosition = 0;
-
-  let imgArray;
-  let currIndex;
-  let inViewMode = false;
-  let userPic, userName;
+let currentUserId, imgArray, currIndex, userPic, userName;
+let inViewMode = false;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
+ userAction.onclick = () =>{
+  try{
+   confirmAction("unfriend "+ username, ()=>{
+    notify("feature is coming soon")
+   })
+  }
+  catch(err){
+   console.error(err);
+   notify("unfriending failed!", "error");
+  }
+ }
 }else if(userAction.textContent.trim() === "Pending") {
   userAction.style.background = "yellow";
+}else{
+ userAction.onclick = () =>{
+  try{
+    notify("feature is coming soon")
+  }
+  catch(err){
+   console.error(err);
+   notify("friending failed!", "error");
+  }
+ }
 }
 
 
@@ -210,14 +227,13 @@ userMenu.onclick = () =>{
       }
     }
   }
+   
     if(rBtn){
     rBtn.onclick = () =>{
       try{
         confirmAction("report this account", ()=>{
         notify("feature is coming soon", "error");
         });
-      },200);
-     enableScrolling();
       }catch(err){
         notify("error messaging friend", "error");
         console.error(err);
