@@ -160,7 +160,7 @@ header button:hover {
   align-items: center;
   gap: 15px;
 }
-.user-info-in-edit img{ 
+.user-info-in-edit #user-pp{ 
   width: 210px;
   height: 210px;
   border-radius: 1rem;
@@ -172,8 +172,6 @@ header button:hover {
   display: none !important;
 }
 #user-pp{
-  width: fit-content;
-  height: fit-content;
   background:#fff;
   position: relative;
   transition: all 0.4s ease;
