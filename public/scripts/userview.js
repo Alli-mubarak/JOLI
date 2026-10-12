@@ -181,11 +181,11 @@ const userInfo = document.querySelector(".user-info");
    const userNameEl = document.getElementById("u-name")
    const bioEl = document.querySelector(".bio");
 const pTitle = document.querySelector(".p-title");
-  const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
-   bannerEl.removeChild(editIcon)
-   userppEl.removeChild(editIcon);
-   userNameEl.removeChild(editIcon)
-   bioEl.removeChild(editIcon)
+  
+   bannerEl.lastElementChild.remove();
+   userppEl.lastElementChild.remove();
+   userNameEl.lastElementChild.remove();
+   bioEl.lastElementChild.remove();
    pTitle.classList.remove("hidden");
   userInfo.classList.remove("user-info-in-edit");
   userMenu.classList.remove("hidden");
