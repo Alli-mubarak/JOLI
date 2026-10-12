@@ -56,12 +56,14 @@ if(userAction.textContent.trim() === "Unfriend") {
   }
  }
 }else{
+ userAction.onclick = () =>{
  try{
   notify("Editing coming soon")
  }
  catch(err){
   console.error(err);
    notify("editing failed!", "error");
+ }
  }
 }
 
