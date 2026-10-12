@@ -62,7 +62,7 @@ if(userAction.textContent.trim() === "Unfriend") {
  userAction.onclick = () =>{
  try{
   if(!userAction.innerHTML.includes("fa-pencil")) return;
-  editProfile();
+  editProfile(userAction);
   console.log(userAction.innerHTML);
  }
  catch(err){
@@ -138,16 +138,36 @@ const response = await fetch("/api/friendship/unfriend", {
   }
   }
 
-async function editProfile(){
+async function editProfile(btn){
  try{
  if(!isAuthorised){
       notify("please, log in first!", "error","click here", "/");
       return;
  }
+  btn.style.background = "yellow";
+  const userInfo = document.querySelector(".user-info");
+  userInfo.classList.add("user-info-in-edit");
+  userMenu.classList.add("hidden");
   alert("editing...");
+  btn.onclick = () => {saveEdit(btn)}
  }
  catch(err){
   notify("editing profile failed!", "error");
+  console.error(err)
+ }
+}
+
+async function saveEdit(btn){
+ try{
+  btn.style.background = "#2bff43";
+const userInfo = document.querySelector(".user-info");
+  userInfo.classList.remove("user-info-in-edit");
+  userMenu.classList.remove("hidden");
+  btn.onclick = () => {editProfile(btn)}
+ }
+ catch(err){
+  notify("editing profile failed!", "error");
+  console.error(err)
  }
 }
 
