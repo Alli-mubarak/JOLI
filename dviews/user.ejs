@@ -77,6 +77,8 @@ return `${Math.floor(sDifference)}s`;
               <% } else { %>
                <% if (user.is_friend) { %>
                   Unfriend
+                <% } else if(user.is_waiting){ %>
+                    Confirm
                <% } else if (user.is_pending) { %>
                   Pending
                <% } else { %>
