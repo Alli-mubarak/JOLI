@@ -74,7 +74,7 @@ if(userAction.textContent.trim() === "Unfriend") {
  userAction.onclick = () =>{
  try{
    if(!isAuthorised) return 
-  if(!userAction.classList.contains('fa-pencil')) return;
+  if(!userAction.innerHTML.includes('fa-pencil')) return;
   editProfile(userAction);
  }
  catch(err){
