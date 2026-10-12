@@ -34,6 +34,7 @@ if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
  userAction.onclick = () =>{
   try{
+   if(userAction.textContent.trim() !== "Unfriend") return;
    const uid = userDetails.getAttribute("data-user");
     unfriend(uid, uName, userAction)
   }
@@ -47,6 +48,7 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else if(userAction.textContent.includes("Add")) {
  userAction.onclick = () =>{
   try{
+   if(!userAction.textContent.includes("Add")) return;
    const uid = userDetails.getAttribute("data-user");
    if(currentUserId === uid) return;
    addFriend(uid, userAction);
@@ -59,7 +61,8 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else{
  userAction.onclick = () =>{
  try{
-  notify("Editing coming soon")
+  notify("Editing coming soon");
+  console.log(userAction.innerHTML);
  }
  catch(err){
   console.error(err);
