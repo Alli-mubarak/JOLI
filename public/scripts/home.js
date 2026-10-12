@@ -8,8 +8,7 @@ const mediaViewer = document.getElementById("media-viewer");
   const viewer = document.getElementById("viewer");
   const mediaCounter = document.getElementById("media-counter");
   const imageBox = document.getElementById("image-view");
-  let imgArray;
-  let currIndex;
+  let imgArray, currIndex;
   let inViewMode = false;
 const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
@@ -457,8 +456,8 @@ async function viewPostMenu(e){
   
   const htmlElements = `
   <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
-  ${currentUserId !== authorId && !isFriend && !isPending? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
-  ${currentUserId !== authorId && isFriend ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && !isFriend && !isPending && isReady? `<button id="add-friend-btn"><i class="fa-solid fa-user-plus"></i>Send friend request to <b>${authorUsername.trim()}</b></button>` : ""}
+  ${currentUserId !== authorId && isFriend && isReady ? `<button id="unfriend-btn"><i class="fa-solid fa-user-minus"></i>Unfriend  <b>${authorUsername.trim()}</b></button>` : ""}
    ${currentUserId !== authorId? `<button id="view-user-btn"><i class="fa-solid fa-user"></i>View  <b>${authorUsername.trim()}</b>'s profile</button>` : ""}
    ${currentUserId === authorId? `<button id="edit-post-btn"><i class="fa-solid fa-pencil"></i> Edit post</button>` : ""}
     ${currentUserId === authorId? `<button id="delete-post-btn"><i class="fa-solid fa-trash"></i> Delete post</button>` : ""}
@@ -471,6 +470,7 @@ async function viewPostMenu(e){
     const addFriendBtn = postMenu.querySelector("#add-friend-btn");
     const unfriendBtn = postMenu.querySelector("#unfriend-btn");
     const viewAuthorBtn = postMenu.querySelector("#view-user-btn");
+    const editBtn = postMenu.querySelector("#edit-post-btn");
     const delBtn = postMenu.querySelector("#delete-post-btn");
 
     
@@ -516,6 +516,19 @@ if(addFriendBtn){
           notify("Author profile view failed!", "error");
           return 
         }
+      }
+    }
+
+    if(editBtn){
+      editBtn.onclick = () =>{
+       notify("feature is coming soon...");
+      
+        postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+     
       }
     }
     
