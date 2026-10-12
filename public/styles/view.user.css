@@ -153,6 +153,10 @@ header button:hover {
             padding : 0 10px;
             position: relative;
         }
+.user-info-in-edit{
+  margin-top:10px;
+  align-items: center;
+}
         .user-info img{
           display: block;
             object-fit: cover;
