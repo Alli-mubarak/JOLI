@@ -61,8 +61,9 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else{
  userAction.onclick = () =>{
  try{
-  notify("Editing coming soon");
-  console.log(userAction.innerHTML);
+  if(!userAction.textContent.includes("fa-pencil")) return;
+  editProfile();
+//  console.log(userAction.innerHTML);
  }
  catch(err){
   console.error(err);
@@ -136,7 +137,19 @@ const response = await fetch("/api/friendship/unfriend", {
     console.error(err)
   }
   }
-    
+
+async function editProfile(){
+ try{
+ if(!isAuthorised){
+      notify("please, log in first!", "error","click here", "/");
+      return;
+ }
+  alert("editing...");
+ }
+ catch(err){
+  notify("editing profile failed!", "error");
+ }
+}
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
