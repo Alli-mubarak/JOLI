@@ -65,7 +65,7 @@ if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "yellow"
   userAction.onclick = () => {
     if(!userAction.textContent.trim() === "Confirm") return 
-    window.location.href === "/friends";
+    window.location.href = "/friends";
   }
 }else{
  userAction.onclick = () =>{
@@ -187,6 +187,7 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
   btn.style.background = "#2bff43";
+   userMenu.classList.remove("hidden");
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
@@ -194,14 +195,12 @@ const userInfo = document.querySelector(".user-info");
    const userNameEl = document.getElementById("u-name")
    const bioEl = document.querySelector(".bio");
 const pTitle = document.querySelector(".p-title");
-  
    bannerEl.lastElementChild.remove();
    userppEl.lastElementChild.remove();
    userNameEl.lastElementChild.remove();
    bioEl.lastElementChild.remove();
    pTitle.classList.remove("hidden");
   userInfo.classList.remove("user-info-in-edit");
-  userMenu.classList.remove("hidden");
   postsContainer.classList.remove("hidden");
   btn.onclick = () => {editProfile(btn)}
  }
@@ -213,8 +212,21 @@ const pTitle = document.querySelector(".p-title");
 
 async function editInfo(el){
   try{
+    const parent = el.target.parentElement;
+    if(parent.tagName === "P"){
+      parent.setAttribute("contenteditable", true);
+      return 
+    }
     const prevEl = el.currentTarget.previousElementSibling;
-    alert(prevEl);
+    if(prevEl.tagName === "IMG"){
+      alert(prevEl);
+      return 
+    }
+   const pPrevEl = el.currentTarget.previousElementSibling.previousElementSibling;
+    if(pPrevEl.tagName === "IMG"){
+      alert(pPrevEl);
+      return 
+    }
   }
   catch(err){
     notify("error editing info", "error");
