@@ -72,7 +72,7 @@ return `${Math.floor(sDifference)}s`;
             <img src="<%= user.profile_picture || '/images/default-user.png' %>" loading="lazy" alt="profile picture" />
            </div>
             <p class="username"><b id="u-name"><%= user.username %></b></p>
-            <p class="bio"><%= user.bio || 'happy to be here on JOLI' %></p>
+            <p class="bio"><span><%= user.bio || 'happy to be here on JOLI' %></span></p>
             <button id="user-action">
            <% if (user.mine) { %>
                 <i class="fa-solid fa-pencil action-btn" ></i>
