@@ -34,9 +34,8 @@ if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
  userAction.onclick = () =>{
   try{
-   confirmAction("unfriend "+ uName, ()=>{
-    notify("feature is coming soon")
-   })
+   const uid = userDetails.getAttribute("data-user");
+    unfriend(id, uName, userAction)
   }
   catch(err){
    console.error(err);
@@ -48,7 +47,9 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else if(userAction.textContent.includes("Add")) {
  userAction.onclick = () =>{
   try{
-    notify("feature is coming soon")
+   const uid = userDetails.getAttribute("data-user");
+   if(currentUserId === uid) return;
+   addFriend(uid, userAction);
   }
   catch(err){
    console.error(err);
@@ -67,6 +68,72 @@ if(userAction.textContent.trim() === "Unfriend") {
  }
 }
 
+async function addFriend(id, btn){
+  try{
+   if(!isAuthorised){
+            notify("please, log in first!", "error","click here", "/");
+            return;
+      }
+      btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+      const response = await fetch("/api/friendship/request", {
+        method: "POST",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({receiverId: id})
+      });
+       const data = await response.json();
+      const result = data.error || data.message;
+   
+      if(response.ok){
+        btn.innerHTML = "pending";
+       btn.style.background = "yellow";
+            notify("friend request sent!");
+      }else{
+        notify("request failed!", "error");
+       console.error(result);    
+      }
+  }
+   catch(err){
+    notify("server error occurred ", "error");
+    console.error(err)
+  }
+}
+
+async function unfriend(id, username, btn){
+  try{
+if(!isAuthorised){
+      notify("please, log in first!", "error","click here", "/");
+      return;
+}
+confirmAction(`unfriend ${username}`, async() => {
+btn.innerHTML += '<b><i class="fa-solid fa-circle-notch roll"></b>'
+const response = await fetch("/api/friendship/unfriend", {
+        method: "DELETE",
+        headers: {
+      'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({friendId: id})
+      });
+      const data = await response.json();
+      const result = data.error || data.message;
+ 
+      if(response.ok){
+      btn.innerHTML = "Add";
+      btn.style.background = "#2bff43";
+      notify("unfriending successful!");
+      }else{
+      notify("unfriending failed!", "error");
+       console.error(result);
+      }
+});
+  }
+  catch(err){
+    notify("error occurred ", "error");
+    console.error(err)
+  }
+  }
+    
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
@@ -243,6 +310,11 @@ userMenu.onclick = () =>{
       try{
         confirmAction("report this account", ()=>{
         notify("feature is coming soon", "error");
+         postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      userMenuContainer.style.bottom = "-100vh";
+      },200);
         });
       }catch(err){
         notify("error messaging friend", "error");
@@ -270,17 +342,20 @@ userMenu.onclick = () =>{
     
     if(delBtn){
       delBtn.onclick = () =>{
-     if(confirm("Are you sure you want to delete your account?")){
-     //  deletePost(postId);
-       alert("feature coming soon!");
-      }
-        postMenuCloser.style.background = "transparent";
+     try{
+        confirmAction("delete your account", ()=>{
+        notify("feature is coming soon", "error");
+         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
       userMenuContainer.style.bottom = "-100vh";
       },200);
-     enableScrolling();
+        });
+      }catch(err){
+        notify("error messaging friend", "error");
+        console.error(err);
       }
+       }
       }
     
     pmCloserBtn.onclick = () =>{
