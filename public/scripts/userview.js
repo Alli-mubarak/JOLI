@@ -35,6 +35,7 @@ if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
  userAction.onclick = () =>{
   try{
+       if(!isAuthorised) return 
    if(userAction.textContent.trim() !== "Unfriend") return;
    const uid = userDetails.getAttribute("data-user");
     unfriend(uid, uName, userAction)
@@ -49,6 +50,7 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else if(userAction.textContent.includes("Add")) {
  userAction.onclick = () =>{
   try{
+    if(!isAuthorised) return 
    if(!userAction.textContent.includes("Add")) return;
    const uid = userDetails.getAttribute("data-user");
    if(currentUserId === uid) return;
@@ -59,9 +61,16 @@ if(userAction.textContent.trim() === "Unfriend") {
    notify("friending failed!", "error");
   }
  }
+}else if(userAction.textContent.trim() === "Confirm") {
+  userAction.style.background = "yellow"
+  userAction.onclick = () => {
+    if(!userAction.textContent.trim() === "Confirm") return 
+    window.location.href === "/friends";
+  }
 }else{
  userAction.onclick = () =>{
  try{
+   if(!isAuthorised) return 
   if(!userAction.innerHTML.includes("fa-pencil")) return;
   editProfile(userAction);
   console.log(userAction.innerHTML);
@@ -146,24 +155,28 @@ async function editProfile(btn){
       return;
  }
   btn.style.background = "yellow";
+  userMenu.classList.add("hidden");
   btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
    const userppEl = document.getElementById("user-pp")
-   const userNameEl = document.getElementById("u-name")
+   const userNameEl = document.getElementById("u-name");
    const bioEl = document.querySelector(".bio");
   const pTitle = document.querySelector(".p-title");
    const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
    bannerEl.innerHTML += editIcon
    userNameEl.innerHTML += editIcon
    userppEl.innerHTML += editIcon;
-   bioEl.innerHTML +=  editIcon
+   bioEl.innerHTML += editIcon;
    pTitle.classList.add("hidden");
   userInfo.classList.add("user-info-in-edit");
-  userMenu.classList.add("hidden");
   postsContainer.classList.add("hidden");
   console.log("editing...");
   btn.onclick = () => {saveEdit(btn)}
+  const editIcons = document.querySelectorAll(".edit");
+  Array.from(editIcons).forEach(i => {
+    i.onclick = (e) =>{editInfo(e)}
+  })
  }
  catch(err){
   notify("editing profile failed!", "error");
@@ -196,6 +209,17 @@ const pTitle = document.querySelector(".p-title");
   notify("editing profile failed!", "error");
   console.error(err)
  }
+}
+
+async function editInfo(el){
+  try{
+    const prevEl = el.currentTarget.previousElementSibling;
+    alert(prevEl);
+  }
+  catch(err){
+    notify("error editing info", "error");
+    console.error(err);
+  }
 }
 
 // confirm box function 
