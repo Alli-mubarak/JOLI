@@ -148,6 +148,8 @@ async function editProfile(btn){
   btn.style.background = "yellow";
   btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
   const userInfo = document.querySelector(".user-info");
+  const pTitle = document.querySelector(".p-title");
+   pTitle.classList.add("hidden");
   userInfo.classList.add("user-info-in-edit");
   userMenu.classList.add("hidden");
   postsContainer.classList.add("hidden");
@@ -165,6 +167,8 @@ async function saveEdit(btn){
   btn.style.background = "#2bff43";
 btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
 const userInfo = document.querySelector(".user-info");
+const pTitle = document.querySelector(".p-title");
+   pTitle.classList.remove("hidden");
   userInfo.classList.remove("user-info-in-edit");
   userMenu.classList.remove("hidden");
   postsContainer.classList.remove("hidden");
