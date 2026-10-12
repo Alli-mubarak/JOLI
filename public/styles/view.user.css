@@ -190,13 +190,14 @@ header button:hover {
           margin-left: 10px;
           transition: all 0.4s ease;
           position: relative;
+          max-width:70vw;
         }
      .username .edit, .bio .edit{
        left: 105%; right:0;
      }
         .bio{
             font-size: 1rem;
-            max-width:100%;
+            max-width:80vw;
           margin-left: 10px;
           transition: all 0.4s ease;
           position: relative;
