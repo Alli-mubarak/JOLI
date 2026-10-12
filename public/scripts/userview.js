@@ -61,9 +61,9 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else{
  userAction.onclick = () =>{
  try{
-  if(!userAction.textContent.includes("fa-pencil")) return;
+  if(!userAction.innerHTML.includes("fa-pencil")) return;
   editProfile();
-//  console.log(userAction.innerHTML);
+  console.log(userAction.innerHTML);
  }
  catch(err){
   console.error(err);
