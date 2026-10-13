@@ -166,9 +166,19 @@ async function editProfile(btn){
    const bioEl = document.querySelector(".bio");
   const pTitle = document.querySelector(".p-title");
    const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
-   bannerEl.innerHTML += editIcon
+   const bChanger = `
+   <div>
+     <input  type="file" accept="image/*" id="b-upload" />
+     <label for="b-upload"> <i class="fa-solid fa-pencil edit"></i></label>
+  </div>`;
+   const ppChanger = `
+   <div>
+     <input  type="file" accept="image/*" id="pp-upload" />
+     <label for="pp-upload"> <i class="fa-solid fa-pencil edit"></i></label>
+  </div>`;
+   bannerEl.innerHTML += bChanger
    userNameEl.innerHTML += editIcon
-   userppEl.innerHTML += editIcon;
+   userppEl.innerHTML += ppChanger;
    bioEl.innerHTML += editIcon;
    pTitle.classList.add("hidden");
   userInfo.classList.add("user-info-in-edit");
