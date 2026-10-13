@@ -392,6 +392,8 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
         let width = imgEl.width;
         let height = imgEl.height;
 
+        console.log(width, height);
+
         // Calculate proportional scale dimensions
         if (width > maxWidth) {
           height = Math.round((height * maxWidth) / width);
