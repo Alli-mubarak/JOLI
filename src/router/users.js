@@ -469,7 +469,7 @@ if(username){
         const remainingDays = Math.ceil((nextAllowedTime - currentTime) / (1000 * 60 * 60 * 24));
         username = "";
         ulastChanged = "";
-          userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
+        userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }
     ulastChanged = `CURRENT_TIMESTAMP`;
   }
@@ -482,16 +482,16 @@ const updateQuery = await pool.query(
             cover_photo = $2,
             profile_picture = $3,
             bio = $4,
-            last_username_change_at = 5,
+            last_username_change_at = $5,
             last_login_at = CURRENT_TIMESTAMP
-        WHERE id = $5
+        WHERE id = $6
         `,
         [
             username || eUsername,
             banner || bannerPic  ,
             pPic || userPic,
             bio || eBio,
-           ulastChanged || serToUpdate.last_username_change_at,
+           ulastChanged || userToUpdate.last_username_change_at,
             uid
         ]
     );
