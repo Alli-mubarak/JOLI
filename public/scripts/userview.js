@@ -278,7 +278,6 @@ else{
 
 async function editInfo(el, i){
   try{
-    
     const parent = el.currentTarget.parentElement;
     let prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
@@ -298,6 +297,7 @@ async function editInfo(el, i){
   }
       if(prevEl && prevEl.tagName === "B") {
         prevEl.maxLength = 30;
+        prevEl.style.background = "var(--touch-color)";
         let filteredText = prevEl.innerText.replace(/[^a-z0-9_-]/g, '');
         if (filteredText.length > prevEl.maxLength) {
           filteredText = filteredText.slice(0, prevEl.maxLength);
@@ -325,7 +325,7 @@ async function editInfo(el, i){
   if (text.length > prevEl.maxLength) {
     const selection = window.getSelection();
     const offset = selection.focusOffset;
-
+  prevEl.style.background = "var(--touch-color)";
     //Chop the text down to the absolute maximum limit
     prevEl.innerText = text.slice(0, prevEl.maxLength);
 
@@ -365,6 +365,7 @@ prevEl.addEventListener('paste', (e) => {
 });
     }else{
         prevEl.removeAttribute("contenteditable", true);
+        prevEl.style.background = "transparent";
         i.classList.remove("fa-check");
       i.classList.add("fa-pencil");
     }
