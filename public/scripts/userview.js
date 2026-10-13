@@ -261,14 +261,6 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   
 else{
   notify("error updating profile");
-  const uMenu = document.getElementById("u-menu");
-   uMenu.classList.remove("hidden");
-   uMenu.onclick = () =>{showMenu()}
- btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
- userInfo.classList.remove("user-info-in-edit");
-  postsContainer.classList.remove("hidden");
- pTitle.classList.remove("hidden");
-  btn.onclick = () => {editProfile(btn)}
      return;
 }
    
