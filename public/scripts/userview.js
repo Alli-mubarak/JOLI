@@ -336,7 +336,7 @@ prevEl.addEventListener('paste', (e) => {
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl && pPrevEl.tagName === "IMG"){
       const newb = await processImg('b-upload',pPrevEl);
-      newBanner = newb
+      newBanner = newb;
     }
   }
   catch(err){
@@ -354,6 +354,9 @@ if (!file) return;
   //  Make sure the user actually selected a file
   if (file) {
     const compressedBlob = await compressImage(file, 1200, 0.8, imgEl); // max-width:1200px, quality 80%
+   //--------//
+    console.log(compressedBlob);
+    //---********//
     return compressedBlob;
    }
   }
