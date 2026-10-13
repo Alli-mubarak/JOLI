@@ -236,7 +236,7 @@ async function editInfo(el, i){
   }
       if(prevEl.tagName === "B") {
         prevEl.maxLength = 30;
-        let filteredText = prevEl.innerText.replace(/[^a-z_-]/g, '');
+        let filteredText = prevEl.innerText.replace(/[^a-z0-9_-]/g, '');
         if (filteredText.length > prevEl.maxLength) {
           filteredText = filteredText.slice(0, prevEl.maxLength);
         }
