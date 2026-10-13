@@ -456,7 +456,7 @@ if(pPic){
     });
   pPic = optimizedPicUrl;
 }
-let userNameIssue;
+let userNameIssue, uLastChanged;
 if(username){
   if (userToUpdate.last_username_change_at) {
       const SIXTY_DAYS_IN_MS = 60 * 24 * 60 * 60 * 1000;
@@ -468,8 +468,10 @@ if(username){
       if (currentTime < nextAllowedTime) {
         const remainingDays = Math.ceil((nextAllowedTime - currentTime) / (1000 * 60 * 60 * 24));
         username = "";
+        ulastChanged = "";
           userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }
+    ulastChanged = `CURRENT_TIMESTAMP`;
   }
 }
 const updateQuery = await pool.query(
@@ -489,14 +491,14 @@ const updateQuery = await pool.query(
             banner || bannerPic  ,
             pPic || userPic,
             bio || eBio,
-           userToUpdate.last_username_change_at || NOW(),
+           ulastChanged || serToUpdate.last_username_change_at,
             uid
         ]
     );
 
 
 
-return res.status(200).json({ message : "ok" });
+return res.status(200).json({ message : "ok", issue: userNameIssue });
 }
 catch(err){
   console.error(err);
