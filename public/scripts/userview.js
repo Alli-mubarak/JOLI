@@ -199,7 +199,7 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
      
-   btn.innerHTML += `<div class="roll"></div>`;
+   btn.innerHTML = `<i class="fa-solid fa-circle-notch roll"></i>`;
    if(!newBanner && !newPic && !newUsername && !newBio){
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
