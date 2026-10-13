@@ -171,6 +171,9 @@ header button:hover {
 .user-info-in-edit .m-count{ 
   display: none !important;
 }
+.user-info-in-edit .username, .user-info-in-edit .bio{ 
+  padding: 5px 10px;
+}
 #user-pp{
   background:#fff;
   position: relative;
@@ -181,6 +184,7 @@ header button:hover {
   border: 4px solid #eee;
   overflow:hidden;
 }
+
         #user-pp img{
           display: block;
             object-fit: cover;
