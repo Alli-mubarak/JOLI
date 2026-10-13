@@ -401,7 +401,7 @@ async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
 
         // Convert canvas back to data URL
        const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
-        vrb = smallDatUrl
+        vrb = smallDataUrl
         console.log(newBanner, newPic);
     }
     
