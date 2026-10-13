@@ -392,7 +392,7 @@ router.post('/v1/disconnect', async (req, res) => {
 });
 
 //user profile update
-router.post('/v1/update',checkSession, limiter,  async (req, res) => {
+router.post('/v1/update', checkSession, limiter,  async (req, res) => {
   if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
 }
@@ -402,7 +402,7 @@ if(!uid || uid !== req.user.id ){
   return res.status(403).json({ error: 'You cannot make changes to this profile!' });
 }
 if(!banner && !pPic && !username && !bio){
-  return res.status(403).json({ error: 'No changes to make!' });
+  return res.status(404).json({ error: 'No changes to make!' });
 }
 if(banner){}
 if(pPic){}
@@ -411,8 +411,7 @@ if(bio){}
 
 
 
-return res..status(200).json({ message : "ok" });
-  
+return res.status(200).json({ message : "ok" });
 }
 catch(err){
   console.error(err);
