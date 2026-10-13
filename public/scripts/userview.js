@@ -243,8 +243,36 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   });
     const result = await response.json();
      console.log(result);
+  if(response.ok){
+    const uMenu = document.getElementById("u-menu");
+   uMenu.classList.remove("hidden");
+   uMenu.onclick = () =>{showMenu()}
+ btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
+ userInfo.classList.remove("user-info-in-edit");
+  postsContainer.classList.remove("hidden");
+ pTitle.classList.remove("hidden");
+  btn.onclick = () => {editProfile(btn)}
+  if(result.issue) alert(result.issue);
+    
+  if(username){
+  window.location.href = `/user/${username}`
+  }else{location.reload}
    }
+  
+else{
+  notify("error updating profile");
+  const uMenu = document.getElementById("u-menu");
+   uMenu.classList.remove("hidden");
+   uMenu.onclick = () =>{showMenu()}
+ btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
+ userInfo.classList.remove("user-info-in-edit");
+  postsContainer.classList.remove("hidden");
+ pTitle.classList.remove("hidden");
+  btn.onclick = () => {editProfile(btn)}
+     return;
+}
    
+ }
  }
  catch(err){
   notify("editing profile failed!", "error");
@@ -407,8 +435,8 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
     
       imgEl.onload = async() => {
         const canvas = document.createElement('canvas');
-        let width = imgEl.width;
-        let height = imgEl.height;
+        let width = imgEl.naturalWidth;
+        let height = imgEl.naturalHeight;
 
         // Calculate proportional scale dimensions
         if (width > maxWidth) {
