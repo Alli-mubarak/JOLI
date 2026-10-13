@@ -420,7 +420,7 @@ const eBio = userToUpdate.bio
   
 if(banner){
   // Send the base64 string directly to Cloudinary
-    const cloudinaryResponse = await cloudinary.uploader.upload(imageStr, {
+    const cloudinaryResponse = await cloudinary.uploader.upload(banner, {
       folder: 'users_cover_photos',
     })
     .catch((error) => {
@@ -439,7 +439,7 @@ if(banner){
 }
 if(pPic){
   // Send the base64 string directly to Cloudinary
-    const cloudinaryResponse = await cloudinary.uploader.upload(imageStr, {
+    const cloudinaryResponse = await cloudinary.uploader.upload(pPic, {
       folder: 'users_profile_pictures',
     })
     .catch((error) => {
@@ -470,8 +470,9 @@ if(username){
         username = "";
         ulastChanged = "";
         userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
+      }else{
+        uLastChanged = `CURRENT_TIMESTAMP`;
       }
-    ulastChanged = `CURRENT_TIMESTAMP`;
   }
 }
 const updateQuery = await pool.query(
@@ -491,7 +492,7 @@ const updateQuery = await pool.query(
             banner || bannerPic  ,
             pPic || userPic,
             bio || eBio,
-           ulastChanged || userToUpdate.last_username_change_at,
+           uLastChanged || userToUpdate.last_username_change_at,
             uid
         ]
     );
