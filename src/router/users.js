@@ -458,6 +458,7 @@ if(pPic){
 }
 let userNameIssue, uLastChanged;
 if(username){
+  
   const existingUsername = await pool.query(
     "SELECT * FROM users WHERE username = $1",
     [username]
@@ -477,10 +478,10 @@ if(username){
         uLastChanged = "";
         userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }else{
-        uLastChanged = `CURRENT_TIMESTAMP`;
+        uLastChanged = Date.now();
       }
   }else{
-    uLastChanged = `CURRENT_TIMESTAMP`;
+    uLastChanged = Date.now();
   }
   }else{
     userNameIssue = "Username is taken, choose another one";
