@@ -329,12 +329,17 @@ prevEl.addEventListener('paste', (e) => {
     }
     prevEl = parent.parentElement.previousElementSibling;
     if(prevEl && prevEl.tagName === "IMG"){
-      const newpp = await processImg('pp-upload',prevEl, newPic);
-      return;
+      const newpp = await processImg('pp-upload',prevEl);
+      console.log(newpp)
+      console.log(1)
+      newPic = newpp
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl && pPrevEl.tagName === "IMG"){
-      const newb = await processImg('b-upload',pPrevEl, newBanner);
+      const newb = await processImg('b-upload',pPrevEl);
+      console.log(newb)
+      console.log(1)
+      newBanner = newb
     }
   }
   catch(err){
@@ -343,8 +348,9 @@ prevEl.addEventListener('paste', (e) => {
   }
 }
 
-async function processImg(inputEl, imgEl, vrb){
+async function processImg(inputEl, imgEl){
   try{
+    let compressedDataUrl;
   const inputTag = document.getElementById(`${inputEl}`);
   inputTag.onchange = async(e) =>{
   const file = e.target.files[0];
@@ -359,8 +365,9 @@ const reader = new FileReader();
     const rawDataUrl = e.target.result; 
 
     try {
-      const compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl, vrb);
-      
+       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
+      console.log(compressedDataUrl)
+        console.log(2)
     } catch (error) {
       console.error("Upload process broke down:", error);
     }
@@ -372,16 +379,18 @@ const reader = new FileReader();
       return;
     }
   }
+    return compressedDataUrl;
   }catch(e){
     notify("error uploading image", "error");
     console.error(e);
   }
 }
 
-async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
+async function compressDataUrl(file, maxWidth, quality, imgEl) {
   try{
     
      imgEl.src = file;
+     let smallDataUrl;
       imgEl.onload = async() => {
         const canvas = document.createElement('canvas');
         let width = imgEl.width;
@@ -400,9 +409,10 @@ async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
         await ctx.drawImage(imgEl, 0, 0, width, height);
 
         // Convert canvas back to data URL
-       const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
-      vrb = smallDataUrl;
+       smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
+       console.log(3)
     }
+    return smallDatUrl;
     }catch(err){
     notify("image compression failed!", "error");
     console.error(err)
