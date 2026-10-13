@@ -281,7 +281,9 @@ async function editInfo(el, i){
     const parent = el.currentTarget.parentElement;
     let prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
-      if(i.classList.contains('fa-pencil')){
+      prevEl.style.background = "var(--touch-color)";
+      
+    if(i.classList.contains('fa-pencil')){
       i.classList.remove("fa-pencil");
       i.classList.add("fa-check");
       prevEl.maxLength = 50
@@ -297,7 +299,6 @@ async function editInfo(el, i){
   }
       if(prevEl && prevEl.tagName === "B") {
         prevEl.maxLength = 30;
-        prevEl.style.background = "var(--touch-color)";
         let filteredText = prevEl.innerText.replace(/[^a-z0-9_-]/g, '');
         if (filteredText.length > prevEl.maxLength) {
           filteredText = filteredText.slice(0, prevEl.maxLength);
