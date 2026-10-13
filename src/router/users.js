@@ -396,7 +396,7 @@ router.post('/v1/update', checkSession, limiter,  async (req, res) => {
   if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
 }
-const {banner, pPic, username, bio, uid} = req.body
+let {banner, pPic, username, bio, uid} = req.body
 try{
 if(!uid || uid !== req.user.id ){
   return res.status(403).json({ error: 'You cannot make changes to this profile!' });
