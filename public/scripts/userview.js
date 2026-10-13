@@ -253,7 +253,7 @@ async function editInfo(el, i){
   if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
     return;
   }
-      if(prevEl.tagName === "B") {
+      if(prevEl && prevEl.tagName === "B") {
         prevEl.maxLength = 30;
         let filteredText = prevEl.innerText.replace(/[^a-z0-9_-]/g, '');
         if (filteredText.length > prevEl.maxLength) {
@@ -328,12 +328,13 @@ prevEl.addEventListener('paste', (e) => {
       return 
     }
     prevEl = parent.parentElement.previousElementSibling;
-    if(prevEl.tagName === "IMG"){
+    if(prevEl && prevEl.tagName === "IMG"){
       const newpp = await processImg('pp-upload',prevEl);
       newPic = newpp;
+      return;
     }
    const pPrevEl = prevEl.previousElementSibling;
-    if(pPrevEl.tagName === "IMG"){
+    if(pPrevEl && pPrevEl.tagName === "IMG"){
       const newb = await processImg('b-upload',pPrevEl);
       newBanner = newb
     }
@@ -385,7 +386,7 @@ function compressImage(file, maxWidth, quality, imgEl) {
         canvas.height = height;
 
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
+        ctx.drawImage(imgEl, 0, 0, width, height);
 
         // Convert canvas back to a binary Blob (JPEG or WebP offer great compression)
         canvas.toBlob((blob) => {
