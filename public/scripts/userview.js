@@ -352,13 +352,30 @@ async function processImg(inputEl, imgEl){
   const file = e.target.files[0];
 if (!file) return;
   //  Make sure the user actually selected a file
-  if (file) {
-    const compressedBlob = await compressImage(file, 1200, 0.8, imgEl); // max-width:1200px, quality 80%
-   //--------//
-    console.log(compressedBlob);
+const reader = new FileReader();
+  
+  reader.readAsDataURL(file);
+
+  reader.onload = async (e) => {
+    // This is your raw Base64 Data URL string
+    const rawDataUrl = e.target.result; 
+
+    try {
+      const compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
+     console.log(compressedDataUrl);
     //---********//
-    return compressedBlob;
-   }
+    return compressedDataUrl;
+      
+    } catch (error) {
+      console.error("Upload process broke down:", error);
+    }
+  
+  }
+    reader.onerror = (err) => {
+      notify("error reading file", "error");
+      console.error(err)
+      return;
+    }
   }
   }catch(e){
     notify("error uploading image", "error");
@@ -366,14 +383,11 @@ if (!file) return;
   }
 }
 
-async function compressImage(file, maxWidth, quality, imgEl) {
+async function compressDataUrl(file, maxWidth, quality, imgEl) {
   try{
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
     
-    reader.onload = (event) => {
-     imgEl.src = event.target.result;
-      imgEl.onload = () => {
+     imgEl.src = file;
+      imgEl.onload = async() => {
         const canvas = document.createElement('canvas');
         let width = imgEl.width;
         let height = imgEl.height;
@@ -391,14 +405,8 @@ async function compressImage(file, maxWidth, quality, imgEl) {
         ctx.drawImage(imgEl, 0, 0, width, height);
 
         // Convert canvas back to data URL
-       return canvas.toDataURL('image/jpeg', quality);
-      
-    }
-        
-      };
-    
-    reader.onerror = (err) => {
-      return console.error(err);
+       const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
+      return smallDataUrl;
     }
     }catch(err){
     notify("image compression failed!", "error");
