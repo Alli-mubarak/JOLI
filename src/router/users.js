@@ -409,7 +409,7 @@ if(!banner && !pPic && !username && !bio){
     "SELECT * FROM users WHERE id = $1",
     [uid]
    );
-  if (existing.rows.length == 0) {
+  if (existing.rows.length === 0) {
    return res.status(404).json({ error: 'user not found!' });
   }
 const userToUpdate = existing.rows[0];
