@@ -391,6 +391,33 @@ router.post('/v1/disconnect', async (req, res) => {
   }
 });
 
+//user profile update
+router.post('/v1/update',checkSession, limiter,  async (req, res) => {
+  if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+}
+const {banner, pPic, username, bio, uid} = req.body
+try{
+if(!uid || uid !== req.user.id ){
+  return res.status(403).json({ error: 'You cannot make changes to this profile!' });
+}
+if(!banner && !pPic && !username && !bio){
+  return res.status(403).json({ error: 'No changes to make!' });
+}
+if(banner){}
+if(pPic){}
+if(username){}
+if(bio){}
 
+
+
+return res..status(200).json({ message : "ok" });
+  
+}
+catch(err){
+  console.error(err);
+  return res.status(500).json({ error: 'Internal server error' });
+}
+});
 
 export default router;
