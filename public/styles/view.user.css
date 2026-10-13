@@ -194,6 +194,7 @@ header button:hover {
           transition: all 0.4s ease;
           position: relative;
           max-width:70vw;
+          min-height: 20px;
         }
      .username .edit, .bio .edit{
        left: 105%; right:0;
@@ -204,6 +205,7 @@ header button:hover {
           margin-left: 10px;
           transition: all 0.4s ease;
           position: relative;
+          min-height: 20px;
         }
         #user-action{
             position: absolute;
