@@ -264,6 +264,18 @@ header button:hover {
   color: #222;
   cursor: pointer;
 }
+.img-changer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+}
+#b-upload, #pp-upload{
+  width:1px; height: 1px;
+}
 .p-loader{
   background: #fff;
   margin-bottom: 10px;
