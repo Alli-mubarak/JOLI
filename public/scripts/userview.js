@@ -198,6 +198,10 @@ async function editProfile(btn){
 
 async function saveEdit(btn){
  try{
+     
+   btn.innerHTML = `<i class="fa-solid fa-check"></i><div class="roll"></div>`;
+   
+   if(!newBanner && !newPic && !newUsername && newBio){
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
    uMenu.onclick = () =>{showMenu()}
@@ -218,13 +222,27 @@ const pTitle = document.querySelector(".p-title");
   userNameEl.firstElementChild.removeAttribute("contenteditable", true);
   bioEl.firstElementChild.removeAttribute("contenteditable", true);
   btn.onclick = () => {editProfile(btn)}
-  const changes = {
+   }else{
+     const uid = userDetails.getAttribute("data-user");
+     const changes = {
     banner: newBanner,
     pPic : newPic,
     username: newUsername,
-    bio: newBio
-  }
-   console.log(changes);
+    bio: newBio,
+    uid : uid
+     }
+
+     const response = await fetch('/user/v1/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(changes)
+  });
+     const result = await response.json();
+     console.log(result);
+   }
+   
  }
  catch(err){
   notify("editing profile failed!", "error");
