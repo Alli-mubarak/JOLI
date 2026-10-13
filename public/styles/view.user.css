@@ -171,7 +171,7 @@ header button:hover {
 .user-info-in-edit .m-count{ 
   display: none !important;
 }
-.user-info-in-edit .username, .user-info-in-edit .bio{ 
+.user-info-in-edit .username b, .user-info-in-edit .bio span{ 
   padding: 5px 10px;
 }
 #user-pp{
