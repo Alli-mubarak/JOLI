@@ -334,7 +334,7 @@ prevEl.addEventListener('paste', (e) => {
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl.tagName === "IMG"){
-      const newb = processImg('b-upload',pPrevEl);
+      const newb = await processImg('b-upload',pPrevEl);
       newBanner = newb
     }
   }
@@ -347,7 +347,7 @@ prevEl.addEventListener('paste', (e) => {
 async function processImg(inputEl, imgEl){
   try{
   const inputTag = document.getElementById(`${inputEl}`);
-  inputTag.onchange = (e) =>{
+  inputTag.onchange = async(e) =>{
   const file = e.target.files[0];
 if (!file) return;
   //  Make sure the user actually selected a file
