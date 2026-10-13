@@ -224,6 +224,8 @@ const pTitle = document.querySelector(".p-title");
  }
 }
 
+let newBanner, newPic, newUsername, newBio;
+
 async function editInfo(el, i){
   try{
     
@@ -265,6 +267,7 @@ async function editInfo(el, i){
       selection.addRange(range);
     }
       }
+        newUsername = prevEl.innerText;
       }
       
   else{
@@ -289,6 +292,7 @@ async function editInfo(el, i){
     }
     
   }
+    newBio = prevEl.innerText;
   }
 });
 
@@ -318,13 +322,13 @@ prevEl.addEventListener('paste', (e) => {
     }
     prevEl = parent.parentElement.previousElementSibling;
     if(prevEl.tagName === "IMG"){
-      processImg('pp-upload',prevEl);
-      return 
+      const newpp = await processImg('pp-upload',prevEl);
+      newPic = newpp;
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl.tagName === "IMG"){
-      processImg('b-upload',pPrevEl);
-      return 
+      const newb = processImg('b-upload',pPrevEl);
+      newBanner = newb
     }
   }
   catch(err){
@@ -338,20 +342,11 @@ async function processImg(inputEl, imgEl){
   const inputTag = document.getElementById(`${inputEl}`);
   inputTag.onchange = (e) =>{
   const file = e.target.files[0];
-
+if (!file) return;
   //  Make sure the user actually selected a file
   if (file) {
-    // Create a temporary local URL pointing to the file object
-    const objectURL = URL.createObjectURL(file);
-
-    //  Update the image UI and make it visible
-    imgEl.src = objectURL;
-    
-
-    // OPTIONAL CLEANUP: Free up memory when the image finishes loading
-    imgEl.onload = () => {
-      URL.revokeObjectURL(objectURL);
-    };
+    const compressedBlob = await compressImage(file, 1200, 0.8, imgEl); // max-width:1200px, quality 80%
+    return compressedBlob;
    }
   }
   }catch(e){
@@ -360,6 +355,43 @@ async function processImg(inputEl, imgEl){
   }
 }
 
+function compressImage(file, maxWidth, quality, imgEl) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    
+    reader.onload = (event) => {
+
+      imgEl.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = imgEl.width;
+        let height = imgEl.height;
+
+        // Calculate proportional scale dimensions
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Convert canvas back to a binary Blob (JPEG or WebP offer great compression)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+          } else {
+            reject(new Error("Canvas compression failed"));
+          }
+        }, 'image/jpeg', quality);
+      };
+    };
+    reader.onerror = (err) => reject(err);
+  });
+    }
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
