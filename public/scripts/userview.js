@@ -31,10 +31,7 @@ let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
 let inViewMode = false;
 let isFriend = false;
-let newBanner = "";
-let newPic = "";
-let newUsername = "";
-let newBio = "";
+let newBanner, newPic, newUsername, newBio;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
@@ -203,8 +200,7 @@ async function saveEdit(btn){
  try{
      
    btn.innerHTML += `<div class="roll"></div>`;
-   console.log(newBanner, newPic, newUsername, newBio)
-   if(!newBanner && !newPic && !newUsername && newBio){
+   if(!newBanner && !newPic && !newUsername && !newBio){
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
    uMenu.onclick = () =>{showMenu()}
@@ -429,7 +425,6 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
        const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
       if(imgEl.func === "pp") newPic = smallDataUrl
       if(imgEl.func === "b") newBanner = smallDataUrl
-        console.log(newBanner, newPic);
     }
     
     }catch(err){
