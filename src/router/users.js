@@ -421,7 +421,7 @@ const eBio = userToUpdate.bio
 if(banner){
   // Send the base64 string directly to Cloudinary
     const cloudinaryResponse = await cloudinary.uploader.upload(banner, {
-      folder: 'users_cover_photos',
+      folder: `users_cover_photos/${uid}`
     })
     .catch((error) => {
            console.log(error);
@@ -440,7 +440,7 @@ if(banner){
 if(pPic){
   // Send the base64 string directly to Cloudinary
     const cloudinaryResponse = await cloudinary.uploader.upload(pPic, {
-      folder: 'users_profile_pictures',
+      folder: `users_profile_pictures/${uid}`
     })
     .catch((error) => {
            console.log(error);
