@@ -31,6 +31,7 @@ let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
 let inViewMode = false;
 let isFriend = false;
+let newBanner, newPic, newUsername, newBio;
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
@@ -217,6 +218,13 @@ const pTitle = document.querySelector(".p-title");
   userNameEl.firstElementChild.removeAttribute("contenteditable", true);
   bioEl.firstElementChild.removeAttribute("contenteditable", true);
   btn.onclick = () => {editProfile(btn)}
+  const changes = {
+    banner: newBanner,
+    pPic : newPic,
+    username: newUsername,
+    bio: newBio
+  }
+   console.log(changes);
  }
  catch(err){
   notify("editing profile failed!", "error");
@@ -224,7 +232,6 @@ const pTitle = document.querySelector(".p-title");
  }
 }
 
-let newBanner, newPic, newUsername, newBio;
 
 async function editInfo(el, i){
   try{
