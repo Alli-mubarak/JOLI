@@ -167,12 +167,12 @@ async function editProfile(btn){
   const pTitle = document.querySelector(".p-title");
    const editIcon = `<i class="fa-solid fa-pencil edit"></i>`;
    const bChanger = `
-   <div>
+   <div class="img-changer">
      <input  type="file" accept="image/*" id="b-upload" />
      <label for="b-upload"> <i class="fa-solid fa-pencil edit"></i></label>
   </div>`;
    const ppChanger = `
-   <div>
+   <div class="img-changer">
      <input  type="file" accept="image/*" id="pp-upload" />
      <label for="pp-upload"> <i class="fa-solid fa-pencil edit"></i></label>
   </div>`;
@@ -316,7 +316,7 @@ prevEl.addEventListener('paste', (e) => {
     }
       return 
     }
-    prevEl = parent.previousElementSibling;
+    prevEl = parent.parentElement.previousElementSibling;
     if(prevEl.tagName === "IMG"){
       alert(prevEl);
       return 
