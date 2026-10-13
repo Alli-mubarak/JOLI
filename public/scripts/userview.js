@@ -329,11 +329,14 @@ prevEl.addEventListener('paste', (e) => {
     }
     prevEl = parent.parentElement.previousElementSibling;
     if(prevEl && prevEl.tagName === "IMG"){
-    processImg('pp-upload',prevEl, newPic);
+      prevEl.func = "pp"
+    processImg('pp-upload',prevEl);
+    
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl && pPrevEl.tagName === "IMG"){
-      processImg('b-upload',pPrevEl, newBanner);
+      pPrevEl.func = "b"
+      processImg('b-upload',pPrevEl);
     }
   }
   catch(err){
@@ -342,7 +345,7 @@ prevEl.addEventListener('paste', (e) => {
   }
 }
 
-async function processImg(inputEl, imgEl, picData){
+async function processImg(inputEl, imgEl){
   try{
     let compressedDataUrl;
   const inputTag = document.getElementById(`${inputEl}`);
@@ -359,7 +362,7 @@ const reader = new FileReader();
     const rawDataUrl = e.target.result; 
 
     try {
-       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl, picData);
+       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
     } catch (error) {
       console.error("Upload process broke down:", error);
     }
@@ -378,7 +381,7 @@ const reader = new FileReader();
   }
 }
 
-async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
+async function compressDataUrl(file, maxWidth, quality, imgEl) {
   try{
      imgEl.src = file;
     
@@ -401,7 +404,8 @@ async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
 
         // Convert canvas back to data URL
        const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
-        vrb = smallDataUrl
+      if(img.func === "pp") newPic = smallDataUrl
+      if(img.func === "b") newBanner = smallDataUrl
         console.log(newBanner, newPic);
     }
     
