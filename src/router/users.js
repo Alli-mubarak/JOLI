@@ -458,6 +458,12 @@ if(pPic){
 }
 let userNameIssue, uLastChanged;
 if(username){
+  const existingUsername = await pool.query(
+    "SELECT * FROM users WHERE username = $1",
+    [username]
+   );
+  if (existingUsername.rows.length === 0) {
+   
   if (userToUpdate.last_username_change_at) {
       const SIXTY_DAYS_IN_MS = 60 * 24 * 60 * 60 * 1000;
       const lastChangeTime = new Date(userToUpdate.last_username_change_at).getTime();
@@ -473,6 +479,15 @@ if(username){
       }else{
         uLastChanged = `CURRENT_TIMESTAMP`;
       }
+  }
+  }else{
+    userNameIssue = "Username is taken, choose another one";
+    if(username === eUsername){
+      userNameIssue = ""
+    }
+    
+    username = "";
+    uLastChanged = "";
   }
 }
 await pool.query(
