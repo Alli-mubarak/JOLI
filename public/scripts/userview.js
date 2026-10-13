@@ -224,7 +224,6 @@ async function editInfo(el, i){
       i.classList.remove("fa-pencil");
       i.classList.add("fa-check");
       prevEl.maxLength = 50
-      if(prevEl.tagName === "B") prevEl.maxLength = 30
       prevEl.setAttribute("contenteditable", true);
       prevEl.focus();
         
@@ -235,7 +234,30 @@ async function editInfo(el, i){
   if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
     return;
   }
+      if(prevEl.tagName === "B") {
+        prevEl.maxLength = 30;
+        let filteredText = prevEl.innerText.replace(/[^a-z_-]/g, '');
+        if (filteredText.length > prevEl.maxLength) {
+          filteredText = filteredText.slice(0, prevEl.maxLength);
+        }
+        if (prevEl.innerText !== filteredText) {
+    prevEl.innerText = filteredText;
 
+    //  Restore the cursor safely so it doesn't jump to the beginning
+    if (prevEl.firstChild) {
+      const range = document.createRange();
+      // Ensure the cursor offset doesn't exceed the new text length
+      const newOffset = Math.min(originalOffset, filteredText.length);
+      
+      range.setStart(editableP.firstChild, newOffset);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+      }
+      }
+      
+  else{
   // Block further typing if the current length meets or exceeds the max limit
   if (text.length > prevEl.maxLength) {
     const selection = window.getSelection();
@@ -256,6 +278,7 @@ async function editInfo(el, i){
       selection.addRange(range);
     }
     
+  }
   }
 });
 
