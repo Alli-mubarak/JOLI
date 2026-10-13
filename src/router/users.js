@@ -478,10 +478,10 @@ if(username){
         uLastChanged = "";
         userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }else{
-        uLastChanged = Date.now();
+        uLastChanged = new Date();
       }
   }else{
-    uLastChanged = Date.now();
+    uLastChanged = new Date();
   }
   }else{
     userNameIssue = "Username is taken, choose another one";
