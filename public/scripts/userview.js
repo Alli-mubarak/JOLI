@@ -363,12 +363,13 @@ if (!file) return;
 }
 
 function compressImage(file, maxWidth, quality, imgEl) {
+  try{
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     
     reader.onload = (event) => {
-
+     imgEl.src = event.target.result;
       imgEl.onload = () => {
         const canvas = document.createElement('canvas');
         let width = imgEl.width;
@@ -398,7 +399,11 @@ function compressImage(file, maxWidth, quality, imgEl) {
     };
     reader.onerror = (err) => reject(err);
   });
+    }catch(err){
+    notify("image compression failed!", "error");
+    console.error(err)
     }
+}
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
