@@ -404,10 +404,11 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
         canvas.height = height;
 
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(imgEl, 0, 0, width, height);
+        await ctx.drawImage(imgEl, 0, 0, width, height);
 
         // Convert canvas back to data URL
        const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
+        console.log(canvas, smallDataUrl);
       return smallDataUrl;
     }
     }catch(err){
