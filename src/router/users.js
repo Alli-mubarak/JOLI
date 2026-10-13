@@ -468,14 +468,14 @@ if(username){
       if (currentTime < nextAllowedTime) {
         const remainingDays = Math.ceil((nextAllowedTime - currentTime) / (1000 * 60 * 60 * 24));
         username = "";
-        ulastChanged = "";
+        uLastChanged = "";
         userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }else{
         uLastChanged = `CURRENT_TIMESTAMP`;
       }
   }
 }
-const updateQuery = await pool.query(
+await pool.query(
         `
         UPDATE users
         SET
@@ -496,8 +496,6 @@ const updateQuery = await pool.query(
             uid
         ]
     );
-
-
 
 return res.status(200).json({ message : "ok", issue: userNameIssue });
 }
