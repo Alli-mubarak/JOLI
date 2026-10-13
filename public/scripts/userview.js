@@ -31,7 +31,10 @@ let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
 let inViewMode = false;
 let isFriend = false;
-let newBanner, newPic, newUsername, newBio;
+let newBanner = "";
+let newPic = "";
+let newUsername = "";
+let newBio = "";
 
 if(userAction.textContent.trim() === "Unfriend") {
   userAction.style.background = "pink";
@@ -199,8 +202,8 @@ async function editProfile(btn){
 async function saveEdit(btn){
  try{
      
-   btn.innerHTML = `<i class="fa-solid fa-check"></i><div class="roll"></div>`;
-   
+   btn.innerHTML += `<div class="roll"></div>`;
+   console.log(newBanner, newPic, newUsername, newBio)
    if(!newBanner && !newPic && !newUsername && newBio){
    const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
@@ -222,8 +225,10 @@ const pTitle = document.querySelector(".p-title");
   userNameEl.firstElementChild.removeAttribute("contenteditable", true);
   bioEl.firstElementChild.removeAttribute("contenteditable", true);
   btn.onclick = () => {editProfile(btn)}
+     return;
    }else{
      const uid = userDetails.getAttribute("data-user");
+     
      const changes = {
     banner: newBanner,
     pPic : newPic,
