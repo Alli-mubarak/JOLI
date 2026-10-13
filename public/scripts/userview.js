@@ -228,7 +228,7 @@ async function editInfo(el, i){
   try{
     
     const parent = el.currentTarget.parentElement;
-    const prevEl = el.currentTarget.previousElementSibling;
+    let prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
       if(i.classList.contains('fa-pencil')){
       i.classList.remove("fa-pencil");
@@ -316,12 +316,12 @@ prevEl.addEventListener('paste', (e) => {
     }
       return 
     }
-    
+    prevEl = parent.previousElementSibling;
     if(prevEl.tagName === "IMG"){
       alert(prevEl);
       return 
     }
-   const pPrevEl = el.currentTarget.previousElementSibling.previousElementSibling;
+   const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl.tagName === "IMG"){
       alert(pPrevEl);
       return 
