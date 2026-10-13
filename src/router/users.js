@@ -404,10 +404,95 @@ if(!uid || uid !== req.user.id ){
 if(!banner && !pPic && !username && !bio){
   return res.status(404).json({ error: 'No changes to make!' });
 }
-if(banner){}
-if(pPic){}
-if(username){}
-if(bio){}
+
+ const existing = await pool.query(
+    "SELECT * FROM users WHERE id = $1",
+    [uid]
+   );
+  if (existing.rows.length == 0) {
+   return res.status(404).json({ error: 'user not found!' });
+  }
+const userToUpdate = existing.rows[0];
+const bannerPic = userToUpdate.cover_photo
+const userPic = userToUpdate.profile_picture
+const eUsername = userToUpdate.username
+const eBio = userToUpdate.bio
+  
+if(banner){
+  // Send the base64 string directly to Cloudinary
+    const cloudinaryResponse = await cloudinary.uploader.upload(imageStr, {
+      folder: 'users_cover_photos',
+    })
+    .catch((error) => {
+           console.log(error);
+       });
+    
+    const optimizedImageUrl = cloudinary.url(cloudinaryResponse.public_id, {
+      // --- PASTE YOUR CLOUDINARY OPTIMIZATION CODES HERE ---
+      fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
+      quality: 'auto',            // q_auto: Compresses file size without losing visual quality
+      width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
+      crop: 'limit',              // was massive, saving your free tier bandwidth
+      secure: true
+    });
+  banner = optimizedImageUrl;
+}
+if(pPic){
+  // Send the base64 string directly to Cloudinary
+    const cloudinaryResponse = await cloudinary.uploader.upload(imageStr, {
+      folder: 'users_profile_pictures',
+    })
+    .catch((error) => {
+           console.log(error);
+       });
+    
+    const optimizedPicUrl = cloudinary.url(cloudinaryResponse.public_id, {
+      // --- PASTE YOUR CLOUDINARY OPTIMIZATION CODES HERE ---
+      fetch_format: 'auto',       // f_auto: Serves WebP to Chrome, AVIF to iOS automatically
+      quality: 'auto',            // q_auto: Compresses file size without losing visual quality
+      width: 500,                 // c_limit,w_600: Resizes down if the user's canvas crop 
+      crop: 'limit',              // was massive, saving your free tier bandwidth
+      secure: true
+    });
+  pPic = optimizedPicUrl;
+}
+let userNameIssue;
+if(username){
+  if (userToUpdate.last_username_change_at) {
+      const SIXTY_DAYS_IN_MS = 60 * 24 * 60 * 60 * 1000;
+      const lastChangeTime = new Date(userToUpdate.last_username_change_at).getTime();
+      const nextAllowedTime = lastChangeTime + SIXTY_DAYS_IN_MS;
+      const currentTime = Date.now();
+    
+      // BLOCK execution if current time is before the cooldown expiry
+      if (currentTime < nextAllowedTime) {
+        const remainingDays = Math.ceil((nextAllowedTime - currentTime) / (1000 * 60 * 60 * 24));
+        username = "";
+          userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
+      }
+  }
+}
+const updateQuery = await pool.query(
+        `
+        UPDATE users
+        SET
+            username = $1,
+            cover_photo = $2,
+            profile_picture = $3,
+            bio = $4,
+            last_username_change_at = 5,
+            last_login_at = CURRENT_TIMESTAMP
+        WHERE id = $5
+        `,
+        [
+            username || eUsername,
+            banner || bannerPic  ,
+            pPic || userPic,
+            bio || eBio,
+           userToUpdate.last_username_change_at || NOW(),
+            uid
+        ]
+    );
 
 
 
