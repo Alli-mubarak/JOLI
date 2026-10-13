@@ -200,12 +200,7 @@ async function saveEdit(btn){
  try{
      
    btn.innerHTML = `<i class="fa-solid fa-circle-notch roll"></i>`;
-   if(!newBanner && !newPic && !newUsername && !newBio){
-   const uMenu = document.getElementById("u-menu");
-   uMenu.classList.remove("hidden");
-   uMenu.onclick = () =>{showMenu()}
-btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
-const userInfo = document.querySelector(".user-info");
+   const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
    const userppEl = document.getElementById("user-pp")
    const userNameEl = document.querySelector(".username");
@@ -215,14 +210,20 @@ const pTitle = document.querySelector(".p-title");
    userppEl.lastElementChild.remove();
    userNameEl.lastElementChild.remove();
    bioEl.lastElementChild.remove();
-   pTitle.classList.remove("hidden");
-  userInfo.classList.remove("user-info-in-edit");
-  postsContainer.classList.remove("hidden");
   userNameEl.firstElementChild.removeAttribute("contenteditable", true);
   bioEl.firstElementChild.removeAttribute("contenteditable", true);
+   
+if(!newBanner && !newPic && !newUsername && !newBio){
+   const uMenu = document.getElementById("u-menu");
+   uMenu.classList.remove("hidden");
+   uMenu.onclick = () =>{showMenu()}
+ btn.innerHTML = `<i class="fa-solid fa-pencil action-btn"></i>`;
+ userInfo.classList.remove("user-info-in-edit");
+  postsContainer.classList.remove("hidden");
+ pTitle.classList.remove("hidden");
   btn.onclick = () => {editProfile(btn)}
      return;
-   }else{
+}else{
      const uid = userDetails.getAttribute("data-user");
      
      const changes = {
@@ -240,8 +241,8 @@ const pTitle = document.querySelector(".p-title");
     },
     body: JSON.stringify(changes)
   });
-  //   const result = await response.json();
-     console.log("else loaded");
+    const result = await response.json();
+     console.log(result);
    }
    
  }
