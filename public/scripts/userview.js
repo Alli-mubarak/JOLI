@@ -318,12 +318,12 @@ prevEl.addEventListener('paste', (e) => {
     }
     prevEl = parent.parentElement.previousElementSibling;
     if(prevEl.tagName === "IMG"){
-      alert(prevEl);
+      processImg('pp-upload',prevEl);
       return 
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl.tagName === "IMG"){
-      alert(pPrevEl);
+      processImg('b-upload',pPrevEl);
       return 
     }
   }
@@ -332,6 +332,34 @@ prevEl.addEventListener('paste', (e) => {
     console.error(err);
   }
 }
+
+async function processImg(inputEl, imgEl){
+  try{
+  const inputTag = document.getElementById(`${inputEl}`);
+  inputTag.onchange = (e) =>{
+  const file = e.target.files[0];
+
+  //  Make sure the user actually selected a file
+  if (file) {
+    // Create a temporary local URL pointing to the file object
+    const objectURL = URL.createObjectURL(file);
+
+    //  Update the image UI and make it visible
+    imageEl.src = objectURL;
+    
+
+    // OPTIONAL CLEANUP: Free up memory when the image finishes loading
+    imageEl.onload = () => {
+      URL.revokeObjectURL(objectURL);
+    };
+   }
+  }
+  }catch(e){
+    console.error(e);
+    notify("error uploading image", "error");
+  }
+}
+
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
