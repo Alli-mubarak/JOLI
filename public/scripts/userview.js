@@ -254,8 +254,8 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   btn.onclick = () => {editProfile(btn)}
   if(result.issue) alert(result.issue);
     
-  if(username){
-  window.location.href = `/user/${username}`
+  if(newUsername && !result.issue){
+  window.location.href = `/user/${newUsername}`
   }else{location.reload}
    }
   
