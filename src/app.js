@@ -198,7 +198,7 @@ app.get('/api/search', async (req, res) => {
     
     // 2. Search Posts (ordered by relevancy ranking)
     const postQuery = `
-      SELECT id, content, created_at, user_id, media_urls, ts_rank(to_tsvector('english', content), to_tsquery('english', $1)) as rank
+      SELECT id, like_count, post_type, content, created_at, user_id, media_urls, ts_rank(to_tsvector('english', content), to_tsquery('english', $1)) as rank
       FROM posts 
       WHERE to_tsvector('english', content) @@ to_tsquery('english', $1)
       ORDER BY rank DESC
