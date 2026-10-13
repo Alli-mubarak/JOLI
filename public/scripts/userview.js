@@ -366,9 +366,8 @@ if (!file) return;
   }
 }
 
-function compressImage(file, maxWidth, quality, imgEl) {
+async function compressImage(file, maxWidth, quality, imgEl) {
   try{
-  return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     
@@ -391,18 +390,16 @@ function compressImage(file, maxWidth, quality, imgEl) {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(imgEl, 0, 0, width, height);
 
-        // Convert canvas back to a binary Blob (JPEG or WebP offer great compression)
-        canvas.toBlob((blob) => {
-          if (blob) {
-            resolve(blob);
-          } else {
-            reject(new Error("Canvas compression failed"));
-          }
-        }, 'image/jpeg', quality);
+        // Convert canvas back to data URL
+       return canvas.toDataURL('image/jpeg', quality);
+      
+    }
+        
       };
-    };
-    reader.onerror = (err) => reject(err);
-  });
+    
+    reader.onerror = (err) => {
+      return console.error(err);
+    }
     }catch(err){
     notify("image compression failed!", "error");
     console.error(err)
