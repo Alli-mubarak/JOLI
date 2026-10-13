@@ -258,7 +258,7 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   window.location.href = `/user/${newUsername}`
   }else{
     document.getElementById("u-name").innerHTML = uName;
-    location.reload
+    location.reload();
   }
    }
   
