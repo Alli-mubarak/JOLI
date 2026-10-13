@@ -479,6 +479,8 @@ if(username){
       }else{
         uLastChanged = `CURRENT_TIMESTAMP`;
       }
+  }else{
+    uLastChanged = `CURRENT_TIMESTAMP`;
   }
   }else{
     userNameIssue = "Username is taken, choose another one";
