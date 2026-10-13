@@ -256,7 +256,10 @@ if(!newBanner && !newPic && !newUsername && !newBio){
     
   if(newUsername && !result.issue){
   window.location.href = `/user/${newUsername}`
-  }else{location.reload}
+  }else{
+    document.getElementById("u-name").innerHTML = uName;
+    location.reload
+  }
    }
   
 else{
