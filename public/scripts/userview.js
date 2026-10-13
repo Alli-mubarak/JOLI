@@ -359,9 +359,7 @@ const reader = new FileReader();
     const rawDataUrl = e.target.result; 
 
     try {
-       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
-      picData = compressedDataUrl
-      console.log(picData)
+       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl, picData);
     } catch (error) {
       console.error("Upload process broke down:", error);
     }
@@ -380,10 +378,10 @@ const reader = new FileReader();
   }
 }
 
-async function compressDataUrl(file, maxWidth, quality, imgEl) {
+async function compressDataUrl(file, maxWidth, quality, imgEl, vrb) {
   try{
      imgEl.src = file;
-     let smallDataUrl;
+    
       imgEl.onload = async() => {
         const canvas = document.createElement('canvas');
         let width = imgEl.width;
@@ -402,10 +400,11 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
         await ctx.drawImage(imgEl, 0, 0, width, height);
 
         // Convert canvas back to data URL
-       smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
+       const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
+        vrb = smallDatUrl
+        console.log(newBanner, newPic);
     }
-    console.log(smallDataUrl);
-    return smallDataUrl;
+    
     }catch(err){
     notify("image compression failed!", "error");
     console.error(err)
