@@ -244,8 +244,8 @@ const pTitle = document.querySelector(".p-title");
     },
     body: JSON.stringify(changes)
   });
-     const result = await response.json();
-     console.log(result);
+  //   const result = await response.json();
+     console.log("else loaded");
    }
    
  }
