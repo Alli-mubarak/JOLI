@@ -8,6 +8,10 @@ position: relative;
 header{
   margin-bottom: 30px;
 }
+header img{
+  object-fit: cover;
+  object-position: center;
+}
 header marquee{
   position: absolute;
   width:100%;
