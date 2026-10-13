@@ -476,7 +476,7 @@ if(username){
         const remainingDays = Math.ceil((nextAllowedTime - currentTime) / (1000 * 60 * 60 * 24));
         username = "";
         uLastChanged = "";
-        userNameIssue = `You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
+        userNameIssue = `Username change failed!. You can change your username again in ${remainingDays} days (on ${new Date(nextAllowedTime).toLocaleDateString()}).`
       }else{
         uLastChanged = new Date();
       }
