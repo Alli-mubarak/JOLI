@@ -329,17 +329,11 @@ prevEl.addEventListener('paste', (e) => {
     }
     prevEl = parent.parentElement.previousElementSibling;
     if(prevEl && prevEl.tagName === "IMG"){
-      const newpp = await processImg('pp-upload',prevEl);
-      console.log(newpp)
-      console.log(1)
-      newPic = newpp
+    processImg('pp-upload',prevEl, newPic);
     }
    const pPrevEl = prevEl.previousElementSibling;
     if(pPrevEl && pPrevEl.tagName === "IMG"){
-      const newb = await processImg('b-upload',pPrevEl);
-      console.log(newb)
-      console.log(1)
-      newBanner = newb
+      processImg('b-upload',pPrevEl, newBanner);
     }
   }
   catch(err){
@@ -348,7 +342,7 @@ prevEl.addEventListener('paste', (e) => {
   }
 }
 
-async function processImg(inputEl, imgEl){
+async function processImg(inputEl, imgEl, picData){
   try{
     let compressedDataUrl;
   const inputTag = document.getElementById(`${inputEl}`);
@@ -366,8 +360,8 @@ const reader = new FileReader();
 
     try {
        compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
-      console.log(compressedDataUrl)
-        console.log(2)
+      picData = compressedDataUrl
+      console.log(picData)
     } catch (error) {
       console.error("Upload process broke down:", error);
     }
@@ -388,7 +382,6 @@ const reader = new FileReader();
 
 async function compressDataUrl(file, maxWidth, quality, imgEl) {
   try{
-    
      imgEl.src = file;
      let smallDataUrl;
       imgEl.onload = async() => {
@@ -410,9 +403,9 @@ async function compressDataUrl(file, maxWidth, quality, imgEl) {
 
         // Convert canvas back to data URL
        smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
-       console.log(3)
     }
-    return smallDatUrl;
+    console.log(smallDataUrl);
+    return smallDataUrl;
     }catch(err){
     notify("image compression failed!", "error");
     console.error(err)
