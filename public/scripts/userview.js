@@ -345,18 +345,18 @@ async function processImg(inputEl, imgEl){
     const objectURL = URL.createObjectURL(file);
 
     //  Update the image UI and make it visible
-    imageEl.src = objectURL;
+    imgEl.src = objectURL;
     
 
     // OPTIONAL CLEANUP: Free up memory when the image finishes loading
-    imageEl.onload = () => {
+    imgEl.onload = () => {
       URL.revokeObjectURL(objectURL);
     };
    }
   }
   }catch(e){
-    console.error(e);
     notify("error uploading image", "error");
+    console.error(e);
   }
 }
 
