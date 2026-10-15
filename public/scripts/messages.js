@@ -85,11 +85,8 @@ function linkify(text) {
 
 async function getConversations(){
   try{
-    if(!isAuthorised){
-      const mainTag = document.querySelector("main");
-      mainTag.innerHTML = `<p class="def-msg" style="text-align:center; margin-top:50px;">Create an account or sign in to view messages</p>`;
-      return;
-    }
+    if(!isAuthorised) return;
+
   const response = await fetch('/api/conversation/user/conversations');
         if (response.ok) {
           const data = await response.json();
@@ -116,7 +113,11 @@ async function getConversations(){
   }
 
 async function getFriends(){
-  if(!isAuthorised) return;
+  if(!isAuthorised){
+      const mainTag = document.querySelector("main");
+      mainTag.innerHTML = `<p class="def-msg" style="text-align:center; margin-top:50px;">Create an account or sign in to view messages</p>`;
+      return;
+  }
   
   try {
        
