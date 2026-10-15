@@ -165,6 +165,7 @@ return `${Math.floor(sDifference)}s`;
         </div>
         </div>
     </section>
+
 <div id="media-viewer" class="hidden">
         <button id="mv-closer">
           <i class="fa-solid fa-xmark"></i>
@@ -180,6 +181,7 @@ return `${Math.floor(sDifference)}s`;
         </div>
         <div id="media-counter"></div>
    </div>
+
 <div id="notifier" class="hidden">
         <p id="n-message">user message</p>
         <a href="#" id="n-link">view action</a>
@@ -187,6 +189,19 @@ return `${Math.floor(sDifference)}s`;
           <i class="fa-solid fa-xmark"></i>
         </span>
   </div>
+
+<div id="img-cropper" class="hidden">
+        
+        <div id="c-btns">
+             <button id="cd-btn"><i class="fa-solid fa-check"></i></button>
+              <button id="cc-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="crop-box">
+            <img src="" id="s-pic" alt="image to crop" />
+          <div id="cropper"></div>
+        </div>
+   
+    </div>
 
   <div id="user-menu-container">
         <div id="p-closer-space"></div>
@@ -199,6 +214,13 @@ return `${Math.floor(sDifference)}s`;
         <button id="share-post-btn"><i class="fa-solid fa-share"></i> Share post</button>
         </div>
   </div>
+
+ <section id="alert-box-container">
+    <div id="alert-box">
+        <p id="issue">You can't do this now</p>
+        <button id="ok-btn">ok</button></button>
+     </div>
+  </section>
 
 <section id="confirm-box-container" class="hidden">
        <div id="confirm-box">
