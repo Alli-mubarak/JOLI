@@ -50,7 +50,6 @@ const initDb = async (pool) => {
     profile_picture TEXT,
     cover_photo TEXT,
     website VARCHAR(255),
-    location VARCHAR(100),
     date_of_birth DATE,
     gender VARCHAR(20),
     role VARCHAR(20) NOT NULL DEFAULT 'user'
@@ -59,11 +58,7 @@ const initDb = async (pool) => {
             'moderator',
             'admin'
         )),
-    followers_count INTEGER NOT NULL DEFAULT 0,
-    following_count INTEGER NOT NULL DEFAULT 0,
-    posts_count INTEGER NOT NULL DEFAULT 0,
         preferences JSONB NOT NULL DEFAULT '{}'::jsonb,
-        posts JSONB NOT NULL DEFAULT '{}'::jsonb,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL,
         last_login_at TIMESTAMP WITH TIME ZONE,
