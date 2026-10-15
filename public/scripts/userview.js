@@ -53,7 +53,10 @@ if(userAction.textContent.trim() === "Unfriend") {
 }else if(userAction.textContent.includes("Add")) {
  userAction.onclick = () =>{
   try{
-    if(!isAuthorised) return 
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+      }
    if(!userAction.textContent.includes("Add")) return;
     isFriend = false;
    const uid = userDetails.getAttribute("data-user");
@@ -198,7 +201,10 @@ async function editProfile(btn){
 
 async function saveEdit(btn){
  try{
-     
+     if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+     }
    btn.innerHTML = `<i class="fa-solid fa-circle-notch roll"></i>`;
    const userInfo = document.querySelector(".user-info");
    const bannerEl = document.querySelector(".banner");
@@ -278,6 +284,10 @@ else{
 
 async function editInfo(el, i){
   try{
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+    }
     const parent = el.currentTarget.parentElement;
     let prevEl = el.currentTarget.previousElementSibling;
     if(parent.tagName === "P"){
@@ -633,6 +643,10 @@ async function showMenu(){
     if(rBtn){
     rBtn.onclick = () =>{
       try{
+        if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+        }
         confirmAction("report this account", ()=>{
         notify("feature is coming soon", "error");
          postMenuCloser.style.background = "transparent";
@@ -668,6 +682,10 @@ async function showMenu(){
     if(delBtn){
       delBtn.onclick = () =>{
      try{
+       if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+       }
         confirmAction("delete your account", ()=>{
         notify("feature is coming soon", "error");
          postMenuCloser.style.background = "transparent";
@@ -870,6 +888,10 @@ function viewPostMenu(e){
     
     if(saveBtn){
       saveBtn.onclick = () =>{
+        if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+        }
        notify("post saving is coming soon!");
         postMenuCloser.style.background = "transparent";
     
@@ -882,15 +904,24 @@ function viewPostMenu(e){
     
     if(delBtn){
       delBtn.onclick = () =>{
-     if(confirm("Are you sure you want to delete this post?")){
-      deletePost(postId);
+        try{
+        if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
       }
-        postMenuCloser.style.background = "transparent";
+     
+       confirmAction("delete this post", ()=>{
+        deletePost(postId);
+         postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
       userMenuContainer.style.bottom = "-100vh";
       },200);
-     enableScrolling();
+        });
+        }catch(err){
+          notify("error deleting post", "error");
+          console.error(err);
+        }
       }
       }
     
@@ -937,6 +968,10 @@ Array.from(shareIcons).forEach(si => {
 
 async function deletePost(postId){
   try{
+    if(!isAuthorised){
+        notify("please, log in first!", "error", "click here", "/");
+        return;
+    }
     const currPost = document.getElementById(`${postId}`);
     currPost.style.background = "#ffeeee";
     
