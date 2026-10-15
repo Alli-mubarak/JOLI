@@ -196,7 +196,11 @@ return `${Math.floor(sDifference)}s`;
 <script>
 const backBtn = document.getElementById("return-btn");
 backBtn.onclick = () =>{
-history.back();
+if (window.history.length > 1) {
+    window.history.back();
+} else {
+      window.location.href = '/'; 
+    }
 }
 </script>
 
