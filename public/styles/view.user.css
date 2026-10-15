@@ -778,11 +778,11 @@ header button:hover {
         }
         #cropper::before{
             width: 4px;
-            height: 50%;
+            height: 30%;
             background: #2bff43;
             content:"";
             position: absolute;
-            top: 25%; left: calc(50% - 2px);
+            top: 35%; left: calc(50% - 2px);
             border-radius: 5px;
             box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
         }
