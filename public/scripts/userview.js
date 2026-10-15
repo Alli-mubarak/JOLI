@@ -277,7 +277,7 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   window.location.href = `/user/${newUsername}`
   }else{
     document.getElementById("u-name").innerHTML = uName;
-    location.reload();
+    showAlert(result.issue);
   }
    }
   
@@ -556,12 +556,15 @@ okBtn.onclick = () =>{
     alertBox.classList.add("hidden");
     issueEl.innerHTML = "";
     enableScrolling();
+  setTimeout(() =>{
+    location.reload()
+   },1000);
 }
   function showAlert(i){
     try{
     disableScrolling();
     issueEl.innerHTML = i
-    alertBox.classList.remove("hidden");
+    alertBox.classList.remove("hidden")
     }
     catch(err){
       notify("unable to show alert!", "error");
