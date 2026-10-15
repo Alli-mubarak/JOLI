@@ -271,18 +271,17 @@ if(!newBanner && !newPic && !newUsername && !newBio){
   postsContainer.classList.remove("hidden");
  pTitle.classList.remove("hidden");
   btn.onclick = () => {editProfile(btn)}
-  if(result.issue) alert(result.issue);
+  if(result.issue) showAlert(result.issue);
     
   if(newUsername && !result.issue){
   window.location.href = `/user/${newUsername}`
   }else{
     document.getElementById("u-name").innerHTML = uName;
-    showAlert(result.issue);
   }
    }
   
 else{
-  notify("error updating profile");
+  notify("error updating profile","error");
      return;
 }
    
