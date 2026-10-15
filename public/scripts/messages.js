@@ -85,6 +85,11 @@ function linkify(text) {
 
 async function getConversations(){
   try{
+    if(!isAuthorised){
+      const mainTag = document.querySelector("main");
+      mainTag.innerHTML = `<p class="def-msg" style="text-align:center; margin-top:50px;">Create an account or sign in to view messages</p>`;
+      return;
+    }
   const response = await fetch('/api/conversation/user/conversations');
         if (response.ok) {
           const data = await response.json();
@@ -242,6 +247,8 @@ cPic.onclick = () => {window.location.href = `/user/${fUsername}`}
 cUsername.onclick = () => {window.location.href = `/user/${fUsername}`}
 
 smBtn.onclick = (e) =>{
+  if(!isAuthorised) return
+  
   const btn = e.currentTarget;
   if(!show_friends){
   btn.innerHTML = `<div class="plus"></div> <div class="plus"></div>`
