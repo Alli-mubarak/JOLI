@@ -463,10 +463,9 @@ cropper.addEventListener('touchmove', (e) => {
   // Calculate new top
     newTop = initialTop + dy;
     let cbHeight = cBox.clientHeight;
-    let remT = cbHeight - cHeight
+    let remT = cbHeight - cropper.clientHeight
     
   // restrict cropper      
-  
   if(newTop < 0) newTop = 0;
  if(newTop > remT) {
      newTop = remT - 2 ;
