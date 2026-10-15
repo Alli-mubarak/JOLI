@@ -295,7 +295,7 @@ router.route('/v1/getPosts')
   .get(async(req, res)=>{
 console.log('posts fetched initially \n');
 try{
-const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 30');
+const result = await pool.query('SELECT * FROM posts ORDER BY created_at DESC LIMIT 15');
 const posts = result.rows
 for(let i = 0; i < posts.length; i++){
   let author = await fetchAuthorDetails(posts[i].user_id);
@@ -335,7 +335,7 @@ if(!time){
   return res.status(400).json({ error: 'a specific time is required' });
 }
 try{
-const result = await pool.query(`SELECT * FROM posts WHERE created_at < '${time}'::timestamptz ORDER BY created_at DESC LIMIT 30`);
+const result = await pool.query(`SELECT * FROM posts WHERE created_at < '${time}'::timestamptz ORDER BY created_at DESC LIMIT 15`);
 const posts = result.rows
 if(posts.length < 1){
   return res.status(404).json({ message: 'No more posts to fetch' });
