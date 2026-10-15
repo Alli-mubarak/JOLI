@@ -1,3 +1,4 @@
+
 const userDetails = document.getElementById("user-details");
 const userAction = document.getElementById("user-action");
 const userMenu = document.getElementById("u-menu");
@@ -26,6 +27,18 @@ const cbContainer = document.getElementById("confirm-box-container");
 const noConfirmBtn = document.getElementById("no-btn");
 const confirmBtn = document.getElementById("yes-btn");
 const postsContainer = document.querySelector(".other-info");
+const alertBox = document.getElementById("alert-box");
+      const issueEl = document.getElementById("issue");
+      const okBtn = document.getElementById("ok-btn");
+      const cropperBox = document.getElementById("img-cropper");
+      const cBox = document.getElementById("crop-box");
+      const sPic = document.getElementById("s-pic");
+      const cdBtn = document.getElementById("cd-btn");
+      const ccBtn = document.getElementById("cc-btn");
+      const cropper = document.getElementById("cropper");
+      let isDragging, startY,cWidth, cHeight, currImgEl
+      let initialTop = 0;
+      let newTop = 0;
 let isAuthorised = false;
 let scrollPosition = 0;
 let currentUserId, imgArray, currIndex, userPic, userName, postCard;
@@ -404,70 +417,125 @@ async function processImg(inputEl, imgEl){
   try{
     let compressedDataUrl;
   const inputTag = document.getElementById(`${inputEl}`);
+    
   inputTag.onchange = async(e) =>{
-  const file = e.target.files[0];
-if (!file) return;
-  //  Make sure the user actually selected a file
-const reader = new FileReader();
-  
-  reader.readAsDataURL(file);
-
-  reader.onload = async (e) => {
-    // This is your raw Base64 Data URL string
-    const rawDataUrl = e.target.result; 
-
-    try {
-       compressedDataUrl = await compressDataUrl(rawDataUrl, 1200, 0.8, imgEl);
-    } catch (error) {
-      console.error("Upload process broke down:", error);
-    }
-  
-  }
+  const img = e.target.files[0];
+      if (!img) return;
+      const reader = new FileReader();
+      
+      reader.onload = async(event) =>{
+        sPic.src = event.target.result;
+       await cropperBox.classList.remove("hidden");
+        if(imgEl.func === "pp") cropper.style.aspectRatio = "1/1";
+      if(imgEl.func === "b") cropper.style.aspectRatio = "3/1";
+       cWidth = cropper.clientWidth;
+       cHeight = cropper.clientHeight;
+        currImgEl = imgEl;
+      };
+      reader.readAsDataURL(img); 
     reader.onerror = (err) => {
       notify("error reading file", "error");
       console.error(err)
       return;
     }
   }
-    return compressedDataUrl;
   }catch(e){
     notify("error uploading image", "error");
     console.error(e);
   }
 }
 
-async function compressDataUrl(file, maxWidth, quality, imgEl) {
+cropper.addEventListener('touchstart', (e) => {
+ 
+  isDragging = true;
+  startY = e.touches[0].clientY;
+  // Prevent mobile screen from scrolling while dragging the box
+  e.preventDefault();
+}, { passive: false });
+
+
+cropper.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  
+ 
+  const dy = e.touches[0].clientY - startY;
+  
+  // Calculate new top
+    newTop = initialTop + dy;
+    let cbHeight = cBox.clientHeight;
+    let remT = cbHeight - cHeight
+    
+  // restrict cropper      
+  
+  if(newTop < 0) newTop = 0;
+ if(newTop > remT) {
+     newTop = remT - 2 ;
+ }
+ // set style
+  cropper.style.top = newTop + "px";
+  
+  e.preventDefault();
+}, { passive: false });
+
+ cropper.addEventListener('touchend', (e) => {
+  if(isDragging){
+ initialTop = newTop;
+ }
+ isDragging = false;
+ 
+});
+
+cdBtn.onclick = () => {
+    savePic(currImgEl)
+}
+
+ccBtn.onclick = () => {
   try{
-     imgEl.src = file;
-    
-      imgEl.onload = async() => {
-        const canvas = document.createElement('canvas');
-        let width = imgEl.naturalWidth;
-        let height = imgEl.naturalHeight;
-
-        // Calculate proportional scale dimensions
-        if (width > maxWidth) {
-          height = Math.round((height * maxWidth) / width);
-          width = maxWidth;
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-        await ctx.drawImage(imgEl, 0, 0, width, height);
-
-        // Convert canvas back to data URL
-       const smallDataUrl = await canvas.toDataURL('image/jpeg', quality);
-      if(imgEl.func === "pp") newPic = smallDataUrl
-      if(imgEl.func === "b") newBanner = smallDataUrl
-    }
-    
-    }catch(err){
-    notify("image compression failed!", "error");
+    cropperBox.classList.add("hidden");
+    sPic.src = "";
+    mInput.value = "";
+    cropper.style.top = 0;
+    console.log("cropping cancelled");
+  currImgEl = "";
+  }catch(err){
     console.error(err)
+  }
+}
+
+async function savePic(el){
+    try{
+      if(!currImgEl){
+        notify("No image to crop!", "error");
+        return;
+      }
+    const canvas = document.createElement("canvas");
+    canvas.width= cropper.clientWidth;
+    canvas.height = cropper.clientHeight;
+    const ctx = canvas.getContext('2d');
+    const rect = cropper.getBoundingClientRect();
+    const imgRect = cBox.getBoundingClientRect();
+    const scaleX = sPic.naturalWidth / imgRect.width;
+     const scaleY = sPic.naturalHeight / imgRect.height;
+    const cropX = 0 * scaleX;
+     const cropY = newTop * scaleY;
+      const cropWidth = rect.width * scaleX;
+       const cropHeight = rect.height * scaleY;
+       
+    await ctx.drawImage(sPic,cropX, cropY, cropWidth, cropHeight,  0, 0,cropper.clientWidth, cropper.clientHeight);
+     const smallDataUrl = await canvas.toDataURL('image/jpeg', 0.8);
+     el.src = smallDataUrl;
+     if(el.func === "pp") newPic = smallDataUrl
+      if(el.func === "b") newBanner = smallDataUrl
+    cropperBox.classList.add("hidden");
+    sPic.src = "";
+    cropper.style.top = 0
+    }
+    catch(err){
+      notify("image cropping failed!", "error");
+        console.error(err);
     }
 }
+
 
 // confirm box function 
 noConfirmBtn.onclick = () =>{
@@ -486,7 +554,22 @@ noConfirmBtn.onclick = () =>{
     cbContainer.action();
     enableScrolling();
       }
-      
+okBtn.onclick = () =>{
+    alertBox.classList.add("hidden");
+    issueEl.innerHTML = "";
+    enableScrolling();
+}
+  function showAlert(i){
+    try{
+    disableScrolling();
+    issueEl.innerHTML = i
+    alertBox.classList.remove("hidden");
+    }
+    catch(err){
+      notify("unable to show alert!", "error");
+      console.error(err);
+    }
+  }
    function confirmAction(a, action){
      disableScrolling();
     cbContainer.action = action
