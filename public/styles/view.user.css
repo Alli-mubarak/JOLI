@@ -726,7 +726,77 @@ header button:hover {
           transform: rotate(360deg);
          }
        }
-#confirm-box-container{
+#img-cropper{
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top:0; left:0;
+            padding: 10px;
+            z-index: 100;
+            background: rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+        #c-btns{
+            display: flex;
+            align-items: center;
+            justify-content:space-between;
+            width:100%;
+            padding: 5px;
+        }
+        #c-btns button {
+            cursor: pointer;
+            padding: 10px;
+            font-size:1.1rem;
+            border-radius: 8px;
+            border: none;
+        }
+        #crop-box{
+            margin: 20px auto 0;
+            background: #fff;
+            width: fit-content;
+            position: relative;
+            overflow: hidden;
+        }
+        #crop-box img{
+           max-height: 80vh;
+            width: auto;
+            height: auto;
+            max-width: 80vw;
+        }
+        #cropper{
+            width: 100%;
+            aspect-ratio: 3 / 1;
+            height: auto;        
+            overflow: hidden; 
+            background: transparent;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top:0;
+            left:0;
+            border: 2px dashed #2bff43;
+            cursor: move;
+        }
+        #cropper::before{
+            width: 4px;
+            height: 50%;
+            background: #2bff43;
+            content:"";
+            position: absolute;
+            top: 25%; left: calc(50% - 2px);
+            border-radius: 5px;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+        }
+        #cropper::after{
+            height: 4px;
+            width: 20%;
+            background: #2bff43;
+            content:"";
+            position: absolute;
+            left: 40%; top: calc(50% - 2px);
+            border-radius: 5px;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
+              }
+#confirm-box-container, #alert-box-container{
            position: fixed;
            background: rgba(0,0,0,0.7);
            width: 100%;
@@ -738,7 +808,7 @@ header button:hover {
            justify-content: center;
            z-index:100;
        }
-       #confirm-box{
+       #confirm-box, #alert-box{
           min-width: 300px;
            max-width: 80vw;
            background: #fff;
@@ -748,7 +818,7 @@ header button:hover {
            width: fit-content;
            border: inset 2px #2bff43;
        }
-       #confirm-box p{
+       #confirm-box p, #alert-box p{
            width: 100%;
            font-size: 1.1rem;
            margin-bottom: 15px;
@@ -763,7 +833,7 @@ header button:hover {
            justify-content: end;
            gap: 12px;
        }
-       #c-action-btns button{
+       #c-action-btns button, #alert-box button{
            cursor: pointer;
            padding: 7px 15px;
            border-radius: 10px;
@@ -775,6 +845,11 @@ header button:hover {
            color : #fff;
            background: #333;
        }
-       #yes-btn{
+       #yes-btn, #ok-btn{
            background: #2bff43;
        }
+      #ok-btn{
+        margin-left: auto;
+        display: block;
+        width: fit-content;
+      }
