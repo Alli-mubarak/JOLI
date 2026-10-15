@@ -492,7 +492,6 @@ ccBtn.onclick = () => {
   try{
     cropperBox.classList.add("hidden");
     sPic.src = "";
-    mInput.value = "";
     cropper.style.top = 0;
     console.log("cropping cancelled");
   currImgEl = "";
