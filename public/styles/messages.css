@@ -371,8 +371,11 @@ main{
      font-size: 1rem;
      width: fit-content;
      font-weight: 600;
+     transition: all ease 0.4s;
    }
-  
+     #c-options button:hover{
+       background: #2bff43;
+     }
   #c-menu:hover #c-options{
     display: flex;
   }
