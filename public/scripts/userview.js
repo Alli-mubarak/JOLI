@@ -91,6 +91,8 @@ if(userAction.textContent.trim() === "Unfriend") {
  userAction.onclick = () =>{
  try{
    if(!isAuthorised) return 
+const uid = userDetails.getAttribute("data-user");
+if(currentUserId !== uid) return;
   if(!userAction.innerHTML.includes('fa-pencil')) return;
   editProfile(userAction);
  }
