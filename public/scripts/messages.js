@@ -653,7 +653,7 @@ socket = io({
 
 delMBtn.onclick = () => {
   try{
-    notify("deleting coming soon!");
+    alert("deleting coming soon!");
     console.log("trying to delete messages");
   }
   catch(err){
@@ -664,7 +664,7 @@ delMBtn.onclick = () => {
 
 clrCBtn.onclick = () => {
   try{
-    notify("clearing coming soon!");
+    alert("clearing coming soon!");
     console.log("trying to clear conversation");
   }
   catch(err){
