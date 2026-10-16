@@ -25,7 +25,7 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 const typingIndicator = document.getElementById("typing-indicator");
-const delMBtn = document.getElementById("dl-m");
+const delMBtn = document.getElementById("del-m");
 const clrCBtn = document.getElementById("cl-c");
 let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout, canSendMessage;
 let inViewMode = false;
