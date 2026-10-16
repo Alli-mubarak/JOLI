@@ -247,6 +247,7 @@ main{
   .name-pic img{
     width: 45px; height:45px;
     border-radius: 50%;
+    border: 2px solid #ddd;
     object-fit: cover;
     object-position: center;
   }
@@ -310,6 +311,7 @@ main{
   width: 40px;
   height:40px;
   border-radius: 50%;
+  border: 2px solid #ddd;
   border: 1px solid var(--primary-color);
   object-fit: cover;
   object-position: center;
