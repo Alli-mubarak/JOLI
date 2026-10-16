@@ -331,22 +331,45 @@ main{
 #c-menu:hover{
   background: #ddd;
 }
-#c-menu div{
+#c-menu .dot{
   position: absolute;
   width: 4px; height:4px;
   background: #222;
   left: 14px;
   border-radius: 20px;
 }
-#c-menu div:nth-child(1){
+#c-menu .dot:nth-child(1){
   top: 6px;
 }
-#c-menu div:nth-child(2){
+#c-menu .dot:nth-child(2){
   top: 14px;
 }
-#c-menu div:nth-child(3){
+#c-menu .dot:nth-child(3){
   top: 22px;
 }
+  #c-menu #c-options{
+  position: absolute;
+  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 5px;
+    background: #ddd;
+    padding: 5px;
+    border-radius: 8px;
+  right: 0; top: 101%;
+    width: fit-content;
+  }
+   #c-options button{
+     display: block;
+     padding: 5px 10px;
+     cursor: pointer;
+     border: none;
+     border-radius: 8px;
+     background: #bbb;
+     color:#222;
+     font-size: 1rem;
+   }
 #c-messages{
   height: calc(100dvh - 230px);
   padding: 10px;
