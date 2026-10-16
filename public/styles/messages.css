@@ -349,15 +349,15 @@ main{
 }
   #c-menu #c-options{
   position: absolute;
-  display: flex;
+  display: none;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     gap: 5px;
-    background: #ddd;
+    background: #eee;
     padding: 5px;
     border-radius: 8px;
-  right: 0; top: 101%;
+  right: 0; top: 110%;
     width: fit-content;
   }
    #c-options button{
@@ -366,10 +366,16 @@ main{
      cursor: pointer;
      border: none;
      border-radius: 8px;
-     background: #bbb;
+     background: #ddd;
      color:#222;
      font-size: 1rem;
+     width: 100%;
+     font-weight: 500;
    }
+  
+  #c-menu:hover #c-options{
+    display: flex;
+  }
 #c-messages{
   height: calc(100dvh - 230px);
   padding: 10px;
