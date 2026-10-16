@@ -357,7 +357,7 @@ main{
     background: #eee;
     padding: 5px;
     border-radius: 8px;
-  right: 0; top: 110%;
+  right: 0; top: 115%;
     width: fit-content;
   }
    #c-options button{
@@ -369,8 +369,8 @@ main{
      background: #ddd;
      color:#222;
      font-size: 1rem;
-     width: 100%;
-     font-weight: 500;
+     width: fit-content;
+     font-weight: 600;
    }
   
   #c-menu:hover #c-options{
