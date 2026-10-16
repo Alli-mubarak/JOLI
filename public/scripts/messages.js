@@ -25,6 +25,8 @@ const postMenu = document.getElementById("post-menu");
 let pmCloserBtn = document.getElementById("p-closer-btn");
 const postMenuCtrl = document.querySelector(".post-menu");
 const typingIndicator = document.getElementById("typing-indicator");
+const delMBtn = document.getElementById("dl-m");
+const clrCBtn = document.getElementById("cl-c");
 let imgArray, currIndex, show_friends, cFId, fPic, fUsername, socket, typingTimeout, canSendMessage;
 let inViewMode = false;
 let conversations = [];
@@ -645,6 +647,28 @@ socket = io({
   });
   }catch(err){
     notify("error starting chat socket", "error");
+    console.error(err);
+  }
+}
+
+delMBtn.onclick = () => {
+  try{
+    notify("deleting coming soon!");
+    console.log("trying to delete messages");
+  }
+  catch(err){
+    notify("deleting failed!", "error");
+    console.error(err);
+  }
+}
+
+clrCBtn.onclick = () => {
+  try{
+    notify("clearing coming soon!");
+    console.log("trying to clear conversation");
+  }
+  catch(err){
+    notify("clearing failed!", "error");
     console.error(err);
   }
 }
