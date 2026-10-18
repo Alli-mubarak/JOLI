@@ -106,9 +106,6 @@ element.style.position = "relative";
 element.innerHTML += bubble;
 }
 
-
-statContainer.classList.add("hidden");
-
 userPic.onclick = () =>{
       menuBox.style.left = "0";
       setTimeout(() =>{
