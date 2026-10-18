@@ -43,6 +43,51 @@ async function getFriendDetails(f, uid){
   }
 }
 
+async function notify(nType, fId, sId, sPic, sName){
+  try{
+  const newNotification = await pool.query(
+`
+INSERT INTO notifications 
+(
+    recepient_id,
+    actor_id,
+    type,
+    resource_id,
+    is_read,
+    actor_username,
+    actor_pic
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7
+)
+
+RETURNING *;
+`,
+[
+    fId,
+    sId,
+    nType,
+    null,
+    false,
+    sName,
+    sPic
+]);
+    return {success: "friend notified"}
+  }catch(err){
+    console.error(err);
+    return {error: "error creating notification"}
+  }
+}
+
+  
 router.post('/request', checkSession, async (req, res) => {
   try{
     if (!req.isAuthenticated() || !req.user){
@@ -60,6 +105,7 @@ router.post('/request', checkSession, async (req, res) => {
     if (senderId === parseInt(receiverId)) {
         return res.status(400).json({ error: "You cannot send a friend request to yourself." });
     }
+    
     const checkReceiver = await pool.query("SELECT * FROM users WHERE id = $1", [receiverId]);
     if (checkReceiver.rows.length === 0) {
             return res.status(403).json({ 
@@ -107,6 +153,9 @@ router.post('/request', checkSession, async (req, res) => {
         }
 
         // Success Response
+       
+        const isNotified = await notify("friendship", receiverId, senderId, req.user.profile_picture, req.user.username);
+      if(isNotified.success) console.log(isNotified)
         return res.status(201).json({ 
             message: "Friend request sent successfully.", 
             status: "pending" 
