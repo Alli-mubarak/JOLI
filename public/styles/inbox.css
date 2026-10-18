@@ -146,14 +146,21 @@ main{
   .n-card:before{
     content: '';
     position: absolute;
-    width: 10px; height:10px;
+    width: 6px; height:6px;
     border-radius: 50%;
     background: var(--primary-color);
-    left: 5px; top: 18px;
+    left: 6px; top: 25px;
   }
   .n-details{
     display: flex;
     align-items: start;
+    justify-content: start;
+    gap: 15px;
+  }
+  .u-msg{
+    display: flex;
+    align-items: start;
+    flex-direction:column;
     justify-content: start;
     gap: 15px;
   }
