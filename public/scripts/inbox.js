@@ -52,15 +52,21 @@ async function showNotification(n){
     }
     const htmlEl = `
     <div class="n-card" data-type=${n.type}>
+    <div class="n-details">
       <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
-      <div class="n-details">
+      
         <div class="n-f-details">
-          <p class="n-f-username">${n.actor_username}</p>
+          <p class="n-username">${n.actor_username}</p>
         </div>
         <div class="n-m-details">
-          <p>${msg}</p>
+          <p class="msg">${msg}</p>
           <small>${getReqTime(n.created_at)}</small>
         </div>
+      </div>
+      <div class="n-menu">
+       <div></div>
+       <div></div>
+       <div></div>
       </div>
     </div>
     `;
