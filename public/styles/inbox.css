@@ -162,7 +162,7 @@ main{
     align-items: start;
     flex-direction:column;
     justify-content: start;
-    gap: 15px;
+    gap: 7px;
   }
   .n-details img{
     width: 60px;
