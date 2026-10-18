@@ -93,12 +93,9 @@ background:#000;
   border-radius: 50%;
 }
 main{
-    padding:20px 0;
+    padding:10px 0;
     width:100%;
 }
-  main h2{
-    text-align:center;
-  }
 .notifications{
   display: flex;
   flex-direction: column;
