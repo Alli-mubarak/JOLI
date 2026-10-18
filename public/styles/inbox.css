@@ -14,28 +14,6 @@ body{
   width: 100%;
   background: #fff;
 }
-.notifier{
-            position: absolute;
-            width:100%;
-            height:40px;
-            display:flex; 
-            padding: 10px;
-            align-items:center;
-            justify-content: center;
-            gap:30px;
-            background: tan;
-            top:-40px;
-            left:0;
-            transition: all ease 0.3s;
-        }
-        .notifier p{
-            font-size: 19px;
-            font-weight: 500;
-        }
-notifier i{
-  font-size: 0.9rem;
-  cursor:pointer;
-}
 header{
   width:100%;
   height: 65px;
@@ -131,7 +109,7 @@ main{
   position: relative;
   background: #eee;
 }
-.n-loader, .notification{
+.n-loader{
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -144,10 +122,26 @@ main{
   overflow: hidden;
   border-radius: 10px;
 }
-  .notification img{
+  .n-card{
+    width: 100%;
+    padding: 10px 10px 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    box-shadow: 0 0 0 5px var(--primary-color);
+    cursor:pointer;
+  }
+  
+  .n-card img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
+  }
+  .n-card .msg{
+    font-weight: 600;
+    font-size: 1.1rem;
+    
   }
   .n-loader:before{
     position: absolute;
