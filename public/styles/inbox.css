@@ -121,7 +121,7 @@ main{
   main h2{
     text-align:center;
   }
-.posts{
+. notifications{
   display: flex;
   flex-direction: column;
   gap:5px;
@@ -131,7 +131,7 @@ main{
   position: relative;
   background: #eee;
 }
-.post{
+.n-loader, .notification{
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -144,7 +144,12 @@ main{
   overflow: hidden;
   border-radius: 10px;
 }
-  .post:before{
+  .notification img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .n-loader:before{
     position: absolute;
     content: '';
     width: 150px;
@@ -164,33 +169,7 @@ main{
   }
 
 @media screen and (min-width:762px){
-  .container{
-    flex-direction: row-reverse;
-    align-items: start;
-    gap:30px;
-  }
-  .logo-caption{
-    display: flex;
-    flex-direction:column;
-    height:100dvh;
-    align-items: center;
-    justify-content:center;
-  }
-  .sign-in-container{
-    min-height: 95dvh;
-    min-width: 350px;
-  }
-  .logo{
-    width:300px;
-    height: 300px;
-  }
-  .form-container{
-    display:flex;
-    min-height: 95dvh;
-    flex-direction: column;
-    align-items :center ;
-    justify-content:center;
-  }
+  /* styling soon */
   
 }
   
