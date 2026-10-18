@@ -50,22 +50,25 @@ async function showNotification(n){
     if(n.type === "friendship"){
       msg = "I want to be your friend";
     }
-    const htmlEl = `
-    <div class="n-card" data-type=${n.type}>
+const htmlEl = `
+ <div class="n-card" data-type=${n.type}>
      <div class="n-details">
         <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
         <div class="u-msg">
           <p class="n-username">${n.actor_username}</p>
           <p class="msg">${msg}</p>
         </div>
-        <small>${getReqTime(n.created_at)}</small>
       </div>
+
+   <div class="t-menu">
+    <small>${getReqTime(n.created_at)}</small>
       <div class="n-menu">
        <div></div>
        <div></div>
        <div></div>
       </div>
-    </div>
+  </div>
+</div>
     `;
     nContainer.innerHTML += htmlEl;
   }
@@ -87,5 +90,3 @@ async function openNotification(n){
   }
 }
 
-
-alert("inbox js loading");
