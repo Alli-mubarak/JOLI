@@ -166,6 +166,24 @@ app.use('/api/conversation', cRoutes);
 app.use('/api/message', mRoutes);
 //***********
 
+//api for fetching notifications
+app.get('/api/notifications', checkSession, async(req,res) =>{
+  try{
+  if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+    const nFetch  = await pool.query(`SELECT * FROM notifications WHERE recipient_id = $1 ORDER BY created_at DESC`, [req.user.id]);
+    
+    return res.status(200).json({
+       notifications: nFetch.rows
+    });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error Occured!');
+  }
+});
+
 //endpoint for a unified search
 app.get('/api/search', async (req, res) => {
   const { q } = req.query; // URL example: /api/search?q=basketball
