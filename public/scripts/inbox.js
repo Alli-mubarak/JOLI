@@ -48,7 +48,7 @@ async function showNotification(n){
   try{
     let msg
     if(n.type === "friendship"){
-      msg = "I want to be your friend";
+      msg = "sent you a friend request, click to view, then accept or decline";
     }
 const htmlEl = `
  <div class="n-card" data-type=${n.type}>
