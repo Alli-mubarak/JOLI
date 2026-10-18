@@ -155,9 +155,23 @@ main{
     object-position: center;
     border: 2px solid #ddd;
   }
+  .n-details p{
+    font-size:1rem;
+  }
   .n-details .msg{
     font-weight: 600;
     font-size: 1.1rem;
+  }
+  .t-menu{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction:column;
+    gap: 8px;
+    width: fit-content;
+  }
+  .t-menu small{
+    font-size:0.8rem;
   }
   .n-menu{
     position: relative;
