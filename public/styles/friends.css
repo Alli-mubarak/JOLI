@@ -271,7 +271,6 @@ main{
             padding: 25px 15px 15px 10px;
             position: relative;
           width: 100%;
-          background: pink;
         }
         .add-friend-btn{
             padding: 10px;
@@ -293,6 +292,10 @@ main{
         .add-friend-btn:hover{
             transform: scale(1.1);
         }
+   .username-bio{
+     width: 100%;
+     overflow: hidden;
+   }
         .username{
             font-size:1.1rem;
             font-weight:600;
