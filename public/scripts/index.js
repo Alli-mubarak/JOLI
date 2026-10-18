@@ -217,8 +217,6 @@ async function checkAuthStatus() {
         if (data.loggedIn) {
           canPost = true;
           isAuthorised = true;
-          statContainer.classList.remove("hidden");
-          await startHeartbeat();
           currentUserId = data.user.id;
         signInLink.classList.add("hidden");
          userPic.src = data.user.profile_picture || "images/default-user.png";
@@ -289,7 +287,6 @@ async function checkAuthStatus() {
           signInLink.classList.remove("hidden");
           userPic.classList.add("hidden");
           currentUserId = "";
-          statContainer.classList.add("hidden");
           if (typeof getFriends === "function") {getFriends()}
         }
       } catch (err) {
