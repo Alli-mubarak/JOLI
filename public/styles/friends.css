@@ -271,6 +271,7 @@ main{
             padding: 25px 15px 15px 10px;
             position: relative;
           width: 100%;
+          background: pink;
         }
         .add-friend-btn{
             padding: 10px;
@@ -290,7 +291,6 @@ main{
           cursor:pointer;
         }
         .add-friend-btn:hover{
-            
             transform: scale(1.1);
         }
         .username{
