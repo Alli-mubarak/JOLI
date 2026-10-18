@@ -121,7 +121,7 @@ main{
   main h2{
     text-align:center;
   }
-. notifications{
+.notifications{
   display: flex;
   flex-direction: column;
   gap:5px;
