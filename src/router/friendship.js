@@ -49,7 +49,7 @@ async function notify(nType, fId, sId, sPic, sName){
 `
 INSERT INTO notifications 
 (
-    recepient_id,
+    recipient_id,
     actor_id,
     type,
     resource_id,
