@@ -286,6 +286,7 @@ async function checkAuthStatus() {
           userPic.classList.add("hidden");
           currentUserId = "";
           if (typeof getFriends === "function") {getFriends()}
+          if (typeof getNotifications === "function") {getNotifications()}
         }
       } catch (err) {
         console.error("Error verifying authentication status:", err);
