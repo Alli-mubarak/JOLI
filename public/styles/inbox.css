@@ -141,6 +141,14 @@ main{
     gap: 6px;
     cursor:pointer;
     background: #eee;
+    position: relative;
+  }
+  .n-card:before{
+    position: absolute;
+    width: 10px; height:10px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    left: 5px; top: 18px;
   }
   .n-details{
     display: flex;
@@ -165,7 +173,7 @@ main{
   }
   .t-menu{
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
     flex-direction:column;
     gap: 8px;
