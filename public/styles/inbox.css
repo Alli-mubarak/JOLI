@@ -173,11 +173,10 @@ main{
     border: 2px solid #ddd;
   }
   .n-details p{
-    font-size:1rem;
+    font-size:1.1rem;
   }
   .n-details .msg{
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 500;
   }
   .t-menu{
     display: flex;
