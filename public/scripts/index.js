@@ -228,6 +228,7 @@ async function checkAuthStatus() {
     
           //fetch all users
         if (typeof getFriends === "function") {getFriends()}
+        else if (typeof getNotifications === "function") {getNotifications()}
         else{
           const frResponse = await fetch("/api/friendship/user/friends");
           if(frResponse.ok){
