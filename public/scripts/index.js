@@ -22,7 +22,7 @@ const pPic = document.getElementById("profile-pic");
 const sUsername = document.getElementById("u-name");
 const sEmail = document.getElementById("user-email");
 const postAdder = document.querySelector(".add-post");
-  const mediaFilesDisplayer = document.getElementById('media-files-displayer');
+const mediaFilesDisplayer = document.getElementById('media-files-displayer');
 const postContainer = document.getElementById('create-post-container');
 const postCloser = document.getElementById('p-closer');
 const postLoader = document.getElementById('p-loader');
@@ -43,8 +43,6 @@ const nCloser = document.getElementById("n-closer");
 const imagesOnPage = document.querySelectorAll('img');
 const pageHeader = document.querySelector("header");
 const pageTabs = document.querySelector(".tabs");
-const statContainer = document.getElementById("user-stat");
-const userStat = document.getElementById("user-status");
 let postsContainer = document.getElementById("posts");
 let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
 let scrollPosition = 0;
@@ -881,71 +879,6 @@ try {
 
 checkAuthStatus();
 
-let heartbeatInterval = null;
-
-function startHeartbeat() {
-  if(!isAuthorised) return;
-  sendPing();
-
-  // Send a heartbeat every 60 seconds
-  heartbeatInterval = setInterval(sendPing, 60000);
-}
-
-async function stopHeartbeat() {
-  try{
-  clearInterval(heartbeatInterval);
-  if(!isAuthorised) return;
-  // Tell the server immediately that the user left
- const response = await fetch('/user/v1/disconnect', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    keepalive: true // Crucial: ensures the request finishes even if the page closes
-  });
-    if(response.ok){ 
-      userStat.classList.remove("online");
-      userStat.classList.add("offline");
-    }
-  }catch(err){
-    console.error(err)
-  }
-}
-
-async function sendPing() {
-  try{
-  // Don't waste server resources if the tab is minimized or hidden
-  if (document.visibilityState === 'hidden') return; 
-
- const response = await fetch('/user/v1/heartbeat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  }).catch(err => {
-   console.error("Heartbeat failed", err);
- });
-    if(response.ok){ 
-      userStat.classList.remove("offline");
-      userStat.classList.add("online");
-    }
-  }catch(err){
-    console.error(err);
-  }
-}
-   
-// Automatically handle page exit/close and returning
-window.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden') {
-    // Optional: You can choose to stop pinging or instantly log out here
-    stopHeartbeat();
-  }else if(document.visibilityState === 'visible') {
-    console.log("User returned to the tab! Sending instant ping...");
-    sendPing(); // Fire a ping immediately so they look online instantly
-    
-    // Clear and reset the interval so it starts its 60-second countdown freshly
-    clearInterval(heartbeatInterval);
-    heartbeatInterval = setInterval(sendPing, 60000);
-  }
-});
-
-window.addEventListener('beforeunload', stopHeartbeat);
 
 // Select all links that require confirmation
 function interceptLinks(){
