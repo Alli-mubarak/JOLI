@@ -122,28 +122,7 @@ main{
   overflow: hidden;
   border-radius: 10px;
 }
-  .n-card{
-    width: 100%;
-    padding: 10px 10px 10px 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 6px;
-    box-shadow: 0 0 0 5px var(--primary-color);
-    cursor:pointer;
-  }
-  
-  .n-card img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-  }
-  .n-card .msg{
-    font-weight: 600;
-    font-size: 1.1rem;
-    
-  }
-  .n-loader:before{
+.n-loader:before{
     position: absolute;
     content: '';
     width: 150px;
@@ -152,6 +131,56 @@ main{
     left: -155px;
     transition: all 0.4s ease;
     animation: load linear infinite 2s;
+  }
+  .n-card{
+    width: 100%;
+    padding: 10px 10px 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    box-shadow: 0 0 15px var(--primary-color);
+    cursor:pointer;
+  }
+  .n-details{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 8px;
+  }
+  .n-details img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit:cover;
+    object-position: center;
+    border: 2px solid #ddd;
+  }
+  .n-details .msg{
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .n-menu{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .n-menu > div{
+    width:4px;
+    height:4px;
+    border-radius:20px;
+    background:#222;
+    left: 18px;
+    position: absolute;
+  }
+  .n-menu > div:nth-child(1){top: 8px}
+  .n-menu > div:nth-child(2){top: 18px}
+  .n-menu > div:nth-child(3){top: 28px}
+  
+  .n-menu:hover{
+    background: rgba(0,0,0,0.08);
   }
   @keyframes load{
     to{
