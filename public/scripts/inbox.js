@@ -84,7 +84,7 @@ const htmlEl = `
 async function openNotification(e){
   try{
       if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
-        const htmlEl = `${currentUserId === authorId? `<button id="delete-btn"><i class="fa-solid fa-trash"></i> Delete notification</button>` : ""}`;
+        const htmlEl = `${currentUserId && isAuthorised? `<button id="delete-btn"><i class="fa-solid fa-trash"></i> Delete notification</button>` : ""}`;
         postMenu.innerHTML = htmlElements;
 
         postMenuContainer.style.bottom = 0;
@@ -93,10 +93,11 @@ async function openNotification(e){
       },300);
       disableScrolling();
         return;
-      }
-  else if(e.currentTarget.getAttribute('data-type') === "friendship"){
+      }else{
+   if(e.currentTarget.getAttribute('data-type') === "friendship"){
     window.location.href = "/friends";
   }
+    }
   } catch(err){
     notify("error opening notification", "error");
     console.error(err);
