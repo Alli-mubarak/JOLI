@@ -130,7 +130,7 @@ main{
     transition: all 0.4s ease;
     animation: load linear infinite 2s;
   }
-  .n-card{
+  .n-card, .n-card-read{
     width: 100%;
     padding: 15px 15px 15px 20px;
     display: flex;
@@ -141,13 +141,9 @@ main{
     background: var(--touch-color);
     position: relative;
   }
-  .n-card .read{
+  .n-card-read{
     background: #fff;
   }
- .read .n-card:before{
-   background: transparent;
-   width:0; height:0;
- }
   .n-card:before{
     content: '';
     position: absolute;
