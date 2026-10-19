@@ -3,8 +3,38 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
+const cbContainer = document.getElementById("confirm-box-container");
+ const noConfirmBtn = document.getElementById("no-btn");
+const confirmBtn = document.getElementById("yes-btn");
 let notifications;
 
+// confirm box function 
+noConfirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action = "";
+    currPost.style.background = "#fff";
+      enableScrolling();
+  postMenuCloser.style.background = "transparent";
+    
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+}
+
+confirmBtn.onclick = () =>{
+         cbContainer.classList.add("hidden");
+        cbContainer.action();
+       enableScrolling();
+      }
+      
+   function confirmAction(a, action){
+     disableScrolling();
+    cbContainer.action = action
+    const cAction = document.getElementById("action");
+    cAction.textContent = a;
+    cbContainer.classList.remove("hidden");
+       }
+       
 async function getNotifications(){
   const mainTag = document.querySelector("main");
   if(!isAuthorised){
@@ -48,12 +78,15 @@ async function getNotifications(){
 
 async function showNotification(n){
   try{
-    let msg
+    let nClass = "n-card";
+    let msg;
     if(n.type === "friendship"){
       msg = "sent you a friend request, click to view, then accept or decline";
     }
+    if(n.is_read) nClass = "n-card read";
+    
 const htmlEl = `
- <div class="n-card" id=${n.id} data-type=${n.type}>
+ <div class=${nClass} id=${n.id} data-type=${n.type}>
      <div class="n-details">
         <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
         <div class="u-msg">
@@ -127,6 +160,7 @@ async function openNotification(e){
         return;
       }else{
    if(e.currentTarget.getAttribute('data-type') === "friendship"){
+     markAsRead(nId);
     window.location.href = "/friends";
   }
     }
@@ -147,6 +181,16 @@ async function deleteNotification(id){
   }
   catch(err){
     notify("error deleting notification", "error");
+    console.error(err);
+  }
+}
+
+async function markAsRead(nId){
+  try{
+    fetch(`/api/notification/read/${nId}`);
+  }
+  catch(err){
+    notify("error marking as read", "error");
     console.error(err);
   }
 }
