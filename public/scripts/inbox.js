@@ -59,6 +59,12 @@ async function getNotifications(){
           nContainer.style.background = "#bbb";
           const ns = document.querySelectorAll('.n-card');
          await Array.from(ns).forEach(el => {el.onclick = (e) => {openNotification(e)}});
+            
+          const nsRd = document.querySelectorAll('.n-card-read');
+          if(nsRd.children > 0){
+         await Array.from(nsRd).forEach(el => {el.onclick = (e) => {openNotification(e)}});
+          }
+            
           }catch(err){
             notify("error loading notifications", "error");
             console.error(err);
