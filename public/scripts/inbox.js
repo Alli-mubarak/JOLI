@@ -84,11 +84,10 @@ async function showNotification(n){
       msg = "sent you a friend request, click to view, then accept or decline";
     }
     if(n.is_read){
-      nClass = "n-card read";
-      alert("read!");
+      nClass = "n-card-read";
     }
 const htmlEl = `
- <div class=${nClass} id=${n.id} data-type=${n.type}>
+ <div class=${nClass} id=${n.id} data-type=${n.type} data-read=${n.is_read}>
      <div class="n-details">
         <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
         <div class="u-msg">
@@ -156,13 +155,16 @@ async function showNMenu(e, nId){
 
 async function openNotification(e){
   try{
-    const nId = e.currentTarget.id
+    const nCard = e.currentTarget
+    const nId = nCard.id
       if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
         showNMenu(e, nId);
         return;
       }else{
-   if(e.currentTarget.getAttribute('data-type') === "friendship"){
+   if(nCard.getAttribute('data-type') === "friendship"){
+     if(nCard.getAttribute('data-read') !== true){
      await markAsRead(nId);
+     }
     window.location.href = "/friends";
   }
     }
