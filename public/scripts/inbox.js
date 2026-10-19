@@ -162,7 +162,7 @@ async function openNotification(e){
         return;
       }else{
    if(e.currentTarget.getAttribute('data-type') === "friendship"){
-     markAsRead(nId);
+     await markAsRead(nId);
     window.location.href = "/friends";
   }
     }
@@ -189,10 +189,19 @@ async function deleteNotification(id){
 
 async function markAsRead(nId){
   try{
-    fetch(`/api/notification/read/${nId}`);
+    const response = await fetch(`/api/notification/read/${nId}`);
+    const data = await response.json();
+    console.log(data);
+    if(response.ok){
+      return
+    }
+    else{
+      notify("error marking as read", "error");
+    }
+    
   }
   catch(err){
-    notify("error marking as read", "error");
+    notify("error reading notification!", "error");
     console.error(err);
   }
 }
