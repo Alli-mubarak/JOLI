@@ -158,7 +158,7 @@ try{
     const postQuery= await pool.query('SELECT * FROM posts WHERE id = $1', [postId]);
   if (postQuery.rows.length === 0) {
     console.error('post not found!');
-    return res.sendFile(path.join(__dirname, "../../", "/views/post-error.html"));
+    return res.status(404).sendFile(path.join(__dirname, "../../", "/views/post-error.html"));
   }
   const postData = postQuery.rows[0];
 let author = await  fetchAuthorDetails(postData.user_id);
