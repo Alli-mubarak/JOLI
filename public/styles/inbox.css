@@ -141,6 +141,13 @@ main{
     background: var(--touch-color);
     position: relative;
   }
+  .n-card .read{
+    background: #fff;
+  }
+ .read .n-card:before{
+   background: transparent;
+   width:0; height:0;
+ }
   .n-card:before{
     content: '';
     position: absolute;
