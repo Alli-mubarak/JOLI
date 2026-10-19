@@ -162,7 +162,7 @@ async function openNotification(e){
         return;
       }else{
    if(nCard.getAttribute('data-type') === "friendship"){
-     if(nCard.getAttribute('data-read') !== true){
+     if(nCard.getAttribute('data-read') !== "true"){
      await markAsRead(nId);
      }
     window.location.href = "/friends";
