@@ -104,7 +104,7 @@ try{
     const userQuery= await pool.query('SELECT id, username, is_active, is_verified, profile_picture, bio, cover_photo FROM users WHERE username = $1', [username]);
   if (userQuery.rows.length === 0) {
     console.error('user not found!');
-    return res.sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
+    return res.status(404).sendFile(path.join(__dirname, "../../", "/views/user-error.html"));
   }
   const userData = userQuery.rows[0];
 let friends = await fetchUserFriends(userData.id);
