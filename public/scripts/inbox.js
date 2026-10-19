@@ -83,8 +83,10 @@ async function showNotification(n){
     if(n.type === "friendship"){
       msg = "sent you a friend request, click to view, then accept or decline";
     }
-    if(n.is_read) nClass = "n-card read";
-    
+    if(n.is_read){
+      nClass = "n-card read";
+      alert("read!");
+    }
 const htmlEl = `
  <div class=${nClass} id=${n.id} data-type=${n.type}>
      <div class="n-details">
