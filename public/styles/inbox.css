@@ -8,6 +8,7 @@
 }
 :root{
   --primary-color : #2bff43;
+ --touch-color:#eef9ee;
 }
 body{
   position:relative;
@@ -137,8 +138,9 @@ main{
     justify-content: space-between;
     gap: 6px;
     cursor:pointer;
-    background: #eee;
+    background: var(--touch-color);
     position: relative;
+    border: 1px solid #444;
   }
   .n-card:before{
     content: '';
