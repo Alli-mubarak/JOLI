@@ -61,7 +61,7 @@ async function getNotifications(){
          await Array.from(ns).forEach(el => {el.onclick = (e) => {openNotification(e)}});
             
           const nsRd = document.querySelectorAll('.n-card-read');
-          if(nsRd.children > 0){
+          if(nsRd.length > 0){
          await Array.from(nsRd).forEach(el => {el.onclick = (e) => {openNotification(e)}});
           }
             
