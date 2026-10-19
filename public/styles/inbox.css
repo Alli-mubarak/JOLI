@@ -100,7 +100,7 @@ main{
 .notifications{
   display: flex;
   flex-direction: column;
-  gap:5px;
+  gap:1px;
   align-items:center;
   justify-content:center;
   width:100%;
@@ -140,7 +140,6 @@ main{
     cursor:pointer;
     background: var(--touch-color);
     position: relative;
-    border: 1px solid #444;
   }
   .n-card:before{
     content: '';
