@@ -85,7 +85,10 @@ async function openNotification(e){
   try{
     const nId = e.currentTarget.id
       if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
-        const htmlEl = `${currentUserId && isAuthorised? `<button id="delete-btn"><i class="fa-solid fa-trash"></i> Delete notification</button>` : ""}`;
+        const htmlEl = `
+        <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
+        ${currentUserId && isAuthorised? `<button id="delete-btn"><i class="fa-solid fa-trash"></i> Delete notification</button>` : ""}
+        `;
         postMenu.innerHTML = htmlEl;
 
         postMenuContainer.style.bottom = 0;
