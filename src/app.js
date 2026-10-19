@@ -184,6 +184,48 @@ app.get('/api/notifications', checkSession, async(req,res) =>{
   }
 });
 
+//api for marking notifications as read
+app.get('/api/notification/read/:id', checkSession, async(req,res) =>{
+  try{
+  if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+    const nId = req.params.id
+    if(!nId) return res.status(404).json({error: "id is missing"});
+    
+    const nFetch  = await pool.query(`UPDATE notifications SET is_read = $1 WHERE id = $2 AND recipient_id = $3 RETURNING *`, [true, nId, req.user.id]);
+    if (nFetch.rows.length === 0) return res.status(404).json({error: "notification not found"});
+    return res.status(200).json({
+       success: true
+    });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error Occured!');
+  }
+});
+
+//api for deleting notification
+app.delete('/api/notification/:id', checkSession, async(req,res) =>{
+  try{
+  if(!req.isAuthenticated() || !req.user) {
+    return res.status(401).send('Unauthorized. Please log in.');
+  }
+    const nId = req.params.id
+    if(!nId) return res.status(404).json({error: "id is missing"});
+    
+    const nFetch  = await pool.query(`DELETE FROM notifications WHERE id = $1 AND recipient_id = $2 RETURNING *`, [nId, req.user.id]);
+    if (nFetch.rowCount === 0) return res.status(404).json({error: "notification not found"});
+    return res.status(200).json({
+       success: true
+    });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error Occured!');
+  }
+});
+
 //endpoint for a unified search
 app.get('/api/search', async (req, res) => {
   const { q } = req.query; // URL example: /api/search?q=basketball
@@ -416,7 +458,7 @@ app.post('/upload/profile-picture', checkSession, limiter, async(req,res) =>{
 //response to all wrong paths
 app.use((req, res)=>{
 console.log('wrong path invoked \n');
-  res.sendFile(path.join(__dirname, "../", "/views/error.html"));
+  res.status(404).sendFile(path.join(__dirname, "../", "/views/error.html"));
 });
 
 // database pinger to prevent powering off
