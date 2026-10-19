@@ -208,7 +208,7 @@ app.get('/api/search', async (req, res) => {
     
     // 1. Search Users
     const userQuery = `
-      SELECT id, username, is_active, is_verified, last_seen, bio, profile_picture
+      SELECT id, username, is_active, is_verified, last_login_at, bio, profile_picture
       FROM users 
       WHERE username ILIKE $1
       LIMIT 5
