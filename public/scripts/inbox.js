@@ -1,4 +1,8 @@
 const nContainer = document.querySelector(".notifications");
+const postMenuContainer = document.getElementById("post-menu-container");
+  const postMenuCloser = document.getElementById("p-closer-space");
+  const postMenu = document.getElementById("post-menu");
+  let pmCloserBtn = document.getElementById("p-closer-btn");
 let notifications;
 
 async function getNotifications(){
@@ -26,7 +30,7 @@ async function getNotifications(){
           });
           
           const ns = document.querySelectorAll('.n-card');
-         await Array.from(ns).forEach(el => {el.onclick = () => {openNotification(el)}});
+         await Array.from(ns).forEach(el => {el.onclick = (e) => {openNotification(e)}});
           }catch(err){
             notify("error loading notifications", "error");
             console.error(err);
@@ -51,7 +55,7 @@ async function showNotification(n){
       msg = "sent you a friend request, click to view, then accept or decline";
     }
 const htmlEl = `
- <div class="n-card" data-type=${n.type}>
+ <div class="n-card" id=${n.id} data-type=${n.type}>
      <div class="n-details">
         <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
         <div class="u-msg">
@@ -60,7 +64,7 @@ const htmlEl = `
         </div>
       </div>
 
-   <div class="t-menu">
+   <div class="t-menu" data-type="n-menu">
     <small>${getReqTime(n.created_at)}</small>
       <div class="n-menu">
        <div></div>
@@ -79,8 +83,13 @@ const htmlEl = `
   }
 }
 
-async function openNotification(n){
+async function openNotification(e){
   try{
+    
+      if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
+        alert("menu clicked");
+        return;
+      }
     alert("opening notification");
   }
   catch(err){
