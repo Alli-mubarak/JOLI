@@ -81,11 +81,9 @@ const htmlEl = `
   }
 }
 
-async function openNotification(e){
+async function showNMenu(e, nId){
   try{
-    const nId = e.currentTarget.id
-      if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
-        const htmlEl = `
+    const htmlEl = `
         <i class="fa-solid fa-xmark" id="p-closer-btn"></i>
         ${currentUserId && isAuthorised? `<button id="delete-btn"><i class="fa-solid fa-trash"></i> Delete notification</button>` : ""}
         `;
@@ -108,12 +106,24 @@ async function openNotification(e){
     
     pmCloserBtn.onclick = () =>{
     postMenuCloser.style.background = "transparent";
-    
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
     }
+    
+  }
+  catch(err){
+    notify("error opening menu", "error");
+    console.error(err);
+  }
+}
+
+async function openNotification(e){
+  try{
+    const nId = e.currentTarget.id
+      if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
+        showNMenu(e, nId);
         return;
       }else{
    if(e.currentTarget.getAttribute('data-type') === "friendship"){
@@ -129,7 +139,11 @@ async function openNotification(e){
 async function deleteNotification(id){
   try{
     notify("feature coming soon..");
-    console.log(id);
+    postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
   }
   catch(err){
     notify("error deleting notification", "error");
