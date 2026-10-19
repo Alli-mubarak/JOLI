@@ -11,9 +11,7 @@ async function getNotifications(){
       mainTag.innerHTML = `<p class="def-msg" style="text-align:center; margin-top:50px;">Create an account or sign in to view messages</p>`;
       return;
   }
-  
   try {
-       
         const response = await fetch('/api/notifications');
       const data = await response.json();
     
@@ -28,7 +26,7 @@ async function getNotifications(){
           await notifications.forEach(n =>{
             showNotification(n);
           });
-          
+          nContainer.style.background = "#bbb";
           const ns = document.querySelectorAll('.n-card');
          await Array.from(ns).forEach(el => {el.onclick = (e) => {openNotification(e)}});
           }catch(err){
@@ -99,10 +97,9 @@ async function openNotification(e){
   else if(e.currentTarget.getAttribute('data-type') === "friendship"){
     window.location.href = "/friends";
   }
-  catch(err){
+  } catch(err){
     notify("error opening notification", "error");
     console.error(err);
-       
   }
 }
 
