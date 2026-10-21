@@ -183,6 +183,9 @@ async function deleteNotification(id){
     const currN = document.getElementById(`${id}`);
     nContainer.removeChild(currN);
     notify("notification deleted");
+    if(nContainer.children.length < 1){
+       nContainer.innerHTML = `<p>You currently have no notifications, they should appear soon</p>`;
+    }
   }
   catch(err){
     notify("error deleting notification", "error");
