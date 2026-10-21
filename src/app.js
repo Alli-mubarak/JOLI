@@ -211,10 +211,19 @@ app.delete('/api/notification/:id', checkSession, async(req,res) =>{
   if(!req.isAuthenticated() || !req.user) {
     return res.status(401).send('Unauthorized. Please log in.');
   }
+    const currUser = req.user.id;
     const nId = req.params.id
     if(!nId) return res.status(404).json({error: "id is missing"});
+
+    const nCheck = await pool.query('SELECT id, recipient_id FROM notifications WHERE id = $1', [nId]);
+    if (nCheck.rows.length === 0) {
+      return res.status(404).json({ message: "The notification you are trying to delete does not exist." });
+    }
+ const cNot = nCheck.rows[0];
+  const notRecp = cNot.recipient_id
+  if(currUser !== notRecp) return res.status(403).json({error: "You cannot delete this notification"});
     
-    const nFetch  = await pool.query(`DELETE FROM notifications WHERE id = $1 AND recipient_id = $2 RETURNING *`, [nId, req.user.id]);
+    const nFetch  = await pool.query(`DELETE FROM notifications WHERE id = $1 AND recipient_id = $2 RETURNING *`, [nId, currUser]);
     if (nFetch.rowCount === 0) return res.status(404).json({error: "notification not found"});
     return res.status(200).json({
        success: true
