@@ -1,4 +1,6 @@
+
 showAlert("chat-tab");
+showAlert("inbox-tab");
 const pendingRequestsContainer = document.getElementById("pending-requests");
 const usersContainer = document.querySelector(".users");
 let lastUserFetched;
