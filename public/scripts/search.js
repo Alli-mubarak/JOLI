@@ -1,3 +1,5 @@
+showAlert("chat-tab");
+showAlert("inbox-tab");
 async function run(){
 const searchForm = document.getElementById("search-form");
 const searchBtn = document.getElementById("search-btn");
