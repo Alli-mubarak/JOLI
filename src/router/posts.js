@@ -434,7 +434,7 @@ router.post('/:id/comment',checkSession, async (req, res) => {
     return res.status(400).json({ message: "Comment content cannot be empty." });
   }
 
-    const postCheck = await pool.query('SELECT id FROM posts WHERE id = $1', [postId]);
+    const postCheck = await pool.query('SELECT id, user_id FROM posts WHERE id = $1', [postId]);
     if (postCheck.rows.length === 0) {
       return res.status(404).json({ message: "The post you are trying to comment on does not exist." });
     }
