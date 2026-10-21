@@ -460,8 +460,10 @@ const cPost = postCheck.rows[0]
     `;
 
     const result = await pool.query(insertQuery, [postId, userId, content.trim()]);
+ if(authorId !== userId){
   const isNotified = await notify("comment", postId, authorId, userId, req.user.profile_picture, req.user.username);
   if(isNotified.success) console.log(isNotified)
+ }
     return res.status(201).json({
       message: "Comment added successfully",
       comment: result.rows[0]
