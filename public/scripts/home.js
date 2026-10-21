@@ -1,6 +1,7 @@
 const sentRequests = [];
 const unfriended = [];
 showAlert("chat-tab");
+showAlert("inbox-tab");
 postsContainer = document.getElementById("posts");
 const mediaViewer = document.getElementById("media-viewer");
   const mediaViewerCloser = document.getElementById("mv-closer");
