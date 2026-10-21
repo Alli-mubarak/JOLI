@@ -87,14 +87,18 @@ async function showNotification(n){
   try{
     let nClass = "n-card";
     let msg;
+    let nType = n.type
     if(n.type === "friendship"){
       msg = "sent you a friend request, click to view, then accept or decline";
+    }else if(n.type === "comment"){
+      msg = " commented on your post, view post and comment";
+      nType = `comment-${n.resource_id}`
     }
     if(n.is_read){
       nClass = "n-card-read";
     }
 const htmlEl = `
- <div class=${nClass} id=${n.id} data-type=${n.type} data-read=${n.is_read}>
+ <div class=${nClass} id=${n.id} data-type=${nType} data-read=${n.is_read}>
      <div class="n-details">
         <img src=${n.actor_pic} alt="friend picture" class="ef-pic"/>
         <div class="u-msg">
@@ -161,18 +165,24 @@ async function showNMenu(e, nId){
 }
 
 async function openNotification(e){
-  try{
-    const nCard = e.currentTarget
-    const nId = nCard.id
-      if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
+try{
+ const nCard = e.currentTarget
+ const nId = nCard.id
+ if(e.target.getAttribute('data-type') === "n-menu" || e.target.parentElement.getAttribute('data-type') === "n-menu"){
         showNMenu(e, nId);
         return;
-      }else{
+ }else{
    if(nCard.getAttribute('data-type') === "friendship"){
      if(nCard.getAttribute('data-read') !== "true"){
      await markAsRead(nId);
      }
     window.location.href = "/friends";
+  } else if(nCard.getAttribute('data-type').includes("comment")){
+     if(nCard.getAttribute('data-read') !== "true"){
+     await markAsRead(nId);
+     }
+     const pId = nCard.getAttribute('data-type').split("-")[1];
+    window.location.href = `/post/${pId}`;
   }
     }
   } catch(err){
