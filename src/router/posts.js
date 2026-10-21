@@ -78,7 +78,7 @@ INSERT INTO notifications
     resource_id,
     is_read,
     actor_username,
-    actor_pic,
+    actor_pic
 )
 
 VALUES
@@ -460,7 +460,7 @@ const cPost = postCheck.rows[0]
     `;
 
     const result = await pool.query(insertQuery, [postId, userId, content.trim()]);
-  const isNotified = await notify("comment",postId, authorId, userId, req.user.profile_picture, req.user.username);
+  const isNotified = await notify("comment", postId, authorId, userId, req.user.profile_picture, req.user.username);
   if(isNotified.success) console.log(isNotified)
     return res.status(201).json({
       message: "Comment added successfully",
