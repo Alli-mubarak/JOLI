@@ -3,37 +3,9 @@ const postMenuContainer = document.getElementById("post-menu-container");
   const postMenuCloser = document.getElementById("p-closer-space");
   const postMenu = document.getElementById("post-menu");
   let pmCloserBtn = document.getElementById("p-closer-btn");
-const cbContainer = document.getElementById("confirm-box-container");
- const noConfirmBtn = document.getElementById("no-btn");
-const confirmBtn = document.getElementById("yes-btn");
 let notifications;
 
-// confirm box function 
-noConfirmBtn.onclick = () =>{
-         cbContainer.classList.add("hidden");
-        cbContainer.action = "";
-    currPost.style.background = "#fff";
-      enableScrolling();
-  postMenuCloser.style.background = "transparent";
-    
-     setTimeout(() =>{
-      postMenuContainer.style.bottom = "-100vh";
-      },200);
-}
 
-confirmBtn.onclick = () =>{
-         cbContainer.classList.add("hidden");
-        cbContainer.action();
-       enableScrolling();
-      }
-      
-   function confirmAction(a, action){
-     disableScrolling();
-    cbContainer.action = action
-    const cAction = document.getElementById("action");
-    cAction.textContent = a;
-    cbContainer.classList.remove("hidden");
-       }
        
 async function getNotifications(){
   const mainTag = document.querySelector("main");
@@ -192,12 +164,25 @@ try{
 
 async function deleteNotification(id){
   try{
-    notify("feature coming soon..");
+    notify("deleting notification..");
     postMenuCloser.style.background = "transparent";
      setTimeout(() =>{
       postMenuContainer.style.bottom = "-100vh";
       },200);
    enableScrolling();
+    const response = await fetch(`/api/notification/${id}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+    
+        if (!response.ok) {
+          console.error(response);
+          notify("notification deletion failed!", "error");
+          return;
+        }
+    const currN = document.getElementById(`${id}`);
+    nContainer.removeChild(currN);
+    notify("notification deleted");
   }
   catch(err){
     notify("error deleting notification", "error");
