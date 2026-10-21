@@ -92,7 +92,7 @@ async function showNotification(n){
       msg = "sent you a friend request, click to view, then accept or decline";
     }else if(n.type === "comment"){
       msg = " commented on your post, check it out!";
-      nType = `comment-${n.resource_id}`
+      nType = `comment_${n.resource_id}`
     }
     if(n.is_read){
       nClass = "n-card-read";
@@ -181,7 +181,7 @@ try{
      if(nCard.getAttribute('data-read') !== "true"){
      await markAsRead(nId);
      }
-     const pId = nCard.getAttribute('data-type').split("-")[1];
+     const pId = nCard.getAttribute('data-type').split("_")[1];
     window.location.href = `/post/${pId}`;
   }
     }
