@@ -185,6 +185,7 @@ async function deleteNotification(id){
     notify("notification deleted");
     if(nContainer.children.length < 1){
        nContainer.innerHTML = `<p>You currently have no notifications, they should appear soon</p>`;
+      nContainer.style.background = "#fff";
     }
   }
   catch(err){
