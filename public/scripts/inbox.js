@@ -91,7 +91,7 @@ async function showNotification(n){
     if(n.type === "friendship"){
       msg = "sent you a friend request, click to view, then accept or decline";
     }else if(n.type === "comment"){
-      msg = " commented on your post, view post and comment";
+      msg = " commented on your post, check it out!";
       nType = `comment-${n.resource_id}`
     }
     if(n.is_read){
