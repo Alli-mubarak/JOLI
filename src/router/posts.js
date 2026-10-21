@@ -66,6 +66,51 @@ async function getPostLikeStatus(postId, userId){
   }
       }
 
+async function notify(nType,rId, fId, sId, sPic, sName){
+  try{
+  const newNotification = await pool.query(
+`
+INSERT INTO notifications 
+(
+    recipient_id,
+    actor_id,
+    type,
+    resource_id,
+    is_read,
+    actor_username,
+    actor_pic,
+)
+
+VALUES
+(
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+)
+
+RETURNING *;
+`,
+[
+    fId,
+    sId,
+    nType,
+    rId,
+    false,
+    sName,
+    sPic
+]);
+    return {success: "user notified"}
+  }catch(err){
+    console.error(err);
+    return {error: "error creating notification"}
+  }
+}
+
+
 // post creation api
 router.post('/v1/create-post', checkSession, async (req, res) => {
   try{
@@ -393,7 +438,8 @@ router.post('/:id/comment',checkSession, async (req, res) => {
     if (postCheck.rows.length === 0) {
       return res.status(404).json({ message: "The post you are trying to comment on does not exist." });
     }
-
+const cPost = postCheck.rows[0]
+  const authorId = cPost.user_id;
     // 4. Insert the comment and immediately JOIN with the users table to get the author's username
     const insertQuery = `
       WITH inserted_comment AS (
@@ -414,6 +460,8 @@ router.post('/:id/comment',checkSession, async (req, res) => {
     `;
 
     const result = await pool.query(insertQuery, [postId, userId, content.trim()]);
+  const isNotified = await notify("comment",postId, authorId, userId, req.user.profile_picture, req.user.username);
+  if(isNotified.success) console.log(isNotified)
     return res.status(201).json({
       message: "Comment added successfully",
       comment: result.rows[0]
