@@ -135,6 +135,16 @@ async function showNMenu(e, nId){
   }
 }
 
+//post menu closer - blank space 
+  postMenuCloser.onclick = () =>{
+      postMenuCloser.style.background = "transparent";
+     setTimeout(() =>{
+      postMenuContainer.style.bottom = "-100vh";
+      },200);
+   enableScrolling();
+    postOnFocus.style.background = "#fff";
+  }
+
 async function openNotification(e){
 try{
  const nCard = e.currentTarget
