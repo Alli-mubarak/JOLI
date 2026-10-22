@@ -406,7 +406,6 @@ function viewPostImage(e){
           notify("like failed!", "error");
           return 
         }
-          console.log(response);
         
         const data = await response.json();
         const postLikes = data.likesCount
