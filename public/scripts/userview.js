@@ -263,7 +263,6 @@ if(!newBanner && !newPic && !newUsername && !newBio){
     body: JSON.stringify(changes)
   });
     const result = await response.json();
-     console.log(result);
   if(response.ok){
     const uMenu = document.getElementById("u-menu");
    uMenu.classList.remove("hidden");
@@ -494,7 +493,6 @@ ccBtn.onclick = () => {
     cropperBox.classList.add("hidden");
     sPic.src = "";
     cropper.style.top = 0;
-    console.log("cropping cancelled");
   currImgEl = "";
   }catch(err){
     console.error(err)
