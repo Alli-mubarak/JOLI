@@ -294,7 +294,6 @@ activatePasswordRevealers();
 
 function toggleReveal(el){
     const passwordInput = el.previousElementSibling;
-    console.log(passwordInput);
     if(passwordInput.type === "password"){
     passwordInput.type = "text";
     el.classList.remove('fa-eye')
