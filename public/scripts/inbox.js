@@ -208,7 +208,6 @@ async function markAsRead(nId){
   try{
     const response = await fetch(`/api/notification/read/${nId}`);
     const data = await response.json();
-    console.log(data);
     if(response.ok){
       return
     }
