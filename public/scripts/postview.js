@@ -72,8 +72,7 @@ async function checkAuthStatus() {
           }
       });
         }
-         console.log("frens:", confirmedFriendships);
-         console.log("p-frens:", pendingFriendships);
+         
           }else{
            notify("server error occurred", "error");
           }
@@ -222,7 +221,6 @@ async function likePost(){
           notify("like failed!", "error");
           return 
         }
-          console.log(response);
         
         const data = await response.json();
         const postLikes = data.likesCount
@@ -509,7 +507,6 @@ async function deletePost(postId){
           currPost.style.background = "#fff";
           return;
         }
-          console.log(response);
     postMenuCloser.style.background = "transparent";
     
      setTimeout(() =>{
