@@ -470,7 +470,6 @@ if (index !== -1) {
   selectedPictures.splice(index, 1);
 }
 mediaFilesDisplayer.removeChild(card);
-  console.log(selectedPictures);
   }catch(e){
     console.error(e)
   }
@@ -712,8 +711,6 @@ existingCanvas.replaceWith(canvas);
 if (index !== -1) {
   selectedPictures[index].canvas = canvas;
 }
-
-console.log(selectedPictures[index]);
 imageInfo = "";
   }catch(e){
     console.error(e)
