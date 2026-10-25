@@ -101,7 +101,6 @@ const userCard = `
        <img src=${user.profile_picture || "/images/default-user.png"} class="user-pic" alt="user picture" />
     </div>
     <div class="user-details">
-       <button class="add-friend-btn" data-type="add-user" data-id=${user.id}><i class="fa-solid fa-plus add-loader"></i> Add </button>
        <div class="username-bio">
           <p class="username">${user.username}</p>
           <small class="bio">${user.bio || "Happy to be here on JOLI"}</small>
