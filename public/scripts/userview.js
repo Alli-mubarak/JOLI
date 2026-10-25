@@ -231,6 +231,7 @@ const pTitle = document.querySelector(".p-title");
    userppEl.lastElementChild.remove();
    userNameEl.lastElementChild.remove();
    bioEl.lastElementChild.remove();
+  bioEl.style.background = "transparent";
   userNameEl.firstElementChild.removeAttribute("contenteditable", true);
   bioEl.firstElementChild.removeAttribute("contenteditable", true);
    
