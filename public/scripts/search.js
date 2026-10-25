@@ -55,14 +55,15 @@ searchForm.onsubmit = async(e) => {
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.marginTop = "0";
       usersTitle.classList.remove("hidden");
-      data.users.forEach(u => {displayUser(u)});
+     await data.users.forEach(u => {displayUser(u)});
+      
     }
     if(data.posts.length > 0) {
       searchHeader.innerHTML = `search results for <b>${query}</b>`;
       searchHeader.style.marginTop = "0";
      slContainer.innerHTML = '';
       postsTitle.classList.remove("hidden");
-      data.posts.forEach(p => {displayPost(p)});
+      await data.posts.forEach(p => {displayPost(p)});
     }
     if(data.posts.length < 1 && data.users.length < 1){
       searchHeader.innerHTML = "Nothing matches your search, try searching for something else";
@@ -73,6 +74,7 @@ searchForm.onsubmit = async(e) => {
       usersTitle.classList.add("hidden");
       return;
     }
+    allowResultView()
   }else{
     notify("error fetching search", "error");
     slContainer.innerHTML = '';
@@ -138,11 +140,6 @@ const postCard = `
                           <small>${getReqTime(post.created_at)}</small>
                      </div>
             </div> 
-            <div class="post-menu" data-type="post-menu">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
         </div>
         <div class="post">
             <p class="post-content">${linkify(post.content)}</p>
@@ -190,6 +187,33 @@ function sortImages(images){
        });
 return result;
 }
+  function allowResultView(){
+    try{
+    const posts = document.querySelectorAll(".postCard");
+    const users = document.querySelectorAll(".user");
+
+    if(users.length > 0){
+      Array.from(users).forEach(u => {
+        u.onclick = (e) =>{
+          const uUrl = e.currentTarget.getAttribute("data-url");
+          window.location.href = uUrl;
+        }
+      })
+      }
+      
+    if(posts.length > 0){
+      Array.from(posts).forEach(p => {
+        p.onclick = (e) =>{
+          const pUrl = e.currentTarget.getAttribute("data-url");
+          window.location.href = pUrl;
+        }
+      })
+    }
+    }catch(err){
+      notify("error viewing result", "error");
+      console.error(err);
+    }
+  }
         }
 
 setTimeout(()=>{
