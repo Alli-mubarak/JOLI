@@ -94,7 +94,7 @@ searchForm.onsubmit = async(e) => {
 
 function displayUser(user){
 try{
- 
+ if(currentUserId === user.id) return;
 const userCard = `
 <div class="user" data-url="/user/${user.username}">
     <div class="pp-box">
