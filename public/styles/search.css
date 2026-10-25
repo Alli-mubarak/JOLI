@@ -153,27 +153,10 @@ main{
             position: relative;
           width: 100%;
         }
-        .add-friend-btn{
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            position: absolute;
-            height: 36px;
-            top: -18px; right:15px;
-            background: var(--primary-color);
-            color:#222;
-            border-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap:10px;
-            transition: all ease 0.3s;
-          cursor:pointer;
-        }
-        .add-friend-btn:hover{
-            
-            transform: scale(1.1);
-        }
+    .username-bio{
+     width: 100%;
+     overflow: hidden;
+      }
         .username{
             font-size:1.1rem;
             font-weight:600;
