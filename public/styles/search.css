@@ -167,7 +167,8 @@ main{
           text-overflow: ellipsis;
         }
         .bio{
-            font-size: 0.8rem;
+          font-size: 0.8rem;
+          display: block;
           width: 95%;
           overflow: hidden;
           white-space: nowrap;
